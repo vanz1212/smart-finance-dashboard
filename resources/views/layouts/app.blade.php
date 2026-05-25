@@ -13,6 +13,7 @@
             <nav class="main-nav">
                 <a href="{{ url('/') }}">Beranda</a>
                 <a href="{{ url('/smart-finance') }}">Smart Finance</a>
+                <a href="{{ route('perpajakan.index') }}">Perpajakan</a>
                 <a href="{{ url('/stata') }}">Stata</a>
             </nav>
         </header>
