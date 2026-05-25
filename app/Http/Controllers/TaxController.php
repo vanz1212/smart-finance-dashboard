@@ -43,6 +43,11 @@ class TaxController extends BaseController
 
     public function calculate(Request $request)
     {
+        $request->merge([
+            'penghasilan_bulanan' => $this->normalizeRupiah($request->input('penghasilan_bulanan')),
+            'pengeluaran_bulanan' => $this->normalizeRupiah($request->input('pengeluaran_bulanan')),
+        ]);
+
         $validated = $request->validate([
             'nama_wajib_pajak' => ['required', 'string', 'max:100'],
             'penghasilan_bulanan' => ['required', 'numeric', 'min:0'],
@@ -85,6 +90,11 @@ class TaxController extends BaseController
     private function taxStatuses(): array
     {
         return array_keys(self::PTKP);
+    }
+
+    private function normalizeRupiah($value): string
+    {
+        return preg_replace('/[^0-9]/', '', (string) $value) ?: '0';
     }
 
     private function calculateProgressiveTax(float $pkp): array

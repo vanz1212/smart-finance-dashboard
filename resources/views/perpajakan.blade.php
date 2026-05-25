@@ -10,6 +10,14 @@
             return 'Rp ' . number_format($value, 0, ',', '.');
         };
 
+        $formatInputRupiah = function ($value) use ($formatRupiah) {
+            if ($value === null || $value === '') {
+                return '';
+            }
+
+            return $formatRupiah(preg_replace('/[^0-9]/', '', (string) $value));
+        };
+
         $statusClass = 'bg-success';
         if (($result['status_pajak'] ?? '') === 'Tidak kena pajak') {
             $statusClass = 'bg-secondary';
@@ -63,14 +71,15 @@
                                 <div class="mb-3">
                                     <label for="penghasilan_bulanan" class="form-label fw-semibold">Penghasilan bulanan</label>
                                     <input
-                                        type="number"
+                                        type="text"
                                         class="form-control @error('penghasilan_bulanan') is-invalid @enderror"
                                         id="penghasilan_bulanan"
                                         name="penghasilan_bulanan"
-                                        value="{{ old('penghasilan_bulanan') }}"
-                                        min="0"
-                                        step="1000"
-                                        placeholder="Contoh: 7500000"
+                                        value="{{ $formatInputRupiah(old('penghasilan_bulanan', $result['penghasilan_bulanan'] ?? '')) }}"
+                                        inputmode="numeric"
+                                        autocomplete="off"
+                                        data-rupiah-input
+                                        placeholder="Contoh: Rp 7.500.000"
                                         required
                                     >
                                     @error('penghasilan_bulanan')
@@ -81,14 +90,15 @@
                                 <div class="mb-3">
                                     <label for="pengeluaran_bulanan" class="form-label fw-semibold">Biaya/pengurang bulanan</label>
                                     <input
-                                        type="number"
+                                        type="text"
                                         class="form-control @error('pengeluaran_bulanan') is-invalid @enderror"
                                         id="pengeluaran_bulanan"
                                         name="pengeluaran_bulanan"
-                                        value="{{ old('pengeluaran_bulanan', $result['pengurang_bulanan'] ?? '') }}"
-                                        min="0"
-                                        step="1000"
-                                        placeholder="Contoh: 3000000"
+                                        value="{{ $formatInputRupiah(old('pengeluaran_bulanan', $result['pengurang_bulanan'] ?? '')) }}"
+                                        inputmode="numeric"
+                                        autocomplete="off"
+                                        data-rupiah-input
+                                        placeholder="Contoh: Rp 3.000.000"
                                         required
                                     >
                                     <div class="form-text">Isi dengan pengurang yang diasumsikan boleh mengurangi penghasilan bruto.</div>
@@ -278,4 +288,25 @@
             </div>
         </div>
     </section>
+
+    <script>
+        document.querySelectorAll('[data-rupiah-input]').forEach((input) => {
+            const formatRupiah = (value) => {
+                const digits = value.replace(/\D/g, '');
+
+                if (!digits) {
+                    return '';
+                }
+
+                return 'Rp ' + new Intl.NumberFormat('id-ID').format(Number(digits));
+            };
+
+            input.value = formatRupiah(input.value);
+
+            input.addEventListener('input', () => {
+                input.value = formatRupiah(input.value);
+                input.setSelectionRange(input.value.length, input.value.length);
+            });
+        });
+    </script>
 @endsection
