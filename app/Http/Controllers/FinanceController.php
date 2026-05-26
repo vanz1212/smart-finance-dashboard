@@ -17,6 +17,26 @@ class FinanceController extends BaseController
 
     public function analyze(Request $request)
     {
+        $moneyFields = [
+            'pemasukan',
+            'kebutuhan_pokok',
+            'transportasi',
+            'cicilan',
+            'gaya_hidup',
+            'tabungan',
+            'investasi',
+            'dana_darurat',
+            'target_tabungan',
+        ];
+
+        foreach ($moneyFields as $field) {
+            if ($request->filled($field)) {
+                $request->merge([
+                    $field => $this->normalizeRupiah($request->input($field)),
+                ]);
+            }
+        }
+
         $validated = $request->validate([
             'periode' => ['required', 'string', 'max:100'],
             'pemasukan' => ['required', 'numeric', 'min:0'],
@@ -100,6 +120,11 @@ class FinanceController extends BaseController
     private function ratio(float $value, float $base): float
     {
         return $base > 0 ? ($value / $base) * 100 : 0;
+    }
+
+    private function normalizeRupiah($value): string
+    {
+        return preg_replace('/[^0-9]/', '', (string) $value) ?: '0';
     }
 
     private function assessFinancialHealth(

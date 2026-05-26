@@ -8,6 +8,14 @@
             return 'Rp ' . number_format($value, 0, ',', '.');
         };
 
+        $formatInputRupiah = function ($value) use ($formatRupiah) {
+            if ($value === null || $value === '') {
+                return '';
+            }
+
+            return $formatRupiah(preg_replace('/[^0-9]/', '', (string) $value));
+        };
+
         $formatPercent = function ($value) {
             return number_format($value, 1, ',', '.') . '%';
         };
@@ -51,47 +59,47 @@
 
                     <label>
                         <span>Total pemasukan</span>
-                        <input type="number" name="pemasukan" value="{{ old('pemasukan', $result['income'] ?? '') }}" min="0" step="1000" placeholder="15000000" required>
+                        <input type="text" name="pemasukan" value="{{ $formatInputRupiah(old('pemasukan', $result['income'] ?? '')) }}" inputmode="numeric" autocomplete="off" data-rupiah-input placeholder="Rp 15.000.000" required>
                     </label>
 
                     <label>
                         <span>Kebutuhan pokok</span>
-                        <input type="number" name="kebutuhan_pokok" value="{{ old('kebutuhan_pokok', $result['expenses']['Kebutuhan pokok'] ?? '') }}" min="0" step="1000" placeholder="4500000" required>
+                        <input type="text" name="kebutuhan_pokok" value="{{ $formatInputRupiah(old('kebutuhan_pokok', $result['expenses']['Kebutuhan pokok'] ?? '')) }}" inputmode="numeric" autocomplete="off" data-rupiah-input placeholder="Rp 4.500.000" required>
                     </label>
 
                     <label>
                         <span>Transportasi</span>
-                        <input type="number" name="transportasi" value="{{ old('transportasi', $result['expenses']['Transportasi'] ?? '') }}" min="0" step="1000" placeholder="1000000" required>
+                        <input type="text" name="transportasi" value="{{ $formatInputRupiah(old('transportasi', $result['expenses']['Transportasi'] ?? '')) }}" inputmode="numeric" autocomplete="off" data-rupiah-input placeholder="Rp 1.000.000" required>
                     </label>
 
                     <label>
                         <span>Cicilan/utang</span>
-                        <input type="number" name="cicilan" value="{{ old('cicilan', $result['expenses']['Cicilan/utang'] ?? '') }}" min="0" step="1000" placeholder="2500000" required>
+                        <input type="text" name="cicilan" value="{{ $formatInputRupiah(old('cicilan', $result['expenses']['Cicilan/utang'] ?? '')) }}" inputmode="numeric" autocomplete="off" data-rupiah-input placeholder="Rp 2.500.000" required>
                     </label>
 
                     <label>
                         <span>Gaya hidup</span>
-                        <input type="number" name="gaya_hidup" value="{{ old('gaya_hidup', $result['expenses']['Gaya hidup'] ?? '') }}" min="0" step="1000" placeholder="1500000" required>
+                        <input type="text" name="gaya_hidup" value="{{ $formatInputRupiah(old('gaya_hidup', $result['expenses']['Gaya hidup'] ?? '')) }}" inputmode="numeric" autocomplete="off" data-rupiah-input placeholder="Rp 1.500.000" required>
                     </label>
 
                     <label>
                         <span>Tabungan</span>
-                        <input type="number" name="tabungan" value="{{ old('tabungan', $result['saving'] ?? '') }}" min="0" step="1000" placeholder="2000000" required>
+                        <input type="text" name="tabungan" value="{{ $formatInputRupiah(old('tabungan', $result['saving'] ?? '')) }}" inputmode="numeric" autocomplete="off" data-rupiah-input placeholder="Rp 2.000.000" required>
                     </label>
 
                     <label>
                         <span>Investasi</span>
-                        <input type="number" name="investasi" value="{{ old('investasi', $result['investment'] ?? '') }}" min="0" step="1000" placeholder="1000000" required>
+                        <input type="text" name="investasi" value="{{ $formatInputRupiah(old('investasi', $result['investment'] ?? '')) }}" inputmode="numeric" autocomplete="off" data-rupiah-input placeholder="Rp 1.000.000" required>
                     </label>
 
                     <label>
                         <span>Dana darurat saat ini</span>
-                        <input type="number" name="dana_darurat" value="{{ old('dana_darurat', $result['emergency_fund'] ?? '') }}" min="0" step="1000" placeholder="25000000" required>
+                        <input type="text" name="dana_darurat" value="{{ $formatInputRupiah(old('dana_darurat', $result['emergency_fund'] ?? '')) }}" inputmode="numeric" autocomplete="off" data-rupiah-input placeholder="Rp 25.000.000" required>
                     </label>
 
                     <label>
                         <span>Target tabungan</span>
-                        <input type="number" name="target_tabungan" value="{{ old('target_tabungan', $result['target_saving'] ?? '') }}" min="0" step="1000" placeholder="50000000">
+                        <input type="text" name="target_tabungan" value="{{ $formatInputRupiah(old('target_tabungan', $result['target_saving'] ?? '')) }}" inputmode="numeric" autocomplete="off" data-rupiah-input placeholder="Rp 50.000.000">
                     </label>
                 </div>
 
@@ -208,4 +216,25 @@
             </div>
         @endif
     </section>
+
+    <script>
+        document.querySelectorAll('[data-rupiah-input]').forEach((input) => {
+            const formatRupiah = (value) => {
+                const digits = value.replace(/\D/g, '');
+
+                if (!digits) {
+                    return '';
+                }
+
+                return 'Rp ' + new Intl.NumberFormat('id-ID').format(Number(digits));
+            };
+
+            input.value = formatRupiah(input.value);
+
+            input.addEventListener('input', () => {
+                input.value = formatRupiah(input.value);
+                input.setSelectionRange(input.value.length, input.value.length);
+            });
+        });
+    </script>
 @endsection
