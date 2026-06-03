@@ -257,11 +257,25 @@
             font-weight: 700;
         }
 
+        .quick-home,
+        .divider,
+        .google-button {
+            display: none;
+        }
+
         .auth-footer {
             margin: 26px 0 0;
             color: rgba(248, 250, 252, 0.68);
             text-align: center;
             font-size: 0.9rem;
+        }
+
+        .login-note {
+            margin: 0;
+            color: rgba(248, 250, 252, 0.68);
+            text-align: center;
+            font-size: 0.88rem;
+            line-height: 1.55;
         }
 
         .auth-alert {
@@ -287,7 +301,7 @@
     </style>
 
     <section class="auth-scene">
-        <a class="back-home" href="{{ route('home') }}">← Landing Page</a>
+        <a class="back-home" href="{{ route('home') }}">← Beranda</a>
 
         <div class="auth-card">
             <div class="auth-mark" aria-hidden="true"></div>
@@ -325,6 +339,8 @@
                 </div>
 
                 <button type="submit" class="login-submit">Log In</button>
+
+                <p class="login-note">Masuk menggunakan akun database: admin@smartfinance.test</p>
 
                 <a class="quick-home" href="{{ route('page.selector') }}">Masuk Ke Halaman Utama</a>
 
