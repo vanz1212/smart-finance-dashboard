@@ -3,310 +3,322 @@
 @section('title', 'Perpajakan - Smart Finance Dashboard')
 
 @section('content')
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
     @php
-        $formatRupiah = function ($value) {
-            return 'Rp ' . number_format($value, 0, ',', '.');
+        $formatRupiah = fn ($value) => 'Rp ' . number_format($value, 0, ',', '.');
+        $statusClass = match ($result['status_pajak'] ?? '') {
+            'Tidak kena pajak' => 'neutral',
+            'Pajak rendah' => 'success',
+            'Pajak normal' => 'warning',
+            'Pajak tinggi' => 'danger',
+            default => 'neutral',
         };
-
-        $formatInputRupiah = function ($value) use ($formatRupiah) {
-            if ($value === null || $value === '') {
-                return '';
-            }
-
-            return $formatRupiah(preg_replace('/[^0-9]/', '', (string) $value));
-        };
-
-        $statusClass = 'bg-success';
-        if (($result['status_pajak'] ?? '') === 'Tidak kena pajak') {
-            $statusClass = 'bg-secondary';
-        } elseif (($result['status_pajak'] ?? '') === 'Pajak normal') {
-            $statusClass = 'bg-primary';
-        } elseif (($result['status_pajak'] ?? '') === 'Pajak tinggi') {
-            $statusClass = 'bg-danger';
-        }
     @endphp
 
-    <section class="py-4" style="background: #eef5ff; min-height: 72vh;">
-        <div class="container-fluid px-0">
-            <div class="mb-4">
-                <span class="badge text-bg-primary mb-2">Smart Finance Dashboard</span>
-                <h1 class="h3 fw-bold text-primary mb-1">Perpajakan Orang Pribadi</h1>
-                <p class="text-secondary mb-0">Estimasi PPh tahunan memakai PTKP, PKP, pembulatan ribuan, dan tarif progresif Indonesia.</p>
+    <style>
+        .tax-workspace {
+            margin: -24px;
+            min-height: calc(100vh - 1px);
+            padding: 34px 24px 56px;
+            color: #f8fafc;
+            background:
+                linear-gradient(180deg, rgba(5, 12, 15, 0.76), rgba(5, 12, 15, 0.97)),
+                url('{{ asset('images/backgroundfinance.jpg') }}') center / cover fixed no-repeat;
+        }
+
+        .tax-inner { width: min(1180px, 100%); margin: 0 auto; }
+        .tax-topbar, .tax-hero { display: flex; justify-content: space-between; gap: 18px; align-items: center; }
+        .tax-topbar { margin-bottom: 34px; }
+        .tax-nav { display: flex; flex-wrap: wrap; gap: 10px; }
+        .tax-nav a { padding: 10px 14px; border: 1px solid rgba(255,255,255,.12); border-radius: 999px; color: rgba(248,250,252,.78); text-decoration: none; font-weight: 800; background: rgba(255,255,255,.05); }
+        .tax-nav a.is-active, .tax-nav a:hover { color: #052e2b; background: #f3c969; border-color: #f3c969; }
+        .tax-hero { align-items: flex-end; margin-bottom: 28px; }
+        .tax-kicker { color: #f3c969; font-size: .8rem; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
+        .tax-hero h1 { margin: 12px 0 0; font-size: clamp(2.2rem, 5vw, 4.8rem); line-height: .98; letter-spacing: 0; }
+        .tax-hero p { max-width: 720px; margin: 16px 0 0; color: rgba(248,250,252,.72); line-height: 1.7; }
+        .tax-badge { min-width: 144px; padding: 12px 16px; border-radius: 999px; color: #052e2b; text-align: center; font-weight: 900; background: #f3c969; }
+        .tax-badge.neutral { background: rgba(255,255,255,.16); color: #fff; }
+        .tax-badge.success { background: #14b8a6; color: #042f2e; }
+        .tax-badge.warning { background: #f3c969; color: #422006; }
+        .tax-badge.danger { background: #fb7185; color: #4c0519; }
+
+        .tax-grid { display: grid; grid-template-columns: minmax(320px,.92fr) minmax(380px,1.08fr); gap: 22px; align-items: start; }
+        .tax-panel { border: 1px solid rgba(255,255,255,.14); border-radius: 14px; background: linear-gradient(180deg, rgba(13,47,51,.78), rgba(6,24,32,.84)); box-shadow: 0 28px 80px rgba(0,0,0,.34); backdrop-filter: blur(16px); }
+        .tax-panel-inner { padding: 24px; }
+        .tax-panel h2 { margin: 0; font-size: 1.18rem; }
+        .tax-panel p { color: rgba(248,250,252,.66); line-height: 1.6; }
+        .tax-form { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 15px; }
+        .tax-form label { display: grid; gap: 8px; }
+        .tax-form label.full { grid-column: 1 / -1; }
+        .tax-form span { color: rgba(248,250,252,.72); font-size: .84rem; font-weight: 800; }
+        .tax-form input, .tax-form select { min-height: 46px; width: 100%; border: 1px solid rgba(255,255,255,.18); border-radius: 10px; padding: 10px 12px; background: rgba(255,255,255,.06); color: #fff; font: inherit; }
+        .tax-form select option { color: #111827; }
+        .tax-form input:focus, .tax-form select:focus { outline: 3px solid rgba(20,184,166,.18); border-color: #14b8a6; }
+        .tax-button { width: 100%; min-height: 50px; margin-top: 18px; border: 0; border-radius: 999px; background: #f3c969; color: #052e2b; cursor: pointer; font: inherit; font-weight: 900; }
+
+        .tax-metrics { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 14px; }
+        .tax-metric, .tax-note { padding: 16px; border: 1px solid rgba(255,255,255,.12); border-radius: 12px; background: rgba(255,255,255,.06); }
+        .tax-metric span { display: block; margin-bottom: 8px; color: rgba(248,250,252,.62); font-size: .82rem; font-weight: 800; }
+        .tax-metric strong { color: #fff; font-size: 1.08rem; }
+        .tax-table { width: 100%; border-collapse: collapse; margin-top: 22px; overflow: hidden; border-radius: 12px; }
+        .tax-table th, .tax-table td { padding: 12px; border-bottom: 1px solid rgba(255,255,255,.1); text-align: left; color: rgba(248,250,252,.78); }
+        .tax-table th { color: #fff; background: rgba(255,255,255,.06); }
+        .tax-table td:last-child, .tax-table th:last-child { text-align: right; }
+        .tax-reference { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 22px; margin-top: 22px; }
+
+        @media (max-width: 900px) { .tax-topbar, .tax-hero { align-items: flex-start; flex-direction: column; } .tax-grid, .tax-reference { grid-template-columns: 1fr; } }
+        @media (max-width: 620px) { .tax-workspace { margin: -24px; padding-inline: 14px; } .tax-form, .tax-metrics { grid-template-columns: 1fr; } }
+        /* Full-page refinement shared with standalone module pages. */
+        html,
+        body {
+            width: 100%;
+            min-height: 100%;
+            margin: 0;
+            overflow-x: hidden;
+            background:
+                radial-gradient(circle at 82% 0%, rgba(24, 191, 117, .16), transparent 34%),
+                linear-gradient(135deg, #06191b 0%, #071f22 48%, #091011 100%) !important;
+            color: #f8fafc;
+        }
+
+        body {
+            display: block;
+        }
+
+        body::before {
+            opacity: .16 !important;
+        }
+
+        .page-shell,
+        .container,
+        .dashboard-shell,
+        .tax-shell,
+        main {
+            width: 100% !important;
+            max-width: none !important;
+            margin: 0 !important;
+            box-sizing: border-box;
+        }
+
+        .page-shell,
+        .container,
+        .dashboard-shell,
+        .tax-shell {
+            padding-left: clamp(18px, 4vw, 56px) !important;
+            padding-right: clamp(18px, 4vw, 56px) !important;
+        }
+
+        header,
+        .topbar,
+        .navbar,
+        nav {
+            max-width: none !important;
+            width: 100% !important;
+            box-sizing: border-box;
+        }
+
+        .hero,
+        .hero-grid,
+        .content-grid,
+        .feature-grid,
+        .cards-grid,
+        .module-grid,
+        form {
+            width: 100% !important;
+            max-width: none !important;
+            box-sizing: border-box;
+        }
+
+        .hero h1,
+        h1 {
+            max-width: 100%;
+            font-size: clamp(42px, 8vw, 96px) !important;
+            line-height: .95 !important;
+            letter-spacing: -.06em;
+        }
+
+        .panel,
+        .card,
+        .feature-card,
+        .dataset-card,
+        .metric-card,
+        .hero-card,
+        .form-card,
+        .tax-card {
+            border: 1px solid rgba(148, 163, 184, .22) !important;
+            background: rgba(12, 34, 36, .88) !important;
+            box-shadow: none !important;
+            backdrop-filter: blur(12px);
+        }
+
+        input,
+        select,
+        textarea {
+            min-height: 48px;
+            border-radius: 14px !important;
+        }
+
+        .nav-links,
+        .menu,
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .nav-links a,
+        .menu a,
+        .tabs a,
+        .btn,
+        button,
+        [role="button"] {
+            white-space: normal;
+        }
+
+        table {
+            width: 100%;
+        }
+
+        .table-wrap,
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        @media (max-width: 900px) {
+            .hero,
+            .hero-grid,
+            .content-grid {
+                grid-template-columns: 1fr !important;
+            }
+
+            header,
+            .topbar,
+            .navbar {
+                align-items: flex-start !important;
+                gap: 14px !important;
+            }
+
+            .nav-links,
+            .menu,
+            .tabs {
+                justify-content: flex-start;
+            }
+        }
+
+        @media (max-width: 620px) {
+            .page-shell,
+            .container,
+            .dashboard-shell,
+            .tax-shell {
+                padding-left: 14px !important;
+                padding-right: 14px !important;
+            }
+
+            .hero h1,
+            h1 {
+                font-size: clamp(34px, 13vw, 56px) !important;
+            }
+        }
+    </style>
+
+    <main class="tax-workspace">
+        <div class="tax-inner">
+            <div class="tax-topbar">
+                <strong>SmartFinance.</strong>
+                <nav class="tax-nav">
+                    <a href="{{ route('page.selector') }}">Beranda</a>
+                    <a href="{{ route('finance.index') }}">Smart Finance</a>
+                    <a class="is-active" href="{{ route('perpajakan.index') }}">Perpajakan</a>
+                    <a href="{{ route('stata') }}">Stata</a>
+                    <a href="{{ route('login') }}">Login</a>
+                </nav>
             </div>
 
-            <div class="row g-4">
-                <div class="col-12 col-lg-5">
-                    <div class="card border-0 shadow-sm">
-                        <div class="card-header bg-primary text-white">
-                            <h2 class="h5 mb-0">Form Input Pajak</h2>
-                        </div>
-                        <div class="card-body p-4">
-                            @if ($errors->any())
-                                <div class="alert alert-danger">
-                                    <strong>Periksa kembali input pajak.</strong>
-                                </div>
-                            @endif
-
-                            <form action="{{ route('perpajakan.calculate') }}" method="POST">
-                                @csrf
-
-                                <div class="mb-3">
-                                    <label for="nama_wajib_pajak" class="form-label fw-semibold">Nama wajib pajak</label>
-                                    <input
-                                        type="text"
-                                        class="form-control @error('nama_wajib_pajak') is-invalid @enderror"
-                                        id="nama_wajib_pajak"
-                                        name="nama_wajib_pajak"
-                                        value="{{ old('nama_wajib_pajak', $result['nama_wajib_pajak'] ?? '') }}"
-                                        placeholder="Masukkan nama wajib pajak"
-                                        required
-                                    >
-                                    @error('nama_wajib_pajak')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="penghasilan_bulanan" class="form-label fw-semibold">Penghasilan bulanan</label>
-                                    <input
-                                        type="text"
-                                        class="form-control @error('penghasilan_bulanan') is-invalid @enderror"
-                                        id="penghasilan_bulanan"
-                                        name="penghasilan_bulanan"
-                                        value="{{ $formatInputRupiah(old('penghasilan_bulanan', $result['penghasilan_bulanan'] ?? '')) }}"
-                                        inputmode="numeric"
-                                        autocomplete="off"
-                                        data-rupiah-input
-                                        placeholder="Contoh: Rp 7.500.000"
-                                        required
-                                    >
-                                    @error('penghasilan_bulanan')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="pengeluaran_bulanan" class="form-label fw-semibold">Biaya/pengurang bulanan</label>
-                                    <input
-                                        type="text"
-                                        class="form-control @error('pengeluaran_bulanan') is-invalid @enderror"
-                                        id="pengeluaran_bulanan"
-                                        name="pengeluaran_bulanan"
-                                        value="{{ $formatInputRupiah(old('pengeluaran_bulanan', $result['pengurang_bulanan'] ?? '')) }}"
-                                        inputmode="numeric"
-                                        autocomplete="off"
-                                        data-rupiah-input
-                                        placeholder="Contoh: Rp 3.000.000"
-                                        required
-                                    >
-                                    <div class="form-text">Isi dengan pengurang yang diasumsikan boleh mengurangi penghasilan bruto.</div>
-                                    @error('pengeluaran_bulanan')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
-                                <div class="mb-4">
-                                    <label for="status_wajib_pajak" class="form-label fw-semibold">Status wajib pajak</label>
-                                    <select
-                                        class="form-select @error('status_wajib_pajak') is-invalid @enderror"
-                                        id="status_wajib_pajak"
-                                        name="status_wajib_pajak"
-                                        required
-                                    >
-                                        @php
-                                            $selectedStatus = old('status_wajib_pajak', $result['status_wajib_pajak'] ?? '');
-                                        @endphp
-                                        <option value="" disabled {{ $selectedStatus ? '' : 'selected' }}>Pilih status</option>
-                                        @foreach ($statuses as $status)
-                                            <option value="{{ $status }}" {{ $selectedStatus === $status ? 'selected' : '' }}>
-                                                {{ $status }} - PTKP {{ $formatRupiah($ptkpTable[$status]) }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    @error('status_wajib_pajak')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
-                                <button type="submit" class="btn btn-primary w-100 fw-semibold">
-                                    Hitung Pajak
-                                </button>
-                            </form>
-                        </div>
-                    </div>
+            <section class="tax-hero">
+                <div>
+                    <span class="tax-kicker">Tax Estimator</span>
+                    <h1>Perpajakan</h1>
+                    <p>Estimasi PPh orang pribadi dengan PTKP, PKP, pembulatan ribuan, dan tarif progresif Indonesia.</p>
                 </div>
+                @if ($result)
+                    <div class="tax-badge {{ $statusClass }}">{{ $result['status_pajak'] }}</div>
+                @endif
+            </section>
 
-                <div class="col-12 col-lg-7">
-                    <div class="card border-0 shadow-sm h-100">
-                        <div class="card-header bg-white border-0 pt-4 px-4">
-                            <h2 class="h5 fw-bold text-primary mb-1">Output Perhitungan PPh</h2>
-                            <p class="text-secondary mb-0">Hasil estimasi akan tampil setelah form dihitung.</p>
-                        </div>
-                        <div class="card-body p-4">
-                            @if ($result)
-                                <div class="d-flex flex-column flex-md-row justify-content-between gap-3 mb-4 p-3 rounded bg-primary-subtle">
-                                    <div>
-                                        <div class="text-secondary small">Nama wajib pajak</div>
-                                        <div class="h5 mb-0 text-primary fw-bold">{{ $result['nama_wajib_pajak'] }}</div>
-                                    </div>
-                                    <div class="text-md-end">
-                                        <div class="text-secondary small">Status pajak</div>
-                                        <span class="badge {{ $statusClass }} px-3 py-2">{{ $result['status_pajak'] }}</span>
-                                    </div>
-                                </div>
-
-                                <div class="row g-3">
-                                    <div class="col-12 col-md-6">
-                                        <div class="border rounded p-3 bg-white">
-                                            <div class="text-secondary small">Penghasilan tahunan</div>
-                                            <div class="fw-bold text-dark">{{ $formatRupiah($result['penghasilan_tahunan']) }}</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                        <div class="border rounded p-3 bg-white">
-                                            <div class="text-secondary small">Biaya/pengurang tahunan</div>
-                                            <div class="fw-bold text-dark">{{ $formatRupiah($result['pengurang_tahunan']) }}</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                        <div class="border rounded p-3 bg-white">
-                                            <div class="text-secondary small">Penghasilan neto</div>
-                                            <div class="fw-bold text-dark">{{ $formatRupiah($result['penghasilan_neto']) }}</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                        <div class="border rounded p-3 bg-white">
-                                            <div class="text-secondary small">PTKP {{ $result['status_wajib_pajak'] }}</div>
-                                            <div class="fw-bold text-dark">{{ $formatRupiah($result['ptkp']) }}</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                        <div class="border rounded p-3 bg-white">
-                                            <div class="text-secondary small">PKP setelah pembulatan</div>
-                                            <div class="fw-bold text-dark">{{ $formatRupiah($result['pkp']) }}</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                        <div class="border rounded p-3 bg-primary text-white">
-                                            <div class="small opacity-75">Estimasi PPh tahunan</div>
-                                            <div class="fw-bold">{{ $formatRupiah($result['estimasi_pajak']) }}</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                        <div class="border rounded p-3 bg-success text-white">
-                                            <div class="small opacity-75">Estimasi PPh bulanan</div>
-                                            <div class="fw-bold">{{ $formatRupiah($result['estimasi_pajak_bulanan']) }}</div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="table-responsive mt-4">
-                                    <table class="table table-sm align-middle mb-0">
-                                        <thead>
-                                            <tr>
-                                                <th>Lapisan PKP</th>
-                                                <th class="text-end">Tarif</th>
-                                                <th class="text-end">PKP lapisan</th>
-                                                <th class="text-end">Pajak</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @forelse ($result['breakdown'] as $row)
-                                                <tr>
-                                                    <td>{{ $row['label'] }}</td>
-                                                    <td class="text-end">{{ $row['rate'] * 100 }}%</td>
-                                                    <td class="text-end">{{ $formatRupiah($row['taxable_amount']) }}</td>
-                                                    <td class="text-end fw-semibold">{{ $formatRupiah($row['tax']) }}</td>
-                                                </tr>
-                                            @empty
-                                                <tr>
-                                                    <td colspan="4" class="text-center text-secondary">PKP nihil, tidak ada pajak terutang.</td>
-                                                </tr>
-                                            @endforelse
-                                        </tbody>
-                                    </table>
-                                </div>
-                            @else
-                                <div class="d-flex align-items-center justify-content-center text-center bg-light rounded p-5 h-100">
-                                    <div>
-                                        <div class="h5 text-primary fw-bold mb-2">Belum ada hasil perhitungan</div>
-                                        <p class="text-secondary mb-0">Isi form pajak, lalu klik tombol Hitung Pajak.</p>
-                                    </div>
-                                </div>
-                            @endif
-                        </div>
+            <section class="tax-grid">
+                <form class="tax-panel tax-panel-inner" action="{{ route('perpajakan.calculate') }}" method="POST">
+                    @csrf
+                    <h2>Input Pajak</h2>
+                    <p>Masukkan data bulanan untuk mendapatkan estimasi PPh tahunan.</p>
+                    <div class="tax-form">
+                        <label class="full"><span>Nama wajib pajak</span><input type="text" name="nama_wajib_pajak" value="{{ old('nama_wajib_pajak', $result['nama_wajib_pajak'] ?? '') }}" required></label>
+                        <label><span>Penghasilan bulanan</span><input type="number" name="penghasilan_bulanan" value="{{ old('penghasilan_bulanan', $result['penghasilan_bulanan'] ?? '') }}" min="0" step="1000" required></label>
+                        <label><span>Biaya/pengurang bulanan</span><input type="number" name="pengeluaran_bulanan" value="{{ old('pengeluaran_bulanan', $result['pengurang_bulanan'] ?? '') }}" min="0" step="1000" required></label>
+                        <label class="full">
+                            <span>Status wajib pajak</span>
+                            @php($selectedStatus = old('status_wajib_pajak', $result['status_wajib_pajak'] ?? ''))
+                            <select name="status_wajib_pajak" required>
+                                <option value="" disabled {{ $selectedStatus ? '' : 'selected' }}>Pilih status</option>
+                                @foreach ($statuses as $status)
+                                    <option value="{{ $status }}" {{ $selectedStatus === $status ? 'selected' : '' }}>{{ $status }} - PTKP {{ $formatRupiah($ptkpTable[$status]) }}</option>
+                                @endforeach
+                            </select>
+                        </label>
                     </div>
-                </div>
-            </div>
+                    <button class="tax-button" type="submit">Hitung Pajak</button>
+                </form>
 
-            <div class="row g-4 mt-1">
-                <div class="col-12 col-lg-6">
-                    <div class="card border-0 shadow-sm">
-                        <div class="card-header bg-white">
-                            <h2 class="h6 fw-bold mb-0 text-primary">PTKP</h2>
+                <div class="tax-panel tax-panel-inner">
+                    <h2>Output Perhitungan</h2>
+                    <p>{{ $result ? 'Ringkasan pajak untuk ' . $result['nama_wajib_pajak'] : 'Hasil estimasi akan tampil setelah form dihitung.' }}</p>
+                    @if ($result)
+                        <div class="tax-metrics">
+                            <div class="tax-metric"><span>Penghasilan neto</span><strong>{{ $formatRupiah($result['penghasilan_neto']) }}</strong></div>
+                            <div class="tax-metric"><span>PTKP {{ $result['status_wajib_pajak'] }}</span><strong>{{ $formatRupiah($result['ptkp']) }}</strong></div>
+                            <div class="tax-metric"><span>PKP dibulatkan</span><strong>{{ $formatRupiah($result['pkp']) }}</strong></div>
+                            <div class="tax-metric"><span>PPh tahunan</span><strong>{{ $formatRupiah($result['estimasi_pajak']) }}</strong></div>
+                            <div class="tax-metric"><span>PPh bulanan</span><strong>{{ $formatRupiah($result['estimasi_pajak_bulanan']) }}</strong></div>
+                            <div class="tax-metric"><span>Status</span><strong>{{ $result['status_pajak'] }}</strong></div>
                         </div>
-                        <div class="card-body p-0">
-                            <div class="table-responsive">
-                                <table class="table table-sm mb-0">
-                                    <tbody>
-                                        @foreach ($ptkpTable as $status => $amount)
-                                            <tr>
-                                                <td class="fw-semibold">{{ $status }}</td>
-                                                <td class="text-end">{{ $formatRupiah($amount) }}</td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="col-12 col-lg-6">
-                    <div class="card border-0 shadow-sm">
-                        <div class="card-header bg-white">
-                            <h2 class="h6 fw-bold mb-0 text-primary">Tarif Progresif PPh OP</h2>
-                        </div>
-                        <div class="card-body p-0">
-                            <div class="table-responsive">
-                                <table class="table table-sm mb-0">
-                                    <tbody>
-                                        @foreach ($taxBrackets as $bracket)
-                                            <tr>
-                                                <td>{{ $bracket['label'] }}</td>
-                                                <td class="text-end fw-semibold">{{ $bracket['rate'] * 100 }}%</td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+                        <table class="tax-table">
+                            <thead><tr><th>Lapisan PKP</th><th>Tarif</th><th>Pajak</th></tr></thead>
+                            <tbody>
+                                @forelse ($result['breakdown'] as $row)
+                                    <tr><td>{{ $row['label'] }}</td><td>{{ $row['rate'] * 100 }}%</td><td>{{ $formatRupiah($row['tax']) }}</td></tr>
+                                @empty
+                                    <tr><td colspan="3">PKP nihil, tidak ada pajak terutang.</td></tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    @else
+                        <div class="tax-note">Isi form pajak untuk melihat PKP, PTKP, dan rincian tarif progresif.</div>
+                    @endif
                 </div>
-            </div>
+            </section>
+
+            <section class="tax-reference">
+                <div class="tax-panel tax-panel-inner">
+                    <h2>Referensi PTKP</h2>
+                    <table class="tax-table">
+                        <tbody>
+                            @foreach ($ptkpTable as $status => $amount)
+                                <tr><td>{{ $status }}</td><td>{{ $formatRupiah($amount) }}</td></tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tax-panel tax-panel-inner">
+                    <h2>Tarif Progresif</h2>
+                    <table class="tax-table">
+                        <tbody>
+                            @foreach ($taxBrackets as $bracket)
+                                <tr><td>{{ $bracket['label'] }}</td><td>{{ $bracket['rate'] * 100 }}%</td></tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </section>
         </div>
-    </section>
-
-    <script>
-        document.querySelectorAll('[data-rupiah-input]').forEach((input) => {
-            const formatRupiah = (value) => {
-                const digits = value.replace(/\D/g, '');
-
-                if (!digits) {
-                    return '';
-                }
-
-                return 'Rp ' + new Intl.NumberFormat('id-ID').format(Number(digits));
-            };
-
-            input.value = formatRupiah(input.value);
-
-            input.addEventListener('input', () => {
-                input.value = formatRupiah(input.value);
-                input.setSelectionRange(input.value.length, input.value.length);
-            });
-        });
-    </script>
+    </main>
 @endsection
