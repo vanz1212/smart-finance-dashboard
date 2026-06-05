@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Login - Smart Finance Dashboard')
+@section('title', 'Sign Up - Smart Finance Dashboard')
 
 @section('content')
     <style>
@@ -47,7 +47,7 @@
         }
 
         .auth-card {
-            width: min(520px, 100%);
+            width: min(560px, 100%);
             position: relative;
             z-index: 1;
             padding: 34px 38px 30px;
@@ -106,7 +106,7 @@
         }
 
         .auth-card .subtitle {
-            max-width: 390px;
+            max-width: 420px;
             margin: 14px auto 28px;
             color: rgba(248, 250, 252, 0.72);
             text-align: center;
@@ -160,44 +160,11 @@
             color: rgba(248, 250, 252, 0.58);
         }
 
-        .password-toggle {
-            flex: 0 0 auto;
-            margin-right: 10px;
-            padding: 8px 10px;
-            border: 0;
-            background: transparent;
-            color: rgba(248, 250, 252, 0.72);
-            cursor: pointer;
-            font: inherit;
-            font-size: 0.82rem;
-        }
-
-        .form-options {
-            display: flex;
-            justify-content: space-between;
-            gap: 16px;
-            align-items: center;
-            color: rgba(248, 250, 252, 0.78);
-            font-size: 0.9rem;
-        }
-
-        .remember {
-            display: inline-flex;
-            gap: 9px;
-            align-items: center;
-        }
-
-        .remember input {
-            width: 16px;
-            height: 16px;
-            accent-color: #14b8a6;
-        }
-
-        .form-options a,
-        .auth-footer a {
-            color: #ffffff;
-            text-decoration: none;
-            font-weight: 700;
+        .form-note {
+            margin: -2px 0 0;
+            color: rgba(248, 250, 252, 0.62);
+            font-size: 0.84rem;
+            line-height: 1.5;
         }
 
         .login-submit {
@@ -213,56 +180,6 @@
             box-shadow: 0 18px 35px rgba(20, 184, 166, 0.14);
         }
 
-        .quick-home {
-            min-height: 50px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid rgba(243, 201, 105, 0.42);
-            border-radius: 999px;
-            background: rgba(243, 201, 105, 0.08);
-            color: #f3c969;
-            text-decoration: none;
-            font-weight: 800;
-        }
-
-        .quick-home:hover {
-            background: rgba(243, 201, 105, 0.15);
-            color: #ffffff;
-        }
-
-        .divider {
-            display: grid;
-            grid-template-columns: 1fr auto 1fr;
-            gap: 18px;
-            align-items: center;
-            margin: 8px 0;
-            color: rgba(248, 250, 252, 0.56);
-        }
-
-        .divider::before,
-        .divider::after {
-            content: "";
-            height: 1px;
-            background: rgba(255, 255, 255, 0.18);
-        }
-
-        .google-button {
-            min-height: 54px;
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            border-radius: 999px;
-            background: rgba(255, 255, 255, 0.04);
-            color: #ffffff;
-            font: inherit;
-            font-weight: 700;
-        }
-
-        .quick-home,
-        .divider,
-        .google-button {
-            display: none;
-        }
-
         .auth-footer {
             margin: 26px 0 0;
             color: rgba(248, 250, 252, 0.68);
@@ -270,12 +187,10 @@
             font-size: 0.9rem;
         }
 
-        .login-note {
-            margin: 0;
-            color: rgba(248, 250, 252, 0.68);
-            text-align: center;
-            font-size: 0.88rem;
-            line-height: 1.55;
+        .auth-footer a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 700;
         }
 
         .auth-alert {
@@ -292,11 +207,6 @@
                 padding: 28px 22px 24px;
                 border-radius: 20px;
             }
-
-            .form-options {
-                flex-direction: column;
-                align-items: flex-start;
-            }
         }
     </style>
 
@@ -305,58 +215,50 @@
 
         <div class="auth-card">
             <div class="auth-mark" aria-hidden="true"></div>
-            <h1>Welcome <span>back!</span></h1>
-            <p class="subtitle">Sign in to access your finance dashboard, tax tools, and personal analysis workspace.</p>
+            <h1>Buat <span>Akun</span></h1>
+            <p class="subtitle">Daftarkan akun baru untuk mengakses dashboard, Smart Finance, Perpajakan, dan Stata.</p>
 
-            <form class="modern-login-form" action="{{ route('login.process') }}" method="POST">
+            <form class="modern-login-form" action="{{ route('signup.process') }}" method="POST">
                 @csrf
 
                 @if ($errors->any())
-                    <div class="auth-alert">Email atau password belum benar.</div>
+                    <div class="auth-alert">{{ $errors->first() }}</div>
                 @endif
+
+                <label class="modern-field">
+                    <span>Nama Lengkap</span>
+                    <div class="input-shell">
+                        <input type="text" name="name" value="{{ old('name') }}" placeholder="Nama kamu" required autofocus>
+                    </div>
+                </label>
 
                 <label class="modern-field">
                     <span>Email</span>
                     <div class="input-shell">
-                        <input type="email" name="email" value="{{ old('email') }}" placeholder="Enter your email" required autofocus>
+                        <input type="email" name="email" value="{{ old('email') }}" placeholder="Enter your email" required>
                     </div>
                 </label>
 
                 <label class="modern-field">
                     <span>Password</span>
                     <div class="input-shell">
-                        <input id="passwordInput" type="password" name="password" placeholder="Enter your password" required>
-                        <button class="password-toggle" type="button" onclick="toggleLoginPassword()">Show</button>
+                        <input type="password" name="password" placeholder="Minimal 8 karakter" required>
                     </div>
                 </label>
 
-                <div class="form-options">
-                    <label class="remember">
-                        <input type="checkbox" name="remember" value="1" checked>
-                        <span>Remember me</span>
-                    </label>
-                    <a href="{{ route('login') }}">Forgot password?</a>
-                </div>
+                <label class="modern-field">
+                    <span>Konfirmasi Password</span>
+                    <div class="input-shell">
+                        <input type="password" name="password_confirmation" placeholder="Ulangi password" required>
+                    </div>
+                </label>
 
-                <button type="submit" class="login-submit">Log In</button>
+                <p class="form-note">Gunakan password minimal 8 karakter agar akun tersimpan aman di PostgreSQL.</p>
 
-                <p class="login-note">Masuk menggunakan akun database: admin@smartfinance.test</p>
-
-                <a class="quick-home" href="{{ route('page.selector') }}">Masuk Ke Halaman Utama</a>
-
-                <div class="divider">Or</div>
-
-                <button type="button" class="google-button">Sign In with Google</button>
+                <button type="submit" class="login-submit">Daftar Sekarang</button>
             </form>
 
-            <p class="auth-footer">Don't have an account? <a href="{{ route('signup') }}">Sign Up</a></p>
+            <p class="auth-footer">Sudah punya akun? <a href="{{ route('login') }}">Masuk di sini</a></p>
         </div>
     </section>
-
-    <script>
-        function toggleLoginPassword() {
-            const input = document.getElementById('passwordInput');
-            input.type = input.type === 'password' ? 'text' : 'password';
-        }
-    </script>
 @endsection

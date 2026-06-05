@@ -4,6 +4,7 @@
 
 @section('content')
     @php
+        $isLoggedIn = auth()->check();
         $formatRupiah = fn ($value) => 'Rp ' . number_format($value, 0, ',', '.');
         $ptkpTable = [
             'TK/0' => 54000000,
@@ -97,22 +98,17 @@
         .selector-title {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 12px;
             font-size: clamp(1.6rem, 4vw, 2.8rem);
             font-weight: 900;
             letter-spacing: 0.08em;
         }
 
-        .selector-title mark {
-            display: inline-grid;
-            place-items: center;
-            width: 42px;
-            height: 42px;
-            border-radius: 8px;
+        .selector-title .brand-mark {
+            width: 28px;
+            height: 28px;
+            border-radius: 7px;
             background: #14b86f;
-            color: #052e2b;
-            font: inherit;
-            letter-spacing: 0;
         }
 
         .case-link {
@@ -129,6 +125,30 @@
             justify-self: end;
             gap: 10px;
             align-items: center;
+        }
+
+        .head-actions form,
+        .side-footer form {
+            margin: 0;
+        }
+
+        .head-actions button,
+        .side-footer button {
+            padding: 10px 18px;
+            border: 2px solid rgba(255, 255, 255, 0.78);
+            border-radius: 999px;
+            background: transparent;
+            color: #ffffff;
+            cursor: pointer;
+            font: inherit;
+            font-weight: 900;
+        }
+
+        .head-actions button:hover,
+        .side-footer button:hover {
+            background: #f3c969;
+            border-color: #f3c969;
+            color: #052e2b;
         }
 
         .dashboard-frame {
@@ -197,8 +217,11 @@
             align-items: center;
             gap: 12px;
             margin-bottom: 28px;
+            color: #f8fafc;
+            font-size: 0.95rem;
             font-weight: 900;
             letter-spacing: 0.04em;
+            text-transform: uppercase;
         }
 
         .brand-mark {
@@ -782,10 +805,17 @@
     <main class="selector-shell">
         <header class="selector-head">
             <div class="selector-logo"><span>SF</span><span>UI</span></div>
-            <div class="selector-title"><mark>S</mark> SMART FINANCE</div>
+            <div class="selector-title"><span class="brand-mark" aria-hidden="true"></span> SMART FINANCE</div>
             <div class="head-actions">
                 <a class="case-link" href="{{ route('profile') }}">Profile</a>
-                <a class="case-link" href="{{ route('login') }}">Login</a>
+                @if ($isLoggedIn)
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <button type="submit">Logout</button>
+                    </form>
+                @else
+                    <a class="case-link" href="{{ route('login') }}">Login</a>
+                @endif
             </div>
         </header>
 
@@ -795,15 +825,17 @@
                     <div class="app-brand"><span class="brand-mark"></span> SMART FINANCE</div>
                     <nav class="side-menu" aria-label="Dashboard selector">
                         <button type="button" class="is-active" data-panel-target="dashboard">Dashboard</button>
-                        <button type="button" data-panel-target="finance">Smart Finance</button>
-                        <button type="button" data-panel-target="tax">Perpajakan</button>
-                        <button type="button" data-panel-target="stata">Stata</button>
-                        <button type="button" data-panel-target="home">Beranda Awal</button>
                     </nav>
                     <nav class="side-footer side-menu">
                         <a href="{{ route('profile') }}">Profile</a>
-                        <a href="{{ route('login') }}">Login</a>
-                        <a href="{{ route('home') }}">Home</a>
+                        @if ($isLoggedIn)
+                            <form action="{{ route('logout') }}" method="POST">
+                                @csrf
+                                <button type="submit">Logout</button>
+                            </form>
+                        @else
+                            <a href="{{ route('login') }}">Login</a>
+                        @endif
                     </nav>
                 </aside>
 
@@ -829,7 +861,7 @@
                             </a>
                             <a class="table-row" href="{{ route('stata') }}">
                                 <span>STA-03</span>
-                                <span><strong>Stata-like Analysis</strong> Korelasi, regresi linear, dan statistik deskriptif.</span>
+                                <span><strong>Stata</strong> Korelasi, regresi linear, dan statistik deskriptif.</span>
                                 <span>Economic Stats</span><span>3 modules</span><span>Research</span><span class="status-pill">DRAFT</span>
                             </a>
                         </div>
@@ -933,7 +965,7 @@
 
                     <div id="panel-stata" class="content-panel">
                         <div class="panel-toolbar">
-                            <h1>Stata-like Analysis</h1>
+                            <h1>Stata</h1>
                         </div>
                         <p class="panel-copy">Data contoh tetap tersedia: GDP, inflasi, pengangguran, dan investasi untuk preview statistik ekonomi.</p>
                         <div class="data-grid">

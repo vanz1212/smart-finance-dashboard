@@ -12,6 +12,8 @@ Route::get('/beranda', [PageController::class, 'landing'])->name('home');
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.process');
+Route::get('/signup', [AuthController::class, 'showSignup'])->name('signup');
+Route::post('/signup', [AuthController::class, 'register'])->name('signup.process');
 
 Route::middleware(Authenticate::class)->group(function () {
     Route::get('/landing', function () {

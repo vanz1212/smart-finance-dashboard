@@ -6,6 +6,13 @@
     @php
         $formatRupiah = fn ($value) => 'Rp ' . number_format($value, 0, ',', '.');
         $formatPercent = fn ($value) => number_format($value, 1, ',', '.') . '%';
+        $formatRupiahInput = function ($value) {
+            if ($value === null || $value === '') {
+                return '';
+            }
+
+            return number_format((float) preg_replace('/[^0-9]/', '', (string) $value), 0, ',', '.');
+        };
     @endphp
 
     <style>
@@ -159,6 +166,25 @@
             background: rgba(255, 255, 255, 0.06);
             color: #ffffff;
             font: inherit;
+        }
+
+        .money-field {
+            position: relative;
+        }
+
+        .money-prefix {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(248, 250, 252, 0.74);
+            font-size: 0.88rem;
+            font-weight: 800;
+            pointer-events: none;
+        }
+
+        .money-field input {
+            padding-left: 42px;
         }
 
         .finance-form-grid input:focus {
@@ -506,15 +532,15 @@
 
                     <div class="finance-form-grid">
                         <label><span>Periode</span><input type="text" name="periode" value="{{ old('periode', $result['periode'] ?? date('F Y')) }}" required></label>
-                        <label><span>Total pemasukan</span><input type="number" name="pemasukan" value="{{ old('pemasukan', $result['income'] ?? '') }}" min="0" step="1000" required></label>
-                        <label><span>Kebutuhan pokok</span><input type="number" name="kebutuhan_pokok" value="{{ old('kebutuhan_pokok', $result['expenses']['Kebutuhan pokok'] ?? '') }}" min="0" step="1000" required></label>
-                        <label><span>Transportasi</span><input type="number" name="transportasi" value="{{ old('transportasi', $result['expenses']['Transportasi'] ?? '') }}" min="0" step="1000" required></label>
-                        <label><span>Cicilan/utang</span><input type="number" name="cicilan" value="{{ old('cicilan', $result['expenses']['Cicilan/utang'] ?? '') }}" min="0" step="1000" required></label>
-                        <label><span>Gaya hidup</span><input type="number" name="gaya_hidup" value="{{ old('gaya_hidup', $result['expenses']['Gaya hidup'] ?? '') }}" min="0" step="1000" required></label>
-                        <label><span>Tabungan</span><input type="number" name="tabungan" value="{{ old('tabungan', $result['saving'] ?? '') }}" min="0" step="1000" required></label>
-                        <label><span>Investasi</span><input type="number" name="investasi" value="{{ old('investasi', $result['investment'] ?? '') }}" min="0" step="1000" required></label>
-                        <label><span>Dana darurat</span><input type="number" name="dana_darurat" value="{{ old('dana_darurat', $result['emergency_fund'] ?? '') }}" min="0" step="1000" required></label>
-                        <label><span>Target tabungan</span><input type="number" name="target_tabungan" value="{{ old('target_tabungan', $result['target_saving'] ?? '') }}" min="0" step="1000"></label>
+                        <label><span>Total pemasukan</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input name="pemasukan" value="{{ $formatRupiahInput(old('pemasukan', $result['income'] ?? '')) }}" inputmode="numeric" autocomplete="off" required></div></label>
+                        <label><span>Kebutuhan pokok</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input name="kebutuhan_pokok" value="{{ $formatRupiahInput(old('kebutuhan_pokok', $result['expenses']['Kebutuhan pokok'] ?? '')) }}" inputmode="numeric" autocomplete="off" required></div></label>
+                        <label><span>Transportasi</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input name="transportasi" value="{{ $formatRupiahInput(old('transportasi', $result['expenses']['Transportasi'] ?? '')) }}" inputmode="numeric" autocomplete="off" required></div></label>
+                        <label><span>Cicilan/utang</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input name="cicilan" value="{{ $formatRupiahInput(old('cicilan', $result['expenses']['Cicilan/utang'] ?? '')) }}" inputmode="numeric" autocomplete="off" required></div></label>
+                        <label><span>Gaya hidup</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input name="gaya_hidup" value="{{ $formatRupiahInput(old('gaya_hidup', $result['expenses']['Gaya hidup'] ?? '')) }}" inputmode="numeric" autocomplete="off" required></div></label>
+                        <label><span>Tabungan</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input name="tabungan" value="{{ $formatRupiahInput(old('tabungan', $result['saving'] ?? '')) }}" inputmode="numeric" autocomplete="off" required></div></label>
+                        <label><span>Investasi</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input name="investasi" value="{{ $formatRupiahInput(old('investasi', $result['investment'] ?? '')) }}" inputmode="numeric" autocomplete="off" required></div></label>
+                        <label><span>Dana darurat</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input name="dana_darurat" value="{{ $formatRupiahInput(old('dana_darurat', $result['emergency_fund'] ?? '')) }}" inputmode="numeric" autocomplete="off" required></div></label>
+                        <label><span>Target tabungan</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input name="target_tabungan" value="{{ $formatRupiahInput(old('target_tabungan', $result['target_saving'] ?? '')) }}" inputmode="numeric" autocomplete="off"></div></label>
                     </div>
 
                     <button class="workspace-button" type="submit">Hitung Analisa</button>
@@ -595,4 +621,37 @@
             @endif
         </div>
     </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var fields = document.querySelectorAll('[data-rupiah-input]');
+
+            function formatRupiah(value) {
+                var digits = String(value || '').replace(/[^0-9]/g, '');
+
+                if (!digits) {
+                    return '';
+                }
+
+                return digits.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+            }
+
+            function normalizeField(input) {
+                var digits = input.value.replace(/[^0-9]/g, '');
+                input.value = formatRupiah(digits);
+            }
+
+            fields.forEach(function (field) {
+                normalizeField(field);
+
+                field.addEventListener('input', function () {
+                    normalizeField(field);
+                });
+
+                field.form && field.form.addEventListener('submit', function () {
+                    field.value = field.value.replace(/[^0-9]/g, '');
+                });
+            });
+        });
+    </script>
 @endsection

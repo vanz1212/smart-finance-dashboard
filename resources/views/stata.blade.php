@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Stata-like Analysis - Smart Finance Dashboard')
+@section('title', 'Stata - Smart Finance Dashboard')
 
 @section('content')
     @php
@@ -493,7 +493,7 @@
             <section class="stata-hero">
                 <div class="stata-panel stata-panel-inner">
                     <span class="stata-kicker">Economic Analysis</span>
-                    <h1>Stata-like Analysis</h1>
+                    <h1>Stata</h1>
                     <p>Ruang analisis statistik untuk data ekonomi: korelasi, regresi linear, statistik deskriptif, dan interpretasi output yang mudah dibaca.</p>
                     <a class="stata-action" href="{{ route('page.selector') }}">Kembali ke Selector</a>
                 </div>
@@ -527,7 +527,7 @@
             <section class="stata-panel stata-panel-inner stata-data-panel">
                 <span class="stata-kicker">Dataset Preview</span>
                 <h2>Data Analisis Ekonomi</h2>
-                <p>Ringkasan data contoh tetap tersedia sebagai dasar pengembangan modul Stata-like: GDP, inflasi, pengangguran, dan investasi.</p>
+                <p>Ringkasan data contoh tetap tersedia sebagai dasar pengembangan modul Stata: GDP, inflasi, pengangguran, dan investasi.</p>
 
                 <div class="stata-data-grid">
                     <div class="stata-data-card"><span>Observasi</span><strong>5 tahun</strong></div>

@@ -23,7 +23,7 @@ class PageController extends BaseController
     }
 
     /**
-     * Halaman Stata-like analysis.
+     * Halaman Stata analysis.
      */
     public function stata()
     {

@@ -73,6 +73,25 @@
             color: #0f172a !important;
         }
 
+        .landing-logout {
+            margin: 0;
+        }
+
+        .landing-logout button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 42px;
+            padding: 0 20px;
+            border: 0;
+            border-radius: 999px;
+            background: #f3c969;
+            color: #052e2b;
+            cursor: pointer;
+            font: inherit;
+            font-weight: 800;
+        }
+
         .landing-hero {
             width: min(1120px, calc(100% - 40px));
             margin: 0 auto;
@@ -404,7 +423,15 @@
                 <a href="{{ route('home') }}">Home</a>
                 <a href="{{ route('perpajakan.index') }}">Tax</a>
                 <a href="{{ route('finance.index') }}">Analysis</a>
-                <a class="landing-login" href="{{ route('login') }}">Login</a>
+                @auth
+                    <a class="landing-login" href="{{ route('profile') }}">Profile</a>
+                    <form action="{{ route('logout') }}" method="POST" class="landing-logout">
+                        @csrf
+                        <button type="submit">Logout</button>
+                    </form>
+                @else
+                    <a class="landing-login" href="{{ route('login') }}">Login</a>
+                @endauth
             </div>
         </nav>
 
@@ -413,7 +440,14 @@
                 <span class="hero-kicker">Finance Intelligence</span>
                 <h1>Designing Financial <em>futures</em></h1>
                 <p>Kelola analisa keuangan, estimasi pajak, dan insight finansial dalam dashboard yang sederhana, fokus, dan siap dipakai.</p>
-                <a class="landing-cta" href="{{ route('login') }}"><span>→</span> Masuk Sekarang</a>
+                @auth
+                    <form action="{{ route('logout') }}" method="POST" class="landing-logout">
+                        @csrf
+                        <button type="submit" class="landing-cta"><span>→</span> Logout</button>
+                    </form>
+                @else
+                    <a class="landing-cta" href="{{ route('login') }}"><span>→</span> Login</a>
+                @endauth
             </div>
         </section>
 
@@ -425,7 +459,14 @@
         <section class="landing-services">
             <div class="section-title">
                 <h2>Tools that <em>are tailored</em></h2>
-                <a class="landing-cta" href="{{ route('login') }}"><span>→</span> Get Started</a>
+                @auth
+                    <form action="{{ route('logout') }}" method="POST" class="landing-logout">
+                        @csrf
+                        <button type="submit" class="landing-cta"><span>→</span> Logout</button>
+                    </form>
+                @else
+                    <a class="landing-cta" href="{{ route('login') }}"><span>→</span> Login</a>
+                @endauth
             </div>
 
             <div class="service-grid">
@@ -441,7 +482,7 @@
                 </article>
                 <article class="service-card">
                     <small>03</small>
-                    <h3>Stata-like</h3>
+                    <h3>Stata</h3>
                     <p>Ruang analisis statistik dan ekonomi untuk kebutuhan akademik.</p>
                 </article>
                 <article class="service-card">
