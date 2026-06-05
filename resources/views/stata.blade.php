@@ -3,6 +3,84 @@
 @section('title', 'Stata-like Analysis - Smart Finance Dashboard')
 
 @section('content')
+    @php
+        $stataCommandGroups = [
+            'Data dan File' => [
+                ['cmd' => 'use', 'desc' => 'Membuka file data Stata berekstensi .dta.', 'example' => 'use data_keuangan.dta, clear'],
+                ['cmd' => 'import excel', 'desc' => 'Mengambil data dari file Excel ke Stata.', 'example' => 'import excel "data.xlsx", firstrow clear'],
+                ['cmd' => 'import delimited', 'desc' => 'Mengambil data CSV, TSV, atau file teks berdelimiter.', 'example' => 'import delimited "data.csv", clear'],
+                ['cmd' => 'save', 'desc' => 'Menyimpan dataset aktif menjadi file .dta.', 'example' => 'save data_bersih.dta, replace'],
+                ['cmd' => 'describe', 'desc' => 'Menampilkan struktur dataset, nama variabel, tipe data, dan label.', 'example' => 'describe'],
+                ['cmd' => 'codebook', 'desc' => 'Memeriksa isi variabel, missing value, rentang nilai, dan label.', 'example' => 'codebook income expense'],
+                ['cmd' => 'list', 'desc' => 'Menampilkan observasi tertentu dalam bentuk tabel.', 'example' => 'list income expense in 1/10'],
+                ['cmd' => 'browse', 'desc' => 'Membuka data editor dalam mode lihat data.', 'example' => 'browse income expense saving'],
+            ],
+            'Membuat dan Mengubah Variabel' => [
+                ['cmd' => 'generate', 'desc' => 'Membuat variabel baru dari rumus atau nilai tertentu.', 'example' => 'generate saving_rate = saving / income'],
+                ['cmd' => 'replace', 'desc' => 'Mengubah nilai variabel yang sudah ada.', 'example' => 'replace saving_rate = 0 if saving_rate < 0'],
+                ['cmd' => 'egen', 'desc' => 'Membuat variabel baru dengan fungsi tambahan seperti mean grup atau total.', 'example' => 'bysort region: egen avg_income = mean(income)'],
+                ['cmd' => 'recode', 'desc' => 'Mengelompokkan ulang nilai variabel numerik.', 'example' => 'recode age (18/25=1) (26/40=2), gen(age_group)'],
+                ['cmd' => 'encode', 'desc' => 'Mengubah variabel string kategori menjadi numerik berlabel.', 'example' => 'encode province, gen(province_id)'],
+                ['cmd' => 'rename', 'desc' => 'Mengganti nama variabel.', 'example' => 'rename monthly_income income'],
+                ['cmd' => 'label variable', 'desc' => 'Memberi label deskriptif pada variabel.', 'example' => 'label variable income "Pendapatan bulanan"'],
+                ['cmd' => 'keep / drop', 'desc' => 'Memilih variabel atau observasi yang dipertahankan atau dihapus.', 'example' => 'keep income expense saving'],
+            ],
+            'Membersihkan dan Menyusun Data' => [
+                ['cmd' => 'sort', 'desc' => 'Mengurutkan data berdasarkan satu atau beberapa variabel.', 'example' => 'sort year province'],
+                ['cmd' => 'bysort', 'desc' => 'Menjalankan command per kelompok setelah data diurutkan.', 'example' => 'bysort province: summarize income'],
+                ['cmd' => 'duplicates', 'desc' => 'Mendeteksi atau menghapus data duplikat.', 'example' => 'duplicates report id year'],
+                ['cmd' => 'merge', 'desc' => 'Menggabungkan dataset berdasarkan key atau ID yang sama.', 'example' => 'merge 1:1 id using data_demografi.dta'],
+                ['cmd' => 'append', 'desc' => 'Menambahkan baris observasi dari dataset lain.', 'example' => 'append using data_2025.dta'],
+                ['cmd' => 'reshape', 'desc' => 'Mengubah format data wide ke long atau sebaliknya.', 'example' => 'reshape long income expense, i(id) j(year)'],
+                ['cmd' => 'collapse', 'desc' => 'Membuat dataset ringkasan berdasarkan statistik tertentu.', 'example' => 'collapse (mean) income expense, by(province)'],
+                ['cmd' => 'compress', 'desc' => 'Menghemat ukuran dataset dengan menyesuaikan tipe data.', 'example' => 'compress'],
+            ],
+            'Statistik Deskriptif dan Tabel' => [
+                ['cmd' => 'summarize', 'desc' => 'Menghasilkan mean, standar deviasi, minimum, maksimum, dan jumlah observasi.', 'example' => 'summarize income expense saving'],
+                ['cmd' => 'tabulate', 'desc' => 'Membuat tabel frekuensi satu atau dua variabel.', 'example' => 'tabulate education gender, row'],
+                ['cmd' => 'tabstat', 'desc' => 'Membuat tabel statistik ringkas yang lebih fleksibel.', 'example' => 'tabstat income, stat(mean sd min max) by(region)'],
+                ['cmd' => 'table', 'desc' => 'Membuat tabel modern untuk frekuensi, ringkasan, dan hasil command.', 'example' => 'table region, statistic(mean income) statistic(sd income)'],
+                ['cmd' => 'correlate', 'desc' => 'Menghitung korelasi antar variabel numerik.', 'example' => 'correlate gdp inflation unemployment'],
+                ['cmd' => 'pwcorr', 'desc' => 'Menghitung korelasi pairwise, sering dipakai dengan signifikansi.', 'example' => 'pwcorr income saving expense, sig'],
+            ],
+            'Grafik' => [
+                ['cmd' => 'histogram', 'desc' => 'Membuat histogram distribusi variabel numerik.', 'example' => 'histogram income, normal'],
+                ['cmd' => 'scatter', 'desc' => 'Membuat scatter plot dua variabel.', 'example' => 'scatter saving income'],
+                ['cmd' => 'twoway', 'desc' => 'Membuat grafik gabungan seperti scatter dan garis fitted.', 'example' => 'twoway (scatter saving income) (lfit saving income)'],
+                ['cmd' => 'graph bar', 'desc' => 'Membuat grafik batang berdasarkan kategori.', 'example' => 'graph bar income, over(region)'],
+                ['cmd' => 'graph box', 'desc' => 'Membuat box plot untuk melihat sebaran dan outlier.', 'example' => 'graph box income, over(region)'],
+            ],
+            'Regresi, Uji, dan Postestimation' => [
+                ['cmd' => 'regress', 'desc' => 'Menjalankan regresi linear OLS.', 'example' => 'regress saving income expense'],
+                ['cmd' => 'logit', 'desc' => 'Model regresi logistik untuk variabel dependen biner.', 'example' => 'logit default income debt_ratio'],
+                ['cmd' => 'probit', 'desc' => 'Model probit untuk outcome biner.', 'example' => 'probit default income debt_ratio'],
+                ['cmd' => 'poisson', 'desc' => 'Model regresi untuk data hitungan.', 'example' => 'poisson claims income age'],
+                ['cmd' => 'anova', 'desc' => 'Analisis varians untuk membandingkan rata-rata antar grup.', 'example' => 'anova income region education'],
+                ['cmd' => 'ttest', 'desc' => 'Uji beda rata-rata satu sampel, dua sampel, atau berpasangan.', 'example' => 'ttest income, by(gender)'],
+                ['cmd' => 'swilk', 'desc' => 'Uji normalitas Shapiro-Wilk.', 'example' => 'swilk income'],
+                ['cmd' => 'test', 'desc' => 'Uji hipotesis linear setelah estimasi model.', 'example' => 'test income = expense'],
+                ['cmd' => 'margins', 'desc' => 'Menghitung prediksi, marginal means, atau marginal effects setelah model.', 'example' => 'margins, dydx(income)'],
+                ['cmd' => 'predict', 'desc' => 'Membuat nilai prediksi atau residual setelah estimasi.', 'example' => 'predict yhat, xb'],
+            ],
+            'Panel dan Time Series' => [
+                ['cmd' => 'xtset', 'desc' => 'Mendeklarasikan struktur data panel.', 'example' => 'xtset firm_id year'],
+                ['cmd' => 'xtreg', 'desc' => 'Regresi data panel fixed effects atau random effects.', 'example' => 'xtreg profit investment inflation, fe'],
+                ['cmd' => 'hausman', 'desc' => 'Membandingkan estimator fixed effects dan random effects.', 'example' => 'hausman fixed random'],
+                ['cmd' => 'tsset', 'desc' => 'Mendeklarasikan struktur data time series.', 'example' => 'tsset year'],
+                ['cmd' => 'arima', 'desc' => 'Model ARIMA untuk analisis deret waktu.', 'example' => 'arima inflation, arima(1,1,1)'],
+                ['cmd' => 'dfuller', 'desc' => 'Augmented Dickey-Fuller test untuk uji unit root.', 'example' => 'dfuller inflation, lags(1)'],
+            ],
+            'Workflow dan Output' => [
+                ['cmd' => 'log using', 'desc' => 'Merekam output sesi Stata ke file log.', 'example' => 'log using hasil_analisis.log, replace'],
+                ['cmd' => 'do', 'desc' => 'Menjalankan file do-file berisi kumpulan command.', 'example' => 'do analisis_keuangan.do'],
+                ['cmd' => 'set more off', 'desc' => 'Mencegah output berhenti per halaman saat script berjalan.', 'example' => 'set more off'],
+                ['cmd' => 'estimates store', 'desc' => 'Menyimpan hasil estimasi model untuk dibandingkan.', 'example' => 'estimates store model1'],
+                ['cmd' => 'estimates table', 'desc' => 'Menampilkan beberapa hasil estimasi dalam satu tabel.', 'example' => 'estimates table model1 model2, stats(N r2)'],
+                ['cmd' => 'help', 'desc' => 'Membuka dokumentasi command dari dalam Stata.', 'example' => 'help regress'],
+            ],
+        ];
+    @endphp
+
     <style>
         .stata-workspace {
             margin: -24px;
@@ -129,9 +207,117 @@
             background: rgba(255,255,255,.06);
         }
 
+        .stata-command-reference {
+            margin-top: 22px;
+        }
+
+        .stata-section-heading {
+            display: flex;
+            justify-content: space-between;
+            gap: 18px;
+            align-items: end;
+            margin-bottom: 18px;
+        }
+
+        .stata-section-heading h2 {
+            margin: 8px 0 0;
+            font-size: clamp(1.6rem, 4vw, 2.7rem);
+            line-height: 1;
+            letter-spacing: 0;
+        }
+
+        .stata-section-heading p {
+            max-width: 520px;
+            margin: 0;
+            color: rgba(248,250,252,.68);
+            line-height: 1.65;
+        }
+
+        .stata-command-groups {
+            display: grid;
+            gap: 18px;
+        }
+
+        .stata-command-group {
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,.14);
+            border-radius: 14px;
+            background: rgba(255,255,255,.055);
+        }
+
+        .stata-command-group h3 {
+            margin: 0 0 16px;
+            color: #f3c969;
+            font-size: 1.12rem;
+        }
+
+        .stata-command-list {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .stata-command-item {
+            display: grid;
+            gap: 10px;
+            padding: 15px;
+            border: 1px solid rgba(255,255,255,.12);
+            border-radius: 12px;
+            background: rgba(5, 12, 15, .34);
+        }
+
+        .stata-command-item code {
+            width: fit-content;
+            padding: 6px 9px;
+            border-radius: 8px;
+            background: rgba(20, 184, 166, .14);
+            color: #5eead4;
+            font-family: Consolas, 'Courier New', monospace;
+            font-weight: 900;
+        }
+
+        .stata-command-item p {
+            margin: 0;
+            color: rgba(248,250,252,.7);
+            line-height: 1.55;
+        }
+
+        .stata-command-item pre {
+            margin: 0;
+            overflow-x: auto;
+            padding: 11px 12px;
+            border-radius: 8px;
+            background: rgba(0,0,0,.36);
+            color: #f8fafc;
+            font-family: Consolas, 'Courier New', monospace;
+            font-size: .88rem;
+            line-height: 1.55;
+        }
+
+        .stata-source-note {
+            margin-top: 16px;
+            padding: 14px 16px;
+            border: 1px solid rgba(20, 184, 166, .32);
+            border-radius: 12px;
+            background: rgba(20, 184, 166, .08);
+            color: rgba(248,250,252,.72);
+            line-height: 1.65;
+        }
+
+        .stata-source-note a {
+            color: #f3c969;
+            font-weight: 900;
+            text-decoration: none;
+        }
+
+        .stata-source-note a:hover {
+            text-decoration: underline;
+        }
+
         @media (max-width: 900px) {
             .stata-topbar { align-items: flex-start; flex-direction: column; }
-            .stata-hero, .feature-grid, .stata-data-grid { grid-template-columns: 1fr; }
+            .stata-hero, .feature-grid, .stata-data-grid, .stata-command-list { grid-template-columns: 1fr; }
+            .stata-section-heading { align-items: flex-start; flex-direction: column; }
         }
 
         @media (max-width: 620px) {
@@ -367,6 +553,41 @@
                         <tr><td>Investasi</td><td>5</td><td>273</td><td>250</td><td>300</td></tr>
                     </tbody>
                 </table>
+            </section>
+
+            <section class="stata-panel stata-panel-inner stata-command-reference">
+                <div class="stata-section-heading">
+                    <div>
+                        <span class="stata-kicker">Command Library</span>
+                        <h2>Command Stata Umum</h2>
+                    </div>
+                    <p>Daftar ini merangkum command yang paling sering dipakai dalam workflow Stata: impor data, cleaning, statistik deskriptif, grafik, regresi, panel, time series, dan output.</p>
+                </div>
+
+                <div class="stata-command-groups">
+                    @foreach ($stataCommandGroups as $groupName => $commands)
+                        <article class="stata-command-group">
+                            <h3>{{ $groupName }}</h3>
+
+                            <div class="stata-command-list">
+                                @foreach ($commands as $command)
+                                    <div class="stata-command-item">
+                                        <code>{{ $command['cmd'] }}</code>
+                                        <p>{{ $command['desc'] }}</p>
+                                        <pre>. {{ $command['example'] }}</pre>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </article>
+                    @endforeach
+                </div>
+
+                <div class="stata-source-note">
+                    Referensi disusun dari dokumentasi resmi Stata seperti
+                    <a href="https://www.stata.com/bookstore/base-reference-manual/" target="_blank" rel="noopener">Base Reference Manual</a>
+                    dan
+                    <a href="https://www.stata.com/bookstore/data-management-reference-manual/" target="_blank" rel="noopener">Data Management Reference Manual</a>.
+                </div>
             </section>
 
             <section class="stata-console">
