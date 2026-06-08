@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@smartfinance.test',
         ], [
             'name' => 'Admin Smart Finance',
+            'username' => 'admin_smartfinance',
             'password' => Hash::make('password'),
             'email_verified_at' => now(),
         ]);

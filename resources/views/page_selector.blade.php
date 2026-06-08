@@ -852,7 +852,7 @@
                             <a class="table-row" href="{{ route('finance.index') }}">
                                 <span>SFD-01</span>
                                 <span><strong>Smart Finance</strong> Analisa arus kas, rasio tabungan, cicilan, dan dana darurat.</span>
-                                <span>Financial Analysis</span><span>6 tools</span><span>Core dashboard</span><span class="status-pill">ACTIVE</span>
+                                <span>Financial Analysis</span><span>6 tools</span><span>Core dashboard</span><span class="status-pill">READY</span>
                             </a>
                             <a class="table-row" href="{{ route('perpajakan.index') }}">
                                 <span>TAX-02</span>
@@ -862,13 +862,13 @@
                             <a class="table-row" href="{{ route('stata') }}">
                                 <span>STA-03</span>
                                 <span><strong>Stata</strong> Korelasi, regresi linear, dan statistik deskriptif.</span>
-                                <span>Economic Stats</span><span>3 modules</span><span>Research</span><span class="status-pill">DRAFT</span>
+                                <span>Economic Stats</span><span>3 modules</span><span>Research</span><span class="status-pill">READY</span>
                             </a>
                         </div>
 
                         <div class="quick-stats">
                             <div class="quick-card"><span>Total Halaman</span><strong>3</strong></div>
-                            <div class="quick-card"><span>Dashboard Aktif</span><strong>2</strong></div>
+                            <div class="quick-card"><span>Dashboard Ready</span><strong>3</strong></div>
                             <div class="quick-card"><span>Analisis Statistik</span><strong>1</strong></div>
                         </div>
                     </div>

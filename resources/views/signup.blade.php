@@ -233,6 +233,13 @@
                 </label>
 
                 <label class="modern-field">
+                    <span>Username</span>
+                    <div class="input-shell">
+                        <input type="text" name="username" value="{{ old('username') }}" placeholder="username_kamu" required>
+                    </div>
+                </label>
+
+                <label class="modern-field">
                     <span>Email</span>
                     <div class="input-shell">
                         <input type="email" name="email" value="{{ old('email') }}" placeholder="Enter your email" required>

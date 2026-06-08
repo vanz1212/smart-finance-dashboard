@@ -259,8 +259,12 @@
 
         .service-grid {
             display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
-            gap: 18px;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 20px;
+            width: min(100%, 980px);
+            margin: 0 auto;
+            justify-content: center;
+            align-items: stretch;
         }
 
         .service-card {
@@ -301,6 +305,55 @@
             margin: 0;
             color: rgba(248, 250, 252, 0.66);
             line-height: 1.65;
+        }
+
+        .company-card {
+            width: min(100%, 980px);
+            margin: 24px auto 0;
+            padding: 28px 30px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 8px;
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.82), rgba(7, 27, 32, 0.92));
+            box-shadow: 0 22px 60px rgba(0, 0, 0, 0.18);
+        }
+
+        .company-card h3 {
+            margin: 0 0 10px;
+            font-size: 1.35rem;
+            line-height: 1.1;
+        }
+
+        .company-card > p {
+            margin: 0 0 22px;
+            max-width: 760px;
+            color: rgba(248, 250, 252, 0.72);
+            line-height: 1.7;
+        }
+
+        .company-info {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px 22px;
+        }
+
+        .company-item {
+            padding-top: 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .company-item span {
+            display: block;
+            margin-bottom: 6px;
+            color: rgba(248, 250, 252, 0.46);
+            font-size: 0.92rem;
+            font-weight: 700;
+        }
+
+        .company-item strong {
+            color: #ffffff;
+            font-size: 1rem;
+            line-height: 1.5;
+            font-weight: 800;
         }
 
         @keyframes frameRise {
@@ -413,6 +466,10 @@
             .service-grid {
                 grid-template-columns: 1fr;
             }
+
+            .company-info {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 
@@ -420,18 +477,10 @@
         <nav class="landing-nav">
             <a class="landing-brand" href="{{ route('home') }}">SmartFinance.</a>
             <div class="landing-links">
-                <a href="{{ route('home') }}">Home</a>
-                <a href="{{ route('perpajakan.index') }}">Tax</a>
-                <a href="{{ route('finance.index') }}">Analysis</a>
                 @auth
                     <a class="landing-login" href="{{ route('profile') }}">Profile</a>
-                    <form action="{{ route('logout') }}" method="POST" class="landing-logout">
-                        @csrf
-                        <button type="submit">Logout</button>
-                    </form>
-                @else
-                    <a class="landing-login" href="{{ route('login') }}">Login</a>
                 @endauth
+                <a class="landing-login" href="{{ route('login') }}">Login</a>
             </div>
         </nav>
 
@@ -440,18 +489,11 @@
                 <span class="hero-kicker">Finance Intelligence</span>
                 <h1>Designing Financial <em>futures</em></h1>
                 <p>Kelola analisa keuangan, estimasi pajak, dan insight finansial dalam dashboard yang sederhana, fokus, dan siap dipakai.</p>
-                @auth
-                    <form action="{{ route('logout') }}" method="POST" class="landing-logout">
-                        @csrf
-                        <button type="submit" class="landing-cta"><span>→</span> Logout</button>
-                    </form>
-                @else
-                    <a class="landing-cta" href="{{ route('login') }}"><span>→</span> Login</a>
-                @endauth
+                <a class="landing-cta" href="#about"><span>→</span> Pelajari lebih lanjut tentang kami</a>
             </div>
         </section>
 
-        <section class="landing-about">
+        <section id="about" class="landing-about">
             <small>About SmartFinance</small>
             <p>SmartFinance membantu membaca kondisi keuangan dengan lebih cepat: arus kas, rasio tabungan, utang, dana darurat, dan pajak dalam satu ekosistem.</p>
         </section>
@@ -459,37 +501,55 @@
         <section class="landing-services">
             <div class="section-title">
                 <h2>Tools that <em>are tailored</em></h2>
-                @auth
-                    <form action="{{ route('logout') }}" method="POST" class="landing-logout">
-                        @csrf
-                        <button type="submit" class="landing-cta"><span>→</span> Logout</button>
-                    </form>
-                @else
-                    <a class="landing-cta" href="{{ route('login') }}"><span>→</span> Login</a>
-                @endauth
             </div>
 
             <div class="service-grid">
                 <article class="service-card">
                     <small>01</small>
                     <h3>Analisa Keuangan</h3>
-                    <p>Hitung rasio pengeluaran, tabungan, cicilan, dan dana darurat.</p>
+                    <p>Hitung rasio pengeluaran, tabungan, cicilan, dan dana darurat. Cocok untuk memantau arus kas bulanan dan melihat posisi keuangan secara cepat.</p>
                 </article>
                 <article class="service-card">
                     <small>02</small>
                     <h3>Perpajakan</h3>
-                    <p>Estimasi PPh orang pribadi memakai PTKP dan tarif progresif.</p>
+                    <p>Estimasi PPh orang pribadi memakai PTKP dan tarif progresif. Sertakan skenario penghasilan agar hasil pajak lebih mudah dibandingkan.</p>
                 </article>
                 <article class="service-card">
                     <small>03</small>
                     <h3>Stata</h3>
-                    <p>Ruang analisis statistik dan ekonomi untuk kebutuhan akademik.</p>
+                    <p>Ruang analisis statistik dan ekonomi untuk kebutuhan akademik. Mendukung alur belajar, eksplorasi data, dan interpretasi hasil analisis.</p>
                 </article>
-                <article class="service-card">
-                    <small>04</small>
-                    <h3>Dashboard</h3>
-                    <p>Tampilan ringkas untuk membaca performa finansial dengan cepat.</p>
-                </article>
+            </div>
+
+            <div class="company-card">
+                <h3>Informasi Perusahaan</h3>
+                <p>Smart Finance Analytics Dashboard adalah platform untuk membantu analisa keuangan, perpajakan, dan statistik dalam satu tempat.</p>
+                <div class="company-info">
+                    <div class="company-item">
+                        <span>Nama Perusahaan</span>
+                        <strong>Smart Finance Analytics</strong>
+                    </div>
+                    <div class="company-item">
+                        <span>Telepon</span>
+                        <strong>+62 812-3456-7890</strong>
+                    </div>
+                    <div class="company-item">
+                        <span>Email</span>
+                        <strong>support@smartfinance.id</strong>
+                    </div>
+                    <div class="company-item">
+                        <span>Alamat</span>
+                        <strong>Jl. Finansial No. 12, Jakarta, Indonesia</strong>
+                    </div>
+                    <div class="company-item">
+                        <span>Jam Operasional</span>
+                        <strong>Senin - Jumat, 09.00 - 17.00 WIB</strong>
+                    </div>
+                    <div class="company-item">
+                        <span>Website</span>
+                        <strong>smartfinance.local</strong>
+                    </div>
+                </div>
             </div>
         </section>
     </main>

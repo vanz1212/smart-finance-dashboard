@@ -65,6 +65,36 @@
             line-height: 1.7;
         }
 
+        .profile-info {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+            margin-top: 24px;
+        }
+
+        .profile-info-item {
+            padding: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .profile-info-item small {
+            display: block;
+            margin-bottom: 8px;
+            color: rgba(248, 250, 252, 0.48);
+            font-weight: 900;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .profile-info-item strong {
+            color: #ffffff;
+            font-size: 1.05rem;
+            line-height: 1.4;
+            word-break: break-word;
+        }
+
         .profile-actions {
             display: flex;
             flex-wrap: wrap;
@@ -94,6 +124,12 @@
             border-color: #14b86f;
             color: #052e2b;
         }
+
+        @media (max-width: 640px) {
+            .profile-info {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 
     <main class="profile-page">
@@ -101,7 +137,25 @@
             <span>User Profile</span>
             @if ($isLoggedIn)
                 <h1>Profil Aktif</h1>
-                <p>Kamu sedang login sebagai <strong>{{ $email }}</strong>. Gunakan halaman utama untuk membuka Smart Finance, Perpajakan, atau Stata.</p>
+                <p>Informasi akun yang sedang login. Gunakan halaman utama untuk membuka Smart Finance, Perpajakan, atau Stata.</p>
+                <div class="profile-info">
+                    <div class="profile-info-item">
+                        <small>Nama Lengkap</small>
+                        <strong>{{ $user->name }}</strong>
+                    </div>
+                    <div class="profile-info-item">
+                        <small>Username</small>
+                        <strong>{{ $user->username ?? '-' }}</strong>
+                    </div>
+                    <div class="profile-info-item">
+                        <small>Email</small>
+                        <strong>{{ $user->email }}</strong>
+                    </div>
+                    <div class="profile-info-item">
+                        <small>Bergabung Sejak</small>
+                        <strong>{{ optional($user->created_at)->format('d M Y') ?? '-' }}</strong>
+                    </div>
+                </div>
                 <div class="profile-actions">
                     <a class="primary" href="{{ route('page.selector') }}">Ke Halaman Utama</a>
                     <form action="{{ route('logout') }}" method="POST">

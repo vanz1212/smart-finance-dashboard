@@ -43,12 +43,14 @@ class AuthController extends BaseController
     {
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
+            'username' => ['required', 'string', 'max:60', 'alpha_dash', 'unique:users,username'],
             'email' => ['required', 'email', 'max:255', 'unique:users,email'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
 
         $user = User::create([
             'name' => $validated['name'],
+            'username' => $validated['username'],
             'email' => $validated['email'],
             'password' => $validated['password'],
         ]);
@@ -73,7 +75,7 @@ class AuthController extends BaseController
     {
         return view('profile', [
             'isLoggedIn' => Auth::check(),
-            'email' => optional(Auth::user())->email,
+            'user' => Auth::user(),
         ]);
     }
 }
