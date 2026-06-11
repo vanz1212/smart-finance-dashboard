@@ -25,7 +25,7 @@ Route::middleware(Authenticate::class)->group(function () {
 
     Route::get('/dashboard/user', function () {
         return view('page_selector');
-    })->middleware('role:user')->name('dashboard.user');
+    })->middleware('role:user,admin')->name('dashboard.user');
 
     Route::get('/dashboard/admin', [AdminUserController::class, 'index'])
         ->middleware('role:admin')
@@ -47,6 +47,10 @@ Route::middleware(Authenticate::class)->group(function () {
         ->middleware('role:admin')
         ->name('admin.users.update');
 
+    Route::patch('/dashboard/admin/users/{user}/role', [AdminUserController::class, 'updateRole'])
+        ->middleware('role:admin')
+        ->name('admin.users.role');
+
     Route::delete('/dashboard/admin/users/{user}', [AdminUserController::class, 'destroy'])
         ->middleware('role:admin')
         ->name('admin.users.destroy');
@@ -61,9 +65,15 @@ Route::middleware(Authenticate::class)->group(function () {
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/profile', [AuthController::class, 'profile'])->name('profile');
-    Route::get('/smart-finance', [FinanceController::class, 'index'])->name('finance.index');
+    Route::get('/smart-finance', [FinanceController::class, 'index'])
+        ->middleware('activity:page_open,smart_finance,Smart Finance')
+        ->name('finance.index');
     Route::post('/smart-finance', [FinanceController::class, 'analyze'])->name('finance.analyze');
-    Route::get('/stata', [PageController::class, 'stata'])->name('stata');
-    Route::get('/perpajakan', [TaxController::class, 'index'])->name('perpajakan.index');
+    Route::get('/stata', [PageController::class, 'stata'])
+        ->middleware('activity:page_open,stata,Stata')
+        ->name('stata');
+    Route::get('/perpajakan', [TaxController::class, 'index'])
+        ->middleware('activity:page_open,perpajakan,Perpajakan')
+        ->name('perpajakan.index');
     Route::post('/perpajakan', [TaxController::class, 'calculate'])->name('perpajakan.calculate');
 });

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ActivityLog;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
@@ -17,6 +18,11 @@ class AdminUserController extends BaseController
                 ->orderBy('role', 'desc')
                 ->orderBy('name')
                 ->paginate(12),
+            'activityLogs' => ActivityLog::query()
+                ->with('user')
+                ->latest()
+                ->limit(15)
+                ->get(),
         ]);
     }
 
@@ -64,6 +70,23 @@ class AdminUserController extends BaseController
         return redirect()
             ->route('admin.users.show', $user)
             ->with('status', 'Profil user berhasil diperbarui.');
+    }
+
+    public function updateRole(Request $request, User $user)
+    {
+        $validated = $request->validate([
+            'role' => ['required', Rule::in(['admin', 'user'])],
+        ]);
+
+        if ($request->user()->is($user) && $validated['role'] !== 'admin') {
+            return back()->withErrors(['role' => 'Role akun sendiri tidak boleh diubah dari admin.']);
+        }
+
+        $user->update([
+            'role' => $validated['role'],
+        ]);
+
+        return back()->with('status', 'Role user berhasil diperbarui.');
     }
 
     public function destroy(Request $request, User $user)

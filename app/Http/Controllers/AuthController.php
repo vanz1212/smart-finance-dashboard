@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\ActivityLog;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Auth;
@@ -36,6 +37,15 @@ class AuthController extends BaseController
 
         $request->session()->regenerate();
 
+        ActivityLog::create([
+            'user_id' => Auth::id(),
+            'action' => 'login',
+            'page_label' => 'Login',
+            'route_name' => 'login.process',
+            'ip_address' => $request->ip(),
+            'user_agent' => substr((string) $request->userAgent(), 0, 2000),
+        ]);
+
         return redirect()->route('dashboard');
     }
 
@@ -59,11 +69,29 @@ class AuthController extends BaseController
         Auth::login($user);
         $request->session()->regenerate();
 
+        ActivityLog::create([
+            'user_id' => $user->id,
+            'action' => 'signup',
+            'page_label' => 'Signup',
+            'route_name' => 'signup.process',
+            'ip_address' => $request->ip(),
+            'user_agent' => substr((string) $request->userAgent(), 0, 2000),
+        ]);
+
         return redirect()->route('dashboard');
     }
 
     public function logout(Request $request)
     {
+        ActivityLog::create([
+            'user_id' => Auth::id(),
+            'action' => 'logout',
+            'page_label' => 'Logout',
+            'route_name' => 'logout',
+            'ip_address' => $request->ip(),
+            'user_agent' => substr((string) $request->userAgent(), 0, 2000),
+        ]);
+
         Auth::logout();
 
         $request->session()->invalidate();

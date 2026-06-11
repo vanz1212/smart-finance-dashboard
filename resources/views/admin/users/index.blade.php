@@ -73,16 +73,19 @@
         }
 
         .admin-actions a {
-            min-height: 44px;
+            min-height: 48px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 0 18px;
+            padding: 0 24px;
             border-radius: 999px;
             border: 1px solid rgba(255, 255, 255, 0.16);
             color: #ffffff;
             text-decoration: none;
             font-weight: 900;
+            line-height: 1;
+            text-align: center;
+            white-space: nowrap;
             background: rgba(255, 255, 255, 0.06);
         }
 
@@ -152,6 +155,9 @@
             font-size: 0.82rem;
             font-weight: 900;
             letter-spacing: 0.04em;
+            line-height: 1;
+            text-align: center;
+            white-space: nowrap;
             text-transform: uppercase;
         }
 
@@ -170,19 +176,26 @@
             gap: 10px;
             flex-wrap: wrap;
             justify-content: flex-end;
+            align-items: center;
         }
 
         .row-actions a,
         .row-actions button {
-            min-height: 38px;
-            padding: 0 14px;
+            min-height: 42px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 18px;
             border-radius: 999px;
             border: 1px solid rgba(255, 255, 255, 0.16);
             background: rgba(255, 255, 255, 0.06);
             color: #ffffff;
             text-decoration: none;
             font: inherit;
-            font-weight: 800;
+            font-weight: 900;
+            line-height: 1;
+            text-align: center;
+            white-space: nowrap;
             cursor: pointer;
         }
 
@@ -196,12 +209,100 @@
             border-color: rgba(239, 68, 68, 0.32);
         }
 
+        .role-form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .role-form select,
+        .role-form button {
+            min-height: 42px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            background: rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+            font: inherit;
+            font-weight: 900;
+            line-height: 1;
+            white-space: nowrap;
+        }
+
+        .role-form select {
+            min-width: 124px;
+            padding: 0 38px 0 18px;
+        }
+
+        .role-form button {
+            padding: 0 22px;
+            cursor: pointer;
+            background: rgba(20, 184, 111, 0.16);
+            border-color: rgba(20, 184, 111, 0.36);
+        }
+
         .admin-footer {
             margin-top: 18px;
         }
 
         .pagination-wrap {
             margin-top: 18px;
+        }
+
+        .log-section {
+            margin-top: 28px;
+            padding: 22px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .log-section h2 {
+            margin: 0 0 8px;
+            font-size: 1.35rem;
+        }
+
+        .log-section p {
+            margin: 0 0 18px;
+            color: rgba(248, 250, 252, 0.68);
+            line-height: 1.6;
+        }
+
+        .log-table {
+            width: 100%;
+            border-collapse: collapse;
+            overflow: hidden;
+        }
+
+        .log-table th,
+        .log-table td {
+            padding: 14px 12px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            vertical-align: top;
+            text-align: left;
+        }
+
+        .log-table th {
+            color: rgba(248, 250, 252, 0.68);
+            font-size: 0.86rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            border-top: 0;
+        }
+
+        .log-table td {
+            color: #ffffff;
+        }
+
+        .log-table small {
+            display: block;
+            color: rgba(248, 250, 252, 0.62);
+            margin-top: 4px;
         }
 
         .empty-state {
@@ -234,12 +335,19 @@
                 </div>
                 <div class="admin-actions">
                     <a class="primary" href="{{ route('dashboard') }}">Kembali ke Dashboard</a>
+                    <a href="{{ route('dashboard.user') }}">Akses Halaman User</a>
                     <a href="{{ route('profile') }}">Profile Saya</a>
                 </div>
             </div>
 
             @if (session('status'))
                 <div class="flash">{{ session('status') }}</div>
+            @endif
+
+            @if ($errors->any())
+                <div class="flash" style="background:rgba(239,68,68,.14);border-color:rgba(239,68,68,.32);color:#ffe4e6;">
+                    {{ $errors->first() }}
+                </div>
             @endif
 
             <div class="user-table">
@@ -265,6 +373,15 @@
                             <span class="role-badge {{ $user->role === 'admin' ? 'role-admin' : 'role-user' }}">
                                 {{ ucfirst($user->role) }}
                             </span>
+                            <form class="role-form" action="{{ route('admin.users.role', $user) }}" method="POST">
+                                @csrf
+                                @method('PATCH')
+                                <select name="role" aria-label="Ubah role {{ $user->name }}">
+                                    <option value="user" @selected($user->role === 'user')>User</option>
+                                    <option value="admin" @selected($user->role === 'admin')>Admin</option>
+                                </select>
+                                <button type="submit">Simpan Role</button>
+                            </form>
                         </div>
                         <div>
                             <strong>{{ optional($user->created_at)->format('d M Y') }}</strong>
@@ -292,6 +409,43 @@
             <div class="pagination-wrap">
                 {{ $users->links() }}
             </div>
+
+            <section class="log-section">
+                <h2>Activity Log</h2>
+                <p>Riwayat login, logout, dan halaman utama yang dibuka user.</p>
+
+                <table class="log-table">
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Aksi</th>
+                            <th>Halaman</th>
+                            <th>Tanggal</th>
+                            <th>Waktu</th>
+                            <th>IP</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($activityLogs as $log)
+                            <tr>
+                                <td>
+                                    <strong>{{ $log->user?->name ?? 'Guest' }}</strong>
+                                    <small>{{ $log->user?->username ?? '-' }}</small>
+                                </td>
+                                <td>{{ strtoupper($log->action) }}</td>
+                                <td>{{ $log->page_label ?? $log->page_key ?? '-' }}</td>
+                                <td>{{ $log->created_at?->format('d M Y') }}</td>
+                                <td>{{ $log->created_at?->format('H:i:s') }}</td>
+                                <td>{{ $log->ip_address ?? '-' }}</td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="6" class="empty-state">Belum ada activity log.</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </section>
         </section>
     </main>
 @endsection

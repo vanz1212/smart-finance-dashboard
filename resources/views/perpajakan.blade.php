@@ -225,13 +225,6 @@
         <div class="tax-inner">
             <div class="tax-topbar">
                 <strong>SmartFinance.</strong>
-                <nav class="tax-nav">
-                    <a href="{{ route('page.selector') }}">Beranda</a>
-                    <a href="{{ route('finance.index') }}">Smart Finance</a>
-                    <a class="is-active" href="{{ route('perpajakan.index') }}">Perpajakan</a>
-                    <a href="{{ route('stata') }}">Stata</a>
-                    <a href="{{ route('login') }}">Login</a>
-                </nav>
             </div>
 
             <section class="tax-hero">
