@@ -36,7 +36,7 @@ class AuthController extends BaseController
 
         $request->session()->regenerate();
 
-        return redirect()->route('page.selector');
+        return redirect()->route('dashboard');
     }
 
     public function register(Request $request)
@@ -51,6 +51,7 @@ class AuthController extends BaseController
         $user = User::create([
             'name' => $validated['name'],
             'username' => $validated['username'],
+            'role' => 'user',
             'email' => $validated['email'],
             'password' => $validated['password'],
         ]);
@@ -58,7 +59,7 @@ class AuthController extends BaseController
         Auth::login($user);
         $request->session()->regenerate();
 
-        return redirect()->route('page.selector');
+        return redirect()->route('dashboard');
     }
 
     public function logout(Request $request)

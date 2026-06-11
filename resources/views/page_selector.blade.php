@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Dashboard Selector - Smart Finance')
+@section('title', 'User Dashboard - Smart Finance')
 
 @section('content')
     @php
@@ -842,7 +842,7 @@
                 <section class="selector-content">
                     <div id="panel-dashboard" class="content-panel is-active">
                         <div class="panel-toolbar">
-                            <h1>Dashboard Selector</h1>
+                            <h1>User Dashboard</h1>
                         </div>
 
                         <div class="module-table">

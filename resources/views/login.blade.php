@@ -342,7 +342,7 @@
 
                 <p class="login-note">Masuk menggunakan akun database: admin@smartfinance.test</p>
 
-                <a class="quick-home" href="{{ route('page.selector') }}">Masuk Ke Halaman Utama</a>
+                <a class="quick-home" href="{{ route('dashboard') }}">Masuk Ke Halaman Utama</a>
 
                 <div class="divider">Or</div>
 
