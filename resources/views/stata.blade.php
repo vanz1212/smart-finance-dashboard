@@ -211,6 +211,93 @@
             margin-top: 22px;
         }
 
+        .stata-tutorial {
+            margin-top: 22px;
+        }
+
+        .tutorial-intro {
+            max-width: 760px;
+            margin: 12px 0 24px;
+            color: rgba(248,250,252,.72);
+            line-height: 1.7;
+        }
+
+        .tutorial-steps {
+            display: grid;
+            gap: 14px;
+        }
+
+        .tutorial-step {
+            display: grid;
+            grid-template-columns: 48px minmax(0, 1fr);
+            gap: 16px;
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,.13);
+            border-radius: 14px;
+            background: rgba(255,255,255,.045);
+        }
+
+        .tutorial-number {
+            width: 48px;
+            height: 48px;
+            display: grid;
+            place-items: center;
+            border-radius: 8px;
+            background: #f3c969;
+            color: #052e2b;
+            font-weight: 900;
+        }
+
+        .tutorial-content h3 {
+            margin: 2px 0 8px;
+            color: #ffffff;
+            font-size: 1.12rem;
+        }
+
+        .tutorial-content p {
+            margin: 0;
+            color: rgba(248,250,252,.7);
+            line-height: 1.65;
+        }
+
+        .tutorial-code {
+            margin: 14px 0 0;
+            overflow-x: auto;
+            padding: 14px 16px;
+            border-radius: 10px;
+            background: rgba(0,0,0,.42);
+            color: #f8fafc;
+            font-family: Consolas, 'Courier New', monospace;
+            font-size: .9rem;
+            line-height: 1.65;
+            white-space: pre;
+        }
+
+        .tutorial-tip {
+            margin-top: 12px;
+            padding: 11px 13px;
+            border-left: 3px solid #14b8a6;
+            background: rgba(20,184,166,.08);
+            color: rgba(248,250,252,.74);
+            line-height: 1.6;
+        }
+
+        .tutorial-checklist {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        .tutorial-checklist div {
+            padding: 14px;
+            border: 1px solid rgba(20,184,166,.26);
+            border-radius: 10px;
+            background: rgba(20,184,166,.07);
+            color: rgba(248,250,252,.78);
+            line-height: 1.55;
+        }
+
         .stata-section-heading {
             display: flex;
             justify-content: space-between;
@@ -316,12 +403,13 @@
 
         @media (max-width: 900px) {
             .stata-topbar { align-items: flex-start; flex-direction: column; }
-            .stata-hero, .feature-grid, .stata-data-grid, .stata-command-list { grid-template-columns: 1fr; }
+            .stata-hero, .feature-grid, .stata-data-grid, .stata-command-list, .tutorial-checklist { grid-template-columns: 1fr; }
             .stata-section-heading { align-items: flex-start; flex-direction: column; }
         }
 
         @media (max-width: 620px) {
             .stata-workspace { margin: -24px; padding-inline: 14px; }
+            .tutorial-step { grid-template-columns: 1fr; }
         }
         /* Full-page refinement: keep the standalone Stata page aligned with the main selector UI. */
         html,
@@ -553,6 +641,113 @@
                         <tr><td>Investasi</td><td>5</td><td>273</td><td>250</td><td>300</td></tr>
                     </tbody>
                 </table>
+            </section>
+
+            <section class="stata-panel stata-panel-inner stata-tutorial">
+                <span class="stata-kicker">Tutorial Pemula</span>
+                <h2>Belajar Stata dari Awal</h2>
+                <p class="tutorial-intro">Ikuti langkah berikut secara berurutan melalui Command Window Stata. Contoh ini memakai data ekonomi dengan variabel tahun, GDP, inflasi, pengangguran, dan investasi.</p>
+
+                <div class="tutorial-steps">
+                    <article class="tutorial-step">
+                        <div class="tutorial-number">01</div>
+                        <div class="tutorial-content">
+                            <h3>Tentukan folder kerja</h3>
+                            <p>Atur folder tempat dataset dan hasil analisis disimpan. Gunakan tanda kutip jika alamat folder mengandung spasi.</p>
+                            <pre class="tutorial-code">. cd "D:\Data Penelitian"
+. pwd
+. dir</pre>
+                            <div class="tutorial-tip"><strong>Hasil yang diharapkan:</strong> <code>pwd</code> menampilkan folder aktif dan <code>dir</code> menampilkan daftar file di dalamnya.</div>
+                        </div>
+                    </article>
+
+                    <article class="tutorial-step">
+                        <div class="tutorial-number">02</div>
+                        <div class="tutorial-content">
+                            <h3>Buka atau impor dataset</h3>
+                            <p>Gunakan <code>use</code> untuk file Stata dan <code>import excel</code> untuk file Excel. Opsi <code>clear</code> membersihkan data yang sedang terbuka.</p>
+                            <pre class="tutorial-code">. use "data_ekonomi.dta", clear
+
+atau
+
+. import excel "data_ekonomi.xlsx", firstrow clear</pre>
+                            <div class="tutorial-tip"><strong>Catatan:</strong> <code>firstrow</code> menjadikan baris pertama Excel sebagai nama variabel.</div>
+                        </div>
+                    </article>
+
+                    <article class="tutorial-step">
+                        <div class="tutorial-number">03</div>
+                        <div class="tutorial-content">
+                            <h3>Kenali struktur dan kualitas data</h3>
+                            <p>Periksa nama variabel, tipe data, contoh observasi, nilai yang hilang, dan kemungkinan data ganda sebelum analisis.</p>
+                            <pre class="tutorial-code">. describe
+. list in 1/10
+. codebook gdp inflasi pengangguran investasi
+. misstable summarize
+. duplicates report tahun</pre>
+                            <div class="tutorial-tip"><strong>Periksa:</strong> variabel angka jangan terbaca sebagai teks, nilai kosong harus dikenali, dan variabel tahun sebaiknya tidak memiliki duplikasi yang tidak disengaja.</div>
+                        </div>
+                    </article>
+
+                    <article class="tutorial-step">
+                        <div class="tutorial-number">04</div>
+                        <div class="tutorial-content">
+                            <h3>Bersihkan dan siapkan variabel</h3>
+                            <p>Ubah tipe variabel bila diperlukan, beri label yang jelas, dan buat variabel turunan untuk kebutuhan analisis.</p>
+                            <pre class="tutorial-code">. destring gdp inflasi investasi, replace
+. label variable gdp "Produk Domestik Bruto"
+. label variable inflasi "Inflasi tahunan (%)"
+. generate pertumbuhan_investasi = 100 * (investasi - investasi[_n-1]) / investasi[_n-1]</pre>
+                            <div class="tutorial-tip"><strong>Tip:</strong> jalankan <code>summarize pertumbuhan_investasi</code> setelah membuat variabel baru untuk memastikan hasilnya masuk akal.</div>
+                        </div>
+                    </article>
+
+                    <article class="tutorial-step">
+                        <div class="tutorial-number">05</div>
+                        <div class="tutorial-content">
+                            <h3>Lakukan analisis deskriptif dan korelasi</h3>
+                            <p>Mulai dari ringkasan data sebelum membangun model. Mean menunjukkan nilai rata-rata, sedangkan standard deviation menunjukkan penyebaran data.</p>
+                            <pre class="tutorial-code">. summarize gdp inflasi pengangguran investasi, detail
+. tabstat gdp inflasi pengangguran investasi, statistics(n mean sd min max)
+. pwcorr gdp inflasi pengangguran investasi, sig obs</pre>
+                            <div class="tutorial-tip"><strong>Membaca korelasi:</strong> nilai mendekati 1 berarti hubungan positif kuat, mendekati -1 berarti hubungan negatif kuat, dan mendekati 0 berarti hubungan linear lemah.</div>
+                        </div>
+                    </article>
+
+                    <article class="tutorial-step">
+                        <div class="tutorial-number">06</div>
+                        <div class="tutorial-content">
+                            <h3>Jalankan regresi linear</h3>
+                            <p>Contoh berikut menguji pengaruh investasi, inflasi, dan pengangguran terhadap GDP. Opsi <code>robust</code> menghasilkan standard error yang lebih tahan terhadap heteroskedastisitas.</p>
+                            <pre class="tutorial-code">. regress gdp investasi inflasi pengangguran, robust
+. estat vif
+. predict gdp_prediksi
+. predict residual, residuals</pre>
+                            <div class="tutorial-tip"><strong>Membaca output:</strong> lihat tanda dan nilai koefisien, <code>P&gt;|t|</code> untuk signifikansi, <code>R-squared</code> untuk kemampuan model menjelaskan variasi GDP, dan VIF untuk memeriksa multikolinearitas.</div>
+                        </div>
+                    </article>
+
+                    <article class="tutorial-step">
+                        <div class="tutorial-number">07</div>
+                        <div class="tutorial-content">
+                            <h3>Buat grafik dan simpan pekerjaan</h3>
+                            <p>Visualisasikan hubungan variabel, simpan dataset yang sudah dibersihkan, dan rekam output agar analisis dapat ditinjau kembali.</p>
+                            <pre class="tutorial-code">. twoway (scatter gdp investasi) (lfit gdp investasi)
+. graph export "grafik_gdp_investasi.png", replace
+. save "data_ekonomi_bersih.dta", replace
+. log using "hasil_analisis.log", replace
+. regress gdp investasi inflasi pengangguran, robust
+. log close</pre>
+                            <div class="tutorial-tip"><strong>Praktik baik:</strong> simpan perintah dalam Do-file agar seluruh analisis dapat dijalankan ulang dan diperiksa langkah demi langkah.</div>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="tutorial-checklist">
+                    <div><strong>Sebelum analisis</strong><br>Periksa tipe data, missing value, duplikasi, dan satuan variabel.</div>
+                    <div><strong>Saat analisis</strong><br>Mulai dari statistik deskriptif, lalu korelasi, grafik, dan model regresi.</div>
+                    <div><strong>Setelah analisis</strong><br>Simpan Do-file, dataset bersih, grafik, log output, dan interpretasi hasil.</div>
+                </div>
             </section>
 
             <section class="stata-panel stata-panel-inner stata-command-reference">
