@@ -384,8 +384,8 @@
                             </form>
                         </div>
                         <div>
-                            <strong>{{ optional($user->created_at)->format('d M Y') }}</strong>
-                            <span>{{ optional($user->created_at)->format('H:i') }}</span>
+                            <strong>{{ optional($user->created_at)->timezone('Asia/Jakarta')->format('d M Y') }}</strong>
+                            <span>{{ optional($user->created_at)->timezone('Asia/Jakarta')->format('H:i') }} WIB</span>
                         </div>
                         <div class="row-actions">
                             <a href="{{ route('admin.users.show', $user) }}">Lihat Profil</a>
@@ -434,8 +434,8 @@
                                 </td>
                                 <td>{{ strtoupper($log->action) }}</td>
                                 <td>{{ $log->page_label ?? $log->page_key ?? '-' }}</td>
-                                <td>{{ $log->created_at?->format('d M Y') }}</td>
-                                <td>{{ $log->created_at?->format('H:i:s') }}</td>
+                                <td>{{ $log->created_at?->timezone('Asia/Jakarta')->format('d M Y') }}</td>
+                                <td>{{ $log->created_at?->timezone('Asia/Jakarta')->format('H:i:s') }} WIB</td>
                                 <td>{{ $log->ip_address ?? '-' }}</td>
                             </tr>
                         @empty

@@ -796,8 +796,70 @@
             }
 
             .side-footer {
+                flex: 0 0 auto !important;
                 margin-top: auto;
                 padding-bottom: max(0px, env(safe-area-inset-bottom));
+            }
+        }
+
+        .side-footer {
+            flex: 0 0 auto !important;
+            margin-top: auto !important;
+            align-content: end;
+        }
+
+        .side-footer form {
+            width: 100%;
+        }
+
+        .side-footer a,
+        .side-footer button {
+            width: 100%;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 0 14px;
+            border: 0;
+            border-radius: 8px;
+            background: transparent;
+            color: rgba(248, 250, 252, 0.72);
+            font: inherit;
+            font-weight: 900;
+            line-height: 1;
+            text-align: left;
+            text-decoration: none;
+        }
+
+        .side-footer a:hover,
+        .side-footer button:hover {
+            background: rgba(20, 184, 111, 0.18);
+            color: #ffffff;
+            box-shadow: inset 3px 0 0 #14b86f;
+        }
+
+        .selector-head {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+        }
+
+        .selector-logo {
+            justify-self: start;
+        }
+
+        .selector-title {
+            justify-self: center;
+        }
+
+        @media (max-width: 980px) {
+            .selector-head {
+                grid-template-columns: 1fr;
+                justify-items: center;
+            }
+
+            .selector-logo,
+            .selector-title {
+                justify-self: center;
             }
         }
     </style>
@@ -806,17 +868,6 @@
         <header class="selector-head">
             <div class="selector-logo"><span>SF</span><span>UI</span></div>
             <div class="selector-title"><span class="brand-mark" aria-hidden="true"></span> SMART FINANCE</div>
-            <div class="head-actions">
-                <a class="case-link" href="{{ route('profile') }}">Profile</a>
-                @if ($isLoggedIn)
-                    <form action="{{ route('logout') }}" method="POST">
-                        @csrf
-                        <button type="submit">Logout</button>
-                    </form>
-                @else
-                    <a class="case-link" href="{{ route('login') }}">Login</a>
-                @endif
-            </div>
         </header>
 
         <section class="dashboard-frame">

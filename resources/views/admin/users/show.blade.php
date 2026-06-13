@@ -146,11 +146,11 @@
                 </div>
                 <div class="profile-item">
                     <small>Bergabung Sejak</small>
-                    <strong>{{ optional($user->created_at)->format('d M Y H:i') }}</strong>
+                    <strong>{{ optional($user->created_at)->timezone('Asia/Jakarta')->format('d M Y H:i') }} WIB</strong>
                 </div>
                 <div class="profile-item">
                     <small>Update Terakhir</small>
-                    <strong>{{ optional($user->updated_at)->format('d M Y H:i') }}</strong>
+                    <strong>{{ optional($user->updated_at)->timezone('Asia/Jakarta')->format('d M Y H:i') }} WIB</strong>
                 </div>
             </div>
 
