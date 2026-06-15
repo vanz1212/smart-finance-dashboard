@@ -307,53 +307,76 @@
             line-height: 1.65;
         }
 
-        .company-card {
-            width: min(100%, 980px);
-            margin: 24px auto 0;
-            padding: 28px 30px;
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 8px;
-            background: linear-gradient(180deg, rgba(15, 23, 42, 0.82), rgba(7, 27, 32, 0.92));
-            box-shadow: 0 22px 60px rgba(0, 0, 0, 0.18);
+        .company-footer {
+            width: 100%;
+            margin-top: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(20, 25, 27, 0.96);
         }
 
-        .company-card h3 {
-            margin: 0 0 10px;
-            font-size: 1.35rem;
-            line-height: 1.1;
+        .company-footer-main {
+            display: grid;
+            grid-template-columns: 1.15fr 1fr 0.8fr;
+            gap: 54px;
+            width: min(1160px, calc(100% - 40px));
+            margin: 0 auto;
+            padding: 48px 0 44px;
         }
 
-        .company-card > p {
-            margin: 0 0 22px;
-            max-width: 760px;
-            color: rgba(248, 250, 252, 0.72);
-            line-height: 1.7;
+        .company-footer-column h3 {
+            margin: 0 0 16px;
+            color: #ffffff;
+            font-size: 1.55rem;
+            line-height: 1.15;
         }
 
-        .company-info {
+        .company-footer-column p {
+            margin: 0;
+            color: rgba(248, 250, 252, 0.76);
+            line-height: 1.65;
+        }
+
+        .company-contact-list {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 14px 22px;
+            gap: 12px 22px;
         }
 
-        .company-item {
-            padding-top: 14px;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .company-item span {
-            display: block;
-            margin-bottom: 6px;
-            color: rgba(248, 250, 252, 0.46);
-            font-size: 0.92rem;
-            font-weight: 700;
-        }
-
-        .company-item strong {
-            color: #ffffff;
-            font-size: 1rem;
+        .company-contact-list a,
+        .company-contact-list span,
+        .company-quick-links a {
+            color: rgba(248, 250, 252, 0.88);
             line-height: 1.5;
+            text-decoration: none;
+        }
+
+        .company-contact-list a:hover,
+        .company-quick-links a:hover {
+            color: #f3c969;
+        }
+
+        .company-quick-links {
+            display: grid;
+            gap: 10px;
+        }
+
+        .company-quick-links a::after {
+            content: "›";
+            margin-left: 8px;
+            color: #f3c969;
+            font-size: 1.25rem;
+            font-weight: 900;
+        }
+
+        .company-footer-bottom {
+            padding: 22px max(20px, calc((100% - 1160px) / 2));
+            background: #14b86f;
+            color: #052e2b;
             font-weight: 800;
+        }
+
+        .company-footer-bottom p {
+            margin: 0;
         }
 
         @keyframes frameRise {
@@ -467,7 +490,13 @@
                 grid-template-columns: 1fr;
             }
 
-            .company-info {
+            .company-footer-main {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                padding-block: 38px;
+            }
+
+            .company-contact-list {
                 grid-template-columns: 1fr;
             }
         }
@@ -520,37 +549,41 @@
                     <p>Ruang analisis statistik dan ekonomi untuk kebutuhan akademik. Mendukung alur belajar, eksplorasi data, dan interpretasi hasil analisis.</p>
                 </article>
             </div>
-
-            <div class="company-card">
-                <h3>Informasi Perusahaan</h3>
-                <p>Smart Finance Analytics Dashboard adalah platform untuk membantu analisa keuangan, perpajakan, dan statistik dalam satu tempat.</p>
-                <div class="company-info">
-                    <div class="company-item">
-                        <span>Nama Perusahaan</span>
-                        <strong>Smart Finance Analytics</strong>
-                    </div>
-                    <div class="company-item">
-                        <span>Telepon</span>
-                        <strong>+62 812-3456-7890</strong>
-                    </div>
-                    <div class="company-item">
-                        <span>Email</span>
-                        <strong>support@smartfinance.id</strong>
-                    </div>
-                    <div class="company-item">
-                        <span>Alamat</span>
-                        <strong>Jl. Finansial No. 12, Jakarta, Indonesia</strong>
-                    </div>
-                    <div class="company-item">
-                        <span>Jam Operasional</span>
-                        <strong>Senin - Jumat, 09.00 - 17.00 WIB</strong>
-                    </div>
-                    <div class="company-item">
-                        <span>Website</span>
-                        <strong>smartfinance.local</strong>
-                    </div>
-                </div>
-            </div>
         </section>
+
+        <footer class="company-footer">
+            <div class="company-footer-main">
+                <section class="company-footer-column">
+                    <h3>Smart Finance Analytics</h3>
+                    <p>
+                        Jl. Finansial No. 12<br>
+                        Jakarta, Indonesia<br>
+                        Platform analisa keuangan, perpajakan, dan statistik.
+                    </p>
+                </section>
+
+                <section class="company-footer-column">
+                    <h3>Hubungi Kami</h3>
+                    <div class="company-contact-list">
+                        <a href="tel:+6281234567890">+62 812-3456-7890</a>
+                        <span>Senin - Jumat</span>
+                        <a href="mailto:support@smartfinance.id">support@smartfinance.id</a>
+                        <span>09.00 - 17.00 WIB</span>
+                    </div>
+                </section>
+
+                <section class="company-footer-column">
+                    <h3>Informasi</h3>
+                    <div class="company-quick-links">
+                        <a href="#about">Tentang Kami</a>
+                        <a href="{{ route('login') }}">Masuk ke Dashboard</a>
+                    </div>
+                </section>
+            </div>
+
+            <div class="company-footer-bottom">
+                <p>Copyright © {{ date('Y') }} Smart Finance Analytics | Kebijakan Privasi | Syarat dan Ketentuan</p>
+            </div>
+        </footer>
     </main>
 @endsection

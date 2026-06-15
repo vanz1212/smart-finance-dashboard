@@ -167,6 +167,30 @@
             line-height: 1.5;
         }
 
+        .password-requirements {
+            display: grid;
+            gap: 8px;
+            margin: -2px 0 0;
+            padding: 14px 16px;
+            border: 1px solid rgba(20, 184, 166, 0.24);
+            border-radius: 14px;
+            background: rgba(20, 184, 166, 0.08);
+            color: rgba(248, 250, 252, 0.76);
+            font-size: 0.84rem;
+            line-height: 1.45;
+        }
+
+        .password-requirements strong {
+            color: #ffffff;
+        }
+
+        .password-requirements span::before {
+            content: "✓";
+            margin-right: 8px;
+            color: #5eead4;
+            font-weight: 900;
+        }
+
         .login-submit {
             min-height: 56px;
             margin-top: 2px;
@@ -249,7 +273,15 @@
                 <label class="modern-field">
                     <span>Password</span>
                     <div class="input-shell">
-                        <input type="password" name="password" placeholder="Minimal 8 karakter" required>
+                        <input
+                            type="password"
+                            name="password"
+                            placeholder="Buat password yang kuat"
+                            minlength="8"
+                            pattern="(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).{8,}"
+                            title="Minimal 8 karakter dan wajib memiliki huruf kapital, angka, serta simbol."
+                            required
+                        >
                     </div>
                 </label>
 
@@ -260,7 +292,13 @@
                     </div>
                 </label>
 
-                <p class="form-note">Gunakan password minimal 8 karakter agar akun tersimpan aman di PostgreSQL.</p>
+                <div class="password-requirements">
+                    <strong>Syarat password:</strong>
+                    <span>Minimal 8 karakter</span>
+                    <span>Memiliki setidaknya satu huruf kapital</span>
+                    <span>Memiliki setidaknya satu angka</span>
+                    <span>Memiliki setidaknya satu simbol, seperti ! @ # $ %</span>
+                </div>
 
                 <button type="submit" class="login-submit">Daftar Sekarang</button>
             </form>

@@ -55,7 +55,19 @@ class AuthController extends BaseController
             'name' => ['required', 'string', 'max:255'],
             'username' => ['required', 'string', 'max:60', 'alpha_dash', 'unique:users,username'],
             'email' => ['required', 'email', 'max:255', 'unique:users,email'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => [
+                'required',
+                'string',
+                'min:8',
+                'regex:/[A-Z]/',
+                'regex:/[0-9]/',
+                'regex:/[^A-Za-z0-9]/',
+                'confirmed',
+            ],
+        ], [
+            'password.min' => 'Password minimal harus terdiri dari 8 karakter.',
+            'password.regex' => 'Password wajib memiliki huruf kapital, angka, dan simbol.',
+            'password.confirmed' => 'Konfirmasi password tidak sesuai.',
         ]);
 
         $user = User::create([

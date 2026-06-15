@@ -340,7 +340,7 @@
 
                 <button type="submit" class="login-submit">Log In</button>
 
-                <p class="login-note">Masuk menggunakan akun database: admin@smartfinance.test</p>
+                <p class="login-note">Akun baru menggunakan password minimal 8 karakter yang memiliki huruf kapital, angka, dan simbol.</p>
 
                 <a class="quick-home" href="{{ route('dashboard') }}">Masuk Ke Halaman Utama</a>
 
