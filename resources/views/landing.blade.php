@@ -3,6 +3,38 @@
 @section('title', 'Smart Finance Dashboard')
 
 @section('content')
+    @php
+        $heroSlides = [
+            [
+                'kicker' => 'Finance Intelligence',
+                'title_before' => 'Designing Financial',
+                'title_accent' => 'futures',
+                'description' => 'Kelola analisa keuangan, estimasi pajak, dan insight finansial dalam dashboard yang sederhana, fokus, dan siap dipakai.',
+                'button' => 'Pelajari lebih lanjut',
+                'url' => '#about',
+                'image' => asset('images/slidev1.jpg'),
+            ],
+            [
+                'kicker' => 'Tax Planning',
+                'title_before' => 'Pahami Pajak',
+                'title_accent' => 'lebih cepat',
+                'description' => 'Lihat estimasi PPh orang pribadi, status PTKP, dan skenario penghasilan dengan tampilan yang mudah dipahami pengguna non-teknis.',
+                'button' => 'Buka Modul Pajak',
+                'url' => route('perpajakan.index'),
+                'image' => asset('images/slidev2.jpg'),
+            ],
+            [
+                'kicker' => 'Academic Insight',
+                'title_before' => 'Eksplorasi Data',
+                'title_accent' => 'dengan Stata',
+                'description' => 'Pelajari korelasi, regresi, dan statistik deskriptif melalui modul Stata yang dirancang untuk kebutuhan belajar dan riset ekonomi.',
+                'button' => 'Lihat Tutorial Stata',
+                'url' => route('stata'),
+                'image' => asset('images/slidev3.jpg'),
+            ],
+        ];
+    @endphp
+
     <style>
         .site-header,
         .site-footer {
@@ -29,12 +61,11 @@
             color: #f8fafc;
             background:
                 radial-gradient(circle at 50% 0%, rgba(243, 201, 105, 0.18), transparent 28%),
-                linear-gradient(180deg, rgba(5, 12, 15, 0.88), rgba(5, 12, 15, 0.98)),
-                url('{{ asset('images/backgroundfinance.jpg') }}') center / cover fixed no-repeat;
+                linear-gradient(180deg, rgba(5, 12, 15, 0.9), rgba(5, 12, 15, 0.98));
         }
 
         .landing-nav {
-            width: min(1160px, calc(100% - 40px));
+            width: min(1220px, calc(100% - 40px));
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
@@ -73,100 +104,134 @@
             color: #0f172a !important;
         }
 
-        .landing-logout {
-            margin: 0;
-        }
-
-        .landing-logout button {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 42px;
-            padding: 0 20px;
-            border: 0;
-            border-radius: 999px;
-            background: #f3c969;
-            color: #052e2b;
-            cursor: pointer;
-            font: inherit;
-            font-weight: 800;
-        }
-
         .landing-hero {
-            width: min(1120px, calc(100% - 40px));
+            width: min(1280px, calc(100% - 40px));
             margin: 0 auto;
-            padding: 84px 0 72px;
-            text-align: center;
+            padding: 18px 0 72px;
         }
 
-        .hero-frame {
-            width: min(760px, 100%);
-            margin: 0 auto;
+        .hero-slider {
             position: relative;
-            padding: 46px 28px 38px;
-            border: 1px solid rgba(243, 201, 105, 0.32);
-            background: linear-gradient(180deg, rgba(13, 47, 51, 0.38), rgba(6, 24, 32, 0.26));
-            box-shadow: 0 28px 90px rgba(0, 0, 0, 0.38);
-            backdrop-filter: blur(10px);
+            overflow: hidden;
+            min-height: 700px;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: #081418;
+            box-shadow: 0 28px 90px rgba(0, 0, 0, 0.34);
             animation: frameRise 0.8s ease-out both;
         }
 
-        .hero-frame::before,
-        .hero-frame::after {
-            content: "";
-            width: 9px;
-            height: 9px;
+        .hero-slides {
+            position: relative;
+            min-height: 700px;
+        }
+
+        .hero-slide {
             position: absolute;
-            background: #f3c969;
-            box-shadow: 0 0 18px rgba(243, 201, 105, 0.7);
+            inset: 0;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(320px, 0.92fr);
+            align-items: center;
+            gap: 34px;
+            padding: 80px 84px 120px;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateX(36px);
+            transition: opacity 0.45s ease, transform 0.45s ease;
         }
 
-        .hero-frame::before {
-            top: -5px;
-            left: -5px;
+        .hero-slide.is-active {
+            opacity: 1;
+            pointer-events: auto;
+            z-index: 2;
+            transform: translateX(0);
         }
 
-        .hero-frame::after {
-            right: -5px;
-            bottom: -5px;
+        .hero-slide::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(90deg, rgba(137, 23, 23, 0.82) 0%, rgba(137, 23, 23, 0.55) 20%, rgba(8, 20, 24, 0.24) 56%, rgba(8, 20, 24, 0.58) 100%),
+                var(--slide-image) center / cover no-repeat;
+            z-index: -2;
+        }
+
+        .hero-slide::after {
+            content: "";
+            position: absolute;
+            inset: auto 0 0;
+            height: 92px;
+            background: linear-gradient(180deg, rgba(122, 17, 17, 0), rgba(122, 17, 17, 0.92));
+            z-index: -1;
+        }
+
+        .hero-copy {
+            max-width: 520px;
+            text-align: left;
+            position: relative;
+            z-index: 2;
         }
 
         .hero-kicker {
             display: inline-flex;
-            margin-bottom: 22px;
-            color: #14b8a6;
-            font-size: 0.78rem;
+            margin-bottom: 24px;
+            color: #ffffff;
+            font-size: 0.9rem;
             font-weight: 900;
-            letter-spacing: 0.12em;
+            letter-spacing: 0.08em;
             text-transform: uppercase;
             animation: softReveal 0.7s ease-out 0.15s both;
         }
 
-        .hero-frame h1 {
-            max-width: 680px;
-            margin: 0 auto;
-            font-size: clamp(3rem, 8vw, 5.8rem);
-            line-height: 0.95;
+        .hero-copy h1 {
+            margin: 0;
+            font-size: clamp(3.2rem, 7vw, 5rem);
+            line-height: 1.04;
             font-weight: 800;
             letter-spacing: 0;
             animation: softReveal 0.75s ease-out 0.25s both;
         }
 
-        .hero-frame h1 em {
+        .hero-copy h1 em {
             color: #f3c969;
             font-family: Georgia, serif;
             font-style: italic;
             font-weight: 500;
-            display: inline-block;
+            display: block;
             animation: wordFloat 3.2s ease-in-out infinite;
         }
 
-        .hero-frame p {
-            max-width: 620px;
-            margin: 24px auto 0;
-            color: rgba(248, 250, 252, 0.72);
+        .hero-copy p {
+            max-width: 520px;
+            margin: 24px 0 0;
+            color: rgba(248, 250, 252, 0.88);
             line-height: 1.7;
+            font-size: 1.04rem;
             animation: softReveal 0.75s ease-out 0.38s both;
+        }
+
+        .hero-visual {
+            min-height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 28px;
+            border-radius: 28px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.04));
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(10px);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            animation: softReveal 0.8s ease-out 0.3s both;
+        }
+
+        .hero-visual img {
+            width: 100%;
+            max-width: 430px;
+            max-height: 500px;
+            object-fit: contain;
+            object-position: center;
+            filter: drop-shadow(0 32px 52px rgba(0, 0, 0, 0.32));
         }
 
         .landing-cta {
@@ -176,9 +241,9 @@
             min-height: 48px;
             margin-top: 32px;
             padding: 0 22px;
-            border-radius: 999px;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.16);
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.72);
             color: #ffffff;
             text-decoration: none;
             font-weight: 800;
@@ -204,6 +269,89 @@
             transform: translateX(-120%);
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.28), transparent);
             animation: ctaShimmer 5.2s cubic-bezier(0.45, 0, 0.25, 1) infinite;
+        }
+
+        .hero-slider-controls {
+            position: absolute;
+            inset: auto 0 24px;
+            z-index: 4;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 14px;
+            padding: 0 28px;
+        }
+
+        .hero-slider-dots {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+            flex: 1 1 auto;
+        }
+
+        .hero-slider-dot {
+            width: 12px;
+            height: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.72);
+            border-radius: 999px;
+            background: rgba(248, 250, 252, 0.18);
+            cursor: pointer;
+            transition: transform 0.2s ease, background 0.2s ease, width 0.2s ease;
+        }
+
+        .hero-slider-dot.is-active {
+            width: 34px;
+            background: #f3c969;
+            border-color: #f3c969;
+        }
+
+        .hero-slider-nav {
+            width: 58px;
+            height: 58px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 0;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+            cursor: pointer;
+            font: inherit;
+            font-size: 2rem;
+            line-height: 0;
+            font-weight: 800;
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+
+        .hero-slider-nav span {
+            display: block;
+            line-height: 1;
+            transform: translateY(-2px);
+        }
+
+        .hero-slider-nav:hover,
+        .hero-slider-dot:hover {
+            transform: scale(1.04);
+        }
+
+        .hero-slider-nav:hover {
+            background: rgba(255, 255, 255, 0.16);
+        }
+
+        .hero-slider-help {
+            width: min(1280px, calc(100% - 40px));
+            margin: 16px auto 0;
+            color: rgba(248, 250, 252, 0.68);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .hero-slider-help code {
+            padding: 2px 8px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.08);
+            color: #f3c969;
         }
 
         .landing-about {
@@ -286,10 +434,6 @@
             animation-delay: 0.16s;
         }
 
-        .service-card:nth-child(4) {
-            animation-delay: 0.24s;
-        }
-
         .service-card small {
             color: rgba(248, 250, 252, 0.42);
             font-weight: 800;
@@ -361,7 +505,7 @@
         }
 
         .company-quick-links a::after {
-            content: "›";
+            content: ">";
             margin-left: 8px;
             color: #f3c969;
             font-size: 1.25rem;
@@ -446,22 +590,50 @@
         }
 
         @media (prefers-reduced-motion: reduce) {
-            .hero-frame,
+            .hero-slide,
             .hero-kicker,
-            .hero-frame h1,
-            .hero-frame h1 em,
-            .hero-frame p,
+            .hero-copy h1,
+            .hero-copy h1 em,
+            .hero-copy p,
+            .hero-visual,
             .landing-cta,
             .landing-cta::after,
             .landing-about p,
             .service-card {
                 animation: none;
+                transition: none;
             }
         }
 
         @media (max-width: 900px) {
             .landing-links a:not(.landing-login) {
                 display: none;
+            }
+
+            .hero-slide {
+                grid-template-columns: 1fr;
+                gap: 24px;
+                padding: 52px 22px 108px;
+            }
+
+            .hero-copy {
+                max-width: none;
+                text-align: center;
+            }
+
+            .hero-copy p {
+                margin-inline: auto;
+            }
+
+            .hero-visual {
+                min-height: 260px;
+                padding: 20px;
+            }
+
+            .hero-visual img {
+                width: 100%;
+                max-width: 280px;
+                max-height: 280px;
             }
 
             .service-grid {
@@ -472,13 +644,29 @@
         @media (max-width: 560px) {
             .landing-nav,
             .landing-hero,
+            .hero-slider-help,
             .landing-about,
             .landing-services {
-                width: min(100% - 28px, 1160px);
+                width: min(100%, calc(100% - 24px));
             }
 
-            .hero-frame {
-                padding: 36px 18px 30px;
+            .hero-slider,
+            .hero-slides {
+                min-height: 640px;
+            }
+
+            .hero-copy h1 {
+                font-size: clamp(2.5rem, 10vw, 3.6rem);
+            }
+
+            .hero-slider-controls {
+                padding: 0 16px;
+            }
+
+            .hero-slider-nav {
+                width: 48px;
+                height: 48px;
+                font-size: 1.65rem;
             }
 
             .section-title {
@@ -514,13 +702,41 @@
         </nav>
 
         <section class="landing-hero">
-            <div class="hero-frame">
-                <span class="hero-kicker">Finance Intelligence</span>
-                <h1>Designing Financial <em>futures</em></h1>
-                <p>Kelola analisa keuangan, estimasi pajak, dan insight finansial dalam dashboard yang sederhana, fokus, dan siap dipakai.</p>
-                <a class="landing-cta" href="#about"><span>→</span> Pelajari lebih lanjut tentang kami</a>
+            <div class="hero-slider" data-hero-slider>
+                <div class="hero-slides">
+                    @foreach ($heroSlides as $index => $slide)
+                        <article class="hero-slide {{ $index === 0 ? 'is-active' : '' }}" style="--slide-image: url('{{ $slide['image'] }}')">
+                            <div class="hero-copy">
+                                <span class="hero-kicker">{{ $slide['kicker'] }}</span>
+                                <h1>
+                                    {{ $slide['title_before'] }}
+                                    <em>{{ $slide['title_accent'] }}</em>
+                                </h1>
+                                <p>{{ $slide['description'] }}</p>
+                                <a class="landing-cta" href="{{ $slide['url'] }}"><span>&rarr;</span> {{ $slide['button'] }}</a>
+                            </div>
+                            <div class="hero-visual">
+                                <img src="{{ $slide['image'] }}" alt="{{ $slide['title_before'] }} {{ $slide['title_accent'] }}">
+                            </div>
+                        </article>
+                    @endforeach
+                </div>
+
+                <div class="hero-slider-controls">
+                    <button type="button" class="hero-slider-nav" data-slide-prev aria-label="Slide sebelumnya"><span>&lsaquo;</span></button>
+                    <div class="hero-slider-dots" aria-label="Navigasi slide">
+                        @foreach ($heroSlides as $index => $slide)
+                            <button type="button" class="hero-slider-dot {{ $index === 0 ? 'is-active' : '' }}" data-slide-dot="{{ $index }}" aria-label="Slide {{ $index + 1 }}"></button>
+                        @endforeach
+                    </div>
+                    <button type="button" class="hero-slider-nav" data-slide-next aria-label="Slide berikutnya"><span>&rsaquo;</span></button>
+                </div>
             </div>
         </section>
+
+        <div class="hero-slider-help">
+            Untuk menambahkan gambar sendiri, cukup upload file ke folder <code>public/images</code> lalu ubah daftar <code>$heroSlides</code> di bagian atas file ini.
+        </div>
 
         <section id="about" class="landing-about">
             <small>About SmartFinance</small>
@@ -582,8 +798,65 @@
             </div>
 
             <div class="company-footer-bottom">
-                <p>Copyright © {{ date('Y') }} Smart Finance Analytics | Kebijakan Privasi | Syarat dan Ketentuan</p>
+                <p>&copy; {{ date('Y') }} Smart Finance Analytics | Kebijakan Privasi | Syarat dan Ketentuan</p>
             </div>
         </footer>
     </main>
+
+    <script>
+        (() => {
+            const slider = document.querySelector("[data-hero-slider]");
+
+            if (!slider) {
+                return;
+            }
+
+            const slides = Array.from(slider.querySelectorAll(".hero-slide"));
+            const dots = Array.from(slider.querySelectorAll("[data-slide-dot]"));
+            const prevButton = slider.querySelector("[data-slide-prev]");
+            const nextButton = slider.querySelector("[data-slide-next]");
+            let currentIndex = 0;
+            let autoplayId = null;
+
+            const render = (index) => {
+                currentIndex = (index + slides.length) % slides.length;
+
+                slides.forEach((slide, slideIndex) => {
+                    slide.classList.toggle("is-active", slideIndex === currentIndex);
+                });
+
+                dots.forEach((dot, dotIndex) => {
+                    dot.classList.toggle("is-active", dotIndex === currentIndex);
+                });
+            };
+
+            const startAutoplay = () => {
+                clearInterval(autoplayId);
+                autoplayId = setInterval(() => render(currentIndex + 1), 5200);
+            };
+
+            prevButton?.addEventListener("click", () => {
+                render(currentIndex - 1);
+                startAutoplay();
+            });
+
+            nextButton?.addEventListener("click", () => {
+                render(currentIndex + 1);
+                startAutoplay();
+            });
+
+            dots.forEach((dot, index) => {
+                dot.addEventListener("click", () => {
+                    render(index);
+                    startAutoplay();
+                });
+            });
+
+            slider.addEventListener("mouseenter", () => clearInterval(autoplayId));
+            slider.addEventListener("mouseleave", startAutoplay);
+
+            render(0);
+            startAutoplay();
+        })();
+    </script>
 @endsection
