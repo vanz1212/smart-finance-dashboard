@@ -160,6 +160,18 @@
             color: rgba(248, 250, 252, 0.58);
         }
 
+        .input-shell input:-webkit-autofill,
+        .input-shell input:-webkit-autofill:hover,
+        .input-shell input:-webkit-autofill:focus,
+        .input-shell input:-webkit-autofill:active {
+            -webkit-text-fill-color: #ffffff;
+            caret-color: #ffffff;
+            border-radius: 18px;
+            -webkit-box-shadow: 0 0 0 1000px rgba(21, 24, 56, 0.52) inset;
+            box-shadow: 0 0 0 1000px rgba(21, 24, 56, 0.52) inset;
+            transition: background-color 9999s ease-in-out 0s;
+        }
+
         .password-toggle {
             flex: 0 0 auto;
             margin-right: 10px;
