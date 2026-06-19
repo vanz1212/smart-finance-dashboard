@@ -110,7 +110,7 @@ body.page-leaving::before {
 .main-nav a,
 .nav-form button {
     position: relative;
-    color: #374151;
+    color: #ffffff;
     border: 0;
     background: transparent;
     padding: 0;
@@ -138,7 +138,7 @@ body.page-leaving::before {
 
 .main-nav a:hover,
 .nav-form button:hover {
-    color: #2563eb;
+    color: #ffffff;
 }
 
 .main-nav a:hover::after,

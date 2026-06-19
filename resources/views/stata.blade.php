@@ -93,10 +93,6 @@
         }
 
         .stata-inner { width: min(1180px, 100%); margin: 0 auto; }
-        .stata-topbar { display: flex; justify-content: space-between; gap: 18px; align-items: center; margin-bottom: 34px; }
-        .stata-nav { display: flex; flex-wrap: wrap; gap: 10px; }
-        .stata-nav a { padding: 10px 14px; border: 1px solid rgba(255,255,255,.12); border-radius: 999px; color: rgba(248,250,252,.78); text-decoration: none; font-weight: 800; background: rgba(255,255,255,.05); }
-        .stata-nav a.is-active, .stata-nav a:hover { color: #052e2b; background: #f3c969; border-color: #f3c969; }
 
         .stata-hero {
             display: grid;
@@ -567,17 +563,6 @@
 
     <main class="stata-workspace">
         <div class="stata-inner">
-            <div class="stata-topbar">
-                <strong>SmartFinance.</strong>
-                <nav class="stata-nav">
-                    <a href="{{ route('page.selector') }}">Beranda</a>
-                    <a href="{{ route('finance.index') }}">Smart Finance</a>
-                    <a href="{{ route('perpajakan.index') }}">Perpajakan</a>
-                    <a class="is-active" href="{{ route('stata') }}">Stata</a>
-                    <a href="{{ route('login') }}">Login</a>
-                </nav>
-            </div>
-
             <section class="stata-hero">
                 <div class="stata-panel stata-panel-inner">
                     <span class="stata-kicker">Economic Analysis</span>

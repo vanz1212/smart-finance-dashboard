@@ -335,7 +335,6 @@
                 </div>
                 <div class="admin-actions">
                     <a class="primary" href="{{ route('dashboard') }}">Kembali ke Dashboard</a>
-                    <a href="{{ route('dashboard.user') }}">Akses Halaman User</a>
                     <a href="{{ route('profile') }}">Profile Saya</a>
                 </div>
             </div>
@@ -388,6 +387,7 @@
                             <span>{{ optional($user->created_at)->timezone('Asia/Jakarta')->format('H:i') }} WIB</span>
                         </div>
                         <div class="row-actions">
+                            <a href="{{ route('dashboard.user') }}">Akses Halaman User</a>
                             <a href="{{ route('admin.users.show', $user) }}">Lihat Profil</a>
                             <a class="edit" href="{{ route('admin.users.edit', $user) }}">Edit</a>
                             @if (! auth()->user()->is($user))

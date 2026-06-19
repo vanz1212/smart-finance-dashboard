@@ -172,15 +172,35 @@
             transition: background-color 9999s ease-in-out 0s;
         }
 
-        .form-note {
-            margin: -2px 0 0;
-            color: rgba(248, 250, 252, 0.62);
-            font-size: 0.84rem;
-            line-height: 1.5;
+        .password-toggle {
+            flex: 0 0 auto;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 46px;
+            height: 46px;
+            margin-right: 6px;
+            border: 0;
+            border-radius: 14px;
+            background: transparent;
+            color: rgba(248, 250, 252, 0.78);
+            cursor: pointer;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        .password-toggle:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+        }
+
+        .password-toggle svg {
+            width: 20px;
+            height: 20px;
+            stroke: currentColor;
         }
 
         .password-requirements {
-            display: grid;
+            display: none;
             gap: 8px;
             margin: -2px 0 0;
             padding: 14px 16px;
@@ -192,15 +212,52 @@
             line-height: 1.45;
         }
 
+        .password-requirements.is-visible {
+            display: grid;
+        }
+
         .password-requirements strong {
             color: #ffffff;
         }
 
         .password-requirements span::before {
-            content: "✓";
+            content: "✕";
             margin-right: 8px;
-            color: #5eead4;
+            color: #fca5a5;
             font-weight: 900;
+        }
+
+        .password-requirements span.is-valid::before {
+            content: "✓";
+            color: #5eead4;
+        }
+
+        .password-requirements span.is-valid {
+            color: #ecfeff;
+        }
+
+        .password-requirements span.is-invalid {
+            color: rgba(248, 250, 252, 0.76);
+        }
+
+        .password-match {
+            display: none;
+            margin: -4px 0 0;
+            font-size: 0.84rem;
+            line-height: 1.45;
+            color: rgba(248, 250, 252, 0.76);
+        }
+
+        .password-match.is-visible {
+            display: block;
+        }
+
+        .password-match.is-valid {
+            color: #5eead4;
+        }
+
+        .password-match.is-invalid {
+            color: #fca5a5;
         }
 
         .login-submit {
@@ -286,31 +343,46 @@
                     <span>Password</span>
                     <div class="input-shell">
                         <input
+                            id="signupPassword"
                             type="password"
                             name="password"
-                            placeholder="Buat password yang kuat"
                             minlength="8"
                             pattern="(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).{8,}"
                             title="Minimal 8 karakter dan wajib memiliki huruf kapital, angka, serta simbol."
+                            autocomplete="new-password"
                             required
                         >
+                        <button type="button" class="password-toggle" data-password-toggle="signupPassword" aria-label="Tampilkan password">
+                            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <path d="M2 12C4.6 7.8 8 5.7 12 5.7C16 5.7 19.4 7.8 22 12C19.4 16.2 16 18.3 12 18.3C8 18.3 4.6 16.2 2 12Z" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                <circle cx="12" cy="12" r="3.2" stroke-width="1.8"/>
+                            </svg>
+                        </button>
                     </div>
                 </label>
 
                 <label class="modern-field">
                     <span>Konfirmasi Password</span>
                     <div class="input-shell">
-                        <input type="password" name="password_confirmation" placeholder="Ulangi password" required>
+                        <input id="signupPasswordConfirmation" type="password" name="password_confirmation" autocomplete="new-password" required>
+                        <button type="button" class="password-toggle" data-password-toggle="signupPasswordConfirmation" aria-label="Tampilkan konfirmasi password">
+                            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <path d="M2 12C4.6 7.8 8 5.7 12 5.7C16 5.7 19.4 7.8 22 12C19.4 16.2 16 18.3 12 18.3C8 18.3 4.6 16.2 2 12Z" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                <circle cx="12" cy="12" r="3.2" stroke-width="1.8"/>
+                            </svg>
+                        </button>
                     </div>
                 </label>
 
-                <div class="password-requirements">
+                <div class="password-requirements" id="passwordRequirements">
                     <strong>Syarat password:</strong>
-                    <span>Minimal 8 karakter</span>
-                    <span>Memiliki setidaknya satu huruf kapital</span>
-                    <span>Memiliki setidaknya satu angka</span>
-                    <span>Memiliki setidaknya satu simbol, seperti ! @ # $ %</span>
+                    <span data-rule="length">Minimal 8 karakter</span>
+                    <span data-rule="uppercase">Memiliki setidaknya satu huruf kapital</span>
+                    <span data-rule="number">Memiliki setidaknya satu angka</span>
+                    <span data-rule="symbol">Memiliki setidaknya satu simbol, seperti ! @ # $ %</span>
                 </div>
+
+                <p class="password-match" id="passwordMatchMessage"></p>
 
                 <button type="submit" class="login-submit">Daftar Sekarang</button>
             </form>
@@ -318,4 +390,93 @@
             <p class="auth-footer">Sudah punya akun? <a href="{{ route('login') }}">Masuk di sini</a></p>
         </div>
     </section>
+
+    <script>
+        (() => {
+            const passwordInput = document.getElementById('signupPassword');
+            const confirmationInput = document.getElementById('signupPasswordConfirmation');
+            const requirements = document.getElementById('passwordRequirements');
+            const matchMessage = document.getElementById('passwordMatchMessage');
+
+            if (!passwordInput || !confirmationInput || !requirements || !matchMessage) {
+                return;
+            }
+
+            const rules = {
+                length: (value) => value.length >= 8,
+                uppercase: (value) => /[A-Z]/.test(value),
+                number: (value) => /[0-9]/.test(value),
+                symbol: (value) => /[^A-Za-z0-9]/.test(value),
+            };
+
+            const ruleElements = Object.fromEntries(
+                Object.keys(rules).map((rule) => [rule, requirements.querySelector(`[data-rule="${rule}"]`)])
+            );
+
+            const updateRequirements = () => {
+                const value = passwordInput.value;
+                const shouldShow = value.length > 0 || document.activeElement === passwordInput;
+
+                requirements.classList.toggle('is-visible', shouldShow);
+
+                Object.entries(rules).forEach(([rule, validator]) => {
+                    const element = ruleElements[rule];
+                    if (!element) {
+                        return;
+                    }
+
+                    const isValid = validator(value);
+                    element.classList.toggle('is-valid', isValid);
+                    element.classList.toggle('is-invalid', !isValid);
+                });
+            };
+
+            const updateConfirmation = () => {
+                const passwordValue = passwordInput.value;
+                const confirmationValue = confirmationInput.value;
+                const shouldShow = confirmationValue.length > 0 || document.activeElement === confirmationInput;
+
+                matchMessage.classList.toggle('is-visible', shouldShow);
+
+                if (!shouldShow) {
+                    matchMessage.textContent = '';
+                    matchMessage.classList.remove('is-valid', 'is-invalid');
+                    return;
+                }
+
+                const matches = passwordValue.length > 0 && confirmationValue === passwordValue;
+                matchMessage.textContent = matches ? '✓ Konfirmasi password sudah sesuai.' : '✕ Konfirmasi password belum sama.';
+                matchMessage.classList.toggle('is-valid', matches);
+                matchMessage.classList.toggle('is-invalid', !matches);
+            };
+
+            passwordInput.addEventListener('focus', updateRequirements);
+            passwordInput.addEventListener('input', () => {
+                updateRequirements();
+                updateConfirmation();
+            });
+            passwordInput.addEventListener('blur', updateRequirements);
+
+            confirmationInput.addEventListener('focus', updateConfirmation);
+            confirmationInput.addEventListener('input', updateConfirmation);
+            confirmationInput.addEventListener('blur', updateConfirmation);
+
+            document.querySelectorAll('[data-password-toggle]').forEach((button) => {
+                button.addEventListener('click', () => {
+                    const input = document.getElementById(button.dataset.passwordToggle);
+
+                    if (!input) {
+                        return;
+                    }
+
+                    const showing = input.type === 'text';
+                    input.type = showing ? 'password' : 'text';
+                    button.setAttribute('aria-label', showing ? 'Tampilkan password' : 'Sembunyikan password');
+                });
+            });
+
+            updateRequirements();
+            updateConfirmation();
+        })();
+    </script>
 @endsection
