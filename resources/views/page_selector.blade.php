@@ -296,6 +296,18 @@
             font-size: clamp(1.45rem, 3vw, 2.1rem);
         }
 
+        .mobile-hint {
+            display: none;
+            margin: -6px 0 18px;
+            padding: 12px 14px;
+            border: 1px solid rgba(20, 184, 111, 0.28);
+            border-radius: 12px;
+            background: rgba(20, 184, 111, 0.08);
+            color: rgba(248, 250, 252, 0.84);
+            line-height: 1.6;
+            font-size: 0.9rem;
+        }
+
         .module-table {
             overflow: hidden;
             border: 1px solid rgba(91, 130, 142, 0.64);
@@ -590,9 +602,30 @@
         }
 
         @media (max-width: 620px) {
+            .selector-head {
+                padding: 16px 14px;
+                min-height: auto;
+                gap: 10px;
+            }
+
+            .selector-title {
+                font-size: 1.35rem;
+                text-align: center;
+            }
+
+            .selector-sidebar {
+                padding: 12px;
+            }
+
+            .app-brand {
+                margin-bottom: 10px;
+                font-size: 0.86rem;
+            }
+
             .panel-toolbar {
                 align-items: flex-start;
                 flex-direction: column;
+                margin-bottom: 14px;
             }
 
             .side-menu {
@@ -601,6 +634,53 @@
 
             .selector-form {
                 grid-template-columns: 1fr;
+            }
+
+            .selector-content {
+                padding: 14px;
+            }
+
+            .content-panel {
+                padding: 16px;
+            }
+
+            .mobile-hint {
+                display: block;
+            }
+
+            .module-table {
+                border-radius: 14px;
+                background: rgba(255, 255, 255, 0.03);
+            }
+
+            .table-row {
+                gap: 10px;
+                padding: 14px;
+                border-top: 1px solid rgba(255, 255, 255, 0.08);
+                border-radius: 0;
+                background: transparent;
+            }
+
+            .table-row > span {
+                display: grid;
+                gap: 4px;
+            }
+
+            .table-row > span::before {
+                content: attr(data-label);
+                color: rgba(248, 250, 252, 0.52);
+                font-size: 0.76rem;
+                font-weight: 800;
+                letter-spacing: 0.04em;
+                text-transform: uppercase;
+            }
+
+            .table-row .status-pill {
+                margin-top: 2px;
+            }
+
+            .quick-card {
+                padding: 16px;
             }
         }
         /* Responsive sidebar hardening: keep every menu label readable at any browser size. */
@@ -896,24 +976,28 @@
                             <h1>User Dashboard</h1>
                         </div>
 
+                        <div class="mobile-hint">
+                            Pilih modul dari daftar di bawah untuk membuka Smart Finance, Perpajakan, atau Stata. Tombol profil dan logout ada di bagian atas panel.
+                        </div>
+
                         <div class="module-table">
                             <div class="table-head">
                                 <span>Kode</span><span>Halaman</span><span>Kategori</span><span>Fitur</span><span>Prioritas</span><span>Status</span>
                             </div>
                             <a class="table-row" href="{{ route('finance.index') }}">
-                                <span>SFD-01</span>
-                                <span><strong>Smart Finance</strong> Analisa arus kas, rasio tabungan, cicilan, dan dana darurat.</span>
-                                <span>Financial Analysis</span><span>6 tools</span><span>Core dashboard</span><span class="status-pill">READY</span>
+                                <span data-label="Kode">SFD-01</span>
+                                <span data-label="Halaman"><strong>Smart Finance</strong> Analisa arus kas, rasio tabungan, cicilan, dan dana darurat.</span>
+                                <span data-label="Kategori">Financial Analysis</span><span data-label="Fitur">6 tools</span><span data-label="Prioritas">Core dashboard</span><span data-label="Status" class="status-pill">READY</span>
                             </a>
                             <a class="table-row" href="{{ route('perpajakan.index') }}">
-                                <span>TAX-02</span>
-                                <span><strong>Perpajakan</strong> Estimasi PPh orang pribadi dengan PTKP dan tarif progresif.</span>
-                                <span>Tax Calculator</span><span>PTKP + PKP</span><span>Compliance</span><span class="status-pill">READY</span>
+                                <span data-label="Kode">TAX-02</span>
+                                <span data-label="Halaman"><strong>Perpajakan</strong> Estimasi PPh orang pribadi dengan PTKP dan tarif progresif.</span>
+                                <span data-label="Kategori">Tax Calculator</span><span data-label="Fitur">PTKP + PKP</span><span data-label="Prioritas">Compliance</span><span data-label="Status" class="status-pill">READY</span>
                             </a>
                             <a class="table-row" href="{{ route('stata') }}">
-                                <span>STA-03</span>
-                                <span><strong>Stata</strong> Korelasi, regresi linear, dan statistik deskriptif.</span>
-                                <span>Economic Stats</span><span>3 modules</span><span>Research</span><span class="status-pill">READY</span>
+                                <span data-label="Kode">STA-03</span>
+                                <span data-label="Halaman"><strong>Stata</strong> Korelasi, regresi linear, dan statistik deskriptif.</span>
+                                <span data-label="Kategori">Economic Stats</span><span data-label="Fitur">3 modules</span><span data-label="Prioritas">Research</span><span data-label="Status" class="status-pill">READY</span>
                             </a>
                         </div>
 
