@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Stata - Smart Finance Dashboard')
+@section('body-class', 'module-page')
 
 @section('content')
     @php
@@ -560,6 +561,8 @@
             }
         }
     </style>
+
+    @include('partials.module-shell-styles')
 
     <main class="stata-workspace">
         <div class="stata-inner">

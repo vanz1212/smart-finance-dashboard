@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Smart Finance - Analisa Keuangan')
+@section('body-class', 'module-page')
 
 @section('content')
     @php
@@ -497,6 +498,8 @@
             }
         }
     </style>
+
+    @include('partials.module-shell-styles')
 
     <main class="finance-workspace">
         <div class="workspace-inner">

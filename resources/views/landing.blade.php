@@ -359,6 +359,7 @@
             margin: 0 auto;
             padding: 72px 0 40px;
             text-align: center;
+            scroll-margin-top: 28px;
         }
 
         .landing-about small {

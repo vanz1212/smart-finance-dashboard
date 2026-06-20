@@ -6,16 +6,20 @@
     <title>@yield('title', 'SMART FINANCE ANALYTICS DASHBOARD')</title>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
-<body>
+<body class="@yield('body-class')">
     <div class="container">
         <header class="site-header">
-            <div class="brand">SMART FINANCE ANALYTICS DASHBOARD</div>
-            <nav class="main-nav">
-                <a href="{{ route('home') }}">Beranda</a>
-                <a href="{{ url('/smart-finance') }}">Smart Finance</a>
-                <a href="{{ route('perpajakan.index') }}">Perpajakan</a>
-                <a href="{{ url('/stata') }}">Stata</a>
+            <a class="brand" href="{{ route('home') }}" aria-label="Smart Finance Beranda">
+                <span class="brand-symbol" aria-hidden="true">S</span>
+                <span>SMART FINANCE</span>
+            </a>
+            <nav class="main-nav" aria-label="Navigasi utama">
+                <a class="{{ request()->routeIs('home', 'dashboard.user', 'page.selector') ? 'is-active' : '' }}" href="{{ route('home') }}">Beranda</a>
+                <a class="{{ request()->routeIs('finance.*') ? 'is-active' : '' }}" href="{{ route('finance.index') }}">Smart Finance</a>
+                <a class="{{ request()->routeIs('perpajakan.*') ? 'is-active' : '' }}" href="{{ route('perpajakan.index') }}">Perpajakan</a>
+                <a class="{{ request()->routeIs('stata') ? 'is-active' : '' }}" href="{{ route('stata') }}">Stata</a>
                 @auth
+                    <a class="{{ request()->routeIs('profile') ? 'is-active' : '' }}" href="{{ route('profile') }}">Profil</a>
                     <form action="{{ route('logout') }}" method="POST" class="nav-form">
                         @csrf
                         <button type="submit">Logout</button>
@@ -47,6 +51,18 @@
                     var url = new URL(link.href, window.location.href);
 
                     if (url.origin !== window.location.origin || link.target || link.hasAttribute('download')) {
+                        return;
+                    }
+
+                    if (url.pathname === window.location.pathname && url.hash) {
+                        var target = document.querySelector(url.hash);
+
+                        if (target) {
+                            event.preventDefault();
+                            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            window.history.pushState(null, '', url.hash);
+                        }
+
                         return;
                     }
 

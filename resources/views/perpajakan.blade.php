@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Perpajakan - Smart Finance Dashboard')
+@section('body-class', 'module-page')
 
 @section('content')
     @php
@@ -220,6 +221,8 @@
             }
         }
     </style>
+
+    @include('partials.module-shell-styles')
 
     <main class="tax-workspace">
         <div class="tax-inner">
