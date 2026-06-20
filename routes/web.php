@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/beranda');
 Route::get('/beranda', [PageController::class, 'landing'])->name('home');
+Route::get('/informasi-perpajakan', [PageController::class, 'taxInformation'])
+    ->name('perpajakan.info');
+Route::get('/informasi-stata', [PageController::class, 'stataInformation'])
+    ->name('stata.info');
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.process');

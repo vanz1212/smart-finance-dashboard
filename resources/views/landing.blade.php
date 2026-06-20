@@ -20,7 +20,7 @@
                 'title_accent' => 'lebih cepat',
                 'description' => 'Lihat estimasi PPh orang pribadi, status PTKP, dan skenario penghasilan dengan tampilan yang mudah dipahami pengguna non-teknis.',
                 'button' => 'Buka Modul Pajak',
-                'url' => route('perpajakan.index'),
+                'url' => route('perpajakan.info'),
                 'image' => asset('images/slidev2.jpg'),
             ],
             [
@@ -29,7 +29,7 @@
                 'title_accent' => 'dengan Stata',
                 'description' => 'Pelajari korelasi, regresi, dan statistik deskriptif melalui modul Stata yang dirancang untuk kebutuhan belajar dan riset ekonomi.',
                 'button' => 'Lihat Tutorial Stata',
-                'url' => route('stata'),
+                'url' => route('stata.info'),
                 'image' => asset('images/slidev3.jpg'),
             ],
         ];

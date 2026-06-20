@@ -15,6 +15,22 @@ class PageController extends BaseController
     }
 
     /**
+     * Halaman informasi pajak yang dapat dibaca tanpa login.
+     */
+    public function taxInformation()
+    {
+        return view('tax_information');
+    }
+
+    /**
+     * Halaman pengenalan dan materi Stata yang dapat dibaca tanpa login.
+     */
+    public function stataInformation()
+    {
+        return view('stata_information');
+    }
+
+    /**
      * Halaman Smart Finance Dashboard.
      */
     public function smartFinance()

@@ -47,7 +47,7 @@ class AuthController extends BaseController
             'user_agent' => substr((string) $request->userAgent(), 0, 2000),
         ]);
 
-        return redirect()->route('dashboard');
+        return redirect()->intended(route('dashboard'));
     }
 
     public function register(Request $request)
