@@ -571,7 +571,7 @@
                     <span class="stata-kicker">Economic Analysis</span>
                     <h1>Stata</h1>
                     <p>Ruang analisis statistik untuk data ekonomi: korelasi, regresi linear, statistik deskriptif, dan interpretasi output yang mudah dibaca.</p>
-                    <a class="stata-action" href="{{ route('page.selector') }}">Kembali ke Selector</a>
+                    <a class="stata-action" href="{{ route('dashboard.user') }}">Kembali ke Selector</a>
                 </div>
 
                 <aside class="stata-panel stata-panel-inner stata-stat">

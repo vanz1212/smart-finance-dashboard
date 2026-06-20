@@ -9,15 +9,30 @@
 <body class="@yield('body-class')">
     <div class="container">
         <header class="site-header">
-            <a class="brand" href="{{ route('home') }}" aria-label="Smart Finance Beranda">
+            <a class="brand" href="{{ route('dashboard.user') }}" aria-label="Buka selector Smart Finance">
                 <span class="brand-symbol" aria-hidden="true">S</span>
                 <span>SMART FINANCE</span>
             </a>
             <nav class="main-nav" aria-label="Navigasi utama">
-                <a class="{{ request()->routeIs('home', 'dashboard.user', 'page.selector') ? 'is-active' : '' }}" href="{{ route('home') }}">Beranda</a>
-                <a class="{{ request()->routeIs('finance.*') ? 'is-active' : '' }}" href="{{ route('finance.index') }}">Smart Finance</a>
-                <a class="{{ request()->routeIs('perpajakan.*') ? 'is-active' : '' }}" href="{{ route('perpajakan.index') }}">Perpajakan</a>
-                <a class="{{ request()->routeIs('stata') ? 'is-active' : '' }}" href="{{ route('stata') }}">Stata</a>
+                <a class="{{ request()->routeIs('dashboard.user', 'page.selector') ? 'is-active' : '' }}" href="{{ route('dashboard.user') }}">Beranda</a>
+                <a class="module-nav-link {{ request()->routeIs('finance.*') ? 'is-active' : '' }}" data-module-nav href="{{ route('finance.index') }}">
+                    <span class="module-tab-label">Smart Finance</span>
+                    @if (request()->routeIs('finance.*'))
+                        <span class="module-active-pill" aria-hidden="true"></span>
+                    @endif
+                </a>
+                <a class="module-nav-link {{ request()->routeIs('perpajakan.*') ? 'is-active' : '' }}" data-module-nav href="{{ route('perpajakan.index') }}">
+                    <span class="module-tab-label">Perpajakan</span>
+                    @if (request()->routeIs('perpajakan.*'))
+                        <span class="module-active-pill" aria-hidden="true"></span>
+                    @endif
+                </a>
+                <a class="module-nav-link {{ request()->routeIs('stata') ? 'is-active' : '' }}" data-module-nav href="{{ route('stata') }}">
+                    <span class="module-tab-label">Stata</span>
+                    @if (request()->routeIs('stata'))
+                        <span class="module-active-pill" aria-hidden="true"></span>
+                    @endif
+                </a>
                 @auth
                     <a class="{{ request()->routeIs('profile') ? 'is-active' : '' }}" href="{{ route('profile') }}">Profil</a>
                     <form action="{{ route('logout') }}" method="POST" class="nav-form">
@@ -51,6 +66,10 @@
                     var url = new URL(link.href, window.location.href);
 
                     if (url.origin !== window.location.origin || link.target || link.hasAttribute('download')) {
+                        return;
+                    }
+
+                    if (document.body.classList.contains('module-page') && link.matches('[data-module-nav]')) {
                         return;
                     }
 

@@ -230,15 +230,23 @@
                 <strong>SmartFinance.</strong>
             </div>
 
-            <section class="tax-hero">
-                <div>
+            <section class="tax-hero module-hero">
+                <div class="module-hero-panel module-hero-copy">
                     <span class="tax-kicker">Tax Estimator</span>
                     <h1>Perpajakan</h1>
                     <p>Estimasi PPh orang pribadi dengan PTKP, PKP, pembulatan ribuan, dan tarif progresif Indonesia.</p>
+                    <a class="module-hero-action" href="{{ route('dashboard.user') }}">Kembali ke Selector</a>
                 </div>
-                @if ($result)
-                    <div class="tax-badge {{ $statusClass }}">{{ $result['status_pajak'] }}</div>
-                @endif
+                <aside class="module-hero-panel module-hero-summary">
+                    @if ($result)
+                        <div class="tax-badge {{ $statusClass }}">{{ $result['status_pajak'] }}</div>
+                        <strong>{{ $formatRupiah($result['estimasi_pajak']) }}</strong>
+                        <span>Estimasi PPh tahunan berdasarkan penghasilan, pengurang, dan status PTKP.</span>
+                    @else
+                        <strong>5</strong>
+                        <span>Lapisan tarif progresif PPh orang pribadi dengan perhitungan PTKP dan PKP.</span>
+                    @endif
+                </aside>
             </section>
 
             <section class="tax-grid">

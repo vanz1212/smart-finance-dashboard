@@ -507,15 +507,23 @@
                 <strong>SmartFinance.</strong>
             </div>
 
-            <section class="workspace-hero">
-                <div>
+            <section class="workspace-hero module-hero">
+                <div class="module-hero-panel module-hero-copy">
                     <span class="workspace-kicker">Finance Intelligence</span>
                     <h1>Analisa Keuangan</h1>
                     <p>Evaluasi arus kas, pengeluaran, tabungan, cicilan, dan kesiapan dana darurat dalam satu dashboard yang ringkas.</p>
+                    <a class="module-hero-action" href="{{ route('dashboard.user') }}">Kembali ke Selector</a>
                 </div>
-                @if ($result)
-                    <div class="status-badge status-{{ $result['status_class'] }}">{{ $result['status'] }}</div>
-                @endif
+                <aside class="module-hero-panel module-hero-summary">
+                    @if ($result)
+                        <div class="status-badge status-{{ $result['status_class'] }}">{{ $result['status'] }}</div>
+                        <strong>{{ $formatPercent($result['saving_ratio']) }}</strong>
+                        <span>Rasio tabungan dan investasi berdasarkan hasil analisa keuangan terbaru.</span>
+                    @else
+                        <strong>6+</strong>
+                        <span>Indikator utama untuk membaca arus kas, tabungan, cicilan, dan kesiapan dana darurat.</span>
+                    @endif
+                </aside>
             </section>
 
             <section class="workspace-grid">

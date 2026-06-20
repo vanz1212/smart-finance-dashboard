@@ -334,7 +334,7 @@
                     <p>Lihat profil user, buka detail akun, edit data, ubah role, atau hapus user langsung dari panel ini.</p>
                 </div>
                 <div class="admin-actions">
-                    <a class="primary" href="{{ route('dashboard') }}">Halaman Utama</a>
+                    <a class="primary" href="{{ route('dashboard.user') }}">Halaman Utama</a>
                     <a href="{{ route('profile') }}">Profile Saya</a>
                 </div>
             </div>

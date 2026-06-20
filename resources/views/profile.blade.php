@@ -161,7 +161,7 @@
                     </div>
                 </div>
                 <div class="profile-actions">
-                    <a class="primary" href="{{ route('dashboard') }}">Ke Halaman Utama</a>
+                    <a class="primary" href="{{ route('dashboard.user') }}">Ke Dashboard Utama</a>
                     <form action="{{ route('logout') }}" method="POST">
                         @csrf
                         <button type="submit">Logout</button>
