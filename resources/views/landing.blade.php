@@ -104,6 +104,46 @@
             color: #0f172a !important;
         }
 
+        .landing-auth-actions,
+        .landing-logout-form {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0;
+        }
+
+        .landing-dashboard,
+        .landing-profile,
+        .landing-logout {
+            min-height: 42px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 18px;
+            border: 1px solid rgba(255, 255, 255, .16);
+            border-radius: 999px;
+            color: rgba(248, 250, 252, .84);
+            background: rgba(255, 255, 255, .06);
+            font: inherit;
+            font-size: .9rem;
+            font-weight: 800;
+            text-decoration: none;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+
+        .landing-dashboard {
+            border-color: rgba(243, 201, 105, .56);
+            color: #092c2d;
+            background: #e6c46d;
+        }
+
+        .landing-logout:hover,
+        .landing-profile:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, .11);
+        }
+
         .landing-hero {
             width: min(1280px, calc(100% - 40px));
             margin: 0 auto;
@@ -611,6 +651,10 @@
                 display: none;
             }
 
+            .landing-auth-actions .landing-dashboard {
+                display: inline-flex;
+            }
+
             .hero-slide {
                 grid-template-columns: 1fr;
                 gap: 24px;
@@ -643,6 +687,13 @@
         }
 
         @media (max-width: 560px) {
+            .landing-dashboard,
+            .landing-logout {
+                min-height: 38px;
+                padding-inline: 13px;
+                font-size: .8rem;
+            }
+
             .landing-nav,
             .landing-hero,
             .hero-slider-help,
@@ -696,9 +747,17 @@
             <a class="landing-brand" href="{{ route('home') }}">SmartFinance.</a>
             <div class="landing-links">
                 @auth
-                    <a class="landing-login" href="{{ route('profile') }}">Profile</a>
+                    <div class="landing-auth-actions">
+                        <a class="landing-dashboard" href="{{ route('dashboard.user') }}">Dashboard</a>
+                        <a class="landing-profile" href="{{ route('profile') }}">Profil</a>
+                        <form class="landing-logout-form" action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button class="landing-logout" type="submit">Logout</button>
+                        </form>
+                    </div>
+                @else
+                    <a class="landing-login" href="{{ route('login') }}">Login</a>
                 @endauth
-                <a class="landing-login" href="{{ route('login') }}">Login</a>
             </div>
         </nav>
 
@@ -793,7 +852,11 @@
                     <h3>Informasi</h3>
                     <div class="company-quick-links">
                         <a href="#about">Tentang Kami</a>
-                        <a href="{{ route('login') }}">Masuk ke Dashboard</a>
+                        @auth
+                            <a href="{{ route('dashboard.user') }}">Buka Dashboard</a>
+                        @else
+                            <a href="{{ route('login') }}">Masuk ke Dashboard</a>
+                        @endauth
                     </div>
                 </section>
             </div>

@@ -35,4 +35,8 @@ return [
         ],
     ],
 
+    'stata' => [
+        'python_binary' => env('STATA_PYTHON_BINARY'),
+    ],
+
 ];

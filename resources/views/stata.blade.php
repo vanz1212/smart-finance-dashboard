@@ -560,6 +560,278 @@
                 font-size: clamp(34px, 13vw, 56px) !important;
             }
         }
+
+        .stata-workbench {
+            margin-top: 24px;
+            scroll-margin-top: 100px;
+        }
+
+        .workbench-heading {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 24px;
+            margin-bottom: 22px;
+        }
+
+        .workbench-heading h2 {
+            margin: 10px 0 0;
+            font-size: clamp(1.8rem, 4vw, 3rem);
+        }
+
+        .workbench-heading p {
+            max-width: 680px;
+            margin: 0;
+            color: rgba(248,250,252,.72);
+            line-height: 1.65;
+        }
+
+        .stata-flash,
+        .stata-error {
+            margin-bottom: 16px;
+            padding: 13px 15px;
+            border: 1px solid rgba(32,189,122,.36);
+            border-radius: 10px;
+            background: rgba(32,189,122,.1);
+            color: #d1fae5;
+            font-weight: 800;
+        }
+
+        .stata-error {
+            border-color: rgba(251,113,133,.38);
+            background: rgba(251,113,133,.1);
+            color: #ffe4e6;
+        }
+
+        .stata-import-grid {
+            display: grid;
+            grid-template-columns: minmax(0,1.35fr) minmax(280px,.65fr);
+            gap: 18px;
+        }
+
+        .stata-upload-card,
+        .stata-dataset-card,
+        .stata-variable-panel,
+        .stata-editor-panel,
+        .stata-result-panel {
+            padding: 22px;
+            border: 1px solid rgba(164,190,190,.2);
+            border-radius: 14px;
+            background: rgba(8,34,37,.96);
+        }
+
+        .stata-upload-card h3,
+        .stata-dataset-card h3,
+        .stata-variable-panel h3,
+        .stata-editor-panel h3,
+        .stata-result-panel h3 {
+            margin: 0;
+        }
+
+        .stata-file-drop {
+            min-height: 150px;
+            display: grid;
+            place-items: center;
+            margin-top: 16px;
+            padding: 24px;
+            border: 1px dashed rgba(230,196,109,.55);
+            border-radius: 12px;
+            background: rgba(230,196,109,.055);
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .stata-file-drop input {
+            width: min(100%, 460px);
+            color: #c8d4d3;
+        }
+
+        .stata-file-drop small {
+            display: block;
+            margin-top: 10px;
+            color: #9fb0af;
+        }
+
+        .stata-import-button,
+        .stata-clear-button,
+        .stata-command-button,
+        .variable-tool {
+            min-height: 42px;
+            border: 1px solid rgba(230,196,109,.45);
+            border-radius: 10px;
+            padding: 0 16px;
+            background: #e6c46d;
+            color: #092c2d;
+            font: inherit;
+            font-weight: 900;
+            cursor: pointer;
+        }
+
+        .stata-import-button {
+            width: 100%;
+            margin-top: 14px;
+        }
+
+        .stata-clear-button,
+        .variable-tool {
+            border-color: rgba(164,190,190,.22);
+            background: rgba(255,255,255,.06);
+            color: #dbe5e4;
+        }
+
+        .dataset-facts {
+            display: grid;
+            grid-template-columns: repeat(2,minmax(0,1fr));
+            gap: 10px;
+            margin: 16px 0;
+        }
+
+        .dataset-facts div {
+            padding: 13px;
+            border: 1px solid rgba(164,190,190,.16);
+            border-radius: 10px;
+            background: rgba(255,255,255,.045);
+        }
+
+        .dataset-facts span,
+        .dataset-facts strong {
+            display: block;
+        }
+
+        .dataset-facts span {
+            margin-bottom: 5px;
+            color: #9fb0af;
+            font-size: .76rem;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .stata-command-layout {
+            display: grid;
+            grid-template-columns: minmax(260px,.32fr) minmax(0,1fr);
+            gap: 18px;
+            margin-top: 18px;
+        }
+
+        .variable-tools,
+        .stata-command-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .variable-tools { margin: 14px 0; }
+
+        .variable-tool {
+            min-height: 34px;
+            padding-inline: 10px;
+            font-size: .78rem;
+        }
+
+        .stata-variable-list {
+            max-height: 390px;
+            display: grid;
+            gap: 7px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .stata-variable-option {
+            display: grid;
+            grid-template-columns: auto minmax(0,1fr) auto;
+            gap: 10px;
+            align-items: center;
+            padding: 10px;
+            border: 1px solid rgba(164,190,190,.13);
+            border-radius: 9px;
+            background: rgba(255,255,255,.035);
+            cursor: pointer;
+        }
+
+        .stata-variable-option input { accent-color: #20bd7a; }
+        .stata-variable-option strong { overflow: hidden; text-overflow: ellipsis; }
+        .stata-variable-option small { color: #91a5a4; }
+        .variable-type { color: #e6c46d; font-family: Consolas,monospace; font-size: .75rem; }
+
+        .stata-editor-panel { min-width: 0; }
+        .stata-command-bar { margin: 16px 0 18px; }
+
+        .stata-command-button {
+            min-height: 40px;
+            background: rgba(230,196,109,.1);
+            color: #f0d98f;
+        }
+
+        .stata-command-button:hover {
+            border-color: #e6c46d;
+            background: rgba(230,196,109,.17);
+        }
+
+        .stata-sort-direction {
+            min-height: 40px;
+            border: 1px solid rgba(164,190,190,.2);
+            border-radius: 10px;
+            padding: 0 10px;
+            background: rgba(3,20,22,.8);
+            color: #f8fafc;
+        }
+
+        .stata-table-wrap {
+            width: 100%;
+            overflow: auto;
+            border: 1px solid rgba(164,190,190,.16);
+            border-radius: 11px;
+        }
+
+        .stata-live-table {
+            width: 100%;
+            border-collapse: collapse;
+            white-space: nowrap;
+        }
+
+        .stata-live-table th,
+        .stata-live-table td {
+            padding: 10px 12px;
+            border-right: 1px solid rgba(164,190,190,.1);
+            border-bottom: 1px solid rgba(164,190,190,.1);
+            text-align: left;
+        }
+
+        .stata-live-table th {
+            position: sticky;
+            top: 0;
+            z-index: 1;
+            background: #173c3e;
+            color: #f8fafc;
+            font-size: .78rem;
+        }
+
+        .stata-live-table td { color: #c7d4d3; }
+
+        .stata-result-panel {
+            margin-top: 18px;
+            scroll-margin-top: 100px;
+        }
+
+        .stata-result-command {
+            display: block;
+            margin: 14px 0 8px;
+            padding: 11px 13px;
+            border-radius: 9px;
+            background: #031416;
+            color: #5eead4;
+            font-family: Consolas,'Courier New',monospace;
+        }
+
+        @media (max-width: 900px) {
+            .workbench-heading { align-items: flex-start; flex-direction: column; }
+            .stata-import-grid, .stata-command-layout { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 560px) {
+            .dataset-facts { grid-template-columns: 1fr; }
+            .stata-upload-card, .stata-dataset-card, .stata-variable-panel, .stata-editor-panel, .stata-result-panel { padding: 16px; }
+        }
     </style>
 
     @include('partials.module-shell-styles')
@@ -598,6 +870,139 @@
                     <h2>Statistik Deskriptif</h2>
                     <p>Ringkasan mean, standar deviasi, minimum, maksimum, dan jumlah observasi.</p>
                 </article>
+            </section>
+
+            <section id="stata-workbench" class="stata-workbench">
+                <div class="workbench-heading">
+                    <div>
+                        <span class="stata-kicker">DTA Workspace</span>
+                        <h2>Data Editor & Instant Commands</h2>
+                    </div>
+                    <p>Impor dataset Stata, pilih variabel, lalu jalankan command analisis yang aman tanpa menulis sintaks secara manual.</p>
+                </div>
+
+                @if (session('stata_status'))
+                    <div class="stata-flash">{{ session('stata_status') }}</div>
+                @endif
+
+                @if ($errors->has('stata_file'))
+                    <div class="stata-error">{{ $errors->first('stata_file') }}</div>
+                @endif
+
+                @if ($errors->has('stata_command'))
+                    <div class="stata-error">{{ $errors->first('stata_command') }}</div>
+                @endif
+
+                <div class="stata-import-grid">
+                    <form class="stata-upload-card" action="{{ route('stata.import') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <h3>Import File .dta</h3>
+                        <label class="stata-file-drop">
+                            <span>
+                                <input type="file" name="stata_file" accept=".dta,application/octet-stream" required>
+                                <small>Format .dta, maksimum 25 MB. File disimpan privat dan hanya terhubung ke sesi akun ini.</small>
+                            </span>
+                        </label>
+                        <button class="stata-import-button" type="submit">Import dan Baca Dataset</button>
+                    </form>
+
+                    <aside class="stata-dataset-card">
+                        <h3>Dataset Aktif</h3>
+                        @if ($stataDataset)
+                            <p>{{ $stataDataset['name'] }}</p>
+                            <div class="dataset-facts">
+                                <div><span>Observasi</span><strong>{{ number_format($stataDataset['summary']['rows'], 0, ',', '.') }}</strong></div>
+                                <div><span>Variabel</span><strong>{{ $stataDataset['summary']['columns'] }}</strong></div>
+                                <div><span>Numerik</span><strong>{{ $stataDataset['summary']['numeric_columns'] }}</strong></div>
+                                <div><span>Ukuran</span><strong>{{ number_format($stataDataset['size'] / 1048576, 2, ',', '.') }} MB</strong></div>
+                            </div>
+                            <p>{{ $stataDataset['summary']['data_label'] }}</p>
+                            <form action="{{ route('stata.clear') }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button class="stata-clear-button" type="submit">Tutup Dataset</button>
+                            </form>
+                        @else
+                            <p>Belum ada dataset aktif. Pilih file `.dta` untuk membuka workspace.</p>
+                        @endif
+                    </aside>
+                </div>
+
+                @if ($stataDataset)
+                    <form class="stata-command-layout" action="{{ route('stata.command') }}" method="POST">
+                        @csrf
+                        <aside class="stata-variable-panel">
+                            <h3>Variables</h3>
+                            <div class="variable-tools">
+                                <button class="variable-tool" type="button" data-select-variables="all">Pilih Semua</button>
+                                <button class="variable-tool" type="button" data-select-variables="numeric">Numerik</button>
+                                <button class="variable-tool" type="button" data-select-variables="none">Bersihkan</button>
+                            </div>
+                            <div class="stata-variable-list">
+                                @foreach ($stataDataset['variables'] as $variable)
+                                    <label class="stata-variable-option">
+                                        <input type="checkbox" name="variables[]" value="{{ $variable['name'] }}" data-numeric="{{ $variable['numeric'] ? '1' : '0' }}">
+                                        <span>
+                                            <strong>{{ $variable['name'] }}</strong>
+                                            @if ($variable['label'])<small>{{ $variable['label'] }}</small>@endif
+                                        </span>
+                                        <span class="variable-type">{{ $variable['type'] }}</span>
+                                    </label>
+                                @endforeach
+                            </div>
+                        </aside>
+
+                        <section class="stata-editor-panel">
+                            <h3>Command Toolbar</h3>
+                            <div class="stata-command-bar">
+                                <button class="stata-command-button" name="command" value="describe" type="submit">Describe</button>
+                                <button class="stata-command-button" name="command" value="summarize" type="submit">Summarize</button>
+                                <button class="stata-command-button" name="command" value="list" type="submit">List Data</button>
+                                <button class="stata-command-button" name="command" value="missing" type="submit">Missing Values</button>
+                                <button class="stata-command-button" name="command" value="correlate" type="submit">Correlate</button>
+                                <button class="stata-command-button" name="command" value="tabulate" type="submit">Tabulate</button>
+                                <select class="stata-sort-direction" name="direction" aria-label="Arah urutan">
+                                    <option value="asc">Ascending</option>
+                                    <option value="desc">Descending</option>
+                                </select>
+                                <button class="stata-command-button" name="command" value="sort" type="submit">Sort Preview</button>
+                                <button class="stata-command-button" name="command" value="regress" type="submit">Regress</button>
+                            </div>
+
+                            <h3>Data Preview</h3>
+                            <p>Maksimal 20 observasi pertama dari file yang diimpor.</p>
+                            <div class="stata-table-wrap">
+                                <table class="stata-live-table">
+                                    <thead><tr>@foreach ($stataDataset['preview']['columns'] as $column)<th>{{ $column }}</th>@endforeach</tr></thead>
+                                    <tbody>
+                                        @foreach ($stataDataset['preview']['rows'] as $row)
+                                            <tr>@foreach ($row as $value)<td>{{ $value === null ? '.' : $value }}</td>@endforeach</tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </section>
+                    </form>
+                @endif
+
+                @if ($stataOutput)
+                    <section id="stata-output" class="stata-result-panel">
+                        <span class="stata-kicker">Results Window</span>
+                        <h3>{{ $stataOutput['title'] }}</h3>
+                        <code class="stata-result-command">{{ $stataOutput['command'] }}</code>
+                        <p>{{ $stataOutput['message'] }}</p>
+                        <div class="stata-table-wrap">
+                            <table class="stata-live-table">
+                                <thead><tr>@foreach ($stataOutput['table']['columns'] as $column)<th>{{ $column }}</th>@endforeach</tr></thead>
+                                <tbody>
+                                    @foreach ($stataOutput['table']['rows'] as $row)
+                                        <tr>@foreach ($row as $value)<td>{{ $value === null ? '.' : $value }}</td>@endforeach</tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                @endif
             </section>
 
             <section class="stata-panel stata-panel-inner stata-data-panel">
@@ -780,4 +1185,20 @@ atau
             </section>
         </div>
     </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var variableInputs = Array.from(document.querySelectorAll('.stata-variable-option input[type="checkbox"]'));
+
+            document.querySelectorAll('[data-select-variables]').forEach(function (button) {
+                button.addEventListener('click', function () {
+                    var mode = button.dataset.selectVariables;
+
+                    variableInputs.forEach(function (input) {
+                        input.checked = mode === 'all' || (mode === 'numeric' && input.dataset.numeric === '1');
+                    });
+                });
+            });
+        });
+    </script>
 @endsection

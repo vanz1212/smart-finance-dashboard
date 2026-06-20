@@ -13,11 +13,19 @@ class AuthController extends BaseController
 {
     public function showLogin()
     {
+        if (Auth::check()) {
+            return redirect()->route('dashboard');
+        }
+
         return view('login');
     }
 
     public function showSignup()
     {
+        if (Auth::check()) {
+            return redirect()->route('dashboard');
+        }
+
         return view('signup');
     }
 
@@ -28,9 +36,7 @@ class AuthController extends BaseController
             'password' => ['required', 'string'],
         ]);
 
-        $remember = $request->boolean('remember');
-
-        if (! Auth::attempt($credentials, $remember)) {
+        if (! Auth::attempt($credentials, true)) {
             return back()
                 ->withErrors(['email' => 'Email atau password tidak sesuai.'])
                 ->onlyInput('email');
@@ -79,7 +85,7 @@ class AuthController extends BaseController
             'password' => Hash::make($validated['password']),
         ]);
 
-        Auth::login($user);
+        Auth::login($user, true);
         $request->session()->regenerate();
 
         ActivityLog::create([

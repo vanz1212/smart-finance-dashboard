@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\FinanceController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\StataController;
 use App\Http\Controllers\TaxController;
 use App\Http\Middleware\Authenticate;
 use Illuminate\Support\Facades\Route;
@@ -73,9 +74,12 @@ Route::middleware(Authenticate::class)->group(function () {
         ->middleware('activity:page_open,smart_finance,Smart Finance')
         ->name('finance.index');
     Route::post('/smart-finance', [FinanceController::class, 'analyze'])->name('finance.analyze');
-    Route::get('/stata', [PageController::class, 'stata'])
+    Route::get('/stata', [StataController::class, 'index'])
         ->middleware('activity:page_open,stata,Stata')
         ->name('stata');
+    Route::post('/stata/import', [StataController::class, 'import'])->name('stata.import');
+    Route::post('/stata/command', [StataController::class, 'run'])->name('stata.command');
+    Route::delete('/stata/dataset', [StataController::class, 'clear'])->name('stata.clear');
     Route::get('/perpajakan', [TaxController::class, 'index'])
         ->middleware('activity:page_open,perpajakan,Perpajakan')
         ->name('perpajakan.index');

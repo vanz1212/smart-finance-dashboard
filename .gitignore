@@ -2,6 +2,7 @@
 /node_modules
 /.idea
 /.vscode
+/.venv
 /.phpunit.result.cache
 /.env
 /.env.*.backup
