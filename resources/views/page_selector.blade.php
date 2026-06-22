@@ -424,7 +424,14 @@
         }
 
         .selector-form select option {
-            color: #111827;
+            background: #f8fafc;
+            color: #0f172a;
+        }
+
+        .selector-form select option:checked,
+        .selector-form select option:hover {
+            background: #d1fae5;
+            color: #052e2b;
         }
 
         .selector-submit {

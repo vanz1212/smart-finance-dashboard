@@ -52,7 +52,16 @@
         .tax-form label.full { grid-column: 1 / -1; }
         .tax-form span { color: rgba(248,250,252,.72); font-size: .84rem; font-weight: 800; }
         .tax-form input, .tax-form select { min-height: 46px; width: 100%; border: 1px solid rgba(255,255,255,.18); border-radius: 10px; padding: 10px 12px; background: rgba(255,255,255,.06); color: #fff; font: inherit; }
-        .tax-form select option { color: #111827; }
+        .tax-form select option {
+            background: #f8fafc;
+            color: #0f172a;
+        }
+
+        .tax-form select option:checked,
+        .tax-form select option:hover {
+            background: #d1fae5;
+            color: #052e2b;
+        }
         .tax-form input:focus, .tax-form select:focus { outline: 3px solid rgba(20,184,166,.18); border-color: #14b8a6; }
         .tax-button { width: 100%; min-height: 50px; margin-top: 18px; border: 0; border-radius: 999px; background: #f3c969; color: #052e2b; cursor: pointer; font: inherit; font-weight: 900; }
 
