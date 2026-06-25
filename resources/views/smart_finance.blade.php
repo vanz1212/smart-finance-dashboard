@@ -14,6 +14,18 @@
 
             return number_format((float) preg_replace('/[^0-9]/', '', (string) $value), 0, ',', '.');
         };
+
+        $translatePeriode = function($value) {
+            if (preg_match('/^(\d{4})-(\d{2})$/', $value, $matches)) {
+                $months = [
+                    '01' => 'Januari', '02' => 'Februari', '03' => 'Maret', '04' => 'April',
+                    '05' => 'Mei', '06' => 'Juni', '07' => 'Juli', '08' => 'Agustus',
+                    '09' => 'September', '10' => 'Oktober', '11' => 'November', '12' => 'Desember'
+                ];
+                return $months[$matches[2]] . ' ' . $matches[1];
+            }
+            return $value; // Fallback
+        };
     @endphp
 
     <style>
@@ -324,6 +336,152 @@
             background: rgba(20, 184, 166, 0.09);
         }
 
+        /* Monthly comparison styles */
+        .comparison-panel {
+            margin-top: 34px;
+            padding: 24px;
+        }
+
+        .chart-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .chart-filter-controls {
+            display: flex;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .btn-filter {
+            padding: 6px 14px;
+            border-radius: 6px;
+            background: transparent;
+            color: rgba(248, 250, 252, 0.72);
+            border: none;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 800;
+            transition: all 0.2s ease;
+        }
+
+        .btn-filter:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .btn-filter.is-active {
+            background: #f3c969;
+            color: #052e2b;
+        }
+
+        .comparison-chart-wrapper {
+            background: rgba(6, 24, 32, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 28px;
+            position: relative;
+            height: 320px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 0.9rem;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 14px 16px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .comparison-table th {
+            color: rgba(248, 250, 252, 0.62);
+            font-weight: 800;
+            font-size: 0.82rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .comparison-table tr:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .comparison-table td {
+            color: #ffffff;
+            vertical-align: middle;
+        }
+
+        .comparison-table td strong {
+            color: #f3c969;
+        }
+
+        .action-buttons {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-use {
+            padding: 6px 12px;
+            border-radius: 6px;
+            background: #14b8a6;
+            color: #042f2e;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 0.78rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-block;
+        }
+
+        .btn-use:hover {
+            background: #0d9488;
+            transform: translateY(-1px);
+        }
+
+        .btn-delete {
+            padding: 6px 12px;
+            border-radius: 6px;
+            background: rgba(244, 63, 94, 0.15);
+            color: #fb7185;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 0.78rem;
+            border: 1px solid rgba(244, 63, 94, 0.3);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-delete:hover {
+            background: rgba(244, 63, 94, 0.3);
+            color: #ffffff;
+            transform: translateY(-1px);
+        }
+
+        .alert-success-banner {
+            padding: 14px 18px;
+            border: 1px solid rgba(20, 184, 166, 0.3);
+            background: rgba(20, 184, 166, 0.12);
+            border-radius: 10px;
+            margin-bottom: 24px;
+            color: #14b8a6;
+            font-weight: 700;
+        }
+
         @media (max-width: 900px) {
             .workspace-topbar,
             .workspace-hero {
@@ -351,6 +509,11 @@
 
             .breakdown-item em {
                 text-align: left;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                align-items: flex-start;
             }
         }
         /* Full-page refinement shared with standalone module pages. */
@@ -448,6 +611,7 @@
         .menu a,
         .tabs a,
         .btn,
+        .btn,
         button,
         [role="button"] {
             white-space: normal;
@@ -507,6 +671,12 @@
                 <strong>SmartFinance.</strong>
             </div>
 
+            @if (session('success'))
+                <div class="alert-success-banner">
+                    {{ session('success') }}
+                </div>
+            @endif
+
             <section class="workspace-hero module-hero">
                 <div class="module-hero-panel module-hero-copy">
                     <span class="workspace-kicker">Finance Intelligence</span>
@@ -535,7 +705,10 @@
                     </div>
 
                     <div class="finance-form-grid">
-                        <label><span>Periode</span><input type="text" name="periode" value="{{ old('periode', $result['periode'] ?? date('F Y')) }}" required></label>
+                        <label>
+                            <span>Periode</span>
+                            <input type="month" name="periode" value="{{ old('periode', $result['periode'] ?? date('Y-m')) }}" required>
+                        </label>
                         <label><span>Total pemasukan</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input name="pemasukan" value="{{ $formatRupiahInput(old('pemasukan', $result['income'] ?? '')) }}" inputmode="numeric" autocomplete="off" required></div></label>
                         <label><span>Kebutuhan pokok</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input name="kebutuhan_pokok" value="{{ $formatRupiahInput(old('kebutuhan_pokok', $result['expenses']['Kebutuhan pokok'] ?? '')) }}" inputmode="numeric" autocomplete="off" required></div></label>
                         <label><span>Transportasi</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input name="transportasi" value="{{ $formatRupiahInput(old('transportasi', $result['expenses']['Transportasi'] ?? '')) }}" inputmode="numeric" autocomplete="off" required></div></label>
@@ -553,7 +726,7 @@
                 <div class="workspace-panel workspace-panel-inner">
                     <div class="panel-heading">
                         <h2>Ringkasan Hasil</h2>
-                        <p>{{ $result ? 'Periode ' . $result['periode'] : 'Hasil akan tampil setelah data dihitung.' }}</p>
+                        <p>{{ $result ? 'Periode ' . $translatePeriode($result['periode']) : 'Hasil akan tampil setelah data dihitung.' }}</p>
                     </div>
 
                     @if ($result)
@@ -623,8 +796,253 @@
                     </div>
                 </section>
             @endif
+
+            @if (isset($history) && count($history) > 0)
+                <section class="workspace-panel workspace-panel-inner comparison-panel">
+                    <div class="chart-header-row">
+                        <div class="panel-heading" style="margin-bottom: 0;">
+                            <h2>Perkembangan Keuangan Bulanan</h2>
+                            <p>Bandingkan pemasukan, pengeluaran, tabungan, dan tren arus kas bersih dari bulan ke bulan.</p>
+                        </div>
+                        <div class="chart-filter-controls">
+                            <button type="button" class="btn-filter is-active" data-range="6">6 Bulan</button>
+                            <button type="button" class="btn-filter" data-range="12">12 Bulan</button>
+                            <button type="button" class="btn-filter" data-range="all">Semua</button>
+                        </div>
+                    </div>
+
+                    <div class="comparison-chart-wrapper">
+                        <canvas id="financeTrendChart"></canvas>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>Periode</th>
+                                    <th>Pemasukan</th>
+                                    <th>Pengeluaran</th>
+                                    <th>Tabungan & Investasi</th>
+                                    <th>Arus Kas Bersih</th>
+                                    <th>Dana Darurat</th>
+                                    <th>Status</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($history as $item)
+                                    <tr>
+                                        <td><strong>{{ $translatePeriode($item->periode) }}</strong></td>
+                                        <td>{{ $formatRupiah($item->calculated['income']) }}</td>
+                                        <td>{{ $formatRupiah($item->calculated['total_expenses']) }}</td>
+                                        <td>{{ $formatRupiah($item->calculated['total_saving_investment']) }}</td>
+                                        <td>{{ $formatRupiah($item->calculated['net_cashflow']) }}</td>
+                                        <td>{{ number_format($item->calculated['emergency_months'], 1, ',', '.') }} bln</td>
+                                        <td>
+                                            <span class="status-badge status-{{ $item->calculated['status_class'] }}" style="padding: 4px 10px; font-size: 0.76rem; min-width: 80px; display: inline-block;">
+                                                {{ $item->calculated['status'] }}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <a href="{{ route('finance.index', ['load_id' => $item->id]) }}" class="btn-use">Gunakan</a>
+                                                <form action="{{ route('finance.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus riwayat analisis untuk periode ini?')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn-delete">Hapus</button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            @endif
         </div>
     </main>
+
+    @if (isset($history) && count($history) > 0)
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var ctx = document.getElementById('financeTrendChart').getContext('2d');
+                
+                var monthsMap = {
+                    '01': 'Jan', '02': 'Feb', '03': 'Mar', '04': 'Apr',
+                    '05': 'Mei', '06': 'Jun', '07': 'Jul', '08': 'Agt',
+                    '09': 'Sep', '10': 'Okt', '11': 'Nov', '12': 'Des'
+                };
+
+                var rawLabels = {!! json_encode($history->map(fn($item) => $item->periode)->toArray()) !!};
+                var allLabels = rawLabels.map(function(val) {
+                    var parts = val.split('-');
+                    if (parts.length === 2 && monthsMap[parts[1]]) {
+                        return monthsMap[parts[1]] + ' ' + parts[0];
+                    }
+                    return val;
+                });
+
+                var allIncome = {!! json_encode($history->map(fn($item) => (float)$item->calculated['income'])->toArray()) !!};
+                var allExpense = {!! json_encode($history->map(fn($item) => (float)$item->calculated['total_expenses'])->toArray()) !!};
+                var allSaving = {!! json_encode($history->map(fn($item) => (float)$item->calculated['total_saving_investment'])->toArray()) !!};
+                var allCashflow = {!! json_encode($history->map(fn($item) => (float)$item->calculated['net_cashflow'])->toArray()) !!};
+
+                var chart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: [],
+                        datasets: [
+                            {
+                                label: 'Pemasukan',
+                                data: [],
+                                borderColor: '#10b981', // emerald
+                                backgroundColor: 'rgba(16, 185, 129, 0.08)',
+                                borderWidth: 3,
+                                tension: 0.3,
+                                fill: true
+                            },
+                            {
+                                label: 'Pengeluaran',
+                                data: [],
+                                borderColor: '#fb7185', // rose
+                                backgroundColor: 'transparent',
+                                borderWidth: 2,
+                                tension: 0.3,
+                                fill: false
+                            },
+                            {
+                                label: 'Tabungan & Investasi',
+                                data: [],
+                                borderColor: '#6366f1', // indigo
+                                backgroundColor: 'transparent',
+                                borderWidth: 2,
+                                tension: 0.3,
+                                fill: false
+                            },
+                            {
+                                label: 'Arus Kas Bersih',
+                                data: [],
+                                borderColor: '#38bdf8', // sky blue
+                                backgroundColor: 'rgba(56, 189, 248, 0.05)',
+                                borderWidth: 2,
+                                tension: 0.3,
+                                fill: true
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                labels: {
+                                    color: '#f8fafc',
+                                    font: {
+                                        family: "'Outfit', 'Inter', sans-serif",
+                                        weight: 'bold',
+                                        size: 11
+                                    }
+                                }
+                            },
+                            tooltip: {
+                                backgroundColor: 'rgba(13, 47, 51, 0.95)',
+                                titleColor: '#f3c969',
+                                bodyColor: '#ffffff',
+                                borderColor: 'rgba(255, 255, 255, 0.1)',
+                                borderWidth: 1,
+                                padding: 12,
+                                callbacks: {
+                                    label: function (context) {
+                                        let label = context.dataset.label || '';
+                                        if (label) {
+                                            label += ': ';
+                                        }
+                                        if (context.parsed.y !== null) {
+                                            label += new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(context.parsed.y);
+                                        }
+                                        return label;
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                grid: {
+                                    color: 'rgba(255, 255, 255, 0.06)'
+                                },
+                                ticks: {
+                                    color: '#94a3b8'
+                                }
+                            },
+                            y: {
+                                grid: {
+                                    color: 'rgba(255, 255, 255, 0.06)'
+                                },
+                                ticks: {
+                                    color: '#94a3b8',
+                                    callback: function (value) {
+                                        return 'Rp ' + new Intl.NumberFormat('id-ID', { notation: 'compact' }).format(value);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+
+                function updateChartRange(range) {
+                    var slicedLabels, slicedIncome, slicedExpense, slicedSaving, slicedCashflow;
+                    if (range === 'all') {
+                        slicedLabels = allLabels;
+                        slicedIncome = allIncome;
+                        slicedExpense = allExpense;
+                        slicedSaving = allSaving;
+                        slicedCashflow = allCashflow;
+                    } else {
+                        var count = parseInt(range, 10);
+                        slicedLabels = allLabels.slice(-count);
+                        slicedIncome = allIncome.slice(-count);
+                        slicedExpense = allExpense.slice(-count);
+                        slicedSaving = allSaving.slice(-count);
+                        slicedCashflow = allCashflow.slice(-count);
+                    }
+
+                    chart.data.labels = slicedLabels;
+                    chart.data.datasets[0].data = slicedIncome;
+                    chart.data.datasets[1].data = slicedExpense;
+                    chart.data.datasets[2].data = slicedSaving;
+                    chart.data.datasets[3].data = slicedCashflow;
+                    chart.update();
+                }
+
+                // Initial range logic
+                var initialRange = '6';
+                if (allLabels.length < 6) {
+                    initialRange = 'all';
+                    document.querySelectorAll('.btn-filter').forEach(function(btn) {
+                        btn.classList.remove('is-active');
+                        if (btn.getAttribute('data-range') === 'all') {
+                            btn.classList.add('is-active');
+                        }
+                    });
+                }
+                updateChartRange(initialRange);
+
+                // Setup listener
+                document.querySelectorAll('.btn-filter').forEach(function (button) {
+                    button.addEventListener('click', function () {
+                        document.querySelectorAll('.btn-filter').forEach(function (btn) {
+                            btn.classList.remove('is-active');
+                        });
+                        this.classList.add('is-active');
+                        var range = this.getAttribute('data-range');
+                        updateChartRange(range);
+                    });
+                });
+            });
+        </script>
+    @endif
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {

@@ -74,6 +74,7 @@ Route::middleware(Authenticate::class)->group(function () {
         ->middleware('activity:page_open,smart_finance,Smart Finance')
         ->name('finance.index');
     Route::post('/smart-finance', [FinanceController::class, 'analyze'])->name('finance.analyze');
+    Route::delete('/smart-finance/{id}', [FinanceController::class, 'destroy'])->name('finance.destroy');
     Route::get('/stata', [StataController::class, 'index'])
         ->middleware('activity:page_open,stata,Stata')
         ->name('stata');

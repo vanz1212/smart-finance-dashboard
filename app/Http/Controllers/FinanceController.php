@@ -2,16 +2,36 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FinancialAnalysis;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 
 class FinanceController extends BaseController
 {
-    public function index()
+    public function index(Request $request)
     {
+        $userId = auth()->id();
+
+        $history = FinancialAnalysis::where('user_id', $userId)
+            ->orderBy('periode', 'asc')
+            ->get()
+            ->map(function ($item) {
+                $item->calculated = $this->calculateResults($item->toArray());
+                return $item;
+            });
+
+        $result = null;
+        if ($request->has('load_id')) {
+            $loadedAnalysis = FinancialAnalysis::where('user_id', $userId)->find($request->input('load_id'));
+            if ($loadedAnalysis) {
+                $result = $this->calculateResults($loadedAnalysis->toArray());
+            }
+        }
+
         return view('smart_finance', [
-            'result' => null,
+            'result' => $result,
             'categories' => $this->expenseCategories(),
+            'history' => $history,
         ]);
     }
 
@@ -50,17 +70,66 @@ class FinanceController extends BaseController
             'target_tabungan' => ['nullable', 'numeric', 'min:0'],
         ]);
 
-        $income = (float) $validated['pemasukan'];
+        $userId = auth()->id();
+
+        // Save or update to database
+        $analysis = FinancialAnalysis::updateOrCreate(
+            [
+                'user_id' => $userId,
+                'periode' => $validated['periode'],
+            ],
+            [
+                'pemasukan' => (float) $validated['pemasukan'],
+                'kebutuhan_pokok' => (float) $validated['kebutuhan_pokok'],
+                'transportasi' => (float) $validated['transportasi'],
+                'cicilan' => (float) $validated['cicilan'],
+                'gaya_hidup' => (float) $validated['gaya_hidup'],
+                'tabungan' => (float) $validated['tabungan'],
+                'investasi' => (float) $validated['investasi'],
+                'dana_darurat' => (float) $validated['dana_darurat'],
+                'target_tabungan' => $validated['target_tabungan'] !== null ? (float) $validated['target_tabungan'] : null,
+            ]
+        );
+
+        $result = $this->calculateResults($analysis->toArray());
+
+        $history = FinancialAnalysis::where('user_id', $userId)
+            ->orderBy('periode', 'asc')
+            ->get()
+            ->map(function ($item) {
+                $item->calculated = $this->calculateResults($item->toArray());
+                return $item;
+            });
+
+        return view('smart_finance', [
+            'result' => $result,
+            'categories' => $this->expenseCategories(),
+            'history' => $history,
+        ]);
+    }
+
+    public function destroy($id)
+    {
+        $userId = auth()->id();
+        $analysis = FinancialAnalysis::where('user_id', $userId)->findOrFail($id);
+        $analysis->delete();
+
+        return redirect()->route('finance.index')->with('success', 'Riwayat analisis berhasil dihapus.');
+    }
+
+    private function calculateResults(array $data): array
+    {
+        $income = (float) $data['pemasukan'];
         $expenses = [
-            'Kebutuhan pokok' => (float) $validated['kebutuhan_pokok'],
-            'Transportasi' => (float) $validated['transportasi'],
-            'Cicilan/utang' => (float) $validated['cicilan'],
-            'Gaya hidup' => (float) $validated['gaya_hidup'],
+            'Kebutuhan pokok' => (float) $data['kebutuhan_pokok'],
+            'Transportasi' => (float) $data['transportasi'],
+            'Cicilan/utang' => (float) $data['cicilan'],
+            'Gaya hidup' => (float) $data['gaya_hidup'],
         ];
-        $saving = (float) $validated['tabungan'];
-        $investment = (float) $validated['investasi'];
-        $emergencyFund = (float) $validated['dana_darurat'];
-        $targetSaving = (float) ($validated['target_tabungan'] ?? 0);
+        $saving = (float) $data['tabungan'];
+        $investment = (float) $data['investasi'];
+        $emergencyFund = (float) $data['dana_darurat'];
+        $targetSaving = (float) ($data['target_tabungan'] ?? 0);
 
         $totalExpenses = array_sum($expenses);
         $totalAllocation = $totalExpenses + $saving + $investment;
@@ -81,30 +150,27 @@ class FinanceController extends BaseController
             $emergencyMonths
         );
 
-        return view('smart_finance', [
-            'result' => [
-                'periode' => $validated['periode'],
-                'income' => $income,
-                'expenses' => $expenses,
-                'total_expenses' => $totalExpenses,
-                'saving' => $saving,
-                'investment' => $investment,
-                'total_saving_investment' => $saving + $investment,
-                'emergency_fund' => $emergencyFund,
-                'target_saving' => $targetSaving,
-                'total_allocation' => $totalAllocation,
-                'net_cashflow' => $netCashflow,
-                'expense_ratio' => $expenseRatio,
-                'saving_ratio' => $savingRatio,
-                'debt_ratio' => $debtRatio,
-                'emergency_months' => $emergencyMonths,
-                'months_to_target' => $monthsToTarget,
-                'status' => $assessment['status'],
-                'status_class' => $assessment['class'],
-                'recommendations' => $assessment['recommendations'],
-            ],
-            'categories' => $this->expenseCategories(),
-        ]);
+        return [
+            'periode' => $data['periode'],
+            'income' => $income,
+            'expenses' => $expenses,
+            'total_expenses' => $totalExpenses,
+            'saving' => $saving,
+            'investment' => $investment,
+            'total_saving_investment' => $saving + $investment,
+            'emergency_fund' => $emergencyFund,
+            'target_saving' => $targetSaving,
+            'total_allocation' => $totalAllocation,
+            'net_cashflow' => $netCashflow,
+            'expense_ratio' => $expenseRatio,
+            'saving_ratio' => $savingRatio,
+            'debt_ratio' => $debtRatio,
+            'emergency_months' => $emergencyMonths,
+            'months_to_target' => $monthsToTarget,
+            'status' => $assessment['status'],
+            'status_class' => $assessment['class'],
+            'recommendations' => $assessment['recommendations'],
+        ];
     }
 
     private function expenseCategories(): array
