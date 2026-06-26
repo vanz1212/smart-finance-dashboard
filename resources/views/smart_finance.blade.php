@@ -698,18 +698,166 @@
             background: rgba(251, 113, 133, 0.06);
         }
 
-        .debt-tag {
-            display: inline-block;
-            margin-left: 6px;
-            padding: 1px 5px;
-            border-radius: 4px;
-            background: rgba(251, 113, 133, 0.18);
-            color: #fb7185;
-            font-size: 0.68rem;
-            font-weight: 900;
-            vertical-align: middle;
+        /* ── Category template selector ───────────────────── */
+        .template-selector {
+            margin-bottom: 16px;
         }
-        /* Full-page refinement shared with standalone module pages. */
+
+        .template-label {
+            color: rgba(248, 250, 252, 0.72);
+            font-size: 0.82rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .template-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .template-btn {
+            padding: 10px 12px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.06);
+            color: rgba(248, 250, 252, 0.72);
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 700;
+            transition: all 0.18s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .template-btn:hover {
+            border-color: rgba(20, 184, 166, 0.4);
+            background: rgba(20, 184, 166, 0.08);
+            color: #14b8a6;
+        }
+
+        .template-name {
+            font-weight: 800;
+            display: block;
+        }
+
+        .template-desc {
+            font-size: 0.65rem;
+            color: rgba(248, 250, 252, 0.5);
+            display: block;
+        }
+
+        /* ── Category recommendations panel ──────────────── */
+        .recommendations-panel {
+            margin-top: 22px;
+            padding: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .recommendations-title {
+            margin: 0 0 12px;
+            font-size: 0.95rem;
+            font-weight: 800;
+        }
+
+        .recommendation-item {
+            display: grid;
+            grid-template-columns: minmax(140px, 1fr) auto;
+            gap: 12px;
+            padding: 10px 12px;
+            margin-bottom: 8px;
+            border-left: 3px solid;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.04);
+            font-size: 0.82rem;
+        }
+
+        .recommendation-item.ok {
+            border-left-color: #14b8a6;
+        }
+
+        .recommendation-item.warning {
+            border-left-color: #f3c969;
+        }
+
+        .recommendation-item.critical {
+            border-left-color: #fb7185;
+        }
+
+        .recommendation-content {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .recommendation-label {
+            color: rgba(248, 250, 252, 0.78);
+            font-weight: 700;
+        }
+
+        .recommendation-text {
+            color: rgba(248, 250, 252, 0.6);
+            font-size: 0.75rem;
+            line-height: 1.4;
+        }
+
+        .recommendation-badge {
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            white-space: nowrap;
+            text-align: center;
+        }
+
+        .recommendation-badge.ok {
+            background: rgba(20, 184, 166, 0.2);
+            color: #14b8a6;
+        }
+
+        .recommendation-badge.warning {
+            background: rgba(243, 201, 105, 0.2);
+            color: #f3c969;
+        }
+
+        .recommendation-badge.critical {
+            background: rgba(251, 113, 133, 0.2);
+            color: #fb7185;
+        }
+
+        /* ── Category trend chart ────────────────────────── */
+        .category-trend-wrapper {
+            background: rgba(6, 24, 32, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 22px;
+            position: relative;
+            min-height: 300px;
+        }
+
+        .category-trend-wrapper canvas {
+            max-height: 280px;
+        }
+
+        @media (max-width: 900px) {
+            .template-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .recommendation-item {
+                grid-template-columns: 1fr;
+            }
+        }
         html,
         body {
             width: 100%;
@@ -919,6 +1067,22 @@
                         <label><span>Total pemasukan</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input name="pemasukan" value="{{ $formatRupiahInput(old('pemasukan', $result['income'] ?? '')) }}" inputmode="numeric" autocomplete="off" required></div></label>
                     </div>
 
+                    {{-- Template selector for expense categories --}}
+                    @if (isset($templates) && count($templates) > 0)
+                    <div class="template-selector">
+                        <label class="template-label">Gunakan Template Kategori (Opsional)</label>
+                        <div class="template-grid">
+                            @foreach ($templates as $template)
+                                <button type="button" class="template-btn" data-template-id="{{ $template['id'] ?? '' }}" title="{{ $template['description'] ?? '' }}">
+                                    <span class="template-name">{{ $template['name'] }}</span>
+                                    <span class="template-desc">{{ $template['type'] }}</span>
+                                </button>
+                            @endforeach
+                        </div>
+                        <span style="font-size: 0.75rem; color: rgba(248,250,252,0.5);">Pilih template untuk otomatis mengisi kategori pengeluaran</span>
+                    </div>
+                    @endif
+
                     <div class="expense-section">
                         <div class="expense-section-header">
                             <span class="expense-section-label">Kategori Pengeluaran</span>
@@ -974,6 +1138,24 @@
                                 @endforeach
                             </ul>
                         </div>
+
+                        @if (!empty($recommendations))
+                        <div class="recommendations-panel">
+                            <h3 class="recommendations-title">Rekomendasi Kategori Pengeluaran</h3>
+                            @foreach ($recommendations as $rec)
+                                <div class="recommendation-item {{ $rec['status'] }}">
+                                    <div class="recommendation-content">
+                                        <span class="recommendation-label">{{ $rec['category_name'] }}</span>
+                                        <span class="recommendation-text">{{ $rec['reason'] }}</span>
+                                    </div>
+                                    <div style="display: flex; flex-direction: column; gap: 4px; align-items: flex-end; justify-content: center;">
+                                        <span class="recommendation-badge {{ $rec['status'] }}">{{ ucfirst($rec['status']) }}</span>
+                                        <span style="font-size: 0.75rem; color: rgba(248,250,252,0.6);">{{ number_format($rec['actual_ratio'], 1) }}%</span>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                        @endif
                     @else
                         <div class="empty-state">
                             <h3>Belum ada analisa</h3>
@@ -1062,6 +1244,19 @@
                         </div>
                     </div>
                 </section>
+
+                @if (!empty($categoryHistory))
+                <section class="workspace-panel workspace-panel-inner">
+                    <div class="panel-heading">
+                        <h2>Tren Kategori Pengeluaran</h2>
+                        <p>Perbandingan perubahan kategori pengeluaran dalam 6 bulan terakhir.</p>
+                    </div>
+
+                    <div class="category-trend-wrapper">
+                        <canvas id="categoryTrendChart"></canvas>
+                    </div>
+                </section>
+                @endif
             @endif
 
             @if (isset($history) && count($history) > 0)
@@ -1538,6 +1733,232 @@
                     field.value = field.value.replace(/[^0-9]/g, '');
                 });
             });
+        });
+    </script>
+
+    {{-- ── Template selector and category trend chart ──────── --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Template selector functionality
+            var templateBtns = document.querySelectorAll('.template-btn');
+            var incomeInput = document.querySelector('input[name="pemasukan"]');
+            var expenseList = document.getElementById('expense-list');
+
+            if (templateBtns.length > 0 && incomeInput && expenseList) {
+                templateBtns.forEach(function (btn) {
+                    btn.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        
+                        var templateId = this.getAttribute('data-template-id');
+                        var income = parseFloat(incomeInput.value.replace(/[^0-9]/g, '')) || 0;
+
+                        if (income <= 0) {
+                            alert('Silakan masukkan total pemasukan terlebih dahulu');
+                            return;
+                        }
+
+                        fetch('{{ route("finance.apply-template") }}', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || '{{ csrf_token() }}'
+                            },
+                            body: JSON.stringify({
+                                template_id: templateId,
+                                income: income
+                            })
+                        })
+                        .then(function(res) { return res.json(); })
+                        .then(function(data) {
+                            if (data.error) {
+                                alert(data.error);
+                                return;
+                            }
+
+                            // Clear existing rows
+                            expenseList.innerHTML = '';
+
+                            // Add new rows from template
+                            var rowIndex = 0;
+                            var PALETTE = [
+                                '#14b8a6','#6366f1','#fb7185','#f3c969',
+                                '#10b981','#38bdf8','#f97316','#a78bfa',
+                                '#34d399','#fbbf24','#e879f9','#60a5fa'
+                            ];
+
+                            function formatRp(val) {
+                                var digits = String(val || '').replace(/[^0-9]/g, '');
+                                if (!digits) return '';
+                                return digits.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+                            }
+
+                            function escHtml(s) {
+                                return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+                            }
+
+                            data.expenses.forEach(function(expense) {
+                                var idx = rowIndex++;
+                                var row = document.createElement('div');
+                                row.className = 'expense-row';
+                                row.dataset.index = idx;
+
+                                var color = PALETTE[idx % PALETTE.length];
+                                var amount = formatRp(String(expense.amount || 0));
+                                var isDebt = expense.is_debt ? ' checked' : '';
+
+                                row.innerHTML =
+                                    '<input type="text" name="expenses[' + idx + '][name]" value="' + escHtml(expense.name) + '" placeholder="Nama kategori" autocomplete="off" required>' +
+                                    '<div class="money-field" style="position:relative;">' +
+                                        '<span class="money-prefix">Rp</span>' +
+                                        '<input type="text" name="expenses[' + idx + '][amount]" value="' + escHtml(amount) + '" class="expense-amount" inputmode="numeric" autocomplete="off" required style="padding-left:42px;">' +
+                                    '</div>' +
+                                    '<label class="debt-toggle" title="Tandai sebagai cicilan/utang">' +
+                                        '<input type="checkbox" name="expenses[' + idx + '][is_debt]" value="1"' + isDebt + '>' +
+                                        'Cicilan' +
+                                    '</label>' +
+                                    '<button type="button" class="btn-remove-expense" title="Hapus kategori">✕</button>';
+
+                                row.style.borderLeft = '3px solid ' + color;
+                                row.style.paddingLeft = '8px';
+
+                                var amountInput = row.querySelector('.expense-amount');
+                                amountInput.addEventListener('input', function() {
+                                    var cursor = this.selectionStart;
+                                    var before = this.value.length;
+                                    this.value = formatRp(this.value);
+                                    var diff = this.value.length - before;
+                                    try { this.setSelectionRange(cursor + diff, cursor + diff); } catch(e) {}
+                                });
+
+                                row.querySelector('.btn-remove-expense').addEventListener('click', function () {
+                                    row.style.opacity = '0';
+                                    row.style.transform = 'translateY(-6px)';
+                                    row.style.transition = 'opacity 0.18s, transform 0.18s';
+                                    setTimeout(function() { row.remove(); }, 180);
+                                });
+
+                                expenseList.appendChild(row);
+                            });
+                        })
+                        .catch(function(err) {
+                            console.error('Error applying template:', err);
+                            alert('Gagal menerapkan template');
+                        });
+                    });
+                });
+            }
+
+            // Category trend chart
+            var categoryTrendCanvas = document.getElementById('categoryTrendChart');
+            if (categoryTrendCanvas && typeof Chart !== 'undefined') {
+                var categoryHistory = {!! json_encode($categoryHistory ?? []) !!};
+                var monthsMap = {
+                    '01': 'Jan', '02': 'Feb', '03': 'Mar', '04': 'Apr',
+                    '05': 'Mei', '06': 'Jun', '07': 'Jul', '08': 'Agt',
+                    '09': 'Sep', '10': 'Okt', '11': 'Nov', '12': 'Des'
+                };
+
+                if (Object.keys(categoryHistory).length > 0) {
+                    var categories = Object.keys(categoryHistory);
+                    var datasets = [];
+                    var colors = [
+                        '#14b8a6','#6366f1','#fb7185','#f3c969',
+                        '#10b981','#38bdf8','#f97316','#a78bfa',
+                        '#34d399','#fbbf24','#e879f9','#60a5fa'
+                    ];
+
+                    // Get all periode labels from the first category
+                    var labels = [];
+                    if (categories.length > 0) {
+                        labels = categoryHistory[categories[0]].map(function(item) {
+                            var parts = item.periode.split('-');
+                            if (parts.length === 2 && monthsMap[parts[1]]) {
+                                return monthsMap[parts[1]] + ' ' + parts[0];
+                            }
+                            return item.periode;
+                        });
+                    }
+
+                    // Create datasets for each category
+                    categories.forEach(function(cat, idx) {
+                        var amounts = categoryHistory[cat].map(function(item) { return item.amount; });
+                        datasets.push({
+                            label: cat,
+                            data: amounts,
+                            borderColor: colors[idx % colors.length],
+                            backgroundColor: 'transparent',
+                            borderWidth: 2.5,
+                            tension: 0.3,
+                            fill: false
+                        });
+                    });
+
+                    new Chart(categoryTrendCanvas.getContext('2d'), {
+                        type: 'line',
+                        data: {
+                            labels: labels,
+                            datasets: datasets
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    labels: {
+                                        color: '#f8fafc',
+                                        font: {
+                                            family: "'Outfit', 'Inter', sans-serif",
+                                            weight: 'bold',
+                                            size: 11
+                                        }
+                                    }
+                                },
+                                tooltip: {
+                                    backgroundColor: 'rgba(13, 47, 51, 0.95)',
+                                    titleColor: '#f3c969',
+                                    bodyColor: '#ffffff',
+                                    borderColor: 'rgba(255, 255, 255, 0.1)',
+                                    borderWidth: 1,
+                                    padding: 12,
+                                    callbacks: {
+                                        label: function (context) {
+                                            let label = context.dataset.label || '';
+                                            if (label) {
+                                                label += ': ';
+                                            }
+                                            if (context.parsed.y !== null) {
+                                                label += new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(context.parsed.y);
+                                            }
+                                            return label;
+                                        }
+                                    }
+                                }
+                            },
+                            scales: {
+                                x: {
+                                    grid: {
+                                        color: 'rgba(255, 255, 255, 0.06)'
+                                    },
+                                    ticks: {
+                                        color: '#94a3b8'
+                                    }
+                                },
+                                y: {
+                                    grid: {
+                                        color: 'rgba(255, 255, 255, 0.06)'
+                                    },
+                                    ticks: {
+                                        color: '#94a3b8',
+                                        callback: function (value) {
+                                            return 'Rp ' + new Intl.NumberFormat('id-ID', { notation: 'compact' }).format(value);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+            }
         });
     </script>
 @endsection

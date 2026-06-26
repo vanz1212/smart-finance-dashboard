@@ -1006,11 +1006,16 @@
                                 <span data-label="Halaman"><strong>Stata</strong> Korelasi, regresi linear, dan statistik deskriptif.</span>
                                 <span data-label="Kategori">Economic Stats</span><span data-label="Fitur">3 modules</span><span data-label="Prioritas">Research</span><span data-label="Status" class="status-pill">READY</span>
                             </a>
+                            <a class="table-row" href="{{ route('targets.index') }}">
+                                <span data-label="Kode">FT-04</span>
+                                <span data-label="Halaman"><strong>Target Finansial</strong> Buat dan monitor target finansial dengan tracking progres real-time dan rekomendasi setoran.</span>
+                                <span data-label="Kategori">Financial Goals</span><span data-label="Fitur">CRUD + Tracking</span><span data-label="Prioritas">Planning</span><span data-label="Status" class="status-pill">READY</span>
+                            </a>
                         </div>
 
                         <div class="quick-stats">
-                            <div class="quick-card"><span>Total Halaman</span><strong>3</strong></div>
-                            <div class="quick-card"><span>Dashboard Ready</span><strong>3</strong></div>
+                            <div class="quick-card"><span>Total Halaman</span><strong>4</strong></div>
+                            <div class="quick-card"><span>Dashboard Ready</span><strong>4</strong></div>
                             <div class="quick-card"><span>Analisis Statistik</span><strong>1</strong></div>
                         </div>
                     </div>

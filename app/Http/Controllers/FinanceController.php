@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\FinancialAnalysis;
+use App\Models\ExpenseCategoryTemplate;
+use App\Models\ExpenseCategoryRecommendation;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 
@@ -21,17 +23,35 @@ class FinanceController extends BaseController
             });
 
         $result = null;
+        $recommendations = [];
+        $categoryHistory = [];
+        
         if ($request->has('load_id')) {
             $loadedAnalysis = FinancialAnalysis::where('user_id', $userId)->find($request->input('load_id'));
             if ($loadedAnalysis) {
                 $result = $this->calculateResults($loadedAnalysis->toArray());
+                $recommendations = $this->generateCategoryRecommendations($result);
+                $categoryHistory = $this->getCategoryHistory($userId, 6);
+            }
+        } elseif ($history->count() > 0) {
+            // If no specific load_id, use the latest analysis
+            $latestAnalysis = $history->last();
+            if ($latestAnalysis) {
+                $result = $latestAnalysis->calculated;
+                $recommendations = $this->generateCategoryRecommendations($result);
+                $categoryHistory = $this->getCategoryHistory($userId, 6);
             }
         }
+
+        $templates = $this->getCategoryTemplates();
 
         return view('smart_finance', [
             'result' => $result,
             'categories' => $this->expenseCategories(),
             'history' => $history,
+            'templates' => $templates,
+            'recommendations' => $recommendations,
+            'categoryHistory' => $categoryHistory,
         ]);
     }
 
@@ -159,11 +179,49 @@ class FinanceController extends BaseController
                 return $item;
             });
 
+        $recommendations = $this->generateCategoryRecommendations($result);
+        $categoryHistory = $this->getCategoryHistory($userId, 6);
+        $templates = $this->getCategoryTemplates();
+
         return view('smart_finance', [
             'result'     => $result,
             'categories' => $this->expenseCategories(),
             'history'    => $history,
+            'templates'  => $templates,
+            'recommendations' => $recommendations,
+            'categoryHistory' => $categoryHistory,
         ]);
+    }
+
+    public function getTemplates()
+    {
+        $templates = $this->getCategoryTemplates();
+        return response()->json($templates);
+    }
+
+    public function applyTemplate(Request $request)
+    {
+        $templateId = $request->input('template_id');
+        $template = ExpenseCategoryTemplate::find($templateId);
+        
+        if (!$template) {
+            return response()->json(['error' => 'Template tidak ditemukan'], 404);
+        }
+
+        $income = (float) ($request->input('income') ?? 0);
+        
+        // Generate expense items based on template ratios and income
+        $expenseItems = [];
+        foreach ($template->categories as $category) {
+            $amount = ($income * $category['ratio_percent']) / 100;
+            $expenseItems[] = [
+                'name' => $category['name'],
+                'amount' => round($amount, 2),
+                'is_debt' => $category['is_debt'] ?? false,
+            ];
+        }
+
+        return response()->json(['expenses' => $expenseItems]);
     }
 
     public function destroy($id)
@@ -341,4 +399,117 @@ class FinanceController extends BaseController
 
         return compact('status', 'class', 'recommendations');
     }
+
+    private function getCategoryTemplates(): array
+    {
+        $templates = ExpenseCategoryTemplate::where('is_default', true)
+            ->orderBy('order')
+            ->get()
+            ->map(function ($template) {
+                return [
+                    'id' => $template->id,
+                    'name' => $template->name,
+                    'description' => $template->description,
+                    'type' => $template->type,
+                    'categories' => $template->categories,
+                ];
+            })
+            ->toArray();
+
+        // If no default templates exist, return predefined ones
+        if (empty($templates)) {
+            $defaults = ExpenseCategoryTemplate::getDefaults();
+            return array_map(function ($default) {
+                return array_merge(['id' => null], $default);
+            }, $defaults);
+        }
+
+        return $templates;
+    }
+
+    private function generateCategoryRecommendations(array $result): array
+    {
+        $income = $result['income'];
+        $recommendations = [];
+
+        // Define ideal ratios for each expense type
+        $idealRatios = [
+            'Kebutuhan pokok' => ['min' => 0.25, 'max' => 0.40, 'ideal' => 0.35],
+            'Transportasi' => ['min' => 0.05, 'max' => 0.15, 'ideal' => 0.10],
+            'Cicilan/utang' => ['min' => 0, 'max' => 0.30, 'ideal' => 0.15],
+            'Gaya hidup' => ['min' => 0.05, 'max' => 0.15, 'ideal' => 0.10],
+        ];
+
+        foreach ($result['expense_items'] as $item) {
+            $categoryName = $item['name'];
+            $actualAmount = (float) $item['amount'];
+            $actualRatio = $income > 0 ? ($actualAmount / $income) : 0;
+
+            $ideal = $idealRatios[$categoryName] ?? ['min' => 0, 'max' => 0.20, 'ideal' => 0.10];
+            $recommendedAmount = $income * $ideal['ideal'];
+
+            $status = 'ok';
+            $idealPercent = $ideal['ideal'] * 100;
+            $reason = "Sesuai dengan standar rekomendasi ({$idealPercent}% dari pemasukan).";
+
+            if ($actualRatio > $ideal['max']) {
+                $status = 'critical';
+                $maxPercent = $ideal['max'] * 100;
+                $exceedPercent = ($actualRatio - $ideal['max']) * 100;
+                $reason = "Pengeluaran melebihi batas maksimal ({$maxPercent}%). Kurangi sebesar " . 
+                    number_format($exceedPercent, 1) . "% dari pemasukan.";
+            } elseif ($actualRatio > $ideal['ideal'] && $actualRatio <= $ideal['max']) {
+                $status = 'warning';
+                $idealPercent = $ideal['ideal'] * 100;
+                $reason = "Pengeluaran lebih tinggi dari ideal. Pertimbangkan untuk mengurangi hingga {$idealPercent}%.";
+            } elseif ($actualRatio < $ideal['min'] && $ideal['min'] > 0) {
+                // This is usually OK (spending less than min)
+                $status = 'ok';
+                $reason = "Pengeluaran lebih rendah dari rekomendasi. Bagus!";
+            }
+
+            $recommendations[] = [
+                'category_name' => $categoryName,
+                'actual_amount' => $actualAmount,
+                'recommended_amount' => $recommendedAmount,
+                'actual_ratio' => $actualRatio * 100,
+                'ideal_ratio' => $ideal['ideal'] * 100,
+                'status' => $status,
+                'reason' => $reason,
+            ];
+        }
+
+        return $recommendations;
+    }
+
+    private function getCategoryHistory($userId, $months = 6): array
+    {
+        $history = FinancialAnalysis::where('user_id', $userId)
+            ->orderBy('periode', 'desc')
+            ->limit($months)
+            ->get()
+            ->reverse()
+            ->values();
+
+        $categoryData = [];
+
+        foreach ($history as $analysis) {
+            $calculated = $this->calculateResults($analysis->toArray());
+            
+            foreach ($calculated['expense_items'] as $item) {
+                $categoryName = $item['name'];
+                if (!isset($categoryData[$categoryName])) {
+                    $categoryData[$categoryName] = [];
+                }
+                
+                $categoryData[$categoryName][] = [
+                    'periode' => $analysis->periode,
+                    'amount' => (float) $item['amount'],
+                ];
+            }
+        }
+
+        return $categoryData;
+    }
 }
+
