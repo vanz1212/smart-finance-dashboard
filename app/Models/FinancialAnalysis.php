@@ -21,9 +21,12 @@ class FinancialAnalysis extends Model
         'cicilan',
         'gaya_hidup',
         'tabungan',
+        'saldo_tabungan',
+        'setoran_tabungan',
         'investasi',
         'dana_darurat',
         'target_tabungan',
+        'expenses_json',
     ];
 
     protected $casts = [
@@ -33,9 +36,12 @@ class FinancialAnalysis extends Model
         'cicilan' => 'float',
         'gaya_hidup' => 'float',
         'tabungan' => 'float',
+        'saldo_tabungan' => 'float',
+        'setoran_tabungan' => 'float',
         'investasi' => 'float',
         'dana_darurat' => 'float',
         'target_tabungan' => 'float',
+        'expenses_json' => 'array',
     ];
 
     public function user(): BelongsTo

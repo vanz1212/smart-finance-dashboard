@@ -516,6 +516,199 @@
                 align-items: flex-start;
             }
         }
+
+        /* ── Dynamic expense categories ──────────────────── */
+        .expense-section {
+            margin: 14px 0 0;
+        }
+
+        .expense-section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .expense-section-label {
+            color: rgba(248, 250, 252, 0.72);
+            font-size: 0.82rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .expense-section-hint {
+            color: rgba(248, 250, 252, 0.4);
+            font-size: 0.73rem;
+        }
+
+        .expense-row {
+            display: grid;
+            grid-template-columns: 1fr 1.1fr auto auto;
+            gap: 9px;
+            align-items: center;
+            margin-bottom: 9px;
+            animation: fadeInRow 0.18s ease;
+        }
+
+        @keyframes fadeInRow {
+            from { opacity: 0; transform: translateY(-6px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .expense-row input[type="text"] {
+            min-height: 44px;
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 10px;
+            padding: 10px 12px;
+            background: rgba(255, 255, 255, 0.06);
+            color: #ffffff;
+            font: inherit;
+            font-size: 0.9rem;
+        }
+
+        .expense-row input[type="text"]:focus {
+            outline: 3px solid rgba(20, 184, 166, 0.18);
+            border-color: #14b8a6;
+        }
+
+        .debt-toggle {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: rgba(248, 250, 252, 0.62);
+            font-size: 0.75rem;
+            font-weight: 700;
+            white-space: nowrap;
+            cursor: pointer;
+            padding: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.04);
+            transition: all 0.18s;
+        }
+
+        .debt-toggle:has(input:checked) {
+            border-color: rgba(251, 113, 133, 0.4);
+            background: rgba(251, 113, 133, 0.1);
+            color: #fb7185;
+        }
+
+        .debt-toggle input[type="checkbox"] {
+            accent-color: #fb7185;
+            width: 14px;
+            height: 14px;
+            cursor: pointer;
+        }
+
+        .btn-remove-expense {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border: 1px solid rgba(244, 63, 94, 0.22);
+            border-radius: 8px;
+            background: rgba(244, 63, 94, 0.07);
+            color: #fb7185;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.18s;
+            flex-shrink: 0;
+        }
+
+        .btn-remove-expense:hover {
+            background: rgba(244, 63, 94, 0.22);
+            border-color: rgba(244, 63, 94, 0.5);
+        }
+
+        .btn-add-expense {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 9px 16px;
+            margin-top: 8px;
+            border: 1px dashed rgba(255, 255, 255, 0.22);
+            border-radius: 9px;
+            background: transparent;
+            color: rgba(248, 250, 252, 0.55);
+            font: inherit;
+            font-size: 0.84rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-add-expense:hover {
+            border-color: rgba(20, 184, 166, 0.5);
+            color: #14b8a6;
+            background: rgba(20, 184, 166, 0.06);
+        }
+
+        /* ── Budget donut chart ───────────────────────────── */
+        .breakdown-layout {
+            grid-template-columns: minmax(0, 1fr) minmax(230px, 0.48fr) !important;
+        }
+
+        .chart-column {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .donut-chart-wrapper {
+            position: relative;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .donut-chart-wrapper canvas {
+            max-height: 220px;
+        }
+
+        .donut-legend {
+            margin-top: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .donut-legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.76rem;
+            color: rgba(248, 250, 252, 0.72);
+        }
+
+        .donut-legend-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .breakdown-item.is-debt {
+            border-color: rgba(251, 113, 133, 0.22);
+            background: rgba(251, 113, 133, 0.06);
+        }
+
+        .debt-tag {
+            display: inline-block;
+            margin-left: 6px;
+            padding: 1px 5px;
+            border-radius: 4px;
+            background: rgba(251, 113, 133, 0.18);
+            color: #fb7185;
+            font-size: 0.68rem;
+            font-weight: 900;
+            vertical-align: middle;
+        }
         /* Full-page refinement shared with standalone module pages. */
         html,
         body {
@@ -699,6 +892,20 @@
             <section class="workspace-grid">
                 <form class="workspace-panel workspace-panel-inner" action="{{ route('finance.analyze') }}" method="POST">
                     @csrf
+                    @php
+                        // Build initial expense rows for the dynamic form
+                        if ($result && !empty($result['expense_items'])) {
+                            $initialExpenses = array_values($result['expense_items']);
+                        } else {
+                            $initialExpenses = [
+                                ['name' => 'Kebutuhan pokok', 'amount' => '', 'is_debt' => false],
+                                ['name' => 'Transportasi',    'amount' => '', 'is_debt' => false],
+                                ['name' => 'Cicilan/utang',   'amount' => '', 'is_debt' => true],
+                                ['name' => 'Gaya hidup',      'amount' => '', 'is_debt' => false],
+                            ];
+                        }
+                    @endphp
+
                     <div class="panel-heading">
                         <h2>Input Bulanan</h2>
                         <p>Gunakan angka rata-rata per bulan agar analisa mudah dibandingkan.</p>
@@ -710,15 +917,31 @@
                             <input type="month" name="periode" value="{{ old('periode', $result['periode'] ?? date('Y-m')) }}" required>
                         </label>
                         <label><span>Total pemasukan</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input name="pemasukan" value="{{ $formatRupiahInput(old('pemasukan', $result['income'] ?? '')) }}" inputmode="numeric" autocomplete="off" required></div></label>
-                        <label><span>Kebutuhan pokok</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input name="kebutuhan_pokok" value="{{ $formatRupiahInput(old('kebutuhan_pokok', $result['expenses']['Kebutuhan pokok'] ?? '')) }}" inputmode="numeric" autocomplete="off" required></div></label>
-                        <label><span>Transportasi</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input name="transportasi" value="{{ $formatRupiahInput(old('transportasi', $result['expenses']['Transportasi'] ?? '')) }}" inputmode="numeric" autocomplete="off" required></div></label>
-                        <label><span>Cicilan/utang</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input name="cicilan" value="{{ $formatRupiahInput(old('cicilan', $result['expenses']['Cicilan/utang'] ?? '')) }}" inputmode="numeric" autocomplete="off" required></div></label>
-                        <label><span>Gaya hidup</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input name="gaya_hidup" value="{{ $formatRupiahInput(old('gaya_hidup', $result['expenses']['Gaya hidup'] ?? '')) }}" inputmode="numeric" autocomplete="off" required></div></label>
-                        <label><span>Tabungan</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input name="tabungan" value="{{ $formatRupiahInput(old('tabungan', $result['saving'] ?? '')) }}" inputmode="numeric" autocomplete="off" required></div></label>
+                    </div>
+
+                    <div class="expense-section">
+                        <div class="expense-section-header">
+                            <span class="expense-section-label">Kategori Pengeluaran</span>
+                            <span class="expense-section-hint">Centang <strong style="color:#fb7185">cicilan</strong> untuk tandai sebagai utang/cicilan</span>
+                        </div>
+                        <div id="expense-list"></div>
+                        <button type="button" id="add-expense-btn" class="btn-add-expense">
+                            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                            Tambah Kategori
+                        </button>
+                    </div>
+
+                    <div class="finance-form-grid" style="margin-top:16px;">
+                        <label><span>Tabungan (bulanan)</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input name="tabungan" value="{{ $formatRupiahInput(old('tabungan', $result['saving'] ?? '')) }}" inputmode="numeric" autocomplete="off" required></div></label>
+                        <label><span>Saldo tabungan saat ini</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input name="saldo_tabungan" value="{{ $formatRupiahInput(old('saldo_tabungan', $result['saldo_tabungan'] ?? '')) }}" inputmode="numeric" autocomplete="off"></div></label>
+                        <label><span>Setoran tabungan bulanan</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input name="setoran_tabungan" value="{{ $formatRupiahInput(old('setoran_tabungan', $result['setoran_tabungan'] ?? '')) }}" inputmode="numeric" autocomplete="off"></div></label>
                         <label><span>Investasi</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input name="investasi" value="{{ $formatRupiahInput(old('investasi', $result['investment'] ?? '')) }}" inputmode="numeric" autocomplete="off" required></div></label>
                         <label><span>Dana darurat</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input name="dana_darurat" value="{{ $formatRupiahInput(old('dana_darurat', $result['emergency_fund'] ?? '')) }}" inputmode="numeric" autocomplete="off" required></div></label>
                         <label><span>Target tabungan</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input name="target_tabungan" value="{{ $formatRupiahInput(old('target_tabungan', $result['target_saving'] ?? '')) }}" inputmode="numeric" autocomplete="off"></div></label>
                     </div>
+
+                    {{-- Pass initial expense data to JavaScript --}}
+                    <script id="initial-expenses-data" type="application/json">{!! json_encode($initialExpenses) !!}</script>
 
                     <button class="workspace-button" type="submit">Hitung Analisa</button>
                 </form>
@@ -761,6 +984,27 @@
             </section>
 
             @if ($result)
+                @php
+                    // Build chart data for the budget donut
+                    $chartLabels  = [];
+                    $chartAmounts = [];
+                    $chartColors  = ['#14b8a6','#6366f1','#fb7185','#f3c969','#10b981','#38bdf8','#f97316','#a78bfa','#34d399','#fbbf24','#e879f9','#60a5fa'];
+                    foreach ($result['expense_items'] as $i => $item) {
+                        $chartLabels[]  = $item['name'];
+                        $chartAmounts[] = (float) $item['amount'];
+                    }
+                    // Tabungan & Investasi
+                    if ($result['saving'] > 0 || $result['investment'] > 0) {
+                        $chartLabels[]  = 'Tabungan & Investasi';
+                        $chartAmounts[] = $result['total_saving_investment'];
+                    }
+                    // Sisa kas (net cashflow positif)
+                    if ($result['net_cashflow'] > 0) {
+                        $chartLabels[]  = 'Sisa Kas';
+                        $chartAmounts[] = $result['net_cashflow'];
+                    }
+                    $chartColorsJson = json_encode($chartColors);
+                @endphp
                 <section class="workspace-panel workspace-panel-inner breakdown-panel">
                     <div class="panel-heading">
                         <h2>Breakdown Anggaran</h2>
@@ -769,11 +1013,16 @@
 
                     <div class="breakdown-layout">
                         <div class="breakdown-list">
-                            @foreach ($result['expenses'] as $category => $amount)
-                                <div class="breakdown-item">
-                                    <span>{{ $category }}</span>
-                                    <strong>{{ $formatRupiah($amount) }}</strong>
-                                    <em>{{ $formatPercent($result['income'] > 0 ? ($amount / $result['income']) * 100 : 0) }}</em>
+                            @foreach ($result['expense_items'] as $item)
+                                <div class="breakdown-item {{ !empty($item['is_debt']) ? 'is-debt' : '' }}">
+                                    <span>
+                                        {{ $item['name'] }}
+                                        @if (!empty($item['is_debt']))
+                                            <span class="debt-tag">cicilan</span>
+                                        @endif
+                                    </span>
+                                    <strong>{{ $formatRupiah((float) $item['amount']) }}</strong>
+                                    <em>{{ $formatPercent($result['income'] > 0 ? ((float)$item['amount'] / $result['income']) * 100 : 0) }}</em>
                                 </div>
                             @endforeach
                             <div class="breakdown-item highlight">
@@ -783,15 +1032,33 @@
                             </div>
                         </div>
 
-                        <div class="goal-card">
-                            <span>Estimasi target tabungan</span>
-                            @if ($result['months_to_target'] !== null)
-                                <strong>{{ $result['months_to_target'] }} bulan</strong>
-                                <p>Dengan target {{ $formatRupiah($result['target_saving']) }}.</p>
-                            @else
-                                <strong>Belum tersedia</strong>
-                                <p>Isi target tabungan untuk menghitung estimasi waktu.</p>
-                            @endif
+                        <div class="chart-column">
+                            <div class="donut-chart-wrapper">
+                                <canvas id="budgetDonutChart"></canvas>
+                                <div class="donut-legend" id="donutLegend"></div>
+                            </div>
+
+                            <div class="goal-card">
+                                <span>Estimasi target tabungan</span>
+                                @if ($result['months_to_target'] !== null)
+                                    <strong>{{ $result['months_to_target'] }} bulan</strong>
+                                    @if ($result['saldo_tabungan'] !== null || $result['setoran_tabungan'] !== null)
+                                        <p style="margin-top:8px;line-height:1.6;color:rgba(248,250,252,0.66);font-size:0.84rem;">
+                                            Target: {{ $formatRupiah($result['target_saving']) }}<br>
+                                            Saldo saat ini: {{ $formatRupiah($result['effective_saldo']) }}<br>
+                                            Setoran/bulan: {{ $formatRupiah($result['effective_setoran']) }}
+                                            @if ($result['saldo_tabungan'] === null)
+                                                <br><em style="color:#f3c969;font-size:0.78rem;">* Isi "Saldo saat ini" untuk estimasi lebih akurat</em>
+                                            @endif
+                                        </p>
+                                    @else
+                                        <p>Target: {{ $formatRupiah($result['target_saving']) }}. Isi saldo &amp; setoran untuk estimasi lebih akurat.</p>
+                                    @endif
+                                @else
+                                    <strong>Belum tersedia</strong>
+                                    <p>Isi target tabungan dan setoran bulanan untuk menghitung estimasi waktu.</p>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -1042,6 +1309,203 @@
                 });
             });
         </script>
+    @endif
+
+    {{-- ── Dynamic expense category manager ─────────────────────────────── --}}
+    <script>
+        (function () {
+            var expenseList  = document.getElementById('expense-list');
+            var addBtn       = document.getElementById('add-expense-btn');
+            var dataEl       = document.getElementById('initial-expenses-data');
+            var form         = expenseList && expenseList.closest('form');
+
+            if (!expenseList || !addBtn) return;
+
+            var rowIndex = 0;
+
+            // ── Color palette for chart dots / row accents
+            var PALETTE = [
+                '#14b8a6','#6366f1','#fb7185','#f3c969',
+                '#10b981','#38bdf8','#f97316','#a78bfa',
+                '#34d399','#fbbf24','#e879f9','#60a5fa'
+            ];
+
+            function formatRp(val) {
+                var digits = String(val || '').replace(/[^0-9]/g, '');
+                if (!digits) return '';
+                return digits.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+            }
+
+            function normalizeAmountField(input) {
+                var cursor  = input.selectionStart;
+                var before  = input.value.length;
+                input.value = formatRp(input.value);
+                var diff    = input.value.length - before;
+                try { input.setSelectionRange(cursor + diff, cursor + diff); } catch(e) {}
+            }
+
+            function createRow(data) {
+                var idx    = rowIndex++;
+                var row    = document.createElement('div');
+                row.className = 'expense-row';
+                row.dataset.index = idx;
+
+                var color  = PALETTE[idx % PALETTE.length];
+                var isDebt = data && data.is_debt;
+                var name   = data ? (data.name || '')  : '';
+                var amount = data ? formatRp(String(data.amount || '')) : '';
+
+                row.innerHTML =
+                    '<input type="text" name="expenses[' + idx + '][name]" value="' + escHtml(name) + '" placeholder="Nama kategori" autocomplete="off" required>' +
+                    '<div class="money-field" style="position:relative;">' +
+                        '<span class="money-prefix">Rp</span>' +
+                        '<input type="text" name="expenses[' + idx + '][amount]" value="' + escHtml(amount) + '" class="expense-amount" inputmode="numeric" autocomplete="off" required style="padding-left:42px;">' +
+                    '</div>' +
+                    '<label class="debt-toggle" title="Tandai sebagai cicilan/utang">' +
+                        '<input type="checkbox" name="expenses[' + idx + '][is_debt]" value="1"' + (isDebt ? ' checked' : '') + '>' +
+                        'Cicilan' +
+                    '</label>' +
+                    '<button type="button" class="btn-remove-expense" title="Hapus kategori">✕</button>';
+
+                // Colorize left border by category index
+                row.style.borderLeft = '3px solid ' + color;
+                row.style.paddingLeft = '8px';
+
+                // Amount formatting
+                var amountInput = row.querySelector('.expense-amount');
+                amountInput.addEventListener('input', function() { normalizeAmountField(this); });
+
+                // Remove row
+                row.querySelector('.btn-remove-expense').addEventListener('click', function () {
+                    row.style.opacity = '0';
+                    row.style.transform = 'translateY(-6px)';
+                    row.style.transition = 'opacity 0.18s, transform 0.18s';
+                    setTimeout(function() { row.remove(); }, 180);
+                });
+
+                return row;
+            }
+
+            function escHtml(s) {
+                return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+            }
+
+            // Pre-populate from PHP-injected data
+            var initial = [];
+            try { initial = JSON.parse(dataEl ? dataEl.textContent : '[]'); } catch(e) {}
+            if (!Array.isArray(initial) || initial.length === 0) {
+                initial = [
+                    { name: 'Kebutuhan pokok', amount: '', is_debt: false },
+                    { name: 'Transportasi',    amount: '', is_debt: false },
+                    { name: 'Cicilan/utang',   amount: '', is_debt: true  },
+                    { name: 'Gaya hidup',      amount: '', is_debt: false },
+                ];
+            }
+            initial.forEach(function(item) { expenseList.appendChild(createRow(item)); });
+
+            // Add button
+            addBtn.addEventListener('click', function () {
+                expenseList.appendChild(createRow(null));
+                expenseList.lastElementChild.querySelector('input[type="text"]').focus();
+            });
+
+            // Strip dots from amount fields before submit
+            form && form.addEventListener('submit', function () {
+                expenseList.querySelectorAll('.expense-amount').forEach(function (inp) {
+                    inp.value = inp.value.replace(/[^0-9]/g, '');
+                });
+            });
+        })();
+    </script>
+
+    {{-- ── Budget donut chart ──────────────────────────────────────────────── --}}
+    @if ($result)
+    <script>
+        (function () {
+            var canvas = document.getElementById('budgetDonutChart');
+            if (!canvas) return;
+
+            // Ensure Chart.js is loaded (it may come from the trend chart above or we load it here)
+            function initDonut() {
+                var labels  = {!! json_encode($chartLabels) !!};
+                var amounts = {!! json_encode($chartAmounts) !!};
+                var palette = {!! $chartColorsJson !!};
+
+                // Extend palette by repeating if needed
+                var colors = labels.map(function(_, i) {
+                    // Tabungan & Investasi → emerald, Sisa Kas → dim white
+                    if (labels[i] === 'Tabungan & Investasi') return '#10b981';
+                    if (labels[i] === 'Sisa Kas')             return 'rgba(255,255,255,0.18)';
+                    return palette[i % palette.length];
+                });
+
+                var total = amounts.reduce(function(s, v) { return s + v; }, 0);
+
+                var chart = new Chart(canvas.getContext('2d'), {
+                    type: 'doughnut',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            data: amounts,
+                            backgroundColor: colors,
+                            borderColor: 'rgba(6,24,32,0.8)',
+                            borderWidth: 2,
+                            hoverOffset: 6,
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        cutout: '62%',
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                backgroundColor: 'rgba(13,47,51,0.95)',
+                                titleColor: '#f3c969',
+                                bodyColor: '#ffffff',
+                                borderColor: 'rgba(255,255,255,0.1)',
+                                borderWidth: 1,
+                                padding: 10,
+                                callbacks: {
+                                    label: function(ctx) {
+                                        var pct = total > 0 ? (ctx.parsed / total * 100).toFixed(1) : '0.0';
+                                        var amt = new Intl.NumberFormat('id-ID', { style:'currency', currency:'IDR', maximumFractionDigits:0 }).format(ctx.parsed);
+                                        return ' ' + amt + '  (' + pct + '%)';
+                                    }
+                                }
+                            }
+                        },
+                        animation: { duration: 600, easing: 'easeOutQuart' },
+                    }
+                });
+
+                // Build custom legend
+                var legendEl = document.getElementById('donutLegend');
+                if (legendEl) {
+                    labels.forEach(function(lbl, i) {
+                        var pct  = total > 0 ? (amounts[i] / total * 100).toFixed(1) : '0.0';
+                        var item = document.createElement('div');
+                        item.className = 'donut-legend-item';
+                        item.innerHTML =
+                            '<span class="donut-legend-dot" style="background:' + colors[i] + ';"></span>' +
+                            '<span style="flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">' + lbl + '</span>' +
+                            '<span style="font-weight:800;color:#f8fafc;white-space:nowrap;">' + pct + '%</span>';
+                        legendEl.appendChild(item);
+                    });
+                }
+            }
+
+            // Chart.js may already be loaded (from the trend chart block above)
+            if (typeof Chart !== 'undefined') {
+                initDonut();
+            } else {
+                var s = document.createElement('script');
+                s.src = 'https://cdn.jsdelivr.net/npm/chart.js';
+                s.onload = initDonut;
+                document.head.appendChild(s);
+            }
+        })();
+    </script>
     @endif
 
     <script>
