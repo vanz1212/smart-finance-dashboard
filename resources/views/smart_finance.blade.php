@@ -33,9 +33,9 @@
             margin: -24px;
             min-height: calc(100vh - 1px);
             padding: 34px 24px 56px;
-            color: #f8fafc;
+            color: var(--text-main);
             background:
-                linear-gradient(180deg, rgba(5, 12, 15, 0.76), rgba(5, 12, 15, 0.97)),
+                linear-gradient(180deg, var(--bg-primary), var(--bg-primary)),
                 url('{{ asset('images/backgroundfinance.jpg') }}') center / cover fixed no-repeat;
         }
 
@@ -60,19 +60,19 @@
 
         .workspace-nav a {
             padding: 10px 14px;
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            border: 1px solid var(--border-color);
             border-radius: 999px;
-            color: rgba(248, 250, 252, 0.78);
+            color: var(--text-muted);
             text-decoration: none;
             font-weight: 800;
-            background: rgba(255, 255, 255, 0.05);
+            background: var(--nav-bg);
         }
 
         .workspace-nav a.is-active,
         .workspace-nav a:hover {
-            color: #052e2b;
-            background: #f3c969;
-            border-color: #f3c969;
+            color: var(--accent-hover);
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
         }
 
         .workspace-hero {
@@ -84,7 +84,7 @@
         }
 
         .workspace-kicker {
-            color: #f3c969;
+            color: var(--accent-primary);
             font-size: 0.8rem;
             font-weight: 900;
             letter-spacing: 0.12em;
@@ -101,7 +101,7 @@
         .workspace-hero p {
             max-width: 680px;
             margin: 16px 0 0;
-            color: rgba(248, 250, 252, 0.72);
+            color: var(--text-muted);
             line-height: 1.7;
         }
 
@@ -109,14 +109,14 @@
             min-width: 126px;
             padding: 12px 16px;
             border-radius: 999px;
-            color: #052e2b;
+            color: var(--accent-hover);
             text-align: center;
             font-weight: 900;
-            background: #f3c969;
+            background: var(--accent-primary);
         }
 
-        .status-success { background: #14b8a6; color: #042f2e; }
-        .status-warning { background: #f3c969; color: #422006; }
+        .status-success { background: var(--accent-primary); color: #042f2e; }
+        .status-warning { background: var(--accent-primary); color: #422006; }
         .status-danger { background: #fb7185; color: #4c0519; }
 
         .workspace-grid {
@@ -127,9 +127,9 @@
         }
 
         .workspace-panel {
-            border: 1px solid rgba(255, 255, 255, 0.14);
+            border: 1px solid var(--border-color);
             border-radius: 14px;
-            background: linear-gradient(180deg, rgba(13, 47, 51, 0.78), rgba(6, 24, 32, 0.84));
+            background: var(--bg-panel);
             box-shadow: 0 28px 80px rgba(0, 0, 0, 0.34);
             backdrop-filter: blur(16px);
         }
@@ -149,7 +149,7 @@
 
         .panel-heading p {
             margin: 8px 0 0;
-            color: rgba(248, 250, 252, 0.66);
+            color: var(--text-muted);
             line-height: 1.6;
         }
 
@@ -165,7 +165,7 @@
         }
 
         .finance-form-grid span {
-            color: rgba(248, 250, 252, 0.72);
+            color: var(--text-muted);
             font-size: 0.84rem;
             font-weight: 800;
         }
@@ -173,11 +173,11 @@
         .finance-form-grid input {
             min-height: 46px;
             width: 100%;
-            border: 1px solid rgba(255, 255, 255, 0.18);
+            border: 1px solid var(--border-color);
             border-radius: 10px;
             padding: 10px 12px;
-            background: rgba(255, 255, 255, 0.06);
-            color: #ffffff;
+            background: var(--nav-bg);
+            color: var(--text-main);
             font: inherit;
         }
 
@@ -190,7 +190,7 @@
             left: 12px;
             top: 50%;
             transform: translateY(-50%);
-            color: rgba(248, 250, 252, 0.74);
+            color: var(--text-muted);
             font-size: 0.88rem;
             font-weight: 800;
             pointer-events: none;
@@ -202,7 +202,7 @@
 
         .finance-form-grid input:focus {
             outline: 3px solid rgba(20, 184, 166, 0.18);
-            border-color: #14b8a6;
+            border-color: var(--accent-primary);
         }
 
         .workspace-button {
@@ -211,8 +211,8 @@
             margin-top: 18px;
             border: 0;
             border-radius: 999px;
-            background: #f3c969;
-            color: #052e2b;
+            background: var(--accent-primary);
+            color: var(--accent-hover);
             cursor: pointer;
             font: inherit;
             font-weight: 900;
@@ -226,9 +226,9 @@
 
         .metric-tile {
             padding: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            border: 1px solid var(--border-color);
             border-radius: 12px;
-            background: rgba(255, 255, 255, 0.06);
+            background: var(--nav-bg);
         }
 
         .metric-tile span,
@@ -242,7 +242,7 @@
 
         .metric-tile strong,
         .goal-card strong {
-            color: #ffffff;
+            color: var(--text-main);
             font-size: 1.1rem;
         }
 
@@ -257,7 +257,7 @@
             justify-content: space-between;
             gap: 12px;
             margin-bottom: 8px;
-            color: rgba(248, 250, 252, 0.74);
+            color: var(--text-muted);
         }
 
         .track {
@@ -271,10 +271,10 @@
             display: block;
             height: 100%;
             border-radius: inherit;
-            background: #f3c969;
+            background: var(--accent-primary);
         }
 
-        .track.good span { background: #14b8a6; }
+        .track.good span { background: var(--accent-primary); }
         .track.debt span { background: #fb7185; }
 
         .insight-box,
@@ -282,9 +282,9 @@
         .goal-card {
             margin-top: 22px;
             padding: 18px;
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            border: 1px solid var(--border-color);
             border-radius: 12px;
-            background: rgba(255, 255, 255, 0.06);
+            background: var(--nav-bg);
         }
 
         .insight-box h3,
@@ -295,7 +295,7 @@
         .insight-box ul {
             margin: 0;
             padding-left: 20px;
-            color: rgba(248, 250, 252, 0.72);
+            color: var(--text-muted);
             line-height: 1.75;
         }
 
@@ -319,13 +319,13 @@
             grid-template-columns: minmax(140px, 1fr) minmax(120px, auto) minmax(74px, auto);
             gap: 12px;
             padding: 13px 14px;
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            border: 1px solid var(--border-color);
             border-radius: 10px;
-            background: rgba(255, 255, 255, 0.06);
+            background: var(--nav-bg);
         }
 
         .breakdown-item em {
-            color: #f3c969;
+            color: var(--accent-primary);
             font-style: normal;
             font-weight: 900;
             text-align: right;
@@ -354,17 +354,17 @@
         .chart-filter-controls {
             display: flex;
             gap: 8px;
-            background: rgba(255, 255, 255, 0.05);
+            background: var(--nav-bg);
             padding: 4px;
             border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border-color);
         }
 
         .btn-filter {
             padding: 6px 14px;
             border-radius: 6px;
             background: transparent;
-            color: rgba(248, 250, 252, 0.72);
+            color: var(--text-muted);
             border: none;
             cursor: pointer;
             font-size: 0.8rem;
@@ -373,18 +373,18 @@
         }
 
         .btn-filter:hover {
-            color: #ffffff;
-            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-main);
+            background: var(--nav-bg);
         }
 
         .btn-filter.is-active {
-            background: #f3c969;
-            color: #052e2b;
+            background: var(--accent-primary);
+            color: var(--accent-hover);
         }
 
         .comparison-chart-wrapper {
             background: rgba(6, 24, 32, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 20px;
             margin-bottom: 28px;
@@ -403,7 +403,7 @@
         .comparison-table td {
             padding: 14px 16px;
             text-align: left;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: 1px solid var(--border-color);
         }
 
         .comparison-table th {
@@ -420,12 +420,12 @@
         }
 
         .comparison-table td {
-            color: #ffffff;
+            color: var(--text-main);
             vertical-align: middle;
         }
 
         .comparison-table td strong {
-            color: #f3c969;
+            color: var(--accent-primary);
         }
 
         .action-buttons {
@@ -437,7 +437,7 @@
         .btn-use {
             padding: 6px 12px;
             border-radius: 6px;
-            background: #14b8a6;
+            background: var(--accent-primary);
             color: #042f2e;
             text-decoration: none;
             font-weight: 800;
@@ -468,7 +468,7 @@
 
         .btn-delete:hover {
             background: rgba(244, 63, 94, 0.3);
-            color: #ffffff;
+            color: var(--text-main);
             transform: translateY(-1px);
         }
 
@@ -478,7 +478,7 @@
             background: rgba(20, 184, 166, 0.12);
             border-radius: 10px;
             margin-bottom: 24px;
-            color: #14b8a6;
+            color: var(--accent-primary);
             font-weight: 700;
         }
 
@@ -528,11 +528,11 @@
             align-items: center;
             margin-bottom: 10px;
             padding-bottom: 10px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid var(--border-color);
         }
 
         .expense-section-label {
-            color: rgba(248, 250, 252, 0.72);
+            color: var(--text-muted);
             font-size: 0.82rem;
             font-weight: 900;
             text-transform: uppercase;
@@ -561,18 +561,18 @@
         .expense-row input[type="text"] {
             min-height: 44px;
             width: 100%;
-            border: 1px solid rgba(255, 255, 255, 0.18);
+            border: 1px solid var(--border-color);
             border-radius: 10px;
             padding: 10px 12px;
-            background: rgba(255, 255, 255, 0.06);
-            color: #ffffff;
+            background: var(--nav-bg);
+            color: var(--text-main);
             font: inherit;
             font-size: 0.9rem;
         }
 
         .expense-row input[type="text"]:focus {
             outline: 3px solid rgba(20, 184, 166, 0.18);
-            border-color: #14b8a6;
+            border-color: var(--accent-primary);
         }
 
         .debt-toggle {
@@ -585,9 +585,9 @@
             white-space: nowrap;
             cursor: pointer;
             padding: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            border: 1px solid var(--border-color);
             border-radius: 8px;
-            background: rgba(255, 255, 255, 0.04);
+            background: var(--nav-bg);
             transition: all 0.18s;
         }
 
@@ -644,7 +644,7 @@
 
         .btn-add-expense:hover {
             border-color: rgba(20, 184, 166, 0.5);
-            color: #14b8a6;
+            color: var(--accent-primary);
             background: rgba(20, 184, 166, 0.06);
         }
 
@@ -661,8 +661,8 @@
 
         .donut-chart-wrapper {
             position: relative;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--nav-bg);
+            border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 16px;
         }
@@ -683,7 +683,7 @@
             align-items: center;
             gap: 8px;
             font-size: 0.76rem;
-            color: rgba(248, 250, 252, 0.72);
+            color: var(--text-muted);
         }
 
         .donut-legend-dot {
@@ -704,7 +704,7 @@
         }
 
         .template-label {
-            color: rgba(248, 250, 252, 0.72);
+            color: var(--text-muted);
             font-size: 0.82rem;
             font-weight: 900;
             text-transform: uppercase;
@@ -722,10 +722,10 @@
 
         .template-btn {
             padding: 10px 12px;
-            border: 1px solid rgba(255, 255, 255, 0.18);
+            border: 1px solid var(--border-color);
             border-radius: 8px;
-            background: rgba(255, 255, 255, 0.06);
-            color: rgba(248, 250, 252, 0.72);
+            background: var(--nav-bg);
+            color: var(--text-muted);
             cursor: pointer;
             font-size: 0.8rem;
             font-weight: 700;
@@ -739,7 +739,7 @@
         .template-btn:hover {
             border-color: rgba(20, 184, 166, 0.4);
             background: rgba(20, 184, 166, 0.08);
-            color: #14b8a6;
+            color: var(--accent-primary);
         }
 
         .template-name {
@@ -757,9 +757,9 @@
         .recommendations-panel {
             margin-top: 22px;
             padding: 18px;
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            border: 1px solid var(--border-color);
             border-radius: 12px;
-            background: rgba(255, 255, 255, 0.06);
+            background: var(--nav-bg);
         }
 
         .recommendations-title {
@@ -776,16 +776,16 @@
             margin-bottom: 8px;
             border-left: 3px solid;
             border-radius: 6px;
-            background: rgba(255, 255, 255, 0.04);
+            background: var(--nav-bg);
             font-size: 0.82rem;
         }
 
         .recommendation-item.ok {
-            border-left-color: #14b8a6;
+            border-left-color: var(--accent-primary);
         }
 
         .recommendation-item.warning {
-            border-left-color: #f3c969;
+            border-left-color: var(--accent-primary);
         }
 
         .recommendation-item.critical {
@@ -799,7 +799,7 @@
         }
 
         .recommendation-label {
-            color: rgba(248, 250, 252, 0.78);
+            color: var(--text-muted);
             font-weight: 700;
         }
 
@@ -821,12 +821,12 @@
 
         .recommendation-badge.ok {
             background: rgba(20, 184, 166, 0.2);
-            color: #14b8a6;
+            color: var(--accent-primary);
         }
 
         .recommendation-badge.warning {
             background: rgba(243, 201, 105, 0.2);
-            color: #f3c969;
+            color: var(--accent-primary);
         }
 
         .recommendation-badge.critical {
@@ -837,7 +837,7 @@
         /* ── Category trend chart ────────────────────────── */
         .category-trend-wrapper {
             background: rgba(6, 24, 32, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 20px;
             margin-top: 22px;
@@ -867,7 +867,7 @@
             background:
                 radial-gradient(circle at 82% 0%, rgba(24, 191, 117, .16), transparent 34%),
                 linear-gradient(135deg, #06191b 0%, #071f22 48%, #091011 100%) !important;
-            color: #f8fafc;
+            color: var(--text-main);
         }
 
         body {
@@ -1111,9 +1111,16 @@
                 </form>
 
                 <div class="workspace-panel workspace-panel-inner">
-                    <div class="panel-heading">
-                        <h2>Ringkasan Hasil</h2>
-                        <p>{{ $result ? 'Periode ' . $translatePeriode($result['periode']) : 'Hasil akan tampil setelah data dihitung.' }}</p>
+                    <div class="panel-heading" style="display: flex; justify-content: space-between; align-items: flex-start;">
+                        <div>
+                            <h2>Ringkasan Hasil</h2>
+                            <p>{{ $result ? 'Periode ' . $translatePeriode($result['periode']) : 'Hasil akan tampil setelah data dihitung.' }}</p>
+                        </div>
+                        @if ($result && isset($request) && $request->has('load_id'))
+                            <a href="{{ route('finance.export-pdf', $request->input('load_id')) }}" class="btn-use" style="background: #ef4444; color: white;" target="_blank">Export PDF</a>
+                        @elseif ($result && $history->last())
+                            <a href="{{ route('finance.export-pdf', $history->last()->id) }}" class="btn-use" style="background: #ef4444; color: white;" target="_blank">Export PDF</a>
+                        @endif
                     </div>
 
                     @if ($result)
@@ -1162,6 +1169,96 @@
                             <p>Isi form di sebelah kiri untuk melihat status keuangan, rasio, dan rekomendasi otomatis.</p>
                         </div>
                     @endif
+
+                    @if ($result)
+                    <!-- What-If Simulation -->
+                    <div class="insight-box" style="background: rgba(20, 184, 166, 0.05); border-color: rgba(20, 184, 166, 0.3);">
+                        <h3 style="color: var(--accent-primary); margin-bottom: 15px;">Simulasi "What-If" (Eksperimen)</h3>
+                        <p style="font-size: 0.85rem; color: rgba(248, 250, 252, 0.7); margin-bottom: 20px;">
+                            Geser slider di bawah ini untuk melihat dampak mengurangi gaya hidup atau mempercepat cicilan terhadap sisa kas (arus kas bersih) Anda secara instan.
+                        </p>
+                        
+                        <div style="display: grid; gap: 20px; margin-bottom: 20px;">
+                            <!-- Slider 1: Kurangi Gaya Hidup -->
+                            <div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                    <label style="font-size: 0.85rem; font-weight: bold;">Kurangi Pengeluaran (Gaya Hidup/Lainnya)</label>
+                                    <span id="sim-expense-val" style="color: var(--accent-primary); font-weight: bold;">0%</span>
+                                </div>
+                                <input type="range" id="sim-expense-slider" min="0" max="50" step="5" value="0" style="width: 100%; accent-color: var(--accent-primary);">
+                            </div>
+                            
+                            <!-- Slider 2: Kurangi Cicilan -->
+                            <div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                    <label style="font-size: 0.85rem; font-weight: bold;">Kurangi Cicilan/Utang</label>
+                                    <span id="sim-debt-val" style="color: var(--accent-primary); font-weight: bold;">0%</span>
+                                </div>
+                                <input type="range" id="sim-debt-slider" min="0" max="50" step="5" value="0" style="width: 100%; accent-color: var(--accent-primary);">
+                            </div>
+                        </div>
+                        
+                        <div style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px; border: 1px dashed rgba(255,255,255,0.2);">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                                <span style="font-size: 0.9rem; color: rgba(255,255,255,0.7);">Proyeksi Arus Kas Bersih:</span>
+                                <strong id="sim-net-cashflow" style="font-size: 1.2rem; color: {{ $result['net_cashflow'] < 0 ? '#ef4444' : '#10b981' }}">{{ $formatRupiah($result['net_cashflow']) }}</strong>
+                            </div>
+                            <div style="font-size: 0.8rem; color: var(--accent-primary);" id="sim-impact-text">
+                                Sesuaikan slider untuk melihat simulasi.
+                            </div>
+                        </div>
+                        
+                        <input type="hidden" id="sim-base-cashflow" value="{{ $result['net_cashflow'] }}">
+                        <input type="hidden" id="sim-base-expense" value="{{ $result['total_expenses'] }}">
+                        <input type="hidden" id="sim-base-debt" value="{{ array_sum(array_column(array_filter($result['expense_items'], fn($i) => !empty($i['is_debt'])), 'amount')) }}">
+                        
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                const expenseSlider = document.getElementById('sim-expense-slider');
+                                const debtSlider = document.getElementById('sim-debt-slider');
+                                const expenseVal = document.getElementById('sim-expense-val');
+                                const debtVal = document.getElementById('sim-debt-val');
+                                const netCashflowLabel = document.getElementById('sim-net-cashflow');
+                                const impactText = document.getElementById('sim-impact-text');
+                                
+                                const baseCashflow = parseFloat(document.getElementById('sim-base-cashflow').value);
+                                const baseExpense = parseFloat(document.getElementById('sim-base-expense').value);
+                                const baseDebt = parseFloat(document.getElementById('sim-base-debt').value);
+                                const baseNonDebtExpense = baseExpense - baseDebt;
+                                
+                                function formatRp(num) {
+                                    return 'Rp ' + new Intl.NumberFormat('id-ID').format(Math.round(num));
+                                }
+                                
+                                function updateSimulation() {
+                                    const expPct = parseInt(expenseSlider.value);
+                                    const debtPct = parseInt(debtSlider.value);
+                                    
+                                    expenseVal.textContent = expPct + '%';
+                                    debtVal.textContent = debtPct + '%';
+                                    
+                                    const savedFromExpense = baseNonDebtExpense * (expPct / 100);
+                                    const savedFromDebt = baseDebt * (debtPct / 100);
+                                    
+                                    const totalSaved = savedFromExpense + savedFromDebt;
+                                    const projectedCashflow = baseCashflow + totalSaved;
+                                    
+                                    netCashflowLabel.textContent = formatRp(projectedCashflow);
+                                    netCashflowLabel.style.color = projectedCashflow < 0 ? '#ef4444' : '#10b981';
+                                    
+                                    if (totalSaved > 0) {
+                                        impactText.textContent = `Hebat! Anda bisa menyelamatkan ${formatRp(totalSaved)} ekstra per bulan. Anda bisa menggunakan ini untuk investasi atau mempercepat tabungan.`;
+                                    } else {
+                                        impactText.textContent = 'Sesuaikan slider untuk melihat simulasi.';
+                                    }
+                                }
+                                
+                                expenseSlider.addEventListener('input', updateSimulation);
+                                debtSlider.addEventListener('input', updateSimulation);
+                            });
+                        </script>
+                    </div>
+                    @endif
                 </div>
             </section>
 
@@ -1170,7 +1267,7 @@
                     // Build chart data for the budget donut
                     $chartLabels  = [];
                     $chartAmounts = [];
-                    $chartColors  = ['#14b8a6','#6366f1','#fb7185','#f3c969','#10b981','#38bdf8','#f97316','#a78bfa','#34d399','#fbbf24','#e879f9','#60a5fa'];
+                    $chartColors  = ['var(--accent-primary)','#6366f1','#fb7185','var(--accent-primary)','#10b981','#38bdf8','#f97316','#a78bfa','#34d399','#fbbf24','#e879f9','#60a5fa'];
                     foreach ($result['expense_items'] as $i => $item) {
                         $chartLabels[]  = $item['name'];
                         $chartAmounts[] = (float) $item['amount'];
@@ -1230,7 +1327,7 @@
                                             Saldo saat ini: {{ $formatRupiah($result['effective_saldo']) }}<br>
                                             Setoran/bulan: {{ $formatRupiah($result['effective_setoran']) }}
                                             @if ($result['saldo_tabungan'] === null)
-                                                <br><em style="color:#f3c969;font-size:0.78rem;">* Isi "Saldo saat ini" untuk estimasi lebih akurat</em>
+                                                <br><em style="color:var(--accent-primary);font-size:0.78rem;">* Isi "Saldo saat ini" untuk estimasi lebih akurat</em>
                                             @endif
                                         </p>
                                     @else
@@ -1400,7 +1497,7 @@
                         plugins: {
                             legend: {
                                 labels: {
-                                    color: '#f8fafc',
+                                    color: 'var(--text-main)',
                                     font: {
                                         family: "'Outfit', 'Inter', sans-serif",
                                         weight: 'bold',
@@ -1410,9 +1507,9 @@
                             },
                             tooltip: {
                                 backgroundColor: 'rgba(13, 47, 51, 0.95)',
-                                titleColor: '#f3c969',
-                                bodyColor: '#ffffff',
-                                borderColor: 'rgba(255, 255, 255, 0.1)',
+                                titleColor: 'var(--accent-primary)',
+                                bodyColor: 'var(--text-main)',
+                                borderColor: 'var(--border-color)',
                                 borderWidth: 1,
                                 padding: 12,
                                 callbacks: {
@@ -1432,7 +1529,7 @@
                         scales: {
                             x: {
                                 grid: {
-                                    color: 'rgba(255, 255, 255, 0.06)'
+                                    color: 'var(--nav-bg)'
                                 },
                                 ticks: {
                                     color: '#94a3b8'
@@ -1440,7 +1537,7 @@
                             },
                             y: {
                                 grid: {
-                                    color: 'rgba(255, 255, 255, 0.06)'
+                                    color: 'var(--nav-bg)'
                                 },
                                 ticks: {
                                     color: '#94a3b8',
@@ -1520,7 +1617,7 @@
 
             // ── Color palette for chart dots / row accents
             var PALETTE = [
-                '#14b8a6','#6366f1','#fb7185','#f3c969',
+                'var(--accent-primary)','#6366f1','#fb7185','var(--accent-primary)',
                 '#10b981','#38bdf8','#f97316','#a78bfa',
                 '#34d399','#fbbf24','#e879f9','#60a5fa'
             ];
@@ -1656,8 +1753,8 @@
                             legend: { display: false },
                             tooltip: {
                                 backgroundColor: 'rgba(13,47,51,0.95)',
-                                titleColor: '#f3c969',
-                                bodyColor: '#ffffff',
+                                titleColor: 'var(--accent-primary)',
+                                bodyColor: 'var(--text-main)',
                                 borderColor: 'rgba(255,255,255,0.1)',
                                 borderWidth: 1,
                                 padding: 10,
@@ -1684,7 +1781,7 @@
                         item.innerHTML =
                             '<span class="donut-legend-dot" style="background:' + colors[i] + ';"></span>' +
                             '<span style="flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">' + lbl + '</span>' +
-                            '<span style="font-weight:800;color:#f8fafc;white-space:nowrap;">' + pct + '%</span>';
+                            '<span style="font-weight:800;color:var(--text-main);white-space:nowrap;">' + pct + '%</span>';
                         legendEl.appendChild(item);
                     });
                 }
@@ -1781,7 +1878,7 @@
                             // Add new rows from template
                             var rowIndex = 0;
                             var PALETTE = [
-                                '#14b8a6','#6366f1','#fb7185','#f3c969',
+                                'var(--accent-primary)','#6366f1','#fb7185','var(--accent-primary)',
                                 '#10b981','#38bdf8','#f97316','#a78bfa',
                                 '#34d399','#fbbf24','#e879f9','#60a5fa'
                             ];
@@ -1862,7 +1959,7 @@
                     var categories = Object.keys(categoryHistory);
                     var datasets = [];
                     var colors = [
-                        '#14b8a6','#6366f1','#fb7185','#f3c969',
+                        'var(--accent-primary)','#6366f1','#fb7185','var(--accent-primary)',
                         '#10b981','#38bdf8','#f97316','#a78bfa',
                         '#34d399','#fbbf24','#e879f9','#60a5fa'
                     ];
@@ -1905,7 +2002,7 @@
                             plugins: {
                                 legend: {
                                     labels: {
-                                        color: '#f8fafc',
+                                        color: 'var(--text-main)',
                                         font: {
                                             family: "'Outfit', 'Inter', sans-serif",
                                             weight: 'bold',
@@ -1915,9 +2012,9 @@
                                 },
                                 tooltip: {
                                     backgroundColor: 'rgba(13, 47, 51, 0.95)',
-                                    titleColor: '#f3c969',
-                                    bodyColor: '#ffffff',
-                                    borderColor: 'rgba(255, 255, 255, 0.1)',
+                                    titleColor: 'var(--accent-primary)',
+                                    bodyColor: 'var(--text-main)',
+                                    borderColor: 'var(--border-color)',
                                     borderWidth: 1,
                                     padding: 12,
                                     callbacks: {
@@ -1937,7 +2034,7 @@
                             scales: {
                                 x: {
                                     grid: {
-                                        color: 'rgba(255, 255, 255, 0.06)'
+                                        color: 'var(--nav-bg)'
                                     },
                                     ticks: {
                                         color: '#94a3b8'
@@ -1945,7 +2042,7 @@
                                 },
                                 y: {
                                     grid: {
-                                        color: 'rgba(255, 255, 255, 0.06)'
+                                        color: 'var(--nav-bg)'
                                     },
                                     ticks: {
                                         color: '#94a3b8',

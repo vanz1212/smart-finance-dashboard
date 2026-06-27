@@ -87,9 +87,9 @@
             margin: -24px;
             min-height: calc(100vh - 1px);
             padding: 34px 24px 56px;
-            color: #f8fafc;
+            color: var(--text-main);
             background:
-                linear-gradient(180deg, rgba(5, 12, 15, 0.76), rgba(5, 12, 15, 0.97)),
+                linear-gradient(180deg, var(--bg-primary), var(--bg-primary)),
                 url('{{ asset('images/backgroundfinance.jpg') }}') center / cover fixed no-repeat;
         }
 
@@ -112,10 +112,10 @@
         }
 
         .stata-panel-inner { padding: 26px; }
-        .stata-kicker { color: #f3c969; font-size: .8rem; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
+        .stata-kicker { color: var(--accent-primary); font-size: .8rem; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
         .stata-hero h1 { margin: 14px 0 0; font-size: clamp(2.4rem, 6vw, 5rem); line-height: .98; letter-spacing: 0; }
         .stata-hero p { max-width: 720px; margin: 18px 0 0; color: rgba(248,250,252,.72); line-height: 1.7; }
-        .stata-action { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; margin-top: 26px; padding: 0 20px; border-radius: 999px; background: #f3c969; color: #052e2b; text-decoration: none; font-weight: 900; }
+        .stata-action { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; margin-top: 26px; padding: 0 20px; border-radius: 999px; background: var(--accent-primary); color: var(--accent-hover); text-decoration: none; font-weight: 900; }
         .stata-stat { display: grid; align-content: center; gap: 18px; }
         .stata-stat strong { display: block; font-size: 2.4rem; color: #fff; }
         .stata-stat span { color: rgba(248,250,252,.66); line-height: 1.5; }
@@ -135,7 +135,7 @@
             box-shadow: 0 22px 60px rgba(0,0,0,.24);
         }
 
-        .feature-card small { color: #f3c969; font-weight: 900; }
+        .feature-card small { color: var(--accent-primary); font-weight: 900; }
         .feature-card h2 { margin: 42px 0 12px; font-size: 1.45rem; line-height: 1.05; }
         .feature-card p { margin: 0; color: rgba(248,250,252,.68); line-height: 1.65; }
 
@@ -150,7 +150,7 @@
             line-height: 1.7;
         }
 
-        .stata-console span { color: #14b8a6; }
+        .stata-console span { color: var(--accent-primary); }
 
         .stata-data-panel {
             margin-top: 22px;
@@ -240,14 +240,14 @@
             display: grid;
             place-items: center;
             border-radius: 8px;
-            background: #f3c969;
-            color: #052e2b;
+            background: var(--accent-primary);
+            color: var(--accent-hover);
             font-weight: 900;
         }
 
         .tutorial-content h3 {
             margin: 2px 0 8px;
-            color: #ffffff;
+            color: var(--text-main);
             font-size: 1.12rem;
         }
 
@@ -263,7 +263,7 @@
             padding: 14px 16px;
             border-radius: 10px;
             background: rgba(0,0,0,.42);
-            color: #f8fafc;
+            color: var(--text-main);
             font-family: Consolas, 'Courier New', monospace;
             font-size: .9rem;
             line-height: 1.65;
@@ -273,7 +273,7 @@
         .tutorial-tip {
             margin-top: 12px;
             padding: 11px 13px;
-            border-left: 3px solid #14b8a6;
+            border-left: 3px solid var(--accent-primary);
             background: rgba(20,184,166,.08);
             color: rgba(248,250,252,.74);
             line-height: 1.6;
@@ -331,7 +331,7 @@
 
         .stata-command-group h3 {
             margin: 0 0 16px;
-            color: #f3c969;
+            color: var(--accent-primary);
             font-size: 1.12rem;
         }
 
@@ -372,7 +372,7 @@
             padding: 11px 12px;
             border-radius: 8px;
             background: rgba(0,0,0,.36);
-            color: #f8fafc;
+            color: var(--text-main);
             font-family: Consolas, 'Courier New', monospace;
             font-size: .88rem;
             line-height: 1.55;
@@ -389,7 +389,7 @@
         }
 
         .stata-source-note a {
-            color: #f3c969;
+            color: var(--accent-primary);
             font-weight: 900;
             text-decoration: none;
         }
@@ -418,7 +418,7 @@
             background:
                 radial-gradient(circle at 82% 0%, rgba(24, 191, 117, .16), transparent 34%),
                 linear-gradient(135deg, #06191b 0%, #071f22 48%, #091011 100%) !important;
-            color: #f8fafc;
+            color: var(--text-main);
         }
 
         body {
@@ -773,7 +773,7 @@
             border-radius: 10px;
             padding: 0 10px;
             background: rgba(3,20,22,.8);
-            color: #f8fafc;
+            color: var(--text-main);
         }
 
         .stata-table-wrap {
@@ -802,7 +802,7 @@
             top: 0;
             z-index: 1;
             background: #173c3e;
-            color: #f8fafc;
+            color: var(--text-main);
             font-size: .78rem;
         }
 

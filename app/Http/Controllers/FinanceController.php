@@ -7,6 +7,7 @@ use App\Models\ExpenseCategoryTemplate;
 use App\Models\ExpenseCategoryRecommendation;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class FinanceController extends BaseController
 {
@@ -231,6 +232,23 @@ class FinanceController extends BaseController
         $analysis->delete();
 
         return redirect()->route('finance.index')->with('success', 'Riwayat analisis berhasil dihapus.');
+    }
+
+    public function exportPdf($id)
+    {
+        $userId = auth()->id();
+        $analysis = FinancialAnalysis::where('user_id', $userId)->findOrFail($id);
+        
+        $result = $this->calculateResults($analysis->toArray());
+        $recommendations = $this->generateCategoryRecommendations($result);
+
+        $pdf = Pdf::loadView('smart_finance_pdf', [
+            'result' => $result,
+            'recommendations' => $recommendations,
+            'user' => auth()->user()
+        ]);
+
+        return $pdf->download('SmartFinance_Report_' . $result['periode'] . '.pdf');
     }
 
     private function calculateResults(array $data): array

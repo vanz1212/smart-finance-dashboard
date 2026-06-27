@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Validation\Rule;
+use App\Models\TaxAnalysis;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class TaxController extends BaseController
 {
@@ -23,6 +25,16 @@ class TaxController extends BaseController
         'K/I/3' => 126000000,
     ];
 
+    private const PTKP_TER_CATEGORY = [
+        'TK/0' => 'A', 'TK/1' => 'A', 'K/0' => 'A',
+        'TK/2' => 'B', 'TK/3' => 'B', 'K/1' => 'B', 'K/2' => 'B',
+        'K/3' => 'C',
+        'K/I/0' => 'A', // Simplified for demo
+        'K/I/1' => 'B',
+        'K/I/2' => 'B',
+        'K/I/3' => 'C',
+    ];
+
     private const TAX_BRACKETS = [
         ['label' => 's.d. Rp60.000.000', 'upper_limit' => 60000000, 'rate' => 0.05],
         ['label' => '> Rp60.000.000 - Rp250.000.000', 'upper_limit' => 250000000, 'rate' => 0.15],
@@ -31,10 +43,29 @@ class TaxController extends BaseController
         ['label' => '> Rp5.000.000.000', 'upper_limit' => null, 'rate' => 0.35],
     ];
 
-    public function index()
+    public function index(Request $request)
     {
+        $userId = auth()->id();
+        $history = TaxAnalysis::where('user_id', $userId)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $result = null;
+        if ($request->has('load_id')) {
+            $loaded = TaxAnalysis::where('user_id', $userId)->find($request->input('load_id'));
+            if ($loaded) {
+                $result = $loaded->hasil_json;
+                $result['id'] = $loaded->id; // Untuk keperluan export PDF
+            }
+        } elseif ($history->count() > 0) {
+            $latest = $history->first();
+            $result = $latest->hasil_json;
+            $result['id'] = $latest->id;
+        }
+
         return view('perpajakan', [
-            'result' => null,
+            'result' => $result,
+            'history' => $history,
             'statuses' => $this->taxStatuses(),
             'ptkpTable' => self::PTKP,
             'taxBrackets' => self::TAX_BRACKETS,
@@ -43,48 +74,157 @@ class TaxController extends BaseController
 
     public function calculate(Request $request)
     {
-        $request->merge([
-            'penghasilan_bulanan' => $this->normalizeRupiah($request->input('penghasilan_bulanan')),
-            'pengeluaran_bulanan' => $this->normalizeRupiah($request->input('pengeluaran_bulanan')),
-        ]);
+        $fieldsToNormalize = ['penghasilan_bulanan', 'penghasilan_tidak_teratur', 'iuran_pensiun', 'zakat', 'kredit_pajak'];
+        foreach ($fieldsToNormalize as $field) {
+            $request->merge([
+                $field => $this->normalizeRupiah($request->input($field, 0)),
+            ]);
+        }
 
         $validated = $request->validate([
-            'nama_wajib_pajak' => ['required', 'string', 'max:100'],
-            'penghasilan_bulanan' => ['required', 'numeric', 'min:0'],
-            'pengeluaran_bulanan' => ['required', 'numeric', 'min:0'],
+            'tahun_pajak' => ['required', 'integer'],
+            'metode_perhitungan' => ['required', 'in:ter,tahunan'],
             'status_wajib_pajak' => ['required', Rule::in(array_keys(self::PTKP))],
+            'penghasilan_bulanan' => ['required', 'numeric', 'min:0'],
+            'penghasilan_tidak_teratur' => ['required', 'numeric', 'min:0'],
+            'iuran_pensiun' => ['required', 'numeric', 'min:0'],
+            'zakat' => ['required', 'numeric', 'min:0'],
+            'kredit_pajak' => ['required', 'numeric', 'min:0'],
         ]);
 
-        $penghasilanTahunan = (float) $validated['penghasilan_bulanan'] * 12;
-        $pengurangTahunan = (float) $validated['pengeluaran_bulanan'] * 12;
-        $penghasilanNeto = max($penghasilanTahunan - $pengurangTahunan, 0);
-        $ptkp = self::PTKP[$validated['status_wajib_pajak']];
+        $metode = $validated['metode_perhitungan'];
+        $tahun = $validated['tahun_pajak'];
+        $status = $validated['status_wajib_pajak'];
+        $penghasilanBulanan = (float) $validated['penghasilan_bulanan'];
+        $penghasilanTidakTeratur = (float) $validated['penghasilan_tidak_teratur']; // THR/Bonus
+        $iuranPensiun = (float) $validated['iuran_pensiun'];
+        $zakat = (float) $validated['zakat'];
+        $kreditPajak = (float) $validated['kredit_pajak'];
+
+        // Biaya Jabatan 5% dari Bruto, Max 500rb/bulan atau 6jt/tahun
+        $biayaJabatanBulanan = min($penghasilanBulanan * 0.05, 500000);
+        
+        $penghasilanTahunan = $penghasilanBulanan * 12;
+        $biayaJabatanTahunan = min(($penghasilanTahunan + $penghasilanTidakTeratur) * 0.05, 6000000);
+        $pengurangTahunan = $biayaJabatanTahunan + ($iuranPensiun * 12) + $zakat; // Zakat dihitung tahunan di sini sbg contoh
+        
+        $penghasilanNeto = max(($penghasilanTahunan + $penghasilanTidakTeratur) - $pengurangTahunan, 0);
+        $ptkp = self::PTKP[$status];
         $pkpSebelumPembulatan = max($penghasilanNeto - $ptkp, 0);
         $pkp = floor($pkpSebelumPembulatan / 1000) * 1000;
-        $calculation = $this->calculateProgressiveTax($pkp);
-        $estimasiPajak = $calculation['total_tax'];
+        
+        // PPh Tahunan
+        $calculationTahunan = $this->calculateProgressiveTax($pkp);
+        $estimasiPajakTahunan = $calculationTahunan['total_tax'];
+        
+        // PPh Kurang/Lebih Bayar
+        $pajakTerutang = max($estimasiPajakTahunan - $kreditPajak, 0);
 
-        return view('perpajakan', [
-            'result' => [
-                'nama_wajib_pajak' => $validated['nama_wajib_pajak'],
-                'status_wajib_pajak' => $validated['status_wajib_pajak'],
-                'penghasilan_bulanan' => (float) $validated['penghasilan_bulanan'],
-                'pengurang_bulanan' => (float) $validated['pengeluaran_bulanan'],
-                'penghasilan_tahunan' => $penghasilanTahunan,
-                'pengurang_tahunan' => $pengurangTahunan,
-                'penghasilan_neto' => $penghasilanNeto,
-                'ptkp' => $ptkp,
-                'pkp_sebelum_pembulatan' => $pkpSebelumPembulatan,
-                'pkp' => $pkp,
-                'estimasi_pajak' => $estimasiPajak,
-                'estimasi_pajak_bulanan' => $estimasiPajak / 12,
-                'status_pajak' => $this->taxLevel($estimasiPajak),
-                'breakdown' => $calculation['breakdown'],
-            ],
-            'statuses' => $this->taxStatuses(),
-            'ptkpTable' => self::PTKP,
-            'taxBrackets' => self::TAX_BRACKETS,
+        // Jika metode TER (Bulanan)
+        $terCategory = self::PTKP_TER_CATEGORY[$status];
+        $terRate = $this->getTerRate($terCategory, $penghasilanBulanan); // Simplification of lookup table
+        $estimasiPajakBulananTER = $penghasilanBulanan * $terRate;
+
+        // Tentukan output berdasarkan metode
+        if ($metode === 'ter' && $tahun >= 2024) {
+            $estimasiPajakBulanan = $estimasiPajakBulananTER;
+            $catatan = "Menggunakan metode TER Kategori {$terCategory} dengan tarif " . ($terRate * 100) . "%.";
+        } else {
+            $estimasiPajakBulanan = $estimasiPajakTahunan / 12;
+            $catatan = "Menggunakan metode PPh 21 Tahunan (Pasal 17).";
+        }
+
+        $hasilJson = [
+            'tahun_pajak' => $tahun,
+            'metode' => $metode,
+            'status_wajib_pajak' => $status,
+            'penghasilan_bulanan' => $penghasilanBulanan,
+            'penghasilan_tidak_teratur' => $penghasilanTidakTeratur,
+            'biaya_jabatan_bulanan' => $biayaJabatanBulanan,
+            'iuran_pensiun' => $iuranPensiun,
+            'zakat' => $zakat,
+            'kredit_pajak' => $kreditPajak,
+            'penghasilan_tahunan' => $penghasilanTahunan,
+            'pengurang_tahunan' => $pengurangTahunan,
+            'penghasilan_neto' => $penghasilanNeto,
+            'ptkp' => $ptkp,
+            'pkp' => $pkp,
+            'estimasi_pajak_tahunan' => $estimasiPajakTahunan,
+            'estimasi_pajak_bulanan' => $estimasiPajakBulanan,
+            'pajak_kurang_bayar' => $pajakTerutang,
+            'status_pajak' => $this->taxLevel($estimasiPajakTahunan),
+            'catatan' => $catatan,
+            'breakdown' => $calculationTahunan['breakdown'],
+            'ter_category' => $terCategory,
+            'ter_rate' => $terRate * 100,
+        ];
+
+        $userId = auth()->id();
+        $analysis = TaxAnalysis::create([
+            'user_id' => $userId,
+            'tahun_pajak' => $tahun,
+            'penghasilan_bulanan' => $penghasilanBulanan,
+            'penghasilan_tidak_teratur' => $penghasilanTidakTeratur,
+            'biaya_jabatan' => $biayaJabatanBulanan,
+            'iuran_pensiun' => $iuranPensiun,
+            'zakat' => $zakat,
+            'kredit_pajak' => $kreditPajak,
+            'status_wajib_pajak' => $status,
+            'metode_perhitungan' => $metode,
+            'estimasi_pajak' => $estimasiPajakTahunan,
+            'hasil_json' => $hasilJson,
         ]);
+
+        return redirect()->route('perpajakan.index')->with('success', 'Kalkulasi pajak berhasil disimpan.');
+    }
+
+    public function destroy($id)
+    {
+        $userId = auth()->id();
+        $analysis = TaxAnalysis::where('user_id', $userId)->findOrFail($id);
+        $analysis->delete();
+
+        return redirect()->route('perpajakan.index')->with('success', 'Riwayat kalkulasi pajak berhasil dihapus.');
+    }
+
+    public function exportPdf($id)
+    {
+        $userId = auth()->id();
+        $analysis = TaxAnalysis::where('user_id', $userId)->findOrFail($id);
+        
+        $result = $analysis->hasil_json;
+
+        $pdf = Pdf::loadView('tax_pdf', [
+            'result' => $result,
+            'user' => auth()->user()
+        ]);
+
+        return $pdf->download('Kalkulasi_Pajak_' . $result['tahun_pajak'] . '.pdf');
+    }
+
+    private function getTerRate($category, $income)
+    {
+        // Simplification of TER table for demonstration purposes
+        if ($income <= 5400000) return 0.0;
+        if ($income <= 5650000) return 0.0025; // 0.25%
+        if ($income <= 5950000) return 0.005;  // 0.5%
+        if ($income <= 6300000) return 0.0075;
+        if ($income <= 6750000) return 0.01;
+        if ($income <= 7500000) return 0.0125;
+        if ($income <= 8550000) return 0.015;
+        if ($income <= 9650000) return 0.0175;
+        if ($income <= 10050000) return 0.02;
+        if ($income <= 10350000) return 0.0225;
+        if ($income <= 10700000) return 0.025;
+        if ($income <= 11050000) return 0.03;
+        if ($income <= 11600000) return 0.035;
+        if ($income <= 12500000) return 0.04;
+        if ($income <= 13750000) return 0.05;
+        if ($income <= 15100000) return 0.06;
+        if ($income <= 16950000) return 0.07;
+        if ($income <= 19750000) return 0.08;
+        if ($income <= 24150000) return 0.09;
+        return 0.1; // Max simplified TER rate fallback
     }
 
     private function taxStatuses(): array
@@ -135,18 +275,9 @@ class TaxController extends BaseController
 
     private function taxLevel(float $tax): string
     {
-        if ($tax <= 0) {
-            return 'Tidak kena pajak';
-        }
-
-        if ($tax < 1000000) {
-            return 'Pajak rendah';
-        }
-
-        if ($tax <= 5000000) {
-            return 'Pajak normal';
-        }
-
+        if ($tax <= 0) return 'Tidak kena pajak';
+        if ($tax < 1000000) return 'Pajak rendah';
+        if ($tax <= 5000000) return 'Pajak normal';
         return 'Pajak tinggi';
     }
 }

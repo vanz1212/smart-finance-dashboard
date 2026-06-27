@@ -5,6 +5,18 @@
 @section('content')
     @php
         $isLoggedIn = auth()->check();
+        $hour = date('H');
+        if ($hour < 11) {
+            $greeting = 'Selamat Pagi';
+        } elseif ($hour < 15) {
+            $greeting = 'Selamat Siang';
+        } elseif ($hour < 18) {
+            $greeting = 'Selamat Sore';
+        } else {
+            $greeting = 'Selamat Malam';
+        }
+        $userName = auth()->user()->name ?? 'Guest';
+        $firstName = explode(' ', $userName)[0];
         $formatRupiah = fn ($value) => 'Rp ' . number_format($value, 0, ',', '.');
         $ptkpTable = [
             'TK/0' => 54000000,
@@ -36,7 +48,7 @@
         }
 
         body {
-            background: #071316;
+            background: var(--bg-primary);
         }
 
         body > .container {
@@ -53,8 +65,8 @@
         .selector-shell {
             min-height: 100vh;
             padding: 0;
-            color: #f8fafc;
-            background: #061418;
+            color: var(--text-main);
+            background: var(--bg-primary);
         }
 
         .selector-head {
@@ -65,8 +77,8 @@
             justify-content: space-between;
             align-items: center;
             gap: 18px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            background: #071b20;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--bg-secondary);
         }
 
         .selector-logo {
@@ -80,8 +92,8 @@
             display: grid;
             place-items: center;
             border-radius: 50%;
-            background: #ffffff;
-            color: #0f172a;
+            background: var(--text-main);
+            color: var(--bg-panel);
             font-size: 0.78rem;
             font-weight: 900;
             box-shadow: 0 8px 28px rgba(0, 0, 0, 0.2);
@@ -89,8 +101,8 @@
 
         .selector-logo span + span {
             margin-left: -8px;
-            background: rgba(255, 255, 255, 0.12);
-            color: #ffffff;
+            background: var(--nav-bg);
+            color: var(--text-main);
             border: 1px solid rgba(255, 255, 255, 0.55);
             backdrop-filter: blur(8px);
         }
@@ -108,14 +120,14 @@
             width: 28px;
             height: 28px;
             border-radius: 7px;
-            background: #14b86f;
+            background: var(--accent-primary);
         }
 
         .case-link {
             padding: 10px 18px;
             border: 2px solid rgba(255, 255, 255, 0.78);
             border-radius: 999px;
-            color: #ffffff;
+            color: var(--text-main);
             text-decoration: none;
             font-weight: 900;
         }
@@ -138,7 +150,7 @@
             border: 2px solid rgba(255, 255, 255, 0.78);
             border-radius: 999px;
             background: transparent;
-            color: #ffffff;
+            color: var(--text-main);
             cursor: pointer;
             font: inherit;
             font-weight: 900;
@@ -146,20 +158,49 @@
 
         .head-actions button:hover,
         .side-footer button:hover {
-            background: #f3c969;
-            border-color: #f3c969;
-            color: #052e2b;
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+            color: var(--accent-hover);
         }
 
         .dashboard-frame {
             width: 100%;
             min-height: calc(100vh - 72px);
             margin: 0;
+            background: var(--bg-primary);
+            display: flex;
+            flex-direction: column;
+            position: relative;
             overflow: hidden;
-            border: 0;
-            border-radius: 0;
-            background: #08191e;
-            box-shadow: none;
+        }
+
+        .dashboard-frame::before {
+            content: '';
+            position: absolute;
+            top: -5%; left: -5%; right: -5%; bottom: -5%;
+            background-image: url('{{ asset('images/abstract_finance_bg.png') }}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: 0;
+            opacity: 0.25;
+            animation: slowPan 35s ease-in-out infinite alternate;
+            pointer-events: none;
+        }
+
+        [data-theme="light"] .dashboard-frame::before {
+            opacity: 0.15;
+            filter: invert(1) hue-rotate(180deg);
+        }
+
+        @keyframes slowPan {
+            0% { transform: scale(1) translate(0, 0); }
+            100% { transform: scale(1.1) translate(-1.5%, 1.5%); }
+        }
+
+        .selector-app, .selector-content {
+            position: relative;
+            z-index: 1;
         }
 
         .browser-bar {
@@ -178,7 +219,7 @@
         }
 
         .window-dots span:nth-child(1) { background: #ff6b5f; }
-        .window-dots span:nth-child(2) { background: #f3c969; }
+        .window-dots span:nth-child(2) { background: var(--accent-primary); }
         .window-dots span:nth-child(3) { background: #4ade80; }
 
         .address-bar {
@@ -187,29 +228,30 @@
             place-items: center;
             border-radius: 8px;
             background: rgba(255, 255, 255, 0.09);
-            color: rgba(248, 250, 252, 0.72);
+            color: var(--text-muted);
             font-size: 0.82rem;
             font-weight: 800;
         }
 
         .browser-actions {
             justify-self: end;
-            color: rgba(248, 250, 252, 0.76);
+            color: var(--text-muted);
             font-weight: 900;
         }
 
-        .selector-app {
-            display: grid;
-            grid-template-columns: 260px minmax(0, 1fr);
-            min-height: calc(100vh - 72px);
+        .selector-app { 
+            width: 100%; 
+            flex-grow: 1; 
+            display: flex; 
+            flex-direction: column; 
         }
 
         .selector-sidebar {
             display: flex;
             flex-direction: column;
             padding: 28px 20px;
-            background: #173c45;
-            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--bg-secondary);
+            border-right: 1px solid var(--border-color);
         }
 
         .app-brand {
@@ -217,7 +259,7 @@
             align-items: center;
             gap: 12px;
             margin-bottom: 28px;
-            color: #f8fafc;
+            color: var(--text-main);
             font-size: 0.95rem;
             font-weight: 900;
             letter-spacing: 0.04em;
@@ -228,7 +270,7 @@
             width: 28px;
             height: 28px;
             border-radius: 7px;
-            background: #14b86f;
+            background: var(--accent-primary);
         }
 
         .side-menu {
@@ -246,7 +288,7 @@
             border: 0;
             border-radius: 8px;
             background: transparent;
-            color: rgba(248, 250, 252, 0.72);
+            color: var(--text-muted);
             cursor: pointer;
             font: inherit;
             font-weight: 900;
@@ -258,8 +300,8 @@
         .side-menu button:hover,
         .side-menu a:hover {
             background: rgba(20, 184, 111, 0.18);
-            color: #ffffff;
-            box-shadow: inset 3px 0 0 #14b86f;
+            color: var(--text-main);
+            box-shadow: inset 3px 0 0 var(--accent-primary);
         }
 
         .side-footer {
@@ -269,9 +311,13 @@
         }
 
         .selector-content {
-            padding: 34px 36px 48px;
-            background: #061418;
-            overflow: auto;
+            padding: 40px 20px;
+            background: transparent;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
         .content-panel {
@@ -280,7 +326,11 @@
         }
 
         .content-panel.is-active {
-            display: block;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
         }
 
         .panel-toolbar {
@@ -325,25 +375,25 @@
 
         .table-head {
             background: rgba(81, 124, 137, 0.72);
-            color: rgba(248, 250, 252, 0.72);
+            color: var(--text-muted);
             font-size: 0.84rem;
             font-weight: 900;
         }
 
         .table-row {
             min-height: 78px;
-            border-top: 1px solid rgba(255, 255, 255, 0.07);
-            color: rgba(248, 250, 252, 0.75);
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
             text-decoration: none;
         }
 
         .table-row:hover {
-            background: rgba(255, 255, 255, 0.04);
+            background: var(--nav-bg);
         }
 
         .table-row strong {
             display: block;
-            color: #14b86f;
+            color: var(--accent-primary);
             margin-bottom: 4px;
         }
 
@@ -351,8 +401,8 @@
             width: fit-content;
             padding: 7px 10px;
             border-radius: 999px;
-            color: #052e2b;
-            background: #f3c969;
+            color: var(--accent-hover);
+            background: var(--accent-primary);
             font-size: 0.78rem;
             font-weight: 900;
         }
@@ -374,19 +424,19 @@
 
         .tool-panel {
             padding: 18px;
-            border: 1px solid rgba(255, 255, 255, 0.11);
+            border: 1px solid var(--border-color);
             border-radius: 12px;
-            background: rgba(255, 255, 255, 0.05);
+            background: var(--nav-bg);
         }
 
         .tool-panel h2 {
             margin: 0 0 12px;
-            color: #ffffff;
+            color: var(--text-main);
             font-size: 1.08rem;
         }
 
         .tool-panel p {
-            color: rgba(248, 250, 252, 0.68);
+            color: var(--text-muted);
             line-height: 1.65;
         }
 
@@ -406,7 +456,7 @@
         }
 
         .selector-form span {
-            color: rgba(248, 250, 252, 0.68);
+            color: var(--text-muted);
             font-size: 0.82rem;
             font-weight: 800;
         }
@@ -415,23 +465,23 @@
         .selector-form select {
             width: 100%;
             min-height: 44px;
-            border: 1px solid rgba(255, 255, 255, 0.16);
+            border: 1px solid var(--border-color);
             border-radius: 8px;
             padding: 9px 11px;
-            background: rgba(255, 255, 255, 0.06);
-            color: #ffffff;
+            background: var(--nav-bg);
+            color: var(--text-main);
             font: inherit;
         }
 
         .selector-form select option {
-            background: #f8fafc;
-            color: #0f172a;
+            background: var(--text-main);
+            color: var(--bg-panel);
         }
 
         .selector-form select option:checked,
         .selector-form select option:hover {
             background: #d1fae5;
-            color: #052e2b;
+            color: var(--accent-hover);
         }
 
         .selector-submit {
@@ -439,8 +489,8 @@
             min-height: 48px;
             border: 0;
             border-radius: 10px;
-            background: #14b86f;
-            color: #052e2b;
+            background: var(--accent-primary);
+            color: var(--accent-hover);
             cursor: pointer;
             font: inherit;
             font-weight: 900;
@@ -486,14 +536,14 @@
         .mini-table th,
         .mini-table td {
             padding: 11px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            color: rgba(248, 250, 252, 0.76);
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-muted);
             text-align: left;
         }
 
         .mini-table th {
-            color: #ffffff;
-            background: rgba(255, 255, 255, 0.06);
+            color: var(--text-main);
+            background: var(--nav-bg);
         }
 
         .mini-table td:last-child,
@@ -505,15 +555,15 @@
         .feature-card,
         .data-card {
             padding: 18px;
-            border: 1px solid rgba(255, 255, 255, 0.11);
+            border: 1px solid var(--border-color);
             border-radius: 12px;
-            background: rgba(255, 255, 255, 0.05);
+            background: var(--nav-bg);
         }
 
         .quick-card span,
         .feature-card span,
         .data-card span {
-            color: rgba(248, 250, 252, 0.58);
+            color: var(--text-muted);
             font-size: 0.82rem;
             font-weight: 800;
         }
@@ -522,23 +572,23 @@
         .data-card strong {
             display: block;
             margin-top: 8px;
-            color: #ffffff;
+            color: var(--text-main);
             font-size: 1.4rem;
         }
 
         .feature-card h2 {
             margin: 14px 0 10px;
-            color: #14b86f;
+            color: var(--accent-primary);
         }
 
         .feature-card p {
-            color: rgba(248, 250, 252, 0.72);
+            color: var(--text-muted);
             line-height: 1.65;
         }
 
         .panel-copy {
             max-width: 760px;
-            color: rgba(248, 250, 252, 0.72);
+            color: var(--text-muted);
             line-height: 1.7;
         }
 
@@ -570,9 +620,12 @@
                 justify-self: center;
             }
 
-            .selector-app {
-                grid-template-columns: 1fr;
-            }
+            .selector-app { 
+            width: 100%; 
+            flex-grow: 1; 
+            display: flex; 
+            flex-direction: column; 
+        }
 
             .selector-sidebar {
                 position: sticky;
@@ -644,8 +697,14 @@
             }
 
             .selector-content {
-                padding: 14px;
-            }
+            padding: 40px 20px;
+            background: transparent;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
 
             .content-panel {
                 padding: 16px;
@@ -663,7 +722,7 @@
             .table-row {
                 gap: 10px;
                 padding: 14px;
-                border-top: 1px solid rgba(255, 255, 255, 0.08);
+                border-top: 1px solid var(--border-color);
                 border-radius: 0;
                 background: transparent;
             }
@@ -691,8 +750,11 @@
             }
         }
         /* Responsive sidebar hardening: keep every menu label readable at any browser size. */
-        .selector-app {
-            grid-template-columns: clamp(220px, 20vw, 280px) minmax(0, 1fr);
+        .selector-app { 
+            width: 100%; 
+            flex-grow: 1; 
+            display: flex; 
+            flex-direction: column; 
         }
 
         .selector-sidebar {
@@ -717,7 +779,13 @@
         }
 
         .selector-content {
-            min-width: 0;
+            padding: 40px 20px;
+            background: transparent;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
         .app-brand {
@@ -740,15 +808,21 @@
         }
 
         @media (max-width: 1180px) {
-            .selector-app {
-                grid-template-columns: minmax(190px, 22vw) minmax(0, 1fr);
-            }
+            .selector-app { 
+            width: 100%; 
+            flex-grow: 1; 
+            display: flex; 
+            flex-direction: column; 
+        }
         }
 
         @media (max-width: 980px) {
-            .selector-app {
-                grid-template-columns: 1fr;
-            }
+            .selector-app { 
+            width: 100%; 
+            flex-grow: 1; 
+            display: flex; 
+            flex-direction: column; 
+        }
 
             .selector-sidebar {
                 position: sticky;
@@ -783,10 +857,12 @@
         }
         /* Fixed desktop sidebar: it stays visible while long panels scroll or browser zoom changes. */
         @media (min-width: 981px) {
-            .selector-app {
-                display: block;
-                min-height: 100vh;
-            }
+            .selector-app { 
+            width: 100%; 
+            flex-grow: 1; 
+            display: flex; 
+            flex-direction: column; 
+        }
 
             .selector-sidebar {
                 position: fixed;
@@ -802,9 +878,14 @@
             }
 
             .selector-content {
-                margin-left: clamp(220px, 20vw, 280px);
-                min-height: 100vh;
-            }
+            padding: 40px 20px;
+            background: transparent;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
 
             .side-menu {
                 flex: 1 1 auto;
@@ -844,12 +925,12 @@
                 overflow: hidden;
             }
 
-            .selector-app {
-                height: 100vh;
-                height: 100dvh;
-                min-height: 0;
-                overflow: hidden;
-            }
+            .selector-app { 
+            width: 100%; 
+            flex-grow: 1; 
+            display: flex; 
+            flex-direction: column; 
+        }
 
             .selector-sidebar {
                 position: fixed !important;
@@ -869,14 +950,14 @@
             }
 
             .selector-content {
-                height: 100vh;
-                height: 100dvh;
-                min-height: 0;
-                margin-left: clamp(220px, 20vw, 280px);
-                overflow-y: auto;
-                overflow-x: hidden;
-                scroll-behavior: smooth;
-            }
+            padding: 40px 20px;
+            background: transparent;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
 
             .side-menu {
                 flex: 1 1 auto;
@@ -910,7 +991,7 @@
             border: 0;
             border-radius: 8px;
             background: transparent;
-            color: rgba(248, 250, 252, 0.72);
+            color: var(--text-muted);
             font: inherit;
             font-weight: 900;
             line-height: 1;
@@ -921,8 +1002,8 @@
         .side-footer a:hover,
         .side-footer button:hover {
             background: rgba(20, 184, 111, 0.18);
-            color: #ffffff;
-            box-shadow: inset 3px 0 0 #14b86f;
+            color: var(--text-main);
+            box-shadow: inset 3px 0 0 var(--accent-primary);
         }
 
         .selector-head {
@@ -952,210 +1033,231 @@
     </style>
 
     <main class="selector-shell">
-        <header class="selector-head">
+        
+        <style>
+            .header-btn {
+                transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+                position: relative;
+                overflow: hidden;
+            }
+            .header-btn:hover {
+                transform: translateY(-3px) scale(1.05);
+                box-shadow: 0 8px 20px rgba(243, 201, 105, 0.25) !important;
+                border-color: var(--accent-primary) !important;
+                background: rgba(243, 201, 105, 0.1) !important;
+                color: var(--accent-primary) !important;
+            }
+            .header-btn.admin-btn:hover {
+                background: var(--accent-hover) !important;
+                color: var(--accent-primary) !important;
+            }
+            .theme-toggle:hover {
+                transform: rotate(15deg) scale(1.15) !important;
+                box-shadow: 0 0 15px rgba(243, 201, 105, 0.4) !important;
+            }
+            .module-card {
+                border-radius: 12px; /* fallback */
+            }
+        </style>
+<header class="selector-head">
             <div class="selector-logo"><span>SF</span><span>UI</span></div>
             <div class="selector-title"><span class="brand-mark" aria-hidden="true"></span> SMART FINANCE</div>
+            <div class="head-actions" style="justify-self: end; display: flex; align-items: center; gap: 12px; margin-right: 14px;">
+                <div class="profile-actions" style="display: flex; gap: 8px;">
+                    <a href="{{ route('profile') }}" class="header-btn" style="font-size: 0.85rem; padding: 6px 14px; background: transparent; color: var(--text-main); border: 1px solid var(--border-color); border-radius: 99px; text-decoration: none; font-weight: 600;">Profil</a>
+                    @if ($isLoggedIn)
+                        <form action="{{ route('logout') }}" method="POST" style="margin:0;">
+                            @csrf
+                            <button type="submit" class="header-btn" style="font-size: 0.85rem; padding: 6px 14px; background: transparent; color: var(--text-main); border: 1px solid var(--border-color); border-radius: 99px; cursor:pointer; font-weight: 600;">Logout</button>
+                        </form>
+                    @else
+                        <a href="{{ route('login') }}" class="header-btn" style="font-size: 0.85rem; padding: 6px 14px; background: transparent; color: var(--text-main); border: 1px solid var(--border-color); border-radius: 99px; text-decoration: none; font-weight: 600;">Login</a>
+                    @endif
+                </div>
+                @if(auth()->check() && auth()->user()->role === 'admin')
+                    <a href="{{ route('dashboard.admin') }}" class="header-btn admin-btn" style="font-size: 0.85rem; padding: 6px 14px; background: var(--accent-primary); color: var(--accent-hover); border-radius: 99px; text-decoration: none; font-weight: bold;">Admin Panel</a>
+                @endif
+                <button class="theme-toggle" aria-label="Toggle Theme" style="border: 1px solid var(--border-color); background: transparent; color: var(--text-main); cursor: pointer; padding: 6px 10px; border-radius: 99px; font-size: 1.1rem; transition: all 0.2s;">
+                    <span class="theme-icon">🌙</span>
+                </button>
+            </div>
         </header>
 
         <section class="dashboard-frame">
             <div class="selector-app">
-                <aside class="selector-sidebar">
-                    <div class="app-brand"><span class="brand-mark"></span> SMART FINANCE</div>
-                    <nav class="side-menu" aria-label="Dashboard selector">
-                        <button type="button" class="is-active" data-panel-target="dashboard">Dashboard</button>
-                    </nav>
-                    <nav class="side-footer side-menu">
-                        <a href="{{ route('profile') }}">Profile</a>
-                        @if ($isLoggedIn)
-                            <form action="{{ route('logout') }}" method="POST">
-                                @csrf
-                                <button type="submit">Logout</button>
-                            </form>
-                        @else
-                            <a href="{{ route('login') }}">Login</a>
-                        @endif
-                    </nav>
-                </aside>
-
                 <section class="selector-content">
                     <div id="panel-dashboard" class="content-panel is-active">
-                        <div class="panel-toolbar">
-                            <h1>User Dashboard</h1>
-                        </div>
-
-                        <div class="mobile-hint">
-                            Pilih modul dari daftar di bawah untuk membuka Smart Finance, Perpajakan, atau Stata. Tombol profil dan logout ada di bagian atas panel.
-                        </div>
-
-                        <div class="module-table">
-                            <div class="table-head">
-                                <span>Kode</span><span>Halaman</span><span>Kategori</span><span>Fitur</span><span>Prioritas</span><span>Status</span>
-                            </div>
-                            <a class="table-row" href="{{ route('finance.index') }}">
-                                <span data-label="Kode">SFD-01</span>
-                                <span data-label="Halaman"><strong>Smart Finance</strong> Analisa arus kas, rasio tabungan, cicilan, dan dana darurat.</span>
-                                <span data-label="Kategori">Financial Analysis</span><span data-label="Fitur">6 tools</span><span data-label="Prioritas">Core dashboard</span><span data-label="Status" class="status-pill">READY</span>
-                            </a>
-                            <a class="table-row" href="{{ route('perpajakan.index') }}">
-                                <span data-label="Kode">TAX-02</span>
-                                <span data-label="Halaman"><strong>Perpajakan</strong> Estimasi PPh orang pribadi dengan PTKP dan tarif progresif.</span>
-                                <span data-label="Kategori">Tax Calculator</span><span data-label="Fitur">PTKP + PKP</span><span data-label="Prioritas">Compliance</span><span data-label="Status" class="status-pill">READY</span>
-                            </a>
-                            <a class="table-row" href="{{ route('stata') }}">
-                                <span data-label="Kode">STA-03</span>
-                                <span data-label="Halaman"><strong>Stata</strong> Korelasi, regresi linear, dan statistik deskriptif.</span>
-                                <span data-label="Kategori">Economic Stats</span><span data-label="Fitur">3 modules</span><span data-label="Prioritas">Research</span><span data-label="Status" class="status-pill">READY</span>
-                            </a>
-                            <a class="table-row" href="{{ route('targets.index') }}">
-                                <span data-label="Kode">FT-04</span>
-                                <span data-label="Halaman"><strong>Target Finansial</strong> Buat dan monitor target finansial dengan tracking progres real-time dan rekomendasi setoran.</span>
-                                <span data-label="Kategori">Financial Goals</span><span data-label="Fitur">CRUD + Tracking</span><span data-label="Prioritas">Planning</span><span data-label="Status" class="status-pill">READY</span>
-                            </a>
-                        </div>
-
-                        <div class="quick-stats">
-                            <div class="quick-card"><span>Total Halaman</span><strong>4</strong></div>
-                            <div class="quick-card"><span>Dashboard Ready</span><strong>4</strong></div>
-                            <div class="quick-card"><span>Analisis Statistik</span><strong>1</strong></div>
-                        </div>
-                    </div>
-
-                    <div id="panel-finance" class="content-panel">
-                        <div class="panel-toolbar">
-                            <h1>Smart Finance</h1>
-                        </div>
-                        <p class="panel-copy">Modul ini membantu membaca kesehatan keuangan dari arus kas, rasio pengeluaran, tabungan, cicilan, dan kesiapan dana darurat.</p>
-
-                        <div class="full-grid">
-                            <form class="tool-panel selector-form" action="{{ route('finance.analyze') }}" method="POST">
-                                @csrf
-                                <label class="full"><span>Periode</span><input type="text" name="periode" value="{{ date('F Y') }}" required></label>
-                                <label><span>Total pemasukan</span><input type="number" name="pemasukan" min="0" step="1000" placeholder="15000000" required></label>
-                                <label><span>Kebutuhan pokok</span><input type="number" name="kebutuhan_pokok" min="0" step="1000" placeholder="4500000" required></label>
-                                <label><span>Transportasi</span><input type="number" name="transportasi" min="0" step="1000" placeholder="1000000" required></label>
-                                <label><span>Cicilan/utang</span><input type="number" name="cicilan" min="0" step="1000" placeholder="2500000" required></label>
-                                <label><span>Gaya hidup</span><input type="number" name="gaya_hidup" min="0" step="1000" placeholder="1500000" required></label>
-                                <label><span>Tabungan</span><input type="number" name="tabungan" min="0" step="1000" placeholder="2000000" required></label>
-                                <label><span>Investasi</span><input type="number" name="investasi" min="0" step="1000" placeholder="1000000" required></label>
-                                <label><span>Dana darurat</span><input type="number" name="dana_darurat" min="0" step="1000" placeholder="25000000" required></label>
-                                <label><span>Target tabungan</span><input type="number" name="target_tabungan" min="0" step="1000" placeholder="50000000"></label>
-                                <button class="selector-submit" type="submit">Hitung Analisa Lengkap</button>
-                            </form>
-
-                            <div class="tool-panel">
-                                <h2>Data dan Output yang Tersedia</h2>
-                                <div class="feature-grid" style="grid-template-columns: 1fr; margin-top: 0;">
-                                    <article class="feature-card"><span>01</span><h2>Cashflow</h2><p>Bandingkan pemasukan, pengeluaran, tabungan, investasi, dan sisa saldo.</p></article>
-                                    <article class="feature-card"><span>02</span><h2>Rasio</h2><p>Rasio pengeluaran, rasio cicilan, savings rate, dan ketahanan dana darurat.</p></article>
-                                    <article class="feature-card"><span>03</span><h2>Rekomendasi</h2><p>Saran otomatis berdasarkan skor kesehatan finansial: Sehat, Waspada, atau Berisiko.</p></article>
-                                </div>
+                        <div class="panel-toolbar" style="margin-bottom: clamp(20px, 5vh, 60px); text-align: center; display: flex; flex-direction: column; align-items: center; width: 100%; padding: 0 20px;">
+                            <div>
+                                <h1 style="color: var(--accent-primary); font-size: clamp(1.8rem, 4vw, 3rem); margin-bottom: 12px;">{{ $greeting }}, {{ $firstName }}! 👋</h1>
+                                <p style="color: var(--text-muted); font-size: clamp(0.9rem, 1.5vw, 1.2rem); max-width: 600px; margin: 0 auto;">Selamat datang di Smart Finance. Pilih modul di bawah untuk memulai analisis Anda hari ini.</p>
                             </div>
                         </div>
-                    </div>
 
-                    <div id="panel-tax" class="content-panel">
-                        <div class="panel-toolbar">
-                            <h1>Perpajakan</h1>
-                        </div>
-                        <p class="panel-copy">Modul perpajakan menghitung estimasi PPh orang pribadi menggunakan PTKP, PKP yang dibulatkan, dan tarif progresif.</p>
-
-                        <div class="tax-overview">
-                            <form class="tool-panel selector-form tax-form-panel" action="{{ route('perpajakan.calculate') }}" method="POST">
-                                @csrf
-                                <h2 style="grid-column: 1 / -1;">Input Perhitungan</h2>
-                                <label class="full"><span>Nama wajib pajak</span><input type="text" name="nama_wajib_pajak" placeholder="Nama wajib pajak" required></label>
-                                <label><span>Penghasilan bulanan</span><input type="number" name="penghasilan_bulanan" min="0" step="1000" placeholder="15000000" required></label>
-                                <label><span>Biaya/pengurang bulanan</span><input type="number" name="pengeluaran_bulanan" min="0" step="1000" placeholder="2000000" required></label>
-                                <label class="full">
-                                    <span>Status wajib pajak</span>
-                                    <select name="status_wajib_pajak" required>
-                                        <option value="" selected disabled>Pilih status</option>
-                                        @foreach ($ptkpTable as $status => $amount)
-                                            <option value="{{ $status }}">{{ $status }} - PTKP {{ $formatRupiah($amount) }}</option>
-                                        @endforeach
-                                    </select>
-                                </label>
-                                <button class="selector-submit" type="submit">Hitung Pajak Lengkap</button>
-                            </form>
-
-                            <div class="tax-reference-grid">
-                                <div class="tax-summary-cards">
-                                    <div class="data-card"><span>Status PTKP</span><strong>12</strong></div>
-                                    <div class="data-card"><span>Tarif</span><strong>5 Layer</strong></div>
-                                    <div class="data-card"><span>Output</span><strong>PPh OP</strong></div>
+                        <style>
+                            .module-container {
+                                display: flex;
+                                justify-content: center;
+                                align-items: stretch;
+                                gap: clamp(16px, 2.5vw, 32px);
+                                width: 100%;
+                                max-width: 1200px;
+                                padding: 0 3vw;
+                            }
+                            .module-card {
+                                flex: 1 1 0;
+                                min-width: 200px;
+                                max-width: 260px;
+                                background: rgba(255, 255, 255, 0.04);
+                                backdrop-filter: blur(16px);
+                                -webkit-backdrop-filter: blur(16px);
+                                border: 1px solid rgba(255, 255, 255, 0.08);
+                                border-radius: 24px;
+                                position: relative;
+                                text-decoration: none;
+                                color: var(--text-main);
+                                transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+                                display: flex;
+                                flex-direction: column;
+                                overflow: hidden;
+                                padding: clamp(20px, 3vh, 32px);
+                                padding-bottom: clamp(24px, 3.5vh, 36px);
+                            }
+                            .module-card::before {
+                                content: '';
+                                position: absolute;
+                                top: 0; left: 0; right: 0; bottom: 0;
+                                background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, transparent 50%, rgba(243,201,105,0.04) 100%);
+                                opacity: 0;
+                                transition: opacity 0.4s;
+                                border-radius: 24px;
+                                z-index: 0;
+                            }
+                            .module-card:hover {
+                                transform: translateY(-10px);
+                                border-color: rgba(243, 201, 105, 0.35);
+                                box-shadow:
+                                    0 20px 50px -12px rgba(243, 201, 105, 0.2),
+                                    0 0 0 1px rgba(243, 201, 105, 0.1),
+                                    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+                                background: rgba(255, 255, 255, 0.07);
+                            }
+                            .module-card:hover::before {
+                                opacity: 1;
+                            }
+                            .module-card:hover .module-icon-wrap {
+                                transform: scale(1.08);
+                                box-shadow: 0 12px 30px -8px var(--card-accent);
+                            }
+                            .module-card:hover .module-title {
+                                color: var(--accent-primary);
+                            }
+                            [data-theme="light"] .module-card {
+                                background: rgba(255, 255, 255, 0.65);
+                                border-color: rgba(0, 0, 0, 0.08);
+                            }
+                            [data-theme="light"] .module-card:hover {
+                                background: rgba(255, 255, 255, 0.85);
+                                border-color: rgba(20, 184, 166, 0.3);
+                                box-shadow:
+                                    0 20px 50px -12px rgba(20, 184, 166, 0.15),
+                                    0 0 0 1px rgba(20, 184, 166, 0.1);
+                            }
+                            .module-icon-wrap {
+                                width: clamp(64px, 10vh, 80px);
+                                height: clamp(64px, 10vh, 80px);
+                                border-radius: 20px;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                margin: 0 auto clamp(16px, 2.5vh, 24px);
+                                font-size: clamp(2rem, 5vh, 2.8rem);
+                                transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+                                position: relative;
+                                z-index: 1;
+                            }
+                            .module-info {
+                                text-align: center;
+                                flex-grow: 1;
+                                display: flex;
+                                flex-direction: column;
+                                position: relative;
+                                z-index: 1;
+                            }
+                            .module-title {
+                                font-size: clamp(1rem, 1.8vh, 1.2rem);
+                                font-weight: 800;
+                                letter-spacing: 0.5px;
+                                margin: 0 0 clamp(6px, 1vh, 10px) 0;
+                                transition: color 0.3s;
+                            }
+                            .module-desc {
+                                font-size: clamp(0.78rem, 1.3vh, 0.88rem);
+                                color: var(--text-muted);
+                                line-height: 1.6;
+                                flex-grow: 1;
+                            }
+                            .module-badge {
+                                display: inline-block;
+                                margin-top: clamp(12px, 2vh, 18px);
+                                padding: 6px 18px;
+                                border-radius: 99px;
+                                font-size: 0.7rem;
+                                font-weight: 800;
+                                letter-spacing: 1.5px;
+                                text-transform: uppercase;
+                                background: rgba(243, 201, 105, 0.15);
+                                color: var(--accent-primary);
+                                border: 1px solid rgba(243, 201, 105, 0.2);
+                            }
+                            [data-theme="light"] .module-badge {
+                                background: rgba(20, 184, 166, 0.1);
+                                color: #0d9488;
+                                border-color: rgba(20, 184, 166, 0.2);
+                            }
+                        </style>
+                        <div class="module-container">
+                            <a class="module-card" href="{{ route('finance.index') }}">
+                                <div class="module-icon-wrap" style="background: linear-gradient(135deg, rgba(20,184,166,0.2), rgba(20,184,166,0.05)); --card-accent: rgba(20,184,166,0.3);">📊</div>
+                                <div class="module-info">
+                                    <h3 class="module-title">Smart Finance</h3>
+                                    <p class="module-desc">Analisa arus kas, rasio tabungan, dan cicilan komprehensif.</p>
+                                    <span class="module-badge">Ready</span>
                                 </div>
-                                <div class="tool-panel">
-                                    <h2>PTKP</h2>
-                                    <table class="mini-table">
-                                        <thead><tr><th>Status</th><th>PTKP</th></tr></thead>
-                                        <tbody>
-                                            @foreach ($ptkpTable as $status => $amount)
-                                                <tr><td>{{ $status }}</td><td>{{ $formatRupiah($amount) }}</td></tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
+                            </a>
+                            
+                            <a class="module-card" href="{{ route('perpajakan.index') }}">
+                                <div class="module-icon-wrap" style="background: linear-gradient(135deg, rgba(243,201,105,0.2), rgba(243,201,105,0.05)); --card-accent: rgba(243,201,105,0.3);">🧾</div>
+                                <div class="module-info">
+                                    <h3 class="module-title">Perpajakan</h3>
+                                    <p class="module-desc">Estimasi PPh orang pribadi dengan PTKP dan tarif progresif.</p>
+                                    <span class="module-badge">Ready</span>
                                 </div>
-                                <div class="tool-panel">
-                                    <h2>Tarif Progresif</h2>
-                                    <table class="mini-table">
-                                        <thead><tr><th>Lapisan PKP</th><th>Tarif</th></tr></thead>
-                                        <tbody>
-                                            @foreach ($taxBrackets as $bracket)
-                                                <tr><td>{{ $bracket['label'] }}</td><td>{{ $bracket['rate'] }}</td></tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
+                            </a>
+
+                            <a class="module-card" href="{{ route('stata') }}">
+                                <div class="module-icon-wrap" style="background: linear-gradient(135deg, rgba(168,85,247,0.2), rgba(168,85,247,0.05)); --card-accent: rgba(168,85,247,0.3);">📈</div>
+                                <div class="module-info">
+                                    <h3 class="module-title">Stata</h3>
+                                    <p class="module-desc">Korelasi, regresi linear, dan statistik deskriptif makroekonomi.</p>
+                                    <span class="module-badge">Ready</span>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
+                            </a>
 
-                    <div id="panel-stata" class="content-panel">
-                        <div class="panel-toolbar">
-                            <h1>Stata</h1>
-                        </div>
-                        <p class="panel-copy">Data contoh tetap tersedia: GDP, inflasi, pengangguran, dan investasi untuk preview statistik ekonomi.</p>
-                        <div class="data-grid">
-                            <div class="data-card"><span>Observasi</span><strong>5 tahun</strong></div>
-                            <div class="data-card"><span>GDP rata-rata</span><strong>1.156</strong></div>
-                            <div class="data-card"><span>Inflasi rata-rata</span><strong>2,78%</strong></div>
-                            <div class="data-card"><span>Pengangguran</span><strong>5,36%</strong></div>
-                        </div>
-                        <div class="tool-panel" style="margin-top: 18px;">
-                            <h2>Tabel Statistik Deskriptif</h2>
-                            <table class="mini-table">
-                                <thead><tr><th>Variabel</th><th>Obs</th><th>Mean</th><th>Min</th><th>Max</th></tr></thead>
-                                <tbody>
-                                    <tr><td>GDP</td><td>5</td><td>1.156</td><td>1.080</td><td>1.250</td></tr>
-                                    <tr><td>Inflasi</td><td>5</td><td>2,78</td><td>1,80</td><td>3,50</td></tr>
-                                    <tr><td>Pengangguran</td><td>5</td><td>5,36</td><td>5,00</td><td>6,00</td></tr>
-                                    <tr><td>Investasi</td><td>5</td><td>273</td><td>250</td><td>300</td></tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="feature-grid">
-                            <article class="feature-card"><span>01</span><h2>Korelasi</h2><p>Analisa hubungan antar variabel numerik.</p></article>
-                            <article class="feature-card"><span>02</span><h2>Regresi</h2><p>Fondasi model linear untuk data ekonomi.</p></article>
-                            <article class="feature-card"><span>03</span><h2>Deskriptif</h2><p>Mean, standar deviasi, minimum, maksimum, dan observasi.</p></article>
+                            <a class="module-card" href="{{ route('targets.index') }}">
+                                <div class="module-icon-wrap" style="background: linear-gradient(135deg, rgba(239,68,68,0.2), rgba(239,68,68,0.05)); --card-accent: rgba(239,68,68,0.3);">🎯</div>
+                                <div class="module-info">
+                                    <h3 class="module-title">Target Finansial</h3>
+                                    <p class="module-desc">Tracking progres real-time dan rekomendasi setoran cerdas.</p>
+                                    <span class="module-badge">Ready</span>
+                                </div>
+                            </a>
                         </div>
                     </div>
-
-                    <div id="panel-home" class="content-panel">
-                        <div class="panel-toolbar">
-                            <h1>Beranda Awal</h1>
-                        </div>
-                        <p class="panel-copy">Beranda awal adalah halaman publik sebelum login, berisi pengenalan Smart Finance dan CTA menuju halaman login.</p>
-                        <div class="feature-grid">
-                            <article class="feature-card"><span>Landing</span><h2>Public Page</h2><p>Halaman pertama untuk mengenalkan aplikasi.</p></article>
-                            <article class="feature-card"><span>Login</span><h2>Access Gate</h2><p>Arahkan user ke halaman login modern.</p></article>
-                            <article class="feature-card"><span>Selector</span><h2>Dashboard Hub</h2><p>Setelah login user memilih modul yang dibutuhkan.</p></article>
-                        </div>
-                    </div>
-                </section>
             </div>
         </section>
     </main>
-
+
     <script>
         document.querySelectorAll('[data-panel-target]').forEach((button) => {
             button.addEventListener('click', () => {
