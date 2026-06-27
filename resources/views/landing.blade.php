@@ -114,8 +114,6 @@
             margin: 0;
         }
 
-        .landing-dashboard,
-        .landing-profile,
         .landing-logout {
             min-height: 42px;
             display: inline-flex;
@@ -134,14 +132,7 @@
             cursor: pointer;
         }
 
-        .landing-dashboard {
-            border-color: rgba(243, 201, 105, .56);
-            color: #092c2d;
-            background: #e6c46d;
-        }
-
-        .landing-logout:hover,
-        .landing-profile:hover {
+        .landing-logout:hover {
             color: #ffffff;
             background: rgba(255, 255, 255, .11);
         }
@@ -753,14 +744,10 @@
             <a class="landing-brand" href="{{ route('home') }}">SmartFinance.</a>
             <div class="landing-links">
                 @auth
-                    <div class="landing-auth-actions">
-                        <a class="landing-dashboard" href="{{ route('dashboard.user') }}">Dashboard</a>
-                        <a class="landing-profile" href="{{ route('profile') }}">Profil</a>
-                        <form class="landing-logout-form" action="{{ route('logout') }}" method="POST">
-                            @csrf
-                            <button class="landing-logout" type="submit">Logout</button>
-                        </form>
-                    </div>
+                    <form class="landing-logout-form" action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <button class="landing-logout" type="submit">Logout</button>
+                    </form>
                 @else
                     <a class="landing-login" href="{{ route('login') }}">Login</a>
                 @endauth
@@ -799,10 +786,6 @@
                 </div>
             </div>
         </section>
-
-        <div class="hero-slider-help">
-            Untuk menambahkan gambar sendiri, cukup upload file ke folder <code>public/images</code> lalu ubah daftar <code>$heroSlides</code> di bagian atas file ini.
-        </div>
 
         <section id="about" class="landing-about">
             <small>About SmartFinance</small>
@@ -858,11 +841,7 @@
                     <h3>Informasi</h3>
                     <div class="company-quick-links">
                         <a href="#about">Tentang Kami</a>
-                        @auth
-                            <a href="{{ route('dashboard.user') }}">Buka Dashboard</a>
-                        @else
-                            <a href="{{ route('login') }}">Masuk ke Dashboard</a>
-                        @endauth
+                        <a href="{{ route('login') }}">Masuk ke Dashboard</a>
                     </div>
                 </section>
             </div>

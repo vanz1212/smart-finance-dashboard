@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\FinanceController;
+use App\Http\Controllers\FinancialTargetController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\StataController;
 use App\Http\Controllers\TaxController;
@@ -74,6 +75,21 @@ Route::middleware(Authenticate::class)->group(function () {
         ->middleware('activity:page_open,smart_finance,Smart Finance')
         ->name('finance.index');
     Route::post('/smart-finance', [FinanceController::class, 'analyze'])->name('finance.analyze');
+    Route::delete('/smart-finance/{id}', [FinanceController::class, 'destroy'])->name('finance.destroy');
+    Route::get('/smart-finance/templates', [FinanceController::class, 'getTemplates'])->name('finance.templates');
+    Route::post('/smart-finance/apply-template', [FinanceController::class, 'applyTemplate'])->name('finance.apply-template');
+    
+    // Financial Targets
+    Route::get('/targets', [FinancialTargetController::class, 'index'])->name('targets.index');
+    Route::get('/targets/create', [FinancialTargetController::class, 'create'])->name('targets.create');
+    Route::post('/targets', [FinancialTargetController::class, 'store'])->name('targets.store');
+    Route::get('/targets/{target}', [FinancialTargetController::class, 'show'])->name('targets.show');
+    Route::get('/targets/{target}/edit', [FinancialTargetController::class, 'edit'])->name('targets.edit');
+    Route::put('/targets/{target}', [FinancialTargetController::class, 'update'])->name('targets.update');
+    Route::delete('/targets/{target}', [FinancialTargetController::class, 'destroy'])->name('targets.destroy');
+    Route::post('/targets/{target}/deposit', [FinancialTargetController::class, 'addDeposit'])->name('targets.add-deposit');
+    Route::delete('/targets/deposit/{deposit}', [FinancialTargetController::class, 'removeDeposit'])->name('targets.remove-deposit');
+    
     Route::get('/stata', [StataController::class, 'index'])
         ->middleware('activity:page_open,stata,Stata')
         ->name('stata');
