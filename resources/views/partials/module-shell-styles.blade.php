@@ -355,9 +355,36 @@
         color: #c7d4d3 !important;
     }
 
+    body.module-page .template-label,
+    body.module-page .expense-section-label,
+    body.module-page .template-name,
+    body.module-page .template-btn,
+    body.module-page .debt-toggle,
+    body.module-page .expense-row input[type="text"],
+    body.module-page .template-desc,
+    body.module-page .expense-section-hint {
+        color: #f8fafc !important;
+    }
+
+    body.module-page .template-desc,
+    body.module-page .expense-section-hint {
+        opacity: .82;
+    }
+
+    body.module-page .template-btn {
+        background: rgba(3, 20, 22, .68) !important;
+        border-color: rgba(180, 203, 202, .24) !important;
+    }
+
+    body.module-page .template-btn:hover {
+        color: #052e2b !important;
+        background: rgba(32, 189, 122, .12) !important;
+    }
+
     body.module-page .finance-form-grid input,
     body.module-page .tax-form input,
-    body.module-page .tax-form select {
+    body.module-page .tax-form select,
+    body.module-page .expense-row input[type="text"] {
         min-height: 50px;
         border: 1px solid rgba(180, 203, 202, .24) !important;
         border-radius: 11px !important;
@@ -368,7 +395,8 @@
 
     body.module-page .finance-form-grid input:focus,
     body.module-page .tax-form input:focus,
-    body.module-page .tax-form select:focus {
+    body.module-page .tax-form select:focus,
+    body.module-page .expense-row input[type="text"]:focus {
         outline: 3px solid rgba(32, 189, 122, .18) !important;
         border-color: rgba(54, 211, 145, .72) !important;
         background: rgba(4, 27, 29, .94) !important;

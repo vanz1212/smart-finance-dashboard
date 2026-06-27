@@ -206,7 +206,7 @@ class FinanceController extends BaseController
         $template = ExpenseCategoryTemplate::find($templateId);
         
         if (!$template) {
-            return response()->json(['error' => 'Template tidak ditemukan'], 404);
+            return response()->json(['error' => __('finance.template_not_found')], 404);
         }
 
         $income = (float) ($request->input('income') ?? 0);
@@ -339,10 +339,10 @@ class FinanceController extends BaseController
     private function expenseCategories(): array
     {
         return [
-            'kebutuhan_pokok' => 'Kebutuhan pokok',
-            'transportasi' => 'Transportasi',
-            'cicilan' => 'Cicilan/utang',
-            'gaya_hidup' => 'Gaya hidup',
+            'kebutuhan_pokok' => __('finance.basic_needs'),
+            'transportasi' => __('finance.transportation'),
+            'cicilan' => __('finance.debt_installment'),
+            'gaya_hidup' => __('finance.lifestyle'),
         ];
     }
 
@@ -368,50 +368,50 @@ class FinanceController extends BaseController
 
         if ($netCashflow < 0) {
             $score -= 30;
-            $recommendations[] = __('Arus kas negatif. Kurangi pengeluaran variabel atau susun ulang cicilan agar saldo bulanan kembali positif.');
+            $recommendations[] = __('finance.recommendation_cashflow_negative');
         }
 
         if ($expenseRatio > 70) {
             $score -= 25;
-            $recommendations[] = __('Rasio pengeluaran melewati 70% pemasukan. Prioritaskan kebutuhan pokok dan tekan biaya gaya hidup.');
+            $recommendations[] = __('finance.recommendation_expense_ratio_high');
         } elseif ($expenseRatio > 60) {
             $score -= 15;
-            $recommendations[] = __('Rasio pengeluaran mulai tinggi. Sisihkan ruang untuk tabungan sebelum menambah komitmen baru.');
+            $recommendations[] = __('finance.recommendation_expense_ratio_warn');
         }
 
         if ($savingRatio < 10) {
             $score -= 20;
-            $recommendations[] = __('Rasio tabungan dan investasi masih di bawah 10%. Target awal yang sehat adalah minimal 10% dari pemasukan.');
+            $recommendations[] = __('finance.recommendation_saving_ratio_low');
         } elseif ($savingRatio < 20) {
             $score -= 10;
-            $recommendations[] = __('Rasio tabungan cukup, tetapi masih bisa ditingkatkan menuju 20% untuk mempercepat target finansial.');
+            $recommendations[] = __('finance.recommendation_saving_ratio_mid');
         }
 
         if ($debtRatio > 30) {
             $score -= 25;
-            $recommendations[] = __('Rasio cicilan di atas 30%. Pertimbangkan pelunasan bertahap atau refinancing sebelum mengambil utang baru.');
+            $recommendations[] = __('finance.recommendation_debt_ratio_high');
         } elseif ($debtRatio > 20) {
             $score -= 10;
-            $recommendations[] = __('Rasio cicilan perlu dipantau. Jaga agar cicilan tidak melewati 30% pemasukan.');
+            $recommendations[] = __('finance.recommendation_debt_ratio_warn');
         }
 
         if ($emergencyMonths < 3) {
             $score -= 15;
-            $recommendations[] = __('Dana darurat belum mencapai 3 bulan pengeluaran. Bangun cadangan kas sebelum meningkatkan risiko investasi.');
+            $recommendations[] = __('finance.recommendation_emergency_low');
         }
 
         if (empty($recommendations)) {
-            $recommendations[] = __('Keuangan terlihat sehat. Pertahankan disiplin anggaran dan evaluasi ulang setiap akhir periode.');
+            $recommendations[] = __('finance.recommendation_finance_healthy');
         }
 
         if ($score >= 80) {
-            $status = __('Sehat');
+            $status = __('finance.status_healthy');
             $class = 'success';
         } elseif ($score >= 55) {
-            $status = __('Waspada');
+            $status = __('finance.status_warning');
             $class = 'warning';
         } else {
-            $status = __('Berisiko');
+            $status = __('finance.status_risky');
             $class = 'danger';
         }
 
@@ -452,10 +452,10 @@ class FinanceController extends BaseController
 
         // Define ideal ratios for each expense type
         $idealRatios = [
-            'Kebutuhan pokok' => ['min' => 0.25, 'max' => 0.40, 'ideal' => 0.35],
-            'Transportasi' => ['min' => 0.05, 'max' => 0.15, 'ideal' => 0.10],
-            'Cicilan/utang' => ['min' => 0, 'max' => 0.30, 'ideal' => 0.15],
-            'Gaya hidup' => ['min' => 0.05, 'max' => 0.15, 'ideal' => 0.10],
+            'basic_needs' => ['min' => 0.25, 'max' => 0.40, 'ideal' => 0.35],
+            'transportation' => ['min' => 0.05, 'max' => 0.15, 'ideal' => 0.10],
+            'debt_installment' => ['min' => 0, 'max' => 0.30, 'ideal' => 0.15],
+            'lifestyle' => ['min' => 0.05, 'max' => 0.15, 'ideal' => 0.10],
         ];
 
         foreach ($result['expense_items'] as $item) {
@@ -463,26 +463,27 @@ class FinanceController extends BaseController
             $actualAmount = (float) $item['amount'];
             $actualRatio = $income > 0 ? ($actualAmount / $income) : 0;
 
-            $ideal = $idealRatios[$categoryName] ?? ['min' => 0, 'max' => 0.20, 'ideal' => 0.10];
+            $categoryKey = $this->normalizeCategoryKey($categoryName);
+            $ideal = $idealRatios[$categoryKey] ?? ['min' => 0, 'max' => 0.20, 'ideal' => 0.10];
             $recommendedAmount = $income * $ideal['ideal'];
 
             $status = 'ok';
             $idealPercent = $ideal['ideal'] * 100;
-            $reason = __('Sesuai dengan standar rekomendasi (:ideal% dari pemasukan).', ['ideal' => $idealPercent]);
+            $reason = __('finance.recommendation_category_within_standard', ['ideal' => $idealPercent]);
 
             if ($actualRatio > $ideal['max']) {
                 $status = 'critical';
                 $maxPercent = $ideal['max'] * 100;
                 $exceedPercent = ($actualRatio - $ideal['max']) * 100;
-                $reason = __('Pengeluaran melebihi batas maksimal (:max%). Kurangi sebesar :exceed% dari pemasukan.', ['max' => $maxPercent, 'exceed' => number_format($exceedPercent, 1)]);
+                $reason = __('finance.recommendation_category_exceeds_max', ['max' => $maxPercent, 'exceed' => number_format($exceedPercent, 1)]);
             } elseif ($actualRatio > $ideal['ideal'] && $actualRatio <= $ideal['max']) {
                 $status = 'warning';
                 $idealPercent = $ideal['ideal'] * 100;
-                $reason = __('Pengeluaran lebih tinggi dari ideal. Pertimbangkan untuk mengurangi hingga :ideal%.', ['ideal' => $idealPercent]);
+                $reason = __('finance.recommendation_category_higher_than_ideal', ['ideal' => $idealPercent]);
             } elseif ($actualRatio < $ideal['min'] && $ideal['min'] > 0) {
                 // This is usually OK (spending less than min)
                 $status = 'ok';
-                $reason = __('Pengeluaran lebih rendah dari rekomendasi. Bagus!');
+                $reason = __('finance.recommendation_category_lower_than_recommendation');
             }
 
             $recommendations[] = [
@@ -492,6 +493,12 @@ class FinanceController extends BaseController
                 'actual_ratio' => $actualRatio * 100,
                 'ideal_ratio' => $ideal['ideal'] * 100,
                 'status' => $status,
+                'status_label' => match ($status) {
+                    'ok' => 'finance.recommendation_status_ok',
+                    'warning' => 'finance.recommendation_status_warning',
+                    'critical' => 'finance.recommendation_status_critical',
+                    default => 'finance.recommendation_status_ok',
+                },
                 'reason' => $reason,
             ];
         }
@@ -527,6 +534,17 @@ class FinanceController extends BaseController
         }
 
         return $categoryData;
+    }
+
+    private function normalizeCategoryKey(string $name): string
+    {
+        return match ($name) {
+            __('finance.basic_needs'), 'Kebutuhan pokok', 'Basic needs' => 'basic_needs',
+            __('finance.transportation'), 'Transportasi', 'Transportation' => 'transportation',
+            __('finance.debt_installment'), 'Cicilan/utang', 'Installment/Debt', 'Installment' => 'debt_installment',
+            __('finance.lifestyle'), 'Gaya hidup', 'Lifestyle' => 'lifestyle',
+            default => strtolower(trim(preg_replace('/[^a-z0-9]+/i', '_', $name), '_')),
+        };
     }
 }
 
