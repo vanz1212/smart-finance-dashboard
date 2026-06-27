@@ -58,7 +58,7 @@
 
         .landing-shell {
             --landing-pad: clamp(18px, 4vw, 72px);
-            --landing-header-height: max(620px, calc(100svh - 88px));
+            --landing-header-height: max(540px, 75svh);
             min-height: 100vh;
             color: #f8fafc;
             background:
@@ -157,18 +157,18 @@
         }
 
         .hero-slides {
+            display: grid;
             position: relative;
             min-height: var(--landing-header-height);
         }
 
         .hero-slide {
-            position: absolute;
-            inset: 0;
+            grid-area: 1 / 1;
             display: grid;
             grid-template-columns: minmax(0, 1.05fr) minmax(280px, 0.82fr);
             align-items: center;
             gap: clamp(24px, 4vw, 58px);
-            padding: clamp(52px, 7vw, 96px) var(--landing-pad) clamp(108px, 11vw, 148px);
+            padding: clamp(36px, 5vw, 64px) var(--landing-pad) clamp(82px, 8vw, 112px);
             opacity: 0;
             pointer-events: none;
             transform: translateX(36px);
@@ -247,7 +247,7 @@
         }
 
         .hero-visual {
-            min-height: clamp(300px, 46vw, 540px);
+            min-height: clamp(240px, 38vw, 420px);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -311,9 +311,9 @@
             inset: auto 0 24px;
             z-index: 4;
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            gap: 14px;
+            gap: 24px;
             padding: 0 var(--landing-pad);
         }
 
@@ -322,7 +322,6 @@
             gap: 10px;
             align-items: center;
             justify-content: center;
-            flex: 1 1 auto;
         }
 
         .hero-slider-dot {
