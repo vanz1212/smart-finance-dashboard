@@ -58,7 +58,7 @@
 
         .landing-shell {
             --landing-pad: clamp(18px, 4vw, 72px);
-            --landing-header-height: clamp(620px, calc(100svh - 88px), 860px);
+            --landing-header-height: max(620px, calc(100svh - 88px));
             min-height: 100vh;
             color: #f8fafc;
             background:
