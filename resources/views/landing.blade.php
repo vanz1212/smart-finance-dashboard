@@ -57,6 +57,8 @@
         }
 
         .landing-shell {
+            --landing-pad: clamp(18px, 4vw, 72px);
+            --landing-header-height: clamp(620px, calc(100svh - 88px), 860px);
             min-height: 100vh;
             color: #f8fafc;
             background:
@@ -65,12 +67,12 @@
         }
 
         .landing-nav {
-            width: min(1220px, calc(100% - 40px));
-            margin: 0 auto;
+            width: 100%;
+            margin: 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 26px 0;
+            padding: clamp(18px, 2.4vw, 30px) var(--landing-pad);
         }
 
         .landing-brand {
@@ -145,17 +147,19 @@
         }
 
         .landing-hero {
-            width: min(1280px, calc(100% - 40px));
-            margin: 0 auto;
-            padding: 18px 0 72px;
+            width: 100%;
+            margin: 0;
+            padding: 0;
         }
 
         .hero-slider {
             position: relative;
             overflow: hidden;
-            min-height: 700px;
-            border-radius: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            min-height: var(--landing-header-height);
+            border-radius: 0;
+            border: 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             background: #081418;
             box-shadow: 0 28px 90px rgba(0, 0, 0, 0.34);
             animation: frameRise 0.8s ease-out both;
@@ -163,17 +167,17 @@
 
         .hero-slides {
             position: relative;
-            min-height: 700px;
+            min-height: var(--landing-header-height);
         }
 
         .hero-slide {
             position: absolute;
             inset: 0;
             display: grid;
-            grid-template-columns: minmax(0, 1fr) minmax(320px, 0.92fr);
+            grid-template-columns: minmax(0, 1.05fr) minmax(280px, 0.82fr);
             align-items: center;
-            gap: 34px;
-            padding: 80px 84px 120px;
+            gap: clamp(24px, 4vw, 58px);
+            padding: clamp(52px, 7vw, 96px) var(--landing-pad) clamp(108px, 11vw, 148px);
             opacity: 0;
             pointer-events: none;
             transform: translateX(36px);
@@ -207,7 +211,7 @@
         }
 
         .hero-copy {
-            max-width: 520px;
+            max-width: clamp(420px, 43vw, 690px);
             text-align: left;
             position: relative;
             z-index: 2;
@@ -226,7 +230,7 @@
 
         .hero-copy h1 {
             margin: 0;
-            font-size: clamp(3.2rem, 7vw, 5rem);
+            font-size: clamp(3rem, 6.6vw, 7rem);
             line-height: 1.04;
             font-weight: 800;
             letter-spacing: 0;
@@ -252,12 +256,12 @@
         }
 
         .hero-visual {
-            min-height: 500px;
+            min-height: clamp(300px, 46vw, 540px);
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 28px;
-            border-radius: 28px;
+            padding: clamp(18px, 3vw, 34px);
+            border-radius: clamp(20px, 2.5vw, 32px);
             background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.04));
             border: 1px solid rgba(255, 255, 255, 0.12);
             backdrop-filter: blur(10px);
@@ -267,8 +271,8 @@
 
         .hero-visual img {
             width: 100%;
-            max-width: 430px;
-            max-height: 500px;
+            max-width: clamp(280px, 34vw, 540px);
+            max-height: clamp(260px, 40vw, 520px);
             object-fit: contain;
             object-position: center;
             filter: drop-shadow(0 32px 52px rgba(0, 0, 0, 0.32));
@@ -278,9 +282,9 @@
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            min-height: 48px;
-            margin-top: 32px;
-            padding: 0 22px;
+            min-height: clamp(46px, 4vw, 54px);
+            margin-top: clamp(24px, 3vw, 36px);
+            padding: 0 clamp(18px, 2vw, 26px);
             border-radius: 14px;
             background: rgba(255, 255, 255, 0.06);
             border: 1px solid rgba(255, 255, 255, 0.72);
@@ -319,7 +323,7 @@
             justify-content: space-between;
             align-items: center;
             gap: 14px;
-            padding: 0 28px;
+            padding: 0 var(--landing-pad);
         }
 
         .hero-slider-dots {
@@ -347,8 +351,8 @@
         }
 
         .hero-slider-nav {
-            width: 58px;
-            height: 58px;
+            width: clamp(48px, 4.8vw, 64px);
+            height: clamp(48px, 4.8vw, 64px);
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -380,8 +384,9 @@
         }
 
         .hero-slider-help {
-            width: min(1280px, calc(100% - 40px));
-            margin: 16px auto 0;
+            width: 100%;
+            margin: 0;
+            padding: clamp(16px, 2.5vw, 24px) var(--landing-pad) 0;
             color: rgba(248, 250, 252, 0.68);
             font-size: 0.95rem;
             line-height: 1.6;
@@ -395,9 +400,9 @@
         }
 
         .landing-about {
-            width: min(960px, calc(100% - 40px));
-            margin: 0 auto;
-            padding: 72px 0 40px;
+            width: 100%;
+            margin: 0;
+            padding: clamp(56px, 7vw, 86px) var(--landing-pad) 40px;
             text-align: center;
             scroll-margin-top: 28px;
         }
@@ -419,13 +424,15 @@
         }
 
         .landing-services {
-            width: min(1160px, calc(100% - 40px));
-            margin: 0 auto;
-            padding: 56px 0 88px;
+            width: 100%;
+            margin: 0;
+            padding: 56px var(--landing-pad) 88px;
         }
 
         .section-title {
             display: flex;
+            max-width: 1160px;
+            margin-inline: auto;
             justify-content: space-between;
             gap: 20px;
             align-items: end;
@@ -658,7 +665,9 @@
             .hero-slide {
                 grid-template-columns: 1fr;
                 gap: 24px;
-                padding: 52px 22px 108px;
+                align-content: center;
+                padding-top: 44px;
+                padding-bottom: 118px;
             }
 
             .hero-copy {
@@ -671,7 +680,7 @@
             }
 
             .hero-visual {
-                min-height: 260px;
+                min-height: clamp(220px, 42vw, 320px);
                 padding: 20px;
             }
 
@@ -694,17 +703,14 @@
                 font-size: .8rem;
             }
 
-            .landing-nav,
-            .landing-hero,
-            .hero-slider-help,
-            .landing-about,
-            .landing-services {
-                width: min(100%, calc(100% - 24px));
+            .landing-shell {
+                --landing-pad: 18px;
+                --landing-header-height: 700px;
             }
 
             .hero-slider,
             .hero-slides {
-                min-height: 640px;
+                min-height: var(--landing-header-height);
             }
 
             .hero-copy h1 {
