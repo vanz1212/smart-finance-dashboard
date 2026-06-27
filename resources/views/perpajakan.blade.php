@@ -13,6 +13,29 @@
             'Pajak tinggi' => 'danger',
             default => 'neutral',
         };
+        $translateTaxStatus = function ($status) {
+            return match ($status) {
+                'Tidak kena pajak' => __('tax.status_not_taxable'),
+                'Pajak rendah' => __('tax.status_low'),
+                'Pajak normal' => __('tax.status_normal'),
+                'Pajak tinggi' => __('tax.status_high'),
+                default => $status,
+            };
+        };
+        $translateTaxNote = function ($result) {
+            if (! $result) {
+                return '';
+            }
+
+            if (($result['metode'] ?? null) === 'ter' && ! empty($result['ter_category'])) {
+                return __('tax.ter_note', [
+                    'category' => $result['ter_category'],
+                    'rate' => number_format((float) ($result['ter_rate'] ?? 0), 2, ',', '.'),
+                ]);
+            }
+
+            return __('tax.annual_note');
+        };
     @endphp
 
     <style>
@@ -286,14 +309,14 @@
 
             <section class="tax-hero module-hero">
                 <div class="module-hero-panel module-hero-copy">
-                    <span class="tax-kicker">Tax Estimator</span>
+                    <span class="tax-kicker">{{ __('tax.kicker') }}</span>
                     <h1>{{ __('tax.title') }}</h1>
                     <p>{{ __('tax.hero_desc') }}</p>
                     <a class="module-hero-action" href="{{ route('dashboard.user') }}">{{ __('tax.back_to_selector') }}</a>
                 </div>
                 <aside class="module-hero-panel module-hero-summary">
                     @if ($result)
-                        <div class="tax-badge {{ $statusClass }}">{{ $result['status_pajak'] }}</div>
+                        <div class="tax-badge {{ $statusClass }}">{{ $translateTaxStatus($result['status_pajak']) }}</div>
                         <strong style="font-size: 2rem;">{{ $formatRupiah($result['estimasi_pajak_tahunan']) }}</strong>
                         <span>{{ __('tax.est_annual_tax') }}</span>
                     @else
@@ -313,21 +336,21 @@
                             <label>
                                 <span>{{ __('tax.tax_year') }}</span>
                                 <select name="tahun_pajak" required>
-                                    <option value="2024" {{ old('tahun_pajak') == '2024' ? 'selected' : '' }}>2024 (Menggunakan TER)</option>
-                                    <option value="2023" {{ old('tahun_pajak') == '2023' ? 'selected' : '' }}>2023 (PPh 21 Lama)</option>
+                                    <option value="2024" {{ old('tahun_pajak') == '2024' ? 'selected' : '' }}>2024 ({{ __('tax.using_ter') }})</option>
+                                    <option value="2023" {{ old('tahun_pajak') == '2023' ? 'selected' : '' }}>2023 ({{ __('tax.old_pph_21') }})</option>
                                 </select>
                             </label>
                             <label>
                                 <span>{{ __('tax.calc_method') }}</span>
                                 <select name="metode_perhitungan" required>
-                                    <option value="ter" {{ old('metode_perhitungan') == 'ter' ? 'selected' : '' }}>TER Bulanan</option>
-                                    <option value="tahunan" {{ old('metode_perhitungan') == 'tahunan' ? 'selected' : '' }}>PPh 21 Tahunan</option>
+                                    <option value="ter" {{ old('metode_perhitungan') == 'ter' ? 'selected' : '' }}>{{ __('tax.monthly_ter') }}</option>
+                                    <option value="tahunan" {{ old('metode_perhitungan') == 'tahunan' ? 'selected' : '' }}>{{ __('tax.annual_pph_21') }}</option>
                                 </select>
                             </label>
                             <label class="full">
                                 <span>{{ __('tax.taxpayer_status') }} 
                                     <div class="tooltip">ℹ️
-                                        <span class="tooltiptext">TK/0: Tidak Kawin tanpa tanggungan<br>K/1: Kawin 1 tanggungan<br>K/I/2: Kawin, istri bekerja, 2 tanggungan</span>
+                                        <span class="tooltiptext">{!! __('tax.ptkp_tooltip') !!}</span>
                                     </div>
                                 </span>
                                 <select name="status_wajib_pajak" required>
@@ -338,22 +361,20 @@
                                 </select>
                             </label>
 
-                            <!-- Penghasilan -->
-                            <div class="full" style="margin-top: 10px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px; color: var(--accent-primary); font-weight: bold;">Penghasilan</div>
-                            <label><span>Gaji Pokok/Bulanan</span><input type="number" name="penghasilan_bulanan" value="{{ old('penghasilan_bulanan') }}" min="0" step="1000" placeholder="0" required></label>
-                            <label><span>THR / Bonus (Tahunan)</span><input type="number" name="penghasilan_tidak_teratur" value="{{ old('penghasilan_tidak_teratur') }}" min="0" step="1000" placeholder="0" required></label>
+                            <div class="full" style="margin-top: 10px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px; color: var(--accent-primary); font-weight: bold;">{{ __('tax.income_section') }}</div>
+                            <label><span>{{ __('tax.monthly_salary') }}</span><input type="number" name="penghasilan_bulanan" value="{{ old('penghasilan_bulanan') }}" min="0" step="1000" placeholder="0" required></label>
+                            <label><span>{{ __('tax.annual_bonus') }}</span><input type="number" name="penghasilan_tidak_teratur" value="{{ old('penghasilan_tidak_teratur') }}" min="0" step="1000" placeholder="0" required></label>
 
-                            <!-- Pengurang Resmi -->
-                            <div class="full" style="margin-top: 10px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px; color: var(--accent-primary); font-weight: bold;">Pengurang Resmi & Kredit</div>
-                            <label><span>Iuran Pensiun / BPJS</span><input type="number" name="iuran_pensiun" value="{{ old('iuran_pensiun') }}" min="0" step="1000" placeholder="0" required></label>
-                            <label><span>Zakat (Resmi)</span><input type="number" name="zakat" value="{{ old('zakat') }}" min="0" step="1000" placeholder="0" required></label>
-                            <label class="full"><span>Kredit Pajak (PPh yang sudah dipotong)</span><input type="number" name="kredit_pajak" value="{{ old('kredit_pajak') }}" min="0" step="1000" placeholder="0" required></label>
+                            <div class="full" style="margin-top: 10px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px; color: var(--accent-primary); font-weight: bold;">{{ __('tax.deduction_section') }}</div>
+                            <label><span>{{ __('tax.pension_bpjs') }}</span><input type="number" name="iuran_pensiun" value="{{ old('iuran_pensiun') }}" min="0" step="1000" placeholder="0" required></label>
+                            <label><span>{{ __('tax.official_zakat') }}</span><input type="number" name="zakat" value="{{ old('zakat') }}" min="0" step="1000" placeholder="0" required></label>
+                            <label class="full"><span>{{ __('tax.tax_credit') }}</span><input type="number" name="kredit_pajak" value="{{ old('kredit_pajak') }}" min="0" step="1000" placeholder="0" required></label>
                         </div>
-                        <button class="tax-button" type="submit">Hitung Pajak</button>
+                        <button class="tax-button" type="submit">{{ __('tax.calculate_tax') }}</button>
                     </form>
 
                     <div class="tax-panel tax-panel-inner" style="margin-top: 22px;">
-                        <h2>Riwayat Kalkulasi</h2>
+                        <h2>{{ __('tax.calculation_history') }}</h2>
                         @if($history->count() > 0)
                             <div class="history-list">
                                 @foreach($history as $item)
@@ -363,17 +384,17 @@
                                             <div style="font-size: 0.8rem; color: #94a3b8;">{{ $item->created_at->format('d M Y') }}</div>
                                         </div>
                                         <div style="display: flex; gap: 8px;">
-                                            <a href="{{ route('perpajakan.index', ['load_id' => $item->id]) }}" class="btn-use" style="background: var(--accent-primary); color: #fff;">Lihat</a>
-                                            <form action="{{ route('perpajakan.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Hapus riwayat ini?');" style="margin:0;">
+                                            <a href="{{ route('perpajakan.index', ['load_id' => $item->id]) }}" class="btn-use" style="background: var(--accent-primary); color: #fff;">{{ __('tax.view') }}</a>
+                                            <form action="{{ route('perpajakan.destroy', $item->id) }}" method="POST" onsubmit="return confirm('{{ __('tax.delete_confirm') }}');" style="margin:0;">
                                                 @csrf @method('DELETE')
-                                                <button type="submit" class="btn-use" style="background: #ef4444; color: #fff; border:none; cursor:pointer;">Hapus</button>
+                                                <button type="submit" class="btn-use" style="background: #ef4444; color: #fff; border:none; cursor:pointer;">{{ __('tax.delete') }}</button>
                                             </form>
                                         </div>
                                     </div>
                                 @endforeach
                             </div>
                         @else
-                            <p style="margin-top: 15px;">Belum ada riwayat kalkulasi tersimpan.</p>
+                            <p style="margin-top: 15px;">{{ __('tax.empty_history') }}</p>
                         @endif
                     </div>
                 </div>
@@ -385,27 +406,27 @@
                             <p>{{ $result ? __('tax.tax_summary') : __('tax.results_will_appear') }}</p>
                         </div>
                         @if ($result)
-                            <a href="{{ route('perpajakan.export-pdf', $result['id']) }}" class="btn-use" style="background: #ef4444; color: white;" target="_blank">Export PDF</a>
+                            <a href="{{ route('perpajakan.export-pdf', $result['id']) }}" class="btn-use" style="background: #ef4444; color: white;" target="_blank">{{ __('tax.export_pdf') }}</a>
                         @endif
                     </div>
                     
                     @if ($result)
                         <div style="margin-bottom: 15px; padding: 10px; background: rgba(20,184,166,0.1); border-left: 3px solid var(--accent-primary); border-radius: 4px; font-size: 0.9rem;">
-                            <strong>Metode:</strong> {{ $result['catatan'] }}
+                            <strong>{{ __('tax.method') }}</strong> {{ $translateTaxNote($result) }}
                         </div>
 
                         <div class="tax-metrics">
-                            <div class="tax-metric"><span>Penghasilan Bruto (Tahunan)</span><strong>{{ $formatRupiah($result['penghasilan_tahunan'] + $result['penghasilan_tidak_teratur']) }}</strong></div>
-                            <div class="tax-metric"><span>Total Pengurang Tahunan</span><strong>{{ $formatRupiah($result['pengurang_tahunan']) }}</strong></div>
-                            <div class="tax-metric"><span>Penghasilan Neto</span><strong>{{ $formatRupiah($result['penghasilan_neto']) }}</strong></div>
+                            <div class="tax-metric"><span>{{ __('tax.annual_gross_income') }}</span><strong>{{ $formatRupiah($result['penghasilan_tahunan'] + $result['penghasilan_tidak_teratur']) }}</strong></div>
+                            <div class="tax-metric"><span>{{ __('tax.annual_deductions') }}</span><strong>{{ $formatRupiah($result['pengurang_tahunan']) }}</strong></div>
+                            <div class="tax-metric"><span>{{ __('tax.net_income') }}</span><strong>{{ $formatRupiah($result['penghasilan_neto']) }}</strong></div>
                             <div class="tax-metric"><span>PTKP ({{ $result['status_wajib_pajak'] }})</span><strong>{{ $formatRupiah($result['ptkp']) }}</strong></div>
-                            <div class="tax-metric"><span>PKP Dibulatkan</span><strong>{{ $formatRupiah($result['pkp']) }}</strong></div>
-                            <div class="tax-metric"><span>Pajak Kurang Bayar</span><strong style="color: #fb7185;">{{ $formatRupiah($result['pajak_kurang_bayar']) }}</strong></div>
+                            <div class="tax-metric"><span>{{ __('tax.rounded_pkp') }}</span><strong>{{ $formatRupiah($result['pkp']) }}</strong></div>
+                            <div class="tax-metric"><span>{{ __('tax.tax_underpaid') }}</span><strong style="color: #fb7185;">{{ $formatRupiah($result['pajak_kurang_bayar']) }}</strong></div>
                         </div>
 
                         <div style="margin-top: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
                             <div style="background: rgba(243, 201, 105, 0.1); padding: 15px; border-radius: 8px; border: 1px solid rgba(243, 201, 105, 0.3);">
-                                <span style="font-size: 0.8rem; color: var(--accent-primary); font-weight: bold;">PPh Tahunan (Pasal 17)</span>
+                                <span style="font-size: 0.8rem; color: var(--accent-primary); font-weight: bold;">{{ __('tax.annual_pph_article_17') }}</span>
                                 <h3 style="margin: 5px 0 0; font-size: 1.5rem;">{{ $formatRupiah($result['estimasi_pajak_tahunan']) }}</h3>
                             </div>
                             <div style="background: rgba(20, 184, 166, 0.1); padding: 15px; border-radius: 8px; border: 1px solid rgba(20, 184, 166, 0.3);">
@@ -414,14 +435,14 @@
                             </div>
                         </div>
 
-                        <h3 style="margin-top: 25px; font-size: 1rem;">Rincian PPh Tahunan Progresif</h3>
+                        <h3 style="margin-top: 25px; font-size: 1rem;">{{ __('tax.progressive_tax_detail') }}</h3>
                         <table class="tax-table">
-                            <thead><tr><th>Lapisan PKP</th><th>Tarif</th><th>Pajak</th></tr></thead>
+                            <thead><tr><th>{{ __('tax.pkp_layer') }}</th><th>{{ __('tax.rate') }}</th><th>{{ __('tax.tax') }}</th></tr></thead>
                             <tbody>
                                 @forelse ($result['breakdown'] as $row)
                                     <tr><td>{{ $row['label'] }}</td><td>{{ $row['rate'] * 100 }}%</td><td>{{ $formatRupiah($row['tax']) }}</td></tr>
                                 @empty
-                                    <tr><td colspan="3">PKP nihil, tidak ada pajak terutang.</td></tr>
+                                    <tr><td colspan="3">{{ __('tax.no_tax_due') }}</td></tr>
                                 @endforelse
                             </tbody>
                         </table>

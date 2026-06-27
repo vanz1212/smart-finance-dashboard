@@ -128,10 +128,13 @@ class TaxController extends BaseController
         // Tentukan output berdasarkan metode
         if ($metode === 'ter' && $tahun >= 2024) {
             $estimasiPajakBulanan = $estimasiPajakBulananTER;
-            $catatan = "Menggunakan metode TER Kategori {$terCategory} dengan tarif " . ($terRate * 100) . "%.";
+            $catatan = __('tax.ter_note', [
+                'category' => $terCategory,
+                'rate' => number_format($terRate * 100, 2, ',', '.'),
+            ]);
         } else {
             $estimasiPajakBulanan = $estimasiPajakTahunan / 12;
-            $catatan = "Menggunakan metode PPh 21 Tahunan (Pasal 17).";
+            $catatan = __('tax.annual_note');
         }
 
         $hasilJson = [
@@ -175,7 +178,7 @@ class TaxController extends BaseController
             'hasil_json' => $hasilJson,
         ]);
 
-        return redirect()->route('perpajakan.index')->with('success', 'Kalkulasi pajak berhasil disimpan.');
+        return redirect()->route('perpajakan.index')->with('success', __('tax.saved_success'));
     }
 
     public function destroy($id)
@@ -184,7 +187,7 @@ class TaxController extends BaseController
         $analysis = TaxAnalysis::where('user_id', $userId)->findOrFail($id);
         $analysis->delete();
 
-        return redirect()->route('perpajakan.index')->with('success', 'Riwayat kalkulasi pajak berhasil dihapus.');
+        return redirect()->route('perpajakan.index')->with('success', __('tax.deleted_success'));
     }
 
     public function exportPdf($id)
