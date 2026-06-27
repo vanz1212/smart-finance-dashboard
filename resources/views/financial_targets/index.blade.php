@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Target Finansial')
+@section('title', __('targets.page_title'))
 @section('body-class', 'module-page')
 
 @section('content')
@@ -500,4 +500,5 @@
             @endif
         </div>
     </main>
+    @include('partials.module-shell-styles')
 @endsection

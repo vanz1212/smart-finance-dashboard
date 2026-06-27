@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Buat Target Finansial Baru')
+@section('title', __('targets.create_title'))
 @section('body-class', 'module-page')
 
 @section('content')
@@ -8,7 +8,7 @@
         .form-workspace {
             margin: -24px;
             min-height: calc(100vh - 1px);
-            padding: 34px 24px 56px;
+            padding: 80px 24px 56px;
             color: #f8fafc;
             background:
                 linear-gradient(180deg, rgba(5, 12, 15, 0.76), rgba(5, 12, 15, 0.97));
@@ -72,6 +72,35 @@
         .form-group select:focus {
             outline: 3px solid rgba(20, 184, 166, 0.18);
             border-color: #14b8a6;
+        }
+
+        /* Enhanced Select UI */
+        .form-group select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.7)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            background-size: 16px;
+            padding-right: 40px;
+            cursor: pointer;
+        }
+
+        .form-group select option {
+            background-color: var(--bg-panel, #071b20);
+            color: #ffffff;
+            padding: 12px;
+        }
+
+        [data-theme="light"] .form-group select {
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='rgba(0,0,0,0.5)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            color: var(--text-main);
+        }
+
+        [data-theme="light"] .form-group select option {
+            background-color: #ffffff;
+            color: #0f172a;
         }
 
         .form-group textarea {
@@ -305,7 +334,11 @@
 
             function normalizeField(input) {
                 var digits = input.value.replace(/[^0-9]/g, '');
-                input.value = formatRupiah(digits);
+                if (digits) {
+                    input.value = 'Rp ' + formatRupiah(digits);
+                } else {
+                    input.value = '';
+                }
             }
 
             fields.forEach(function (field) {
@@ -319,4 +352,5 @@
             });
         });
     </script>
+    @include('partials.module-shell-styles')
 @endsection

@@ -210,12 +210,7 @@ class FinancialTargetController extends BaseController
         
         $target->save();
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Setoran berhasil dicatat.',
-            'current_amount' => $target->current_amount,
-            'progress' => $target->getProgressPercentage(),
-        ]);
+        return redirect()->back()->with('success', 'Setoran berhasil dicatat.');
     }
 
     public function removeDeposit(FinancialTargetDeposit $deposit)
@@ -251,7 +246,7 @@ class FinancialTargetController extends BaseController
         for ($i = 11; $i >= 0; $i--) {
             $date = Carbon::now()->subMonths($i);
             $key = $date->format('Y-m');
-            $breakdown[$date->format('M Y')] = $deposits[$key]->sum('amount') ?? 0;
+            $breakdown[$date->format('M Y')] = isset($deposits[$key]) ? $deposits[$key]->sum('amount') : 0;
         }
 
         return $breakdown;

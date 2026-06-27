@@ -1021,18 +1021,18 @@
             <section class="workspace-hero module-hero">
                 <div class="module-hero-panel module-hero-copy">
                     <span class="workspace-kicker">Finance Intelligence</span>
-                    <h1>Analisa Keuangan</h1>
-                    <p>Evaluasi arus kas, pengeluaran, tabungan, cicilan, dan kesiapan dana darurat dalam satu dashboard yang ringkas.</p>
-                    <a class="module-hero-action" href="{{ route('dashboard.user') }}">Kembali ke Selector</a>
+                    <h1>{{ __('finance.title') }}</h1>
+                    <p>{{ __('finance.hero_desc') }}</p>
+                    <a class="module-hero-action" href="{{ route('dashboard.user') }}">{{ __('finance.back_to_selector') }}</a>
                 </div>
                 <aside class="module-hero-panel module-hero-summary">
                     @if ($result)
                         <div class="status-badge status-{{ $result['status_class'] }}">{{ $result['status'] }}</div>
                         <strong>{{ $formatPercent($result['saving_ratio']) }}</strong>
-                        <span>Rasio tabungan dan investasi berdasarkan hasil analisa keuangan terbaru.</span>
+                        <span>{{ __('finance.saving_ratio_desc') }}</span>
                     @else
                         <strong>6+</strong>
-                        <span>Indikator utama untuk membaca arus kas, tabungan, cicilan, dan kesiapan dana darurat.</span>
+                        <span>{{ __('finance.main_indicators_desc') }}</span>
                     @endif
                 </aside>
             </section>
@@ -1046,17 +1046,17 @@
                             $initialExpenses = array_values($result['expense_items']);
                         } else {
                             $initialExpenses = [
-                                ['name' => 'Kebutuhan pokok', 'amount' => '', 'is_debt' => false],
-                                ['name' => 'Transportasi',    'amount' => '', 'is_debt' => false],
-                                ['name' => 'Cicilan/utang',   'amount' => '', 'is_debt' => true],
-                                ['name' => 'Gaya hidup',      'amount' => '', 'is_debt' => false],
+                                ['name' => __('finance.basic_needs'), 'amount' => '', 'is_debt' => false],
+                                ['name' => __('finance.transportation'),    'amount' => '', 'is_debt' => false],
+                                ['name' => __('finance.debt_installment'),   'amount' => '', 'is_debt' => true],
+                                ['name' => __('finance.lifestyle'),      'amount' => '', 'is_debt' => false],
                             ];
                         }
                     @endphp
 
                     <div class="panel-heading">
-                        <h2>Input Bulanan</h2>
-                        <p>Gunakan angka rata-rata per bulan agar analisa mudah dibandingkan.</p>
+                        <h2>{{ __('finance.monthly_input') }}</h2>
+                        <p>{{ __('finance.use_monthly_average') }}</p>
                     </div>
 
                     <div class="finance-form-grid">
@@ -1064,57 +1064,57 @@
                             <span>Periode</span>
                             <input type="month" name="periode" value="{{ old('periode', $result['periode'] ?? date('Y-m')) }}" required>
                         </label>
-                        <label><span>Total pemasukan</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input name="pemasukan" value="{{ $formatRupiahInput(old('pemasukan', $result['income'] ?? '')) }}" inputmode="numeric" autocomplete="off" required></div></label>
+                        <label><span>{{ __('finance.total_income') }}</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input name="pemasukan" value="{{ $formatRupiahInput(old('pemasukan', $result['income'] ?? '')) }}" inputmode="numeric" autocomplete="off" required></div></label>
                     </div>
 
                     {{-- Template selector for expense categories --}}
                     @if (isset($templates) && count($templates) > 0)
                     <div class="template-selector">
-                        <label class="template-label">Gunakan Template Kategori (Opsional)</label>
+                        <label class="template-label">{{ __('finance.use_template') }}</label>
                         <div class="template-grid">
                             @foreach ($templates as $template)
                                 <button type="button" class="template-btn" data-template-id="{{ $template['id'] ?? '' }}" title="{{ $template['description'] ?? '' }}">
-                                    <span class="template-name">{{ $template['name'] }}</span>
-                                    <span class="template-desc">{{ $template['type'] }}</span>
+                                    <span class="template-name">{{ __($template['name']) }}</span>
+                                    <span class="template-desc">{{ __($template['type']) }}</span>
                                 </button>
                             @endforeach
                         </div>
-                        <span style="font-size: 0.75rem; color: rgba(248,250,252,0.5);">Pilih template untuk otomatis mengisi kategori pengeluaran</span>
+                        <span style="font-size: 0.75rem; color: rgba(248,250,252,0.5);">{{ __('finance.select_template') }}</span>
                     </div>
                     @endif
 
                     <div class="expense-section">
                         <div class="expense-section-header">
-                            <span class="expense-section-label">Kategori Pengeluaran</span>
-                            <span class="expense-section-hint">Centang <strong style="color:#fb7185">cicilan</strong> untuk tandai sebagai utang/cicilan</span>
+                            <span class="expense-section-label">{{ __('finance.expense_category') }}</span>
+                            <span class="expense-section-hint">{!! __('finance.check_debt') !!}</span>
                         </div>
                         <div id="expense-list"></div>
                         <button type="button" id="add-expense-btn" class="btn-add-expense">
                             <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                            Tambah Kategori
+                            {{ __('finance.add_category') }}
                         </button>
                     </div>
 
                     <div class="finance-form-grid" style="margin-top:16px;">
-                        <label><span>Tabungan (bulanan)</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input name="tabungan" value="{{ $formatRupiahInput(old('tabungan', $result['saving'] ?? '')) }}" inputmode="numeric" autocomplete="off" required></div></label>
-                        <label><span>Saldo tabungan saat ini</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input name="saldo_tabungan" value="{{ $formatRupiahInput(old('saldo_tabungan', $result['saldo_tabungan'] ?? '')) }}" inputmode="numeric" autocomplete="off"></div></label>
-                        <label><span>Setoran tabungan bulanan</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input name="setoran_tabungan" value="{{ $formatRupiahInput(old('setoran_tabungan', $result['setoran_tabungan'] ?? '')) }}" inputmode="numeric" autocomplete="off"></div></label>
-                        <label><span>Investasi</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input name="investasi" value="{{ $formatRupiahInput(old('investasi', $result['investment'] ?? '')) }}" inputmode="numeric" autocomplete="off" required></div></label>
-                        <label><span>Dana darurat</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input name="dana_darurat" value="{{ $formatRupiahInput(old('dana_darurat', $result['emergency_fund'] ?? '')) }}" inputmode="numeric" autocomplete="off" required></div></label>
-                        <label><span>Target tabungan</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input name="target_tabungan" value="{{ $formatRupiahInput(old('target_tabungan', $result['target_saving'] ?? '')) }}" inputmode="numeric" autocomplete="off"></div></label>
+                        <label><span>{{ __('finance.monthly_savings') }}</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input name="tabungan" value="{{ $formatRupiahInput(old('tabungan', $result['saving'] ?? '')) }}" inputmode="numeric" autocomplete="off" required></div></label>
+                        <label><span>{{ __('finance.current_savings_balance') }}</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input name="saldo_tabungan" value="{{ $formatRupiahInput(old('saldo_tabungan', $result['saldo_tabungan'] ?? '')) }}" inputmode="numeric" autocomplete="off"></div></label>
+                        <label><span>{{ __('finance.monthly_deposit') }}</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input name="setoran_tabungan" value="{{ $formatRupiahInput(old('setoran_tabungan', $result['setoran_tabungan'] ?? '')) }}" inputmode="numeric" autocomplete="off"></div></label>
+                        <label><span>{{ __('finance.investment') }}</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input name="investasi" value="{{ $formatRupiahInput(old('investasi', $result['investment'] ?? '')) }}" inputmode="numeric" autocomplete="off" required></div></label>
+                        <label><span>{{ __('finance.emergency_fund') }}</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input name="dana_darurat" value="{{ $formatRupiahInput(old('dana_darurat', $result['emergency_fund'] ?? '')) }}" inputmode="numeric" autocomplete="off" required></div></label>
+                        <label><span>{{ __('finance.savings_target') }}</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input name="target_tabungan" value="{{ $formatRupiahInput(old('target_tabungan', $result['target_saving'] ?? '')) }}" inputmode="numeric" autocomplete="off"></div></label>
                     </div>
 
                     {{-- Pass initial expense data to JavaScript --}}
                     <script id="initial-expenses-data" type="application/json">{!! json_encode($initialExpenses) !!}</script>
 
-                    <button class="workspace-button" type="submit">Hitung Analisa</button>
+                    <button class="workspace-button" type="submit">{{ __('finance.calculate') }}</button>
                 </form>
 
                 <div class="workspace-panel workspace-panel-inner">
                     <div class="panel-heading" style="display: flex; justify-content: space-between; align-items: flex-start;">
                         <div>
-                            <h2>Ringkasan Hasil</h2>
-                            <p>{{ $result ? 'Periode ' . $translatePeriode($result['periode']) : 'Hasil akan tampil setelah data dihitung.' }}</p>
+                            <h2>{{ __('finance.results_summary') }}</h2>
+                            <p>{{ $result ? 'Periode ' . $translatePeriode($result['periode']) : __('finance.results_will_appear') }}</p>
                         </div>
                         @if ($result && isset($request) && $request->has('load_id'))
                             <a href="{{ route('finance.export-pdf', $request->input('load_id')) }}" class="btn-use" style="background: #ef4444; color: white;" target="_blank">Export PDF</a>
@@ -1128,17 +1128,17 @@
                             <div class="metric-tile"><span>Pemasukan</span><strong>{{ $formatRupiah($result['income']) }}</strong></div>
                             <div class="metric-tile"><span>Pengeluaran</span><strong>{{ $formatRupiah($result['total_expenses']) }}</strong></div>
                             <div class="metric-tile"><span>Arus kas bersih</span><strong>{{ $formatRupiah($result['net_cashflow']) }}</strong></div>
-                            <div class="metric-tile"><span>Dana darurat</span><strong>{{ number_format($result['emergency_months'], 1, ',', '.') }} bulan</strong></div>
+                            <div class="metric-tile"><span>{{ __('finance.emergency_fund') }}</span><strong>{{ number_format($result['emergency_months'], 1, ',', '.') }} {{ __('finance.months') }}</strong></div>
                         </div>
 
                         <div class="ratio-stack">
                             <div><div class="ratio-line"><span>Rasio pengeluaran</span><strong>{{ $formatPercent($result['expense_ratio']) }}</strong></div><div class="track"><span style="width: {{ min($result['expense_ratio'], 100) }}%"></span></div></div>
-                            <div><div class="ratio-line"><span>Rasio tabungan + investasi</span><strong>{{ $formatPercent($result['saving_ratio']) }}</strong></div><div class="track good"><span style="width: {{ min($result['saving_ratio'], 100) }}%"></span></div></div>
+                            <div><div class="ratio-line"><span>{{ __('finance.saving_ratio') }}</span><strong>{{ $formatPercent($result['saving_ratio']) }}</strong></div><div class="track good"><span style="width: {{ min($result['saving_ratio'], 100) }}%"></span></div></div>
                             <div><div class="ratio-line"><span>Rasio cicilan</span><strong>{{ $formatPercent($result['debt_ratio']) }}</strong></div><div class="track debt"><span style="width: {{ min($result['debt_ratio'], 100) }}%"></span></div></div>
                         </div>
 
                         <div class="insight-box">
-                            <h3>Rekomendasi</h3>
+                            <h3>{{ __('finance.recommendations') }}</h3>
                             <ul>
                                 @foreach ($result['recommendations'] as $recommendation)
                                     <li>{{ $recommendation }}</li>
@@ -1148,11 +1148,11 @@
 
                         @if (!empty($recommendations))
                         <div class="recommendations-panel">
-                            <h3 class="recommendations-title">Rekomendasi Kategori Pengeluaran</h3>
+                            <h3 class="recommendations-title">{{ __('finance.expense_recommendations') }}</h3>
                             @foreach ($recommendations as $rec)
                                 <div class="recommendation-item {{ $rec['status'] }}">
                                     <div class="recommendation-content">
-                                        <span class="recommendation-label">{{ $rec['category_name'] }}</span>
+                                        <span class="recommendation-label">{{ __($rec['category_name']) }}</span>
                                         <span class="recommendation-text">{{ $rec['reason'] }}</span>
                                     </div>
                                     <div style="display: flex; flex-direction: column; gap: 4px; align-items: flex-end; justify-content: center;">
@@ -1165,15 +1165,15 @@
                         @endif
                     @else
                         <div class="empty-state">
-                            <h3>Belum ada analisa</h3>
-                            <p>Isi form di sebelah kiri untuk melihat status keuangan, rasio, dan rekomendasi otomatis.</p>
+                            <h3>{{ __('finance.no_analysis') }}</h3>
+                            <p>{{ __('finance.fill_form') }}</p>
                         </div>
                     @endif
 
                     @if ($result)
                     <!-- What-If Simulation -->
                     <div class="insight-box" style="background: rgba(20, 184, 166, 0.05); border-color: rgba(20, 184, 166, 0.3);">
-                        <h3 style="color: var(--accent-primary); margin-bottom: 15px;">Simulasi "What-If" (Eksperimen)</h3>
+                        <h3 style="color: var(--accent-primary); margin-bottom: 15px;">{{ __('finance.what_if_simulation') }}</h3>
                         <p style="font-size: 0.85rem; color: rgba(248, 250, 252, 0.7); margin-bottom: 20px;">
                             Geser slider di bawah ini untuk melihat dampak mengurangi gaya hidup atau mempercepat cicilan terhadap sisa kas (arus kas bersih) Anda secara instan.
                         </p>
@@ -1182,7 +1182,7 @@
                             <!-- Slider 1: Kurangi Gaya Hidup -->
                             <div>
                                 <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                                    <label style="font-size: 0.85rem; font-weight: bold;">Kurangi Pengeluaran (Gaya Hidup/Lainnya)</label>
+                                    <label style="font-size: 0.85rem; font-weight: bold;">{{ __('finance.reduce_expenses') }}</label>
                                     <span id="sim-expense-val" style="color: var(--accent-primary); font-weight: bold;">0%</span>
                                 </div>
                                 <input type="range" id="sim-expense-slider" min="0" max="50" step="5" value="0" style="width: 100%; accent-color: var(--accent-primary);">
@@ -1191,7 +1191,7 @@
                             <!-- Slider 2: Kurangi Cicilan -->
                             <div>
                                 <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                                    <label style="font-size: 0.85rem; font-weight: bold;">Kurangi Cicilan/Utang</label>
+                                    <label style="font-size: 0.85rem; font-weight: bold;">{{ __('finance.reduce_debt') }}</label>
                                     <span id="sim-debt-val" style="color: var(--accent-primary); font-weight: bold;">0%</span>
                                 </div>
                                 <input type="range" id="sim-debt-slider" min="0" max="50" step="5" value="0" style="width: 100%; accent-color: var(--accent-primary);">
@@ -1247,7 +1247,7 @@
                                     netCashflowLabel.style.color = projectedCashflow < 0 ? '#ef4444' : '#10b981';
                                     
                                     if (totalSaved > 0) {
-                                        impactText.textContent = `Hebat! Anda bisa menyelamatkan ${formatRp(totalSaved)} ekstra per bulan. Anda bisa menggunakan ini untuk investasi atau mempercepat tabungan.`;
+                                        impactText.textContent = `Hebat! Anda bisa menyelamatkan ${formatRp(totalSaved)} ekstra per {{ __('finance.months') }}. Anda bisa menggunakan ini untuk investasi atau mempercepat tabungan.`;
                                     } else {
                                         impactText.textContent = 'Sesuaikan slider untuk melihat simulasi.';
                                     }
@@ -1286,8 +1286,8 @@
                 @endphp
                 <section class="workspace-panel workspace-panel-inner breakdown-panel">
                     <div class="panel-heading">
-                        <h2>Breakdown Anggaran</h2>
-                        <p>Komposisi pengeluaran dibandingkan dengan pemasukan bulanan.</p>
+                        <h2>{{ __('finance.budget_breakdown') }}</h2>
+                        <p>Komposisi pengeluaran dibandingkan dengan pemasukan {{ __('finance.months') }}an.</p>
                     </div>
 
                     <div class="breakdown-layout">
@@ -1295,7 +1295,7 @@
                             @foreach ($result['expense_items'] as $item)
                                 <div class="breakdown-item {{ !empty($item['is_debt']) ? 'is-debt' : '' }}">
                                     <span>
-                                        {{ $item['name'] }}
+                                        {{ __($item['name']) }}
                                         @if (!empty($item['is_debt']))
                                             <span class="debt-tag">cicilan</span>
                                         @endif
@@ -1320,12 +1320,12 @@
                             <div class="goal-card">
                                 <span>Estimasi target tabungan</span>
                                 @if ($result['months_to_target'] !== null)
-                                    <strong>{{ $result['months_to_target'] }} bulan</strong>
+                                    <strong>{{ $result['months_to_target'] }} {{ __('finance.months') }}</strong>
                                     @if ($result['saldo_tabungan'] !== null || $result['setoran_tabungan'] !== null)
                                         <p style="margin-top:8px;line-height:1.6;color:rgba(248,250,252,0.66);font-size:0.84rem;">
                                             Target: {{ $formatRupiah($result['target_saving']) }}<br>
                                             Saldo saat ini: {{ $formatRupiah($result['effective_saldo']) }}<br>
-                                            Setoran/bulan: {{ $formatRupiah($result['effective_setoran']) }}
+                                            Setoran/{{ __('finance.months') }}: {{ $formatRupiah($result['effective_setoran']) }}
                                             @if ($result['saldo_tabungan'] === null)
                                                 <br><em style="color:var(--accent-primary);font-size:0.78rem;">* Isi "Saldo saat ini" untuk estimasi lebih akurat</em>
                                             @endif
@@ -1335,7 +1335,7 @@
                                     @endif
                                 @else
                                     <strong>Belum tersedia</strong>
-                                    <p>Isi target tabungan dan setoran bulanan untuk menghitung estimasi waktu.</p>
+                                    <p>Isi target tabungan dan setoran {{ __('finance.months') }}an untuk menghitung estimasi waktu.</p>
                                 @endif
                             </div>
                         </div>
@@ -1345,8 +1345,8 @@
                 @if (!empty($categoryHistory))
                 <section class="workspace-panel workspace-panel-inner">
                     <div class="panel-heading">
-                        <h2>Tren Kategori Pengeluaran</h2>
-                        <p>Perbandingan perubahan kategori pengeluaran dalam 6 bulan terakhir.</p>
+                        <h2>{{ __('finance.expense_trends') }}</h2>
+                        <p>Perbandingan perubahan kategori pengeluaran dalam 6 {{ __('finance.months') }} terakhir.</p>
                     </div>
 
                     <div class="category-trend-wrapper">
@@ -1360,13 +1360,13 @@
                 <section class="workspace-panel workspace-panel-inner comparison-panel">
                     <div class="chart-header-row">
                         <div class="panel-heading" style="margin-bottom: 0;">
-                            <h2>Perkembangan Keuangan Bulanan</h2>
-                            <p>Bandingkan pemasukan, pengeluaran, tabungan, dan tren arus kas bersih dari bulan ke bulan.</p>
+                            <h2>{{ __('finance.monthly_progress') }}</h2>
+                            <p>Bandingkan pemasukan, pengeluaran, tabungan, dan tren arus kas bersih dari {{ __('finance.months') }} ke {{ __('finance.months') }}.</p>
                         </div>
                         <div class="chart-filter-controls">
-                            <button type="button" class="btn-filter is-active" data-range="6">6 Bulan</button>
-                            <button type="button" class="btn-filter" data-range="12">12 Bulan</button>
-                            <button type="button" class="btn-filter" data-range="all">Semua</button>
+                            <button type="button" class="btn-filter is-active" data-range="6">{{ __('finance.six_months') }}</button>
+                            <button type="button" class="btn-filter" data-range="12">{{ __('finance.twelve_months') }}</button>
+                            <button type="button" class="btn-filter" data-range="all">{{ __('finance.all') }}</button>
                         </div>
                     </div>
 
@@ -1378,14 +1378,14 @@
                         <table class="comparison-table">
                             <thead>
                                 <tr>
-                                    <th>Periode</th>
-                                    <th>Pemasukan</th>
-                                    <th>Pengeluaran</th>
-                                    <th>Tabungan & Investasi</th>
-                                    <th>Arus Kas Bersih</th>
-                                    <th>Dana Darurat</th>
-                                    <th>Status</th>
-                                    <th>Aksi</th>
+                                    <th>{{ __('finance.period') }}</th>
+                                    <th>{{ __('finance.income') }}</th>
+                                    <th>{{ __('finance.expenses') }}</th>
+                                    <th>{{ __('finance.savings_investment') }}</th>
+                                    <th>{{ __('finance.net_cash_flow') }}</th>
+                                    <th>{{ __('finance.emergency_fund_col') }}</th>
+                                    <th>{{ __('finance.status') }}</th>
+                                    <th>{{ __('finance.action') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -1399,7 +1399,7 @@
                                         <td>{{ number_format($item->calculated['emergency_months'], 1, ',', '.') }} bln</td>
                                         <td>
                                             <span class="status-badge status-{{ $item->calculated['status_class'] }}" style="padding: 4px 10px; font-size: 0.76rem; min-width: 80px; display: inline-block;">
-                                                {{ $item->calculated['status'] }}
+                                                {{ __($item->calculated['status']) }}
                                             </span>
                                         </td>
                                         <td>
@@ -1408,7 +1408,7 @@
                                                 <form action="{{ route('finance.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus riwayat analisis untuk periode ini?')">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn-delete">Hapus</button>
+                                                    <button type="submit" class="btn-delete">{{ __('finance.delete') }}</button>
                                                 </form>
                                             </div>
                                         </td>
@@ -1648,16 +1648,16 @@
                 var amount = data ? formatRp(String(data.amount || '')) : '';
 
                 row.innerHTML =
-                    '<input type="text" name="expenses[' + idx + '][name]" value="' + escHtml(name) + '" placeholder="Nama kategori" autocomplete="off" required>' +
+                    '<input type="text" name="expenses[' + idx + '][name]" value="' + escHtml(name) + '" placeholder="{{ __('finance.category_name') }}" autocomplete="off" required>' +
                     '<div class="money-field" style="position:relative;">' +
                         '<span class="money-prefix">Rp</span>' +
                         '<input type="text" name="expenses[' + idx + '][amount]" value="' + escHtml(amount) + '" class="expense-amount" inputmode="numeric" autocomplete="off" required style="padding-left:42px;">' +
                     '</div>' +
-                    '<label class="debt-toggle" title="Tandai sebagai cicilan/utang">' +
+                    '<label class="debt-toggle" title="{{ __('finance.mark_as_debt') }}">' +
                         '<input type="checkbox" name="expenses[' + idx + '][is_debt]" value="1"' + (isDebt ? ' checked' : '') + '>' +
                         'Cicilan' +
                     '</label>' +
-                    '<button type="button" class="btn-remove-expense" title="Hapus kategori">✕</button>';
+                    '<button type="button" class="btn-remove-expense" title="{{ __('finance.remove_category') }}">✕</button>';
 
                 // Colorize left border by category index
                 row.style.borderLeft = '3px solid ' + color;
@@ -1687,10 +1687,10 @@
             try { initial = JSON.parse(dataEl ? dataEl.textContent : '[]'); } catch(e) {}
             if (!Array.isArray(initial) || initial.length === 0) {
                 initial = [
-                    { name: 'Kebutuhan pokok', amount: '', is_debt: false },
-                    { name: 'Transportasi',    amount: '', is_debt: false },
-                    { name: 'Cicilan/utang',   amount: '', is_debt: true  },
-                    { name: 'Gaya hidup',      amount: '', is_debt: false },
+                    { name: '{{ __('finance.basic_needs') }}', amount: '', is_debt: false },
+                    { name: '{{ __('finance.transportation') }}',    amount: '', is_debt: false },
+                    { name: '{{ __('finance.debt_installment') }}',   amount: '', is_debt: true  },
+                    { name: '{{ __('finance.lifestyle') }}',      amount: '', is_debt: false },
                 ];
             }
             initial.forEach(function(item) { expenseList.appendChild(createRow(item)); });
@@ -1904,16 +1904,16 @@
                                 var isDebt = expense.is_debt ? ' checked' : '';
 
                                 row.innerHTML =
-                                    '<input type="text" name="expenses[' + idx + '][name]" value="' + escHtml(expense.name) + '" placeholder="Nama kategori" autocomplete="off" required>' +
+                                    '<input type="text" name="expenses[' + idx + '][name]" value="' + escHtml(expense.name) + '" placeholder="{{ __('finance.category_name') }}" autocomplete="off" required>' +
                                     '<div class="money-field" style="position:relative;">' +
                                         '<span class="money-prefix">Rp</span>' +
                                         '<input type="text" name="expenses[' + idx + '][amount]" value="' + escHtml(amount) + '" class="expense-amount" inputmode="numeric" autocomplete="off" required style="padding-left:42px;">' +
                                     '</div>' +
-                                    '<label class="debt-toggle" title="Tandai sebagai cicilan/utang">' +
+                                    '<label class="debt-toggle" title="{{ __('finance.mark_as_debt') }}">' +
                                         '<input type="checkbox" name="expenses[' + idx + '][is_debt]" value="1"' + isDebt + '>' +
                                         'Cicilan' +
                                     '</label>' +
-                                    '<button type="button" class="btn-remove-expense" title="Hapus kategori">✕</button>';
+                                    '<button type="button" class="btn-remove-expense" title="{{ __('finance.remove_category') }}">✕</button>';
 
                                 row.style.borderLeft = '3px solid ' + color;
                                 row.style.paddingLeft = '8px';

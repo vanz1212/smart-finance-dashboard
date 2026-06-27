@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Login - Smart Finance Dashboard')
+@section('title', __('auth.page_title_login'))
 
 @section('content')
     <style>

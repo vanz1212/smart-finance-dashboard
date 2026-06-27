@@ -1,0 +1,28 @@
+<?php
+
+return [
+    'page_title' => 'Stata - Smart Finance Dashboard',
+    'title' => 'Stata',
+    'Statistical analysis workspace for economic data: correlation, linear regression, descriptive statistics, and easy-to-read output interpretation.' => 'Ruang analisis statistik untuk data ekonomi: korelasi, regresi linear, statistik deskriptif, dan interpretasi output yang mudah dibaca.',
+    'Back to Selector' => 'Kembali ke Selector',
+    'Main analysis module ready to be developed for academic and economic workflows.' => 'Modul analisis utama yang siap dikembangkan untuk workflow akademik dan ekonomi.',
+    'Correlation' => 'Korelasi',
+    'Helps read relationships between numerical variables and identify initial patterns.' => 'Membantu membaca hubungan antar variabel numerik dan mengidentifikasi pola awal.',
+    'Linear Regression' => 'Regresi Linear',
+    'The foundation of economic model analysis to see the effect of independent variables on the dependent variable.' => 'Fondasi analisis model ekonomi untuk melihat pengaruh variabel independen terhadap dependen.',
+    'Descriptive Statistics' => 'Statistik Deskriptif',
+    'Summary of mean, standard deviation, minimum, maximum, and number of observations.' => 'Ringkasan mean, standar deviasi, minimum, maksimum, dan jumlah observasi.',
+    'Import Stata datasets, select variables, and run safe analysis commands without writing syntax manually.' => 'Impor dataset Stata, pilih variabel, lalu jalankan command analisis yang aman tanpa menulis sintaks secara manual.',
+    'Import .dta File' => 'Import File .dta',
+    'Upload File' => 'Upload File',
+    'Active Dataset' => 'Dataset Aktif',
+    'No active dataset yet. Select a .dta file to get started.' => 'Belum ada dataset aktif. Pilih file .dta untuk memulai.',
+    'Command Analyzer' => 'Command Analyzer',
+    'Select Command' => 'Pilih Command',
+    'Independent Variable (X)' => 'Variabel Independen (X)',
+    'Dependent Variable (Y)' => 'Variabel Dependen (Y)',
+    'Select variable' => 'Pilih variabel',
+    'Run Command' => 'Jalankan Command',
+    'Stata Output Console' => 'Stata Output Console',
+    'No output yet. Run a command to see the results.' => 'Belum ada output. Jalankan command untuk melihat hasil.',
+];

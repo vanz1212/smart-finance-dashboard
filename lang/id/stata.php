@@ -1,0 +1,28 @@
+<?php
+
+return [
+    'page_title' => 'Stata - Smart Finance Dashboard',
+    'title' => 'Stata',
+    'hero_desc' => 'Ruang analisis statistik untuk data ekonomi: korelasi, regresi linear, statistik deskriptif, dan interpretasi output yang mudah dibaca.',
+    'back_to_selector' => 'Kembali ke Selector',
+    'main_module_desc' => 'Modul analisis utama yang siap dikembangkan untuk workflow akademik dan ekonomi.',
+    'correlation' => 'Korelasi',
+    'correlation_desc' => 'Membantu membaca hubungan antar variabel numerik dan mengidentifikasi pola awal.',
+    'linear_regression' => 'Regresi Linear',
+    'linear_regression_desc' => 'Fondasi analisis model ekonomi untuk melihat pengaruh variabel independen terhadap dependen.',
+    'desc_stats' => 'Statistik Deskriptif',
+    'desc_stats_desc' => 'Ringkasan mean, standar deviasi, minimum, maksimum, dan jumlah observasi.',
+    'import_desc' => 'Impor dataset Stata, pilih variabel, lalu jalankan command analisis yang aman tanpa menulis sintaks secara manual.',
+    'import_file' => 'Import File .dta',
+    'upload_file' => 'Upload File',
+    'active_dataset' => 'Dataset Aktif',
+    'no_dataset' => 'Belum ada dataset aktif. Pilih file .dta untuk memulai.',
+    'cmd_analyzer' => 'Command Analyzer',
+    'choose_cmd' => 'Pilih Command',
+    'indep_var' => 'Variabel Independen (X)',
+    'dep_var' => 'Variabel Dependen (Y)',
+    'choose_var' => 'Pilih variabel',
+    'run_cmd' => 'Jalankan Command',
+    'output_console' => 'Stata Output Console',
+    'no_output' => 'Belum ada output. Jalankan command untuk melihat hasil.',
+];

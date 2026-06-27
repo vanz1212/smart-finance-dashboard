@@ -1,0 +1,28 @@
+<?php
+
+return [
+    'page_title' => 'Perpajakan - Smart Finance Dashboard',
+    'title' => 'Perpajakan',
+    'disclaimer_desc' => 'Hasil kalkulasi ini merupakan estimasi dan simulasi pribadi berdasarkan Tarif Efektif Rata-Rata (TER) dan PPh Pasal 17. Harap tetap mengacu pada DJP Online untuk pelaporan pajak resmi Anda.',
+    'important' => 'Penting:',
+    'hero_desc' => 'Estimasi PPh orang pribadi dengan metode PPh 21 Bulanan (TER) dan Rekonsiliasi Tahunan.',
+    'back_to_selector' => 'Kembali ke Selector',
+    'est_annual_tax' => 'Estimasi PPh Tahunan',
+    'ter_desc' => 'Lapisan tarif progresif PPh orang pribadi & Tarif Efektif Rata-Rata (TER).',
+    'input_data' => 'Input Data Pajak',
+    'input_desc' => 'Masukkan profil penghasilan dan potongan resmi.',
+    'tax_year' => 'Tahun Pajak',
+    'calc_method' => 'Metode Perhitungan',
+    'taxpayer_status' => 'Status Wajib Pajak (PTKP)',
+    'choose_status' => 'Pilih status',
+    'gross_income_monthly' => 'Penghasilan Bruto (Bulanan)',
+    'gross_income_desc' => 'Total keseluruhan penghasilan kotor per bulan',
+    'calculate_btn' => 'Hitung Estimasi Pajak',
+    'calc_output' => 'Output Perhitungan',
+    'tax_summary' => 'Ringkasan pajak Anda',
+    'results_will_appear' => 'Hasil estimasi akan tampil di sini.',
+    'est_pph_21' => 'Estimasi PPh Pasal 21',
+    'est_monthly_tax' => 'PPh Bulanan (Estimasi)',
+    'fill_form' => 'Isi form pajak untuk melihat simulasi perhitungan.',
+    'tariff_info' => 'Informasi Tarif & Regulasi (Ringkasan)',
+];

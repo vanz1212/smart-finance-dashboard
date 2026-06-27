@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Perpajakan - Smart Finance Dashboard')
+@section('title', __('tax.page_title'))
 @section('body-class', 'module-page')
 
 @section('content')
@@ -281,24 +281,24 @@
             </div>
             
             <div class="disclaimer-alert">
-                <strong>Penting:</strong> Hasil kalkulasi ini merupakan estimasi dan simulasi pribadi berdasarkan Tarif Efektif Rata-Rata (TER) dan PPh Pasal 17. Harap tetap mengacu pada DJP Online untuk pelaporan pajak resmi Anda.
+                <strong>{{ __('tax.important') }}</strong> {{ __('tax.disclaimer_desc') }}
             </div>
 
             <section class="tax-hero module-hero">
                 <div class="module-hero-panel module-hero-copy">
                     <span class="tax-kicker">Tax Estimator</span>
-                    <h1>Perpajakan</h1>
-                    <p>Estimasi PPh orang pribadi dengan metode PPh 21 Bulanan (TER) dan Rekonsiliasi Tahunan.</p>
-                    <a class="module-hero-action" href="{{ route('dashboard.user') }}">Kembali ke Selector</a>
+                    <h1>{{ __('tax.title') }}</h1>
+                    <p>{{ __('tax.hero_desc') }}</p>
+                    <a class="module-hero-action" href="{{ route('dashboard.user') }}">{{ __('tax.back_to_selector') }}</a>
                 </div>
                 <aside class="module-hero-panel module-hero-summary">
                     @if ($result)
                         <div class="tax-badge {{ $statusClass }}">{{ $result['status_pajak'] }}</div>
                         <strong style="font-size: 2rem;">{{ $formatRupiah($result['estimasi_pajak_tahunan']) }}</strong>
-                        <span>Estimasi PPh Tahunan</span>
+                        <span>{{ __('tax.est_annual_tax') }}</span>
                     @else
                         <strong>TER</strong>
-                        <span>Lapisan tarif progresif PPh orang pribadi & Tarif Efektif Rata-Rata (TER).</span>
+                        <span>{{ __('tax.ter_desc') }}</span>
                     @endif
                 </aside>
             </section>
@@ -307,31 +307,31 @@
                 <div>
                     <form class="tax-panel tax-panel-inner" action="{{ route('perpajakan.calculate') }}" method="POST">
                         @csrf
-                        <h2>Input Data Pajak</h2>
-                        <p>Masukkan profil penghasilan dan potongan resmi.</p>
+                        <h2>{{ __('tax.input_data') }}</h2>
+                        <p>{{ __('tax.input_desc') }}</p>
                         <div class="tax-form">
                             <label>
-                                <span>Tahun Pajak</span>
+                                <span>{{ __('tax.tax_year') }}</span>
                                 <select name="tahun_pajak" required>
                                     <option value="2024" {{ old('tahun_pajak') == '2024' ? 'selected' : '' }}>2024 (Menggunakan TER)</option>
                                     <option value="2023" {{ old('tahun_pajak') == '2023' ? 'selected' : '' }}>2023 (PPh 21 Lama)</option>
                                 </select>
                             </label>
                             <label>
-                                <span>Metode Perhitungan</span>
+                                <span>{{ __('tax.calc_method') }}</span>
                                 <select name="metode_perhitungan" required>
                                     <option value="ter" {{ old('metode_perhitungan') == 'ter' ? 'selected' : '' }}>TER Bulanan</option>
                                     <option value="tahunan" {{ old('metode_perhitungan') == 'tahunan' ? 'selected' : '' }}>PPh 21 Tahunan</option>
                                 </select>
                             </label>
                             <label class="full">
-                                <span>Status Wajib Pajak (PTKP) 
+                                <span>{{ __('tax.taxpayer_status') }} 
                                     <div class="tooltip">ℹ️
                                         <span class="tooltiptext">TK/0: Tidak Kawin tanpa tanggungan<br>K/1: Kawin 1 tanggungan<br>K/I/2: Kawin, istri bekerja, 2 tanggungan</span>
                                     </div>
                                 </span>
                                 <select name="status_wajib_pajak" required>
-                                    <option value="" disabled {{ !old('status_wajib_pajak') ? 'selected' : '' }}>Pilih status</option>
+                                    <option value="" disabled {{ !old('status_wajib_pajak') ? 'selected' : '' }}>{{ __('tax.choose_status') }}</option>
                                     @foreach ($statuses as $status)
                                         <option value="{{ $status }}" {{ old('status_wajib_pajak') === $status ? 'selected' : '' }}>{{ $status }} - PTKP {{ $formatRupiah($ptkpTable[$status]) }}</option>
                                     @endforeach
@@ -381,8 +381,8 @@
                 <div class="tax-panel tax-panel-inner">
                     <div style="display: flex; justify-content: space-between; align-items: flex-start;">
                         <div>
-                            <h2>Output Perhitungan</h2>
-                            <p>{{ $result ? 'Ringkasan pajak Anda' : 'Hasil estimasi akan tampil di sini.' }}</p>
+                            <h2>{{ __('tax.calc_output') }}</h2>
+                            <p>{{ $result ? __('tax.tax_summary') : __('tax.results_will_appear') }}</p>
                         </div>
                         @if ($result)
                             <a href="{{ route('perpajakan.export-pdf', $result['id']) }}" class="btn-use" style="background: #ef4444; color: white;" target="_blank">Export PDF</a>
@@ -409,7 +409,7 @@
                                 <h3 style="margin: 5px 0 0; font-size: 1.5rem;">{{ $formatRupiah($result['estimasi_pajak_tahunan']) }}</h3>
                             </div>
                             <div style="background: rgba(20, 184, 166, 0.1); padding: 15px; border-radius: 8px; border: 1px solid rgba(20, 184, 166, 0.3);">
-                                <span style="font-size: 0.8rem; color: var(--accent-primary); font-weight: bold;">PPh Bulanan (Estimasi)</span>
+                                <span style="font-size: 0.8rem; color: var(--accent-primary); font-weight: bold;">{{ __('tax.est_monthly_tax') }}</span>
                                 <h3 style="margin: 5px 0 0; font-size: 1.5rem;">{{ $formatRupiah($result['estimasi_pajak_bulanan']) }}</h3>
                             </div>
                         </div>
@@ -426,7 +426,7 @@
                             </tbody>
                         </table>
                     @else
-                        <div class="tax-note">Isi form pajak untuk melihat simulasi perhitungan.</div>
+                        <div class="tax-note">{{ __('tax.fill_form') }}</div>
                     @endif
                 </div>
             </section>

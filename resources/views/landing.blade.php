@@ -6,29 +6,29 @@
     @php
         $heroSlides = [
             [
-                'kicker' => 'Finance Intelligence',
-                'title_before' => 'Designing Financial',
-                'title_accent' => 'futures',
-                'description' => 'Kelola analisa keuangan, estimasi pajak, dan insight finansial dalam dashboard yang sederhana, fokus, dan siap dipakai.',
-                'button' => 'Pelajari lebih lanjut',
+                'kicker' => __('landing.slide1_kicker'),
+                'title_before' => __('landing.slide1_title_before'),
+                'title_accent' => __('landing.slide1_title_accent'),
+                'description' => __('landing.slide1_description'),
+                'button' => __('landing.slide1_button'),
                 'url' => '#about',
                 'image' => asset('images/slidev1.jpg'),
             ],
             [
-                'kicker' => 'Tax Planning',
-                'title_before' => 'Pahami Pajak',
-                'title_accent' => 'lebih cepat',
-                'description' => 'Lihat estimasi PPh orang pribadi, status PTKP, dan skenario penghasilan dengan tampilan yang mudah dipahami pengguna non-teknis.',
-                'button' => 'Buka Modul Pajak',
+                'kicker' => __('landing.slide2_kicker'),
+                'title_before' => __('landing.slide2_title_before'),
+                'title_accent' => __('landing.slide2_title_accent'),
+                'description' => __('landing.slide2_description'),
+                'button' => __('landing.slide2_button'),
                 'url' => route('perpajakan.info'),
                 'image' => asset('images/slidev2.jpg'),
             ],
             [
-                'kicker' => 'Academic Insight',
-                'title_before' => 'Eksplorasi Data',
-                'title_accent' => 'dengan Stata',
-                'description' => 'Pelajari korelasi, regresi, dan statistik deskriptif melalui modul Stata yang dirancang untuk kebutuhan belajar dan riset ekonomi.',
-                'button' => 'Lihat Tutorial Stata',
+                'kicker' => __('landing.slide3_kicker'),
+                'title_before' => __('landing.slide3_title_before'),
+                'title_accent' => __('landing.slide3_title_accent'),
+                'description' => __('landing.slide3_description'),
+                'button' => __('landing.slide3_button'),
                 'url' => route('stata.info'),
                 'image' => asset('images/slidev3.jpg'),
             ],
@@ -736,19 +736,140 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* Language Toggle */
+        .lang-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 2px;
+            border: 1px solid rgba(255, 255, 255, .16);
+            border-radius: 999px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, .06);
+        }
+
+        .lang-toggle a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 14px;
+            font-size: .8rem;
+            font-weight: 800;
+            text-decoration: none;
+            color: rgba(248, 250, 252, .6);
+            transition: background .2s ease, color .2s ease;
+            white-space: nowrap;
+        }
+
+        .lang-toggle a:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, .08);
+        }
+
+        .lang-toggle a.is-active {
+            background: rgba(243, 201, 105, .18);
+            color: #f3c969;
+        }
+
+        /* Language Popup Overlay */
+        .lang-popup-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(5, 12, 15, .82);
+            backdrop-filter: blur(12px);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity .35s ease, visibility .35s ease;
+        }
+
+        .lang-popup-overlay.is-visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .lang-popup {
+            width: min(420px, calc(100% - 40px));
+            padding: 44px 38px;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, .12);
+            background: linear-gradient(160deg, rgba(255, 255, 255, .1), rgba(243, 201, 105, .06));
+            backdrop-filter: blur(32px);
+            text-align: center;
+            transform: translateY(24px) scale(.96);
+            transition: transform .35s ease;
+        }
+
+        .lang-popup-overlay.is-visible .lang-popup {
+            transform: translateY(0) scale(1);
+        }
+
+        .lang-popup h2 {
+            margin: 0 0 8px;
+            font-size: 1.55rem;
+            color: #ffffff;
+        }
+
+        .lang-popup p {
+            margin: 0 0 28px;
+            color: rgba(248, 250, 252, .68);
+            font-size: .95rem;
+        }
+
+        .lang-popup-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .lang-popup-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 16px 20px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, .12);
+            background: rgba(255, 255, 255, .06);
+            color: #f8fafc;
+            font: inherit;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background .2s ease, border-color .2s ease, transform .15s ease;
+        }
+
+        .lang-popup-btn:hover {
+            background: rgba(243, 201, 105, .14);
+            border-color: rgba(243, 201, 105, .3);
+            transform: scale(1.02);
+        }
+
+        .lang-popup-btn .lang-flag {
+            font-size: 1.4rem;
+            line-height: 1;
+        }
     </style>
 
     <main class="landing-shell">
         <nav class="landing-nav">
             <a class="landing-brand" href="{{ route('home') }}">SmartFinance.</a>
             <div class="landing-links">
+                <div class="lang-toggle">
+                    <a href="{{ route('lang.switch', 'id') }}" class="{{ app()->getLocale() === 'id' ? 'is-active' : '' }}">ID</a>
+                    <a href="{{ route('lang.switch', 'en') }}" class="{{ app()->getLocale() === 'en' ? 'is-active' : '' }}">EN</a>
+                </div>
                 @auth
                     <form class="landing-logout-form" action="{{ route('logout') }}" method="POST">
                         @csrf
-                        <button class="landing-logout" type="submit">Logout</button>
+                        <button class="landing-logout" type="submit">{{ __('landing.logout') }}</button>
                     </form>
                 @else
-                    <a class="landing-login" href="{{ route('login') }}">Login</a>
+                    <a class="landing-login" href="{{ route('login') }}">{{ __('landing.login') }}</a>
                 @endauth
             </div>
         </nav>
@@ -787,30 +908,30 @@
         </section>
 
         <section id="about" class="landing-about">
-            <small>About SmartFinance</small>
-            <p>SmartFinance membantu membaca kondisi keuangan dengan lebih cepat: arus kas, rasio tabungan, utang, dana darurat, dan pajak dalam satu ekosistem.</p>
+            <small>{{ __('landing.about_label') }}</small>
+            <p>{{ __('landing.about_text') }}</p>
         </section>
 
         <section class="landing-services">
             <div class="section-title">
-                <h2>Tools that <em>are tailored</em></h2>
+                <h2>{{ __('landing.services_title_before') }} <em>{{ __('landing.services_title_accent') }}</em></h2>
             </div>
 
             <div class="service-grid">
                 <article class="service-card">
                     <small>01</small>
-                    <h3>Analisa Keuangan</h3>
-                    <p>Hitung rasio pengeluaran, tabungan, cicilan, dan dana darurat. Cocok untuk memantau arus kas bulanan dan melihat posisi keuangan secara cepat.</p>
+                    <h3>{{ __('landing.service1_title') }}</h3>
+                    <p>{{ __('landing.service1_desc') }}</p>
                 </article>
                 <article class="service-card">
                     <small>02</small>
-                    <h3>Perpajakan</h3>
-                    <p>Estimasi PPh orang pribadi memakai PTKP dan tarif progresif. Sertakan skenario penghasilan agar hasil pajak lebih mudah dibandingkan.</p>
+                    <h3>{{ __('landing.service2_title') }}</h3>
+                    <p>{{ __('landing.service2_desc') }}</p>
                 </article>
                 <article class="service-card">
                     <small>03</small>
-                    <h3>Stata</h3>
-                    <p>Ruang analisis statistik dan ekonomi untuk kebutuhan akademik. Mendukung alur belajar, eksplorasi data, dan interpretasi hasil analisis.</p>
+                    <h3>{{ __('landing.service3_title') }}</h3>
+                    <p>{{ __('landing.service3_desc') }}</p>
                 </article>
             </div>
         </section>
@@ -819,37 +940,49 @@
             <div class="company-footer-main">
                 <section class="company-footer-column">
                     <h3>Smart Finance Analytics</h3>
-                    <p>
-                        Jl. Finansial No. 12<br>
-                        Jakarta, Indonesia<br>
-                        Platform analisa keuangan, perpajakan, dan statistik.
-                    </p>
+                    <p>{!! __('landing.footer_address') !!}</p>
                 </section>
 
                 <section class="company-footer-column">
-                    <h3>Hubungi Kami</h3>
+                    <h3>{{ __('landing.footer_contact_title') }}</h3>
                     <div class="company-contact-list">
                         <a href="tel:+6281234567890">+62 812-3456-7890</a>
-                        <span>Senin - Jumat</span>
+                        <span>{{ __('landing.footer_schedule_days') }}</span>
                         <a href="mailto:support@smartfinance.id">support@smartfinance.id</a>
-                        <span>09.00 - 17.00 WIB</span>
+                        <span>{{ __('landing.footer_schedule_hours') }}</span>
                     </div>
                 </section>
 
                 <section class="company-footer-column">
-                    <h3>Informasi</h3>
+                    <h3>{{ __('landing.footer_info_title') }}</h3>
                     <div class="company-quick-links">
-                        <a href="#about">Tentang Kami</a>
-                        <a href="{{ route('login') }}">Masuk ke Dashboard</a>
+                        <a href="#about">{{ __('landing.footer_about_link') }}</a>
+                        <a href="{{ route('login') }}">{{ __('landing.footer_dashboard_link') }}</a>
                     </div>
                 </section>
             </div>
 
             <div class="company-footer-bottom">
-                <p>&copy; {{ date('Y') }} Smart Finance Analytics | Kebijakan Privasi | Syarat dan Ketentuan</p>
+                <p>{!! __('landing.footer_copyright', ['year' => date('Y')]) !!}</p>
             </div>
         </footer>
     </main>
+
+    {{-- Language Selection Popup (first visit) --}}
+    <div class="lang-popup-overlay" id="langPopup">
+        <div class="lang-popup">
+            <h2>🌐 {{ __('landing.lang_popup_title') }}</h2>
+            <p>{{ __('landing.lang_popup_desc') }}</p>
+            <div class="lang-popup-options">
+                <a href="{{ route('lang.switch', 'id') }}" class="lang-popup-btn" data-lang-choice>
+                    <span class="lang-flag">🇮🇩</span> {{ __('landing.lang_id') }}
+                </a>
+                <a href="{{ route('lang.switch', 'en') }}" class="lang-popup-btn" data-lang-choice>
+                    <span class="lang-flag">🇬🇧</span> {{ __('landing.lang_en') }}
+                </a>
+            </div>
+        </div>
+    </div>
 
     <script>
         (() => {
@@ -905,6 +1038,30 @@
 
             render(0);
             startAutoplay();
+        })();
+
+        // Language popup: show on first visit
+        (() => {
+            const popup = document.getElementById('langPopup');
+            if (!popup) return;
+
+            const hasChosen = localStorage.getItem('sf_lang_chosen');
+            if (!hasChosen) {
+                requestAnimationFrame(() => popup.classList.add('is-visible'));
+            }
+
+            popup.querySelectorAll('[data-lang-choice]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    localStorage.setItem('sf_lang_chosen', '1');
+                });
+            });
+
+            popup.addEventListener('click', (e) => {
+                if (e.target === popup) {
+                    popup.classList.remove('is-visible');
+                    localStorage.setItem('sf_lang_chosen', '1');
+                }
+            });
         })();
     </script>
 @endsection

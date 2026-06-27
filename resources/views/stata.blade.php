@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Stata - Smart Finance Dashboard')
+@section('title', __('stata.page_title'))
 @section('body-class', 'module-page')
 
 @section('content')
@@ -36,7 +36,7 @@
                 ['cmd' => 'collapse', 'desc' => 'Membuat dataset ringkasan berdasarkan statistik tertentu.', 'example' => 'collapse (mean) income expense, by(province)'],
                 ['cmd' => 'compress', 'desc' => 'Menghemat ukuran dataset dengan menyesuaikan tipe data.', 'example' => 'compress'],
             ],
-            'Statistik Deskriptif dan Tabel' => [
+            __('stata.desc_stats') . ' dan Tabel' => [
                 ['cmd' => 'summarize', 'desc' => 'Menghasilkan mean, standar deviasi, minimum, maksimum, dan jumlah observasi.', 'example' => 'summarize income expense saving'],
                 ['cmd' => 'tabulate', 'desc' => 'Membuat tabel frekuensi satu atau dua variabel.', 'example' => 'tabulate education gender, row'],
                 ['cmd' => 'tabstat', 'desc' => 'Membuat tabel statistik ringkas yang lebih fleksibel.', 'example' => 'tabstat income, stat(mean sd min max) by(region)'],
@@ -841,15 +841,15 @@
             <section class="stata-hero">
                 <div class="stata-panel stata-panel-inner">
                     <span class="stata-kicker">Economic Analysis</span>
-                    <h1>Stata</h1>
-                    <p>Ruang analisis statistik untuk data ekonomi: korelasi, regresi linear, statistik deskriptif, dan interpretasi output yang mudah dibaca.</p>
-                    <a class="stata-action" href="{{ route('dashboard.user') }}">Kembali ke Selector</a>
+                    <h1>{{ __('stata.title') }}</h1>
+                    <p>{{ __('stata.hero_desc') }}</p>
+                    <a class="stata-action" href="{{ route('dashboard.user') }}">{{ __('stata.back_to_selector') }}</a>
                 </div>
 
                 <aside class="stata-panel stata-panel-inner stata-stat">
                     <div>
                         <strong>3+</strong>
-                        <span>Modul analisis utama yang siap dikembangkan untuk workflow akademik dan ekonomi.</span>
+                        <span>{{ __('stata.main_module_desc') }}</span>
                     </div>
                 </aside>
             </section>
@@ -857,18 +857,18 @@
             <section class="feature-grid">
                 <article class="feature-card">
                     <small>01</small>
-                    <h2>Korelasi</h2>
-                    <p>Membantu membaca hubungan antar variabel numerik dan mengidentifikasi pola awal.</p>
+                    <h2>{{ __('stata.correlation') }}</h2>
+                    <p>{{ __('stata.correlation_desc') }}</p>
                 </article>
                 <article class="feature-card">
                     <small>02</small>
-                    <h2>Regresi Linear</h2>
-                    <p>Fondasi analisis model ekonomi untuk melihat pengaruh variabel independen terhadap dependen.</p>
+                    <h2>{{ __('stata.linear_regression') }}</h2>
+                    <p>{{ __('stata.linear_regression_desc') }}</p>
                 </article>
                 <article class="feature-card">
                     <small>03</small>
-                    <h2>Statistik Deskriptif</h2>
-                    <p>Ringkasan mean, standar deviasi, minimum, maksimum, dan jumlah observasi.</p>
+                    <h2>{{ __('stata.desc_stats') }}</h2>
+                    <p>{{ __('stata.desc_stats_desc') }}</p>
                 </article>
             </section>
 
@@ -878,7 +878,7 @@
                         <span class="stata-kicker">DTA Workspace</span>
                         <h2>Data Editor & Instant Commands</h2>
                     </div>
-                    <p>Impor dataset Stata, pilih variabel, lalu jalankan command analisis yang aman tanpa menulis sintaks secara manual.</p>
+                    <p>{{ __('stata.import_desc') }}</p>
                 </div>
 
                 @if (session('stata_status'))
@@ -896,7 +896,7 @@
                 <div class="stata-import-grid">
                     <form class="stata-upload-card" action="{{ route('stata.import') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <h3>Import File .dta</h3>
+                        <h3>{{ __('stata.import_file') }}</h3>
                         <label class="stata-file-drop">
                             <span>
                                 <input type="file" name="stata_file" accept=".dta,application/octet-stream" required>
@@ -907,7 +907,7 @@
                     </form>
 
                     <aside class="stata-dataset-card">
-                        <h3>Dataset Aktif</h3>
+                        <h3>{{ __('stata.active_dataset') }}</h3>
                         @if ($stataDataset)
                             <p>{{ $stataDataset['name'] }}</p>
                             <div class="dataset-facts">

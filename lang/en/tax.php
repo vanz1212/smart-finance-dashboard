@@ -1,0 +1,28 @@
+<?php
+
+return [
+    'page_title' => 'Taxation - Smart Finance Dashboard',
+    'title' => 'Taxation',
+    'This calculation result is a personal estimation and simulation based on the Average Effective Rate (TER) and PPh Article 17. Please continue to refer to DJP Online for your official tax reporting.' => 'Hasil kalkulasi ini merupakan estimasi dan simulasi pribadi berdasarkan Tarif Efektif Rata-Rata (TER) dan PPh Pasal 17. Harap tetap mengacu pada DJP Online untuk pelaporan pajak resmi Anda.',
+    'Important:' => 'Penting:',
+    'Personal income tax estimation using Monthly PPh 21 (TER) and Annual Reconciliation methods.' => 'Estimasi PPh orang pribadi dengan metode PPh 21 Bulanan (TER) dan Rekonsiliasi Tahunan.',
+    'Back to Selector' => 'Kembali ke Selector',
+    'Annual Tax Estimation' => 'Estimasi PPh Tahunan',
+    'Progressive personal income tax bracket & Average Effective Rate (TER).' => 'Lapisan tarif progresif PPh orang pribadi & Tarif Efektif Rata-Rata (TER).',
+    'Tax Data Input' => 'Input Data Pajak',
+    'Enter your official income and deduction profile.' => 'Masukkan profil penghasilan dan potongan resmi.',
+    'Tax Year' => 'Tahun Pajak',
+    'Calculation Method' => 'Metode Perhitungan',
+    'Taxpayer Status (PTKP)' => 'Status Wajib Pajak (PTKP)',
+    'Select status' => 'Pilih status',
+    'Gross Income (Monthly)' => 'Penghasilan Bruto (Bulanan)',
+    'Total overall gross income per month' => 'Total keseluruhan penghasilan kotor per bulan',
+    'Calculate Tax Estimation' => 'Hitung Estimasi Pajak',
+    'Calculation Output' => 'Output Perhitungan',
+    'Your tax summary' => 'Ringkasan pajak Anda',
+    'Estimation results will appear here.' => 'Hasil estimasi akan tampil di sini.',
+    'PPh Article 21 Estimation' => 'Estimasi PPh Pasal 21',
+    'Monthly Tax (Estimation)' => 'PPh Bulanan (Estimasi)',
+    'Fill out the tax form to see the calculation simulation.' => 'Isi form pajak untuk melihat simulasi perhitungan.',
+    'Tariff & Regulation Information (Summary)' => 'Informasi Tarif & Regulasi (Ringkasan)',
+];

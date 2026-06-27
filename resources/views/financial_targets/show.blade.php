@@ -45,15 +45,22 @@
             align-items: center;
             gap: 8px;
             margin-bottom: 24px;
+            padding: 8px 16px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             color: rgba(248, 250, 252, 0.72);
             text-decoration: none;
             font-size: 0.9rem;
             font-weight: 700;
-            transition: all 0.2s;
+            transition: all 0.2s ease;
         }
 
         .back-link:hover {
-            color: #14b8a6;
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateX(-4px);
         }
 
         .header-section {
@@ -249,23 +256,43 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px;
+            padding: 16px;
             background: rgba(255, 255, 255, 0.04);
-            border-radius: 8px;
-            border-left: 3px solid #14b8a6;
+            border-radius: 10px;
+            border-left: 4px solid #14b8a6;
+            margin-bottom: 8px;
         }
 
         .deposit-info {
             flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
         }
 
         .deposit-date {
-            font-size: 0.8rem;
-            color: rgba(248, 250, 252, 0.6);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 700;
+            color: rgba(248, 250, 252, 0.5);
+        }
+
+        .deposit-note {
+            font-size: 0.95rem;
+            color: rgba(248, 250, 252, 0.9);
+            line-height: 1.4;
+        }
+
+        .deposit-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
         }
 
         .deposit-amount {
             font-weight: 900;
+            font-size: 1.05rem;
             color: #14b8a6;
         }
 
@@ -427,7 +454,7 @@
                 <div class="header-info">
                     <h1>{{ $target->name }}</h1>
                     @if ($target->description)
-                        <p style="margin: 8px 0 0; color: rgba(248, 250, 252, 0.66); line-height: 1.5;">{{ $target->description }}</p>
+                        <p style="margin: 12px 0 16px; color: rgba(248, 250, 252, 0.72); line-height: 1.6; font-size: 1.05rem; max-width: 600px;">{{ $target->description }}</p>
                     @endif
                     <div class="header-meta">
                         <span class="badge badge-category">{{ $categoryLabels[$target->category] ?? 'Lainnya' }}</span>
@@ -486,7 +513,7 @@
                             <form action="{{ route('targets.add-deposit', $target->id) }}" method="POST" id="deposit-form">
                                 @csrf
                                 <div class="form-row">
-                                    <input type="number" name="amount" placeholder="Jumlah (Rp)" step="1000" min="1000" required class="form-input">
+                                    <input type="text" name="amount" placeholder="Jumlah (Rp)" data-rupiah-input required class="form-input">
                                     <input type="date" name="date" value="{{ date('Y-m-d') }}" max="{{ date('Y-m-d') }}" required class="form-input">
                                     <button type="submit" class="btn-add">+ Catat</button>
                                 </div>
@@ -501,15 +528,17 @@
                                         <div class="deposit-info">
                                             <div class="deposit-date">{{ $deposit->date->format('d M Y') }}</div>
                                             @if ($deposit->note)
-                                                <small style="color: rgba(248, 250, 252, 0.5);">{{ $deposit->note }}</small>
+                                                <div class="deposit-note">{{ $deposit->note }}</div>
                                             @endif
                                         </div>
-                                        <div class="deposit-amount">{{ $formatRupiah($deposit->amount) }}</div>
-                                        <form action="{{ route('targets.remove-deposit', $deposit->id) }}" method="POST" style="margin: 0;" onsubmit="return confirm('Hapus setoran ini?')">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn-delete">Hapus</button>
-                                        </form>
+                                        <div class="deposit-right">
+                                            <div class="deposit-amount">{{ $formatRupiah($deposit->amount) }}</div>
+                                            <form action="{{ route('targets.remove-deposit', $deposit->id) }}" method="POST" style="margin: 0;" onsubmit="return confirm('Hapus setoran ini?')">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn-delete">Hapus</button>
+                                            </form>
+                                        </div>
                                     </div>
                                 @endforeach
                             </div>
@@ -586,14 +615,44 @@
     </main>
 
     <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var fields = document.querySelectorAll('[data-rupiah-input]');
+
+            function formatRupiah(value) {
+                var digits = String(value || '').replace(/[^0-9]/g, '');
+                if (!digits) return '';
+                return digits.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+            }
+
+            function normalizeField(input) {
+                var digits = input.value.replace(/[^0-9]/g, '');
+                if (digits) {
+                    input.value = 'Rp ' + formatRupiah(digits);
+                } else {
+                    input.value = '';
+                }
+            }
+
+            fields.forEach(function (field) {
+                normalizeField(field);
+                field.addEventListener('input', function () {
+                    normalizeField(field);
+                });
+            });
+        });
+
         document.getElementById('deposit-form')?.addEventListener('submit', function(e) {
             var amountInput = this.querySelector('input[name="amount"]');
-            var amount = parseInt(amountInput.value);
+            var cleanValue = amountInput.value.replace(/[^0-9]/g, '');
+            var amount = parseInt(cleanValue || '0');
+            
             if (amount < 1000) {
                 e.preventDefault();
                 alert('Setoran minimal Rp 1.000');
                 return false;
             }
+            
+            amountInput.value = cleanValue;
         });
     </script>
 
@@ -612,4 +671,30 @@
             });
         @endif
     </script>
+    @if(session('success'))
+        <div id="success-popup" style="position: fixed; bottom: 30px; right: 30px; background: #14b8a6; color: #042f2e; padding: 16px 24px; border-radius: 12px; font-weight: 800; box-shadow: 0 10px 25px rgba(20, 184, 166, 0.3); z-index: 9999; display: flex; align-items: center; gap: 12px; animation: slideUp 0.4s ease forwards;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+            {{ session('success') }}
+        </div>
+        <style>
+            @keyframes slideUp {
+                from { transform: translateY(100px); opacity: 0; }
+                to { transform: translateY(0); opacity: 1; }
+            }
+            @keyframes fadeOut {
+                from { opacity: 1; }
+                to { opacity: 0; }
+            }
+        </style>
+        <script>
+            setTimeout(() => {
+                const popup = document.getElementById('success-popup');
+                if (popup) {
+                    popup.style.animation = 'fadeOut 0.4s ease forwards';
+                    setTimeout(() => popup.remove(), 400);
+                }
+            }, 4000);
+        </script>
+    @endif
+    @include('partials.module-shell-styles')
 @endsection

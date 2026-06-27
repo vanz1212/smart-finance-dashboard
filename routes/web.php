@@ -17,6 +17,13 @@ Route::get('/informasi-perpajakan', [PageController::class, 'taxInformation'])
 Route::get('/informasi-stata', [PageController::class, 'stataInformation'])
     ->name('stata.info');
 
+Route::get('/lang/{locale}', function (string $locale) {
+    if (in_array($locale, ['id', 'en'])) {
+        session()->put('locale', $locale);
+    }
+    return redirect()->back();
+})->name('lang.switch');
+
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.process');
 Route::get('/signup', [AuthController::class, 'showSignup'])->name('signup');

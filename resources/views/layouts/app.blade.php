@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ app()->getLocale() }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -68,15 +68,20 @@
 <body class="@yield('body-class')">
     <div class="container">
         <header class="site-header">
-            <a class="brand" href="{{ route('dashboard.user') }}" aria-label="Buka selector Smart Finance">
+            <a class="brand" href="{{ route('dashboard.user') }}" aria-label="{{ __('app.home') }}">
                 <span class="brand-symbol" aria-hidden="true">S</span>
                 <span>SMART FINANCE</span>
             </a>
             <nav class="main-nav" aria-label="Navigasi utama">
+                <div style="display: flex; gap: 8px; align-items: center; font-weight: bold; font-size: 0.9rem;">
+                    <a href="{{ url('/lang/id') }}" style="text-decoration: none; color: {{ App::getLocale() === 'id' ? 'var(--accent-primary)' : 'var(--text-main)' }};">ID</a>
+                    <span style="color: var(--text-muted);">|</span>
+                    <a href="{{ url('/lang/en') }}" style="text-decoration: none; color: {{ App::getLocale() === 'en' ? 'var(--accent-primary)' : 'var(--text-main)' }};">EN</a>
+                </div>
                 <button class="theme-toggle" aria-label="Toggle Theme">
                     <span class="theme-icon">🌙</span>
                 </button>
-                <a class="{{ request()->routeIs('dashboard.user', 'page.selector') ? 'is-active' : '' }}" href="{{ route('dashboard.user') }}">Beranda</a>
+                <a class="{{ request()->routeIs('dashboard.user', 'page.selector') ? 'is-active' : '' }}" href="{{ route('dashboard.user') }}">{{ __('app.home') }}</a>
                 <a class="module-nav-link {{ request()->routeIs('finance.*') ? 'is-active' : '' }}" data-module-nav href="{{ route('finance.index') }}">
                     <span class="module-tab-label">Smart Finance</span>
                     @if (request()->routeIs('finance.*'))
@@ -84,7 +89,7 @@
                     @endif
                 </a>
                 <a class="module-nav-link {{ request()->routeIs('perpajakan.*') ? 'is-active' : '' }}" data-module-nav href="{{ route('perpajakan.index') }}">
-                    <span class="module-tab-label">Perpajakan</span>
+                    <span class="module-tab-label">{{ __('app.module_perpajakan') }}</span>
                     @if (request()->routeIs('perpajakan.*'))
                         <span class="module-active-pill" aria-hidden="true"></span>
                     @endif
@@ -95,14 +100,20 @@
                         <span class="module-active-pill" aria-hidden="true"></span>
                     @endif
                 </a>
+                <a class="module-nav-link {{ request()->routeIs('targets.*') ? 'is-active' : '' }}" data-module-nav href="{{ route('targets.index') }}">
+                    <span class="module-tab-label">{{ __('targets.page_title') }}</span>
+                    @if (request()->routeIs('targets.*'))
+                        <span class="module-active-pill" aria-hidden="true"></span>
+                    @endif
+                </a>
                 @auth
-                    <a class="{{ request()->routeIs('profile') ? 'is-active' : '' }}" href="{{ route('profile') }}">Profil</a>
+                    <a class="{{ request()->routeIs('profile') ? 'is-active' : '' }}" href="{{ route('profile') }}">{{ __('app.profile') }}</a>
                     <form action="{{ route('logout') }}" method="POST" class="nav-form">
                         @csrf
-                        <button type="submit">Logout</button>
+                        <button type="submit">{{ __('app.logout') }}</button>
                     </form>
                 @else
-                    <a href="{{ route('login') }}">Login</a>
+                    <a href="{{ route('login') }}">{{ __('app.login') }}</a>
                 @endauth
             </nav>
         </header>
@@ -112,7 +123,7 @@
         </main>
 
         <footer class="site-footer">
-            <p>© 2026 Smart Finance Analytics Dashboard. Dibuat untuk mahasiswa ekonomi dan pengguna data ekonomi.</p>
+            <p>{{ __('app.footer') }}</p>
         </footer>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>

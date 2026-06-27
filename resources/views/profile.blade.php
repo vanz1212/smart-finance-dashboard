@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Profile - Smart Finance')
+@section('title', __('profile.page_title'))
 
 @section('content')
     <style>

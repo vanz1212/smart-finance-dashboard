@@ -368,50 +368,50 @@ class FinanceController extends BaseController
 
         if ($netCashflow < 0) {
             $score -= 30;
-            $recommendations[] = 'Arus kas negatif. Kurangi pengeluaran variabel atau susun ulang cicilan agar saldo bulanan kembali positif.';
+            $recommendations[] = __('Arus kas negatif. Kurangi pengeluaran variabel atau susun ulang cicilan agar saldo bulanan kembali positif.');
         }
 
         if ($expenseRatio > 70) {
             $score -= 25;
-            $recommendations[] = 'Rasio pengeluaran melewati 70% pemasukan. Prioritaskan kebutuhan pokok dan tekan biaya gaya hidup.';
+            $recommendations[] = __('Rasio pengeluaran melewati 70% pemasukan. Prioritaskan kebutuhan pokok dan tekan biaya gaya hidup.');
         } elseif ($expenseRatio > 60) {
             $score -= 15;
-            $recommendations[] = 'Rasio pengeluaran mulai tinggi. Sisihkan ruang untuk tabungan sebelum menambah komitmen baru.';
+            $recommendations[] = __('Rasio pengeluaran mulai tinggi. Sisihkan ruang untuk tabungan sebelum menambah komitmen baru.');
         }
 
         if ($savingRatio < 10) {
             $score -= 20;
-            $recommendations[] = 'Rasio tabungan dan investasi masih di bawah 10%. Target awal yang sehat adalah minimal 10% dari pemasukan.';
+            $recommendations[] = __('Rasio tabungan dan investasi masih di bawah 10%. Target awal yang sehat adalah minimal 10% dari pemasukan.');
         } elseif ($savingRatio < 20) {
             $score -= 10;
-            $recommendations[] = 'Rasio tabungan cukup, tetapi masih bisa ditingkatkan menuju 20% untuk mempercepat target finansial.';
+            $recommendations[] = __('Rasio tabungan cukup, tetapi masih bisa ditingkatkan menuju 20% untuk mempercepat target finansial.');
         }
 
         if ($debtRatio > 30) {
             $score -= 25;
-            $recommendations[] = 'Rasio cicilan di atas 30%. Pertimbangkan pelunasan bertahap atau refinancing sebelum mengambil utang baru.';
+            $recommendations[] = __('Rasio cicilan di atas 30%. Pertimbangkan pelunasan bertahap atau refinancing sebelum mengambil utang baru.');
         } elseif ($debtRatio > 20) {
             $score -= 10;
-            $recommendations[] = 'Rasio cicilan perlu dipantau. Jaga agar cicilan tidak melewati 30% pemasukan.';
+            $recommendations[] = __('Rasio cicilan perlu dipantau. Jaga agar cicilan tidak melewati 30% pemasukan.');
         }
 
         if ($emergencyMonths < 3) {
             $score -= 15;
-            $recommendations[] = 'Dana darurat belum mencapai 3 bulan pengeluaran. Bangun cadangan kas sebelum meningkatkan risiko investasi.';
+            $recommendations[] = __('Dana darurat belum mencapai 3 bulan pengeluaran. Bangun cadangan kas sebelum meningkatkan risiko investasi.');
         }
 
         if (empty($recommendations)) {
-            $recommendations[] = 'Keuangan terlihat sehat. Pertahankan disiplin anggaran dan evaluasi ulang setiap akhir periode.';
+            $recommendations[] = __('Keuangan terlihat sehat. Pertahankan disiplin anggaran dan evaluasi ulang setiap akhir periode.');
         }
 
         if ($score >= 80) {
-            $status = 'Sehat';
+            $status = __('Sehat');
             $class = 'success';
         } elseif ($score >= 55) {
-            $status = 'Waspada';
+            $status = __('Waspada');
             $class = 'warning';
         } else {
-            $status = 'Berisiko';
+            $status = __('Berisiko');
             $class = 'danger';
         }
 
@@ -468,22 +468,21 @@ class FinanceController extends BaseController
 
             $status = 'ok';
             $idealPercent = $ideal['ideal'] * 100;
-            $reason = "Sesuai dengan standar rekomendasi ({$idealPercent}% dari pemasukan).";
+            $reason = __('Sesuai dengan standar rekomendasi (:ideal% dari pemasukan).', ['ideal' => $idealPercent]);
 
             if ($actualRatio > $ideal['max']) {
                 $status = 'critical';
                 $maxPercent = $ideal['max'] * 100;
                 $exceedPercent = ($actualRatio - $ideal['max']) * 100;
-                $reason = "Pengeluaran melebihi batas maksimal ({$maxPercent}%). Kurangi sebesar " . 
-                    number_format($exceedPercent, 1) . "% dari pemasukan.";
+                $reason = __('Pengeluaran melebihi batas maksimal (:max%). Kurangi sebesar :exceed% dari pemasukan.', ['max' => $maxPercent, 'exceed' => number_format($exceedPercent, 1)]);
             } elseif ($actualRatio > $ideal['ideal'] && $actualRatio <= $ideal['max']) {
                 $status = 'warning';
                 $idealPercent = $ideal['ideal'] * 100;
-                $reason = "Pengeluaran lebih tinggi dari ideal. Pertimbangkan untuk mengurangi hingga {$idealPercent}%.";
+                $reason = __('Pengeluaran lebih tinggi dari ideal. Pertimbangkan untuk mengurangi hingga :ideal%.', ['ideal' => $idealPercent]);
             } elseif ($actualRatio < $ideal['min'] && $ideal['min'] > 0) {
                 // This is usually OK (spending less than min)
                 $status = 'ok';
-                $reason = "Pengeluaran lebih rendah dari rekomendasi. Bagus!";
+                $reason = __('Pengeluaran lebih rendah dari rekomendasi. Bagus!');
             }
 
             $recommendations[] = [

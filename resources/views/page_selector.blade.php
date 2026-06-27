@@ -7,13 +7,13 @@
         $isLoggedIn = auth()->check();
         $hour = date('H');
         if ($hour < 11) {
-            $greeting = 'Selamat Pagi';
+            $greeting = __('app.good_morning');
         } elseif ($hour < 15) {
-            $greeting = 'Selamat Siang';
+            $greeting = __('app.good_afternoon');
         } elseif ($hour < 18) {
-            $greeting = 'Selamat Sore';
+            $greeting = __('app.good_evening');
         } else {
-            $greeting = 'Selamat Malam';
+            $greeting = __('app.good_night');
         }
         $userName = auth()->user()->name ?? 'Guest';
         $firstName = explode(' ', $userName)[0];
@@ -1064,19 +1064,24 @@
             <div class="selector-title"><span class="brand-mark" aria-hidden="true"></span> SMART FINANCE</div>
             <div class="head-actions" style="justify-self: end; display: flex; align-items: center; gap: 12px; margin-right: 14px;">
                 <div class="profile-actions" style="display: flex; gap: 8px;">
-                    <a href="{{ route('profile') }}" class="header-btn" style="font-size: 0.85rem; padding: 6px 14px; background: transparent; color: var(--text-main); border: 1px solid var(--border-color); border-radius: 99px; text-decoration: none; font-weight: 600;">Profil</a>
+                    <a href="{{ route('profile') }}" class="header-btn" style="font-size: 0.85rem; padding: 6px 14px; background: transparent; color: var(--text-main); border: 1px solid var(--border-color); border-radius: 99px; text-decoration: none; font-weight: 600;">{{ __('app.profile') }}</a>
                     @if ($isLoggedIn)
                         <form action="{{ route('logout') }}" method="POST" style="margin:0;">
                             @csrf
-                            <button type="submit" class="header-btn" style="font-size: 0.85rem; padding: 6px 14px; background: transparent; color: var(--text-main); border: 1px solid var(--border-color); border-radius: 99px; cursor:pointer; font-weight: 600;">Logout</button>
+                            <button type="submit" class="header-btn" style="font-size: 0.85rem; padding: 6px 14px; background: transparent; color: var(--text-main); border: 1px solid var(--border-color); border-radius: 99px; cursor:pointer; font-weight: 600;">{{ __('app.logout') }}</button>
                         </form>
                     @else
-                        <a href="{{ route('login') }}" class="header-btn" style="font-size: 0.85rem; padding: 6px 14px; background: transparent; color: var(--text-main); border: 1px solid var(--border-color); border-radius: 99px; text-decoration: none; font-weight: 600;">Login</a>
+                        <a href="{{ route('login') }}" class="header-btn" style="font-size: 0.85rem; padding: 6px 14px; background: transparent; color: var(--text-main); border: 1px solid var(--border-color); border-radius: 99px; text-decoration: none; font-weight: 600;">{{ __('app.login') }}</a>
                     @endif
                 </div>
                 @if(auth()->check() && auth()->user()->role === 'admin')
-                    <a href="{{ route('dashboard.admin') }}" class="header-btn admin-btn" style="font-size: 0.85rem; padding: 6px 14px; background: var(--accent-primary); color: var(--accent-hover); border-radius: 99px; text-decoration: none; font-weight: bold;">Admin Panel</a>
+                    <a href="{{ route('dashboard.admin') }}" class="header-btn admin-btn" style="font-size: 0.85rem; padding: 6px 14px; background: var(--accent-primary); color: var(--accent-hover); border-radius: 99px; text-decoration: none; font-weight: bold;">{{ __('app.admin_panel') }}</a>
                 @endif
+                <div style="display: flex; gap: 8px; align-items: center; font-weight: bold; font-size: 0.9rem;">
+                    <a href="{{ url('/lang/id') }}" style="text-decoration: none; color: {{ App::getLocale() === 'id' ? 'var(--accent-primary)' : 'var(--text-main)' }};">ID</a>
+                    <span style="color: var(--text-muted);">|</span>
+                    <a href="{{ url('/lang/en') }}" style="text-decoration: none; color: {{ App::getLocale() === 'en' ? 'var(--accent-primary)' : 'var(--text-main)' }};">EN</a>
+                </div>
                 <button class="theme-toggle" aria-label="Toggle Theme" style="border: 1px solid var(--border-color); background: transparent; color: var(--text-main); cursor: pointer; padding: 6px 10px; border-radius: 99px; font-size: 1.1rem; transition: all 0.2s;">
                     <span class="theme-icon">🌙</span>
                 </button>
@@ -1090,7 +1095,7 @@
                         <div class="panel-toolbar" style="margin-bottom: clamp(20px, 5vh, 60px); text-align: center; display: flex; flex-direction: column; align-items: center; width: 100%; padding: 0 20px;">
                             <div>
                                 <h1 style="color: var(--accent-primary); font-size: clamp(1.8rem, 4vw, 3rem); margin-bottom: 12px;">{{ $greeting }}, {{ $firstName }}! 👋</h1>
-                                <p style="color: var(--text-muted); font-size: clamp(0.9rem, 1.5vw, 1.2rem); max-width: 600px; margin: 0 auto;">Selamat datang di Smart Finance. Pilih modul di bawah untuk memulai analisis Anda hari ini.</p>
+                                <p style="color: var(--text-muted); font-size: clamp(0.9rem, 1.5vw, 1.2rem); max-width: 600px; margin: 0 auto;">{{ __('app.welcome_text') }}</p>
                             </div>
                         </div>
 
@@ -1220,36 +1225,36 @@
                             <a class="module-card" href="{{ route('finance.index') }}">
                                 <div class="module-icon-wrap" style="background: linear-gradient(135deg, rgba(20,184,166,0.2), rgba(20,184,166,0.05)); --card-accent: rgba(20,184,166,0.3);">📊</div>
                                 <div class="module-info">
-                                    <h3 class="module-title">Smart Finance</h3>
-                                    <p class="module-desc">Analisa arus kas, rasio tabungan, dan cicilan komprehensif.</p>
-                                    <span class="module-badge">Ready</span>
+                                    <h3 class="module-title">{{ __('app.module_smart_finance') }}</h3>
+                                    <p class="module-desc">{{ __('app.desc_smart_finance') }}</p>
+                                    <span class="module-badge">{{ __('app.ready') }}</span>
                                 </div>
                             </a>
                             
                             <a class="module-card" href="{{ route('perpajakan.index') }}">
                                 <div class="module-icon-wrap" style="background: linear-gradient(135deg, rgba(243,201,105,0.2), rgba(243,201,105,0.05)); --card-accent: rgba(243,201,105,0.3);">🧾</div>
                                 <div class="module-info">
-                                    <h3 class="module-title">Perpajakan</h3>
-                                    <p class="module-desc">Estimasi PPh orang pribadi dengan PTKP dan tarif progresif.</p>
-                                    <span class="module-badge">Ready</span>
+                                    <h3 class="module-title">{{ __('app.module_perpajakan') }}</h3>
+                                    <p class="module-desc">{{ __('app.desc_perpajakan') }}</p>
+                                    <span class="module-badge">{{ __('app.ready') }}</span>
                                 </div>
                             </a>
 
                             <a class="module-card" href="{{ route('stata') }}">
                                 <div class="module-icon-wrap" style="background: linear-gradient(135deg, rgba(168,85,247,0.2), rgba(168,85,247,0.05)); --card-accent: rgba(168,85,247,0.3);">📈</div>
                                 <div class="module-info">
-                                    <h3 class="module-title">Stata</h3>
-                                    <p class="module-desc">Korelasi, regresi linear, dan statistik deskriptif makroekonomi.</p>
-                                    <span class="module-badge">Ready</span>
+                                    <h3 class="module-title">{{ __('app.module_stata') }}</h3>
+                                    <p class="module-desc">{{ __('app.desc_stata') }}</p>
+                                    <span class="module-badge">{{ __('app.ready') }}</span>
                                 </div>
                             </a>
 
                             <a class="module-card" href="{{ route('targets.index') }}">
                                 <div class="module-icon-wrap" style="background: linear-gradient(135deg, rgba(239,68,68,0.2), rgba(239,68,68,0.05)); --card-accent: rgba(239,68,68,0.3);">🎯</div>
                                 <div class="module-info">
-                                    <h3 class="module-title">Target Finansial</h3>
-                                    <p class="module-desc">Tracking progres real-time dan rekomendasi setoran cerdas.</p>
-                                    <span class="module-badge">Ready</span>
+                                    <h3 class="module-title">{{ __('app.module_targets') }}</h3>
+                                    <p class="module-desc">{{ __('app.desc_targets') }}</p>
+                                    <span class="module-badge">{{ __('app.ready') }}</span>
                                 </div>
                             </a>
                         </div>
@@ -1257,7 +1262,8 @@
             </div>
         </section>
     </main>
-
+
+
     <script>
         document.querySelectorAll('[data-panel-target]').forEach((button) => {
             button.addEventListener('click', () => {
