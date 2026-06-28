@@ -158,6 +158,26 @@
                 ],
             ];
         }
+
+        $tutorialSnippets = app()->getLocale() === 'en'
+            ? [
+                ". cd \"D:\\Research Data\"\n. pwd\n. dir",
+                ". use \"economic_data.dta\", clear\n\nor\n\n. import excel \"economic_data.xlsx\", firstrow clear",
+                ". describe\n. list in 1/10\n. codebook gdp inflation unemployment investment\n. misstable summarize\n. duplicates report year",
+                ". destring gdp inflation investment, replace\n. label variable gdp \"Gross Domestic Product\"\n. label variable inflation \"Annual inflation (%)\"\n. generate investment_growth = 100 * (investment - investment[_n-1]) / investment[_n-1]",
+                ". summarize gdp inflation unemployment investment, detail\n. tabstat gdp inflation unemployment investment, statistics(n mean sd min max)\n. pwcorr gdp inflation unemployment investment, sig obs",
+                ". regress gdp investment inflation unemployment, robust\n. estat vif\n. predict gdp_prediction\n. predict residual, residuals",
+                ". twoway (scatter gdp investment) (lfit gdp investment)\n. graph export \"gdp_investment_chart.png\", replace\n. save \"clean_economic_data.dta\", replace\n. log using \"analysis_results.log\", replace\n. regress gdp investment inflation unemployment, robust\n. log close",
+            ]
+            : [
+                ". cd \"D:\\Data Penelitian\"\n. pwd\n. dir",
+                ". use \"data_ekonomi.dta\", clear\n\natau\n\n. import excel \"data_ekonomi.xlsx\", firstrow clear",
+                ". describe\n. list in 1/10\n. codebook gdp inflasi pengangguran investasi\n. misstable summarize\n. duplicates report tahun",
+                ". destring gdp inflasi investasi, replace\n. label variable gdp \"Produk Domestik Bruto\"\n. label variable inflasi \"Inflasi tahunan (%)\"\n. generate pertumbuhan_investasi = 100 * (investasi - investasi[_n-1]) / investasi[_n-1]",
+                ". summarize gdp inflasi pengangguran investasi, detail\n. tabstat gdp inflasi pengangguran investasi, statistics(n mean sd min max)\n. pwcorr gdp inflasi pengangguran investasi, sig obs",
+                ". regress gdp investasi inflasi pengangguran, robust\n. estat vif\n. predict gdp_prediksi\n. predict residual, residuals",
+                ". twoway (scatter gdp investasi) (lfit gdp investasi)\n. graph export \"grafik_gdp_investasi.png\", replace\n. save \"data_ekonomi_bersih.dta\", replace\n. log using \"hasil_analisis.log\", replace\n. regress gdp investasi inflasi pengangguran, robust\n. log close",
+            ];
     @endphp
 
     <style>
@@ -340,12 +360,14 @@
             overflow-x: auto;
             padding: 14px 16px;
             border-radius: 10px;
-            background: rgba(0,0,0,.42);
-            color: var(--text-main);
+            border: 1px solid rgba(94, 234, 212, .24);
+            background: linear-gradient(180deg, rgba(14, 44, 48, .96), rgba(8, 27, 31, .96));
+            color: #f8fffe;
             font-family: Consolas, 'Courier New', monospace;
             font-size: .9rem;
             line-height: 1.65;
             white-space: pre;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
         }
 
         .tutorial-tip {
@@ -425,22 +447,24 @@
             padding: 15px;
             border: 1px solid rgba(255,255,255,.12);
             border-radius: 12px;
-            background: rgba(5, 12, 15, .34);
+            background: linear-gradient(180deg, rgba(18, 55, 59, .92), rgba(9, 30, 34, .92));
+            box-shadow: inset 0 1px 0 rgba(255,255,255,.05);
         }
 
         .stata-command-item code {
             width: fit-content;
-            padding: 6px 9px;
+            padding: 7px 10px;
             border-radius: 8px;
-            background: rgba(20, 184, 166, .14);
-            color: #5eead4;
+            border: 1px solid rgba(94, 234, 212, .24);
+            background: rgba(94, 234, 212, .16);
+            color: #c7fff4;
             font-family: Consolas, 'Courier New', monospace;
             font-weight: 900;
         }
 
         .stata-command-item p {
             margin: 0;
-            color: rgba(248,250,252,.7);
+            color: rgba(248,250,252,.9);
             line-height: 1.55;
         }
 
@@ -449,8 +473,9 @@
             overflow-x: auto;
             padding: 11px 12px;
             border-radius: 8px;
-            background: rgba(0,0,0,.36);
-            color: var(--text-main);
+            border: 1px solid rgba(230,196,109,.18);
+            background: rgba(244, 248, 248, .08);
+            color: #fff7dd;
             font-family: Consolas, 'Courier New', monospace;
             font-size: .88rem;
             line-height: 1.55;
@@ -836,13 +861,13 @@
 
         .stata-command-button {
             min-height: 40px;
-            background: rgba(230,196,109,.1);
-            color: #f0d98f;
+            background: rgba(230,196,109,.18);
+            color: #fff2bf;
         }
 
         .stata-command-button:hover {
             border-color: #e6c46d;
-            background: rgba(230,196,109,.17);
+            background: rgba(230,196,109,.28);
         }
 
         .stata-sort-direction {
@@ -896,8 +921,9 @@
             margin: 14px 0 8px;
             padding: 11px 13px;
             border-radius: 9px;
-            background: #031416;
-            color: #5eead4;
+            border: 1px solid rgba(94, 234, 212, .24);
+            background: linear-gradient(180deg, rgba(14, 44, 48, .96), rgba(8, 27, 31, .96));
+            color: #c7fff4;
             font-family: Consolas,'Courier New',monospace;
         }
 
@@ -1010,7 +1036,7 @@
                     <form class="stata-command-layout" action="{{ route('stata.command') }}" method="POST">
                         @csrf
                         <aside class="stata-variable-panel">
-                            <h3>Variables</h3>
+                            <h3>{{ __('stata.variables') }}</h3>
                             <div class="variable-tools">
                                 <button class="variable-tool" type="button" data-select-variables="all">{{ __('stata.select_all') }}</button>
                                 <button class="variable-tool" type="button" data-select-variables="numeric">{{ __('stata.numeric') }}</button>
@@ -1084,21 +1110,21 @@
             </section>
 
             <section class="stata-panel stata-panel-inner stata-data-panel">
-                <span class="stata-kicker">Dataset Preview</span>
-                <h2>Data Analisis Ekonomi</h2>
-                <p>Ringkasan data contoh tetap tersedia sebagai dasar pengembangan modul Stata: GDP, inflasi, pengangguran, dan investasi.</p>
+                <span class="stata-kicker">{{ __('stata.dataset_preview') }}</span>
+                <h2>{{ __('stata.economic_data_title') }}</h2>
+                <p>{{ __('stata.economic_data_desc') }}</p>
 
                 <div class="stata-data-grid">
-                    <div class="stata-data-card"><span>Observasi</span><strong>5 tahun</strong></div>
-                    <div class="stata-data-card"><span>GDP rata-rata</span><strong>1.156</strong></div>
-                    <div class="stata-data-card"><span>Inflasi rata-rata</span><strong>2,78%</strong></div>
-                    <div class="stata-data-card"><span>Pengangguran rata-rata</span><strong>5,36%</strong></div>
+                    <div class="stata-data-card"><span>{{ __('stata.observations') }}</span><strong>5 {{ __('stata.years') }}</strong></div>
+                    <div class="stata-data-card"><span>{{ __('stata.average_gdp') }}</span><strong>1.156</strong></div>
+                    <div class="stata-data-card"><span>{{ __('stata.average_inflation') }}</span><strong>2,78%</strong></div>
+                    <div class="stata-data-card"><span>{{ __('stata.average_unemployment') }}</span><strong>5,36%</strong></div>
                 </div>
 
                 <table class="stata-output-table">
                     <thead>
                         <tr>
-                            <th>Variabel</th>
+                            <th>{{ __('stata.variable') }}</th>
                             <th>Obs</th>
                             <th>Mean</th>
                             <th>Min</th>
@@ -1107,127 +1133,104 @@
                     </thead>
                     <tbody>
                         <tr><td>GDP</td><td>5</td><td>1.156</td><td>1.080</td><td>1.250</td></tr>
-                        <tr><td>Inflasi</td><td>5</td><td>2,78</td><td>1,80</td><td>3,50</td></tr>
-                        <tr><td>Pengangguran</td><td>5</td><td>5,36</td><td>5,00</td><td>6,00</td></tr>
-                        <tr><td>Investasi</td><td>5</td><td>273</td><td>250</td><td>300</td></tr>
+                        <tr><td>{{ __('stata.inflation') }}</td><td>5</td><td>2,78</td><td>1,80</td><td>3,50</td></tr>
+                        <tr><td>{{ __('stata.unemployment') }}</td><td>5</td><td>5,36</td><td>5,00</td><td>6,00</td></tr>
+                        <tr><td>{{ __('stata.investment') }}</td><td>5</td><td>273</td><td>250</td><td>300</td></tr>
                     </tbody>
                 </table>
             </section>
 
             <section class="stata-panel stata-panel-inner stata-tutorial">
-                <span class="stata-kicker">Tutorial Pemula</span>
-                <h2>Belajar Stata dari Awal</h2>
-                <p class="tutorial-intro">Ikuti langkah berikut secara berurutan melalui Command Window Stata. Contoh ini memakai data ekonomi dengan variabel tahun, GDP, inflasi, pengangguran, dan investasi.</p>
+                <span class="stata-kicker">{{ __('stata.beginner_tutorial') }}</span>
+                <h2>{{ __('stata.learn_from_start') }}</h2>
+                <p class="tutorial-intro">{{ __('stata.tutorial_intro') }}</p>
 
                 <div class="tutorial-steps">
                     <article class="tutorial-step">
                         <div class="tutorial-number">01</div>
                         <div class="tutorial-content">
-                            <h3>Tentukan folder kerja</h3>
-                            <p>Atur folder tempat dataset dan hasil analisis disimpan. Gunakan tanda kutip jika alamat folder mengandung spasi.</p>
-                            <pre class="tutorial-code">. cd "D:\Data Penelitian"
-. pwd
-. dir</pre>
-                            <div class="tutorial-tip"><strong>Hasil yang diharapkan:</strong> <code>pwd</code> menampilkan folder aktif dan <code>dir</code> menampilkan daftar file di dalamnya.</div>
+                            <h3>{{ __('stata.tutorial_steps.0.title') }}</h3>
+                            <p>{!! __('stata.tutorial_steps.0.body') !!}</p>
+                            <pre class="tutorial-code">{{ $tutorialSnippets[0] }}</pre>
+                            <div class="tutorial-tip"><strong>{{ __('stata.expected_result') }}</strong> {!! __('stata.tutorial_steps.0.tip') !!}</div>
                         </div>
                     </article>
 
                     <article class="tutorial-step">
                         <div class="tutorial-number">02</div>
                         <div class="tutorial-content">
-                            <h3>Buka atau impor dataset</h3>
-                            <p>Gunakan <code>use</code> untuk file Stata dan <code>import excel</code> untuk file Excel. Opsi <code>clear</code> membersihkan data yang sedang terbuka.</p>
-                            <pre class="tutorial-code">. use "data_ekonomi.dta", clear
-
-atau
-
-. import excel "data_ekonomi.xlsx", firstrow clear</pre>
-                            <div class="tutorial-tip"><strong>Catatan:</strong> <code>firstrow</code> menjadikan baris pertama Excel sebagai nama variabel.</div>
+                            <h3>{{ __('stata.tutorial_steps.1.title') }}</h3>
+                            <p>{!! __('stata.tutorial_steps.1.body') !!}</p>
+                            <pre class="tutorial-code">{{ $tutorialSnippets[1] }}</pre>
+                            <div class="tutorial-tip"><strong>{{ __('stata.note') }}</strong> {!! __('stata.tutorial_steps.1.tip') !!}</div>
                         </div>
                     </article>
 
                     <article class="tutorial-step">
                         <div class="tutorial-number">03</div>
                         <div class="tutorial-content">
-                            <h3>Kenali struktur dan kualitas data</h3>
-                            <p>Periksa nama variabel, tipe data, contoh observasi, nilai yang hilang, dan kemungkinan data ganda sebelum analisis.</p>
-                            <pre class="tutorial-code">. describe
-. list in 1/10
-. codebook gdp inflasi pengangguran investasi
-. misstable summarize
-. duplicates report tahun</pre>
-                            <div class="tutorial-tip"><strong>Periksa:</strong> variabel angka jangan terbaca sebagai teks, nilai kosong harus dikenali, dan variabel tahun sebaiknya tidak memiliki duplikasi yang tidak disengaja.</div>
+                            <h3>{{ __('stata.tutorial_steps.2.title') }}</h3>
+                            <p>{!! __('stata.tutorial_steps.2.body') !!}</p>
+                            <pre class="tutorial-code">{{ $tutorialSnippets[2] }}</pre>
+                            <div class="tutorial-tip"><strong>{{ __('stata.check') }}</strong> {!! __('stata.tutorial_steps.2.tip') !!}</div>
                         </div>
                     </article>
 
                     <article class="tutorial-step">
                         <div class="tutorial-number">04</div>
                         <div class="tutorial-content">
-                            <h3>Bersihkan dan siapkan variabel</h3>
-                            <p>Ubah tipe variabel bila diperlukan, beri label yang jelas, dan buat variabel turunan untuk kebutuhan analisis.</p>
-                            <pre class="tutorial-code">. destring gdp inflasi investasi, replace
-. label variable gdp "Produk Domestik Bruto"
-. label variable inflasi "Inflasi tahunan (%)"
-. generate pertumbuhan_investasi = 100 * (investasi - investasi[_n-1]) / investasi[_n-1]</pre>
-                            <div class="tutorial-tip"><strong>Tip:</strong> jalankan <code>summarize pertumbuhan_investasi</code> setelah membuat variabel baru untuk memastikan hasilnya masuk akal.</div>
+                            <h3>{{ __('stata.tutorial_steps.3.title') }}</h3>
+                            <p>{!! __('stata.tutorial_steps.3.body') !!}</p>
+                            <pre class="tutorial-code">{{ $tutorialSnippets[3] }}</pre>
+                            <div class="tutorial-tip"><strong>{{ __('stata.tip') }}</strong> {!! __('stata.tutorial_steps.3.tip') !!}</div>
                         </div>
                     </article>
 
                     <article class="tutorial-step">
                         <div class="tutorial-number">05</div>
                         <div class="tutorial-content">
-                            <h3>Lakukan analisis deskriptif dan korelasi</h3>
-                            <p>Mulai dari ringkasan data sebelum membangun model. Mean menunjukkan nilai rata-rata, sedangkan standard deviation menunjukkan penyebaran data.</p>
-                            <pre class="tutorial-code">. summarize gdp inflasi pengangguran investasi, detail
-. tabstat gdp inflasi pengangguran investasi, statistics(n mean sd min max)
-. pwcorr gdp inflasi pengangguran investasi, sig obs</pre>
-                            <div class="tutorial-tip"><strong>Membaca korelasi:</strong> nilai mendekati 1 berarti hubungan positif kuat, mendekati -1 berarti hubungan negatif kuat, dan mendekati 0 berarti hubungan linear lemah.</div>
+                            <h3>{{ __('stata.tutorial_steps.4.title') }}</h3>
+                            <p>{!! __('stata.tutorial_steps.4.body') !!}</p>
+                            <pre class="tutorial-code">{{ $tutorialSnippets[4] }}</pre>
+                            <div class="tutorial-tip"><strong>{{ __('stata.reading_correlation') }}</strong> {!! __('stata.tutorial_steps.4.tip') !!}</div>
                         </div>
                     </article>
 
                     <article class="tutorial-step">
                         <div class="tutorial-number">06</div>
                         <div class="tutorial-content">
-                            <h3>Jalankan regresi linear</h3>
-                            <p>Contoh berikut menguji pengaruh investasi, inflasi, dan pengangguran terhadap GDP. Opsi <code>robust</code> menghasilkan standard error yang lebih tahan terhadap heteroskedastisitas.</p>
-                            <pre class="tutorial-code">. regress gdp investasi inflasi pengangguran, robust
-. estat vif
-. predict gdp_prediksi
-. predict residual, residuals</pre>
-                            <div class="tutorial-tip"><strong>Membaca output:</strong> lihat tanda dan nilai koefisien, <code>P&gt;|t|</code> untuk signifikansi, <code>R-squared</code> untuk kemampuan model menjelaskan variasi GDP, dan VIF untuk memeriksa multikolinearitas.</div>
+                            <h3>{{ __('stata.tutorial_steps.5.title') }}</h3>
+                            <p>{!! __('stata.tutorial_steps.5.body') !!}</p>
+                            <pre class="tutorial-code">{{ $tutorialSnippets[5] }}</pre>
+                            <div class="tutorial-tip"><strong>{{ __('stata.reading_output') }}</strong> {!! __('stata.tutorial_steps.5.tip') !!}</div>
                         </div>
                     </article>
 
                     <article class="tutorial-step">
                         <div class="tutorial-number">07</div>
                         <div class="tutorial-content">
-                            <h3>Buat grafik dan simpan pekerjaan</h3>
-                            <p>Visualisasikan hubungan variabel, simpan dataset yang sudah dibersihkan, dan rekam output agar analisis dapat ditinjau kembali.</p>
-                            <pre class="tutorial-code">. twoway (scatter gdp investasi) (lfit gdp investasi)
-. graph export "grafik_gdp_investasi.png", replace
-. save "data_ekonomi_bersih.dta", replace
-. log using "hasil_analisis.log", replace
-. regress gdp investasi inflasi pengangguran, robust
-. log close</pre>
-                            <div class="tutorial-tip"><strong>Praktik baik:</strong> simpan perintah dalam Do-file agar seluruh analisis dapat dijalankan ulang dan diperiksa langkah demi langkah.</div>
+                            <h3>{{ __('stata.tutorial_steps.6.title') }}</h3>
+                            <p>{!! __('stata.tutorial_steps.6.body') !!}</p>
+                            <pre class="tutorial-code">{{ $tutorialSnippets[6] }}</pre>
+                            <div class="tutorial-tip"><strong>{{ __('stata.best_practice') }}</strong> {!! __('stata.tutorial_steps.6.tip') !!}</div>
                         </div>
                     </article>
                 </div>
 
                 <div class="tutorial-checklist">
-                    <div><strong>Sebelum analisis</strong><br>Periksa tipe data, missing value, duplikasi, dan satuan variabel.</div>
-                    <div><strong>Saat analisis</strong><br>Mulai dari statistik deskriptif, lalu korelasi, grafik, dan model regresi.</div>
-                    <div><strong>Setelah analisis</strong><br>Simpan Do-file, dataset bersih, grafik, log output, dan interpretasi hasil.</div>
+                    <div><strong>{{ __('stata.before_analysis') }}</strong><br>{{ __('stata.before_analysis_desc') }}</div>
+                    <div><strong>{{ __('stata.during_analysis') }}</strong><br>{{ __('stata.during_analysis_desc') }}</div>
+                    <div><strong>{{ __('stata.after_analysis') }}</strong><br>{{ __('stata.after_analysis_desc') }}</div>
                 </div>
             </section>
 
             <section class="stata-panel stata-panel-inner stata-command-reference">
                 <div class="stata-section-heading">
                     <div>
-                        <span class="stata-kicker">Command Library</span>
-                        <h2>Command Stata Umum</h2>
+                        <span class="stata-kicker">{{ __('stata.command_library') }}</span>
+                        <h2>{{ __('stata.common_commands') }}</h2>
                     </div>
-                    <p>Daftar ini merangkum command yang paling sering dipakai dalam workflow Stata: impor data, cleaning, statistik deskriptif, grafik, regresi, panel, time series, dan output.</p>
+                    <p>{{ __('stata.command_library_desc') }}</p>
                 </div>
 
                 <div class="stata-command-groups">
@@ -1249,9 +1252,9 @@ atau
                 </div>
 
                 <div class="stata-source-note">
-                    Referensi disusun dari dokumentasi resmi Stata seperti
+                    {{ __('stata.source_note') }}
                     <a href="https://www.stata.com/bookstore/base-reference-manual/" target="_blank" rel="noopener">Base Reference Manual</a>
-                    dan
+                    {{ __('stata.and') }}
                     <a href="https://www.stata.com/bookstore/data-management-reference-manual/" target="_blank" rel="noopener">Data Management Reference Manual</a>.
                 </div>
             </section>
