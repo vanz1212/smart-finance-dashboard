@@ -38,7 +38,7 @@ return [
     'services_title_before' => 'Tools that',
     'services_title_accent' => 'are tailored',
 
-    'service1_title' => 'Financial Analysis',
+    'service1_title' => 'Financial Planning',
     'service1_desc' => 'Calculate expense ratios, savings, installments, and emergency funds. Perfect for monitoring monthly cash flow and assessing your financial position.',
 
     'service2_title' => 'Taxation',

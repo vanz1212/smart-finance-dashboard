@@ -48,14 +48,7 @@ class FinancialTargetController extends BaseController
 
     public function create()
     {
-        $categories = [
-            'tabungan' => 'Tabungan',
-            'investasi' => 'Investasi',
-            'asuransi' => 'Asuransi',
-            'properti' => 'Properti',
-            'pendidikan' => 'Pendidikan',
-            'lainnya' => 'Lainnya',
-        ];
+        $categories = $this->categories();
 
         return view('financial_targets.create', compact('categories'));
     }
@@ -90,7 +83,7 @@ class FinancialTargetController extends BaseController
         
         $target->save();
 
-        return redirect()->route('targets.show', $target->id)->with('success', 'Target finansial berhasil dibuat.');
+        return redirect()->route('targets.show', $target->id)->with('success', __('targets.created_success'));
     }
 
     public function show(FinancialTarget $target)
@@ -126,14 +119,7 @@ class FinancialTargetController extends BaseController
             abort(403);
         }
 
-        $categories = [
-            'tabungan' => 'Tabungan',
-            'investasi' => 'Investasi',
-            'asuransi' => 'Asuransi',
-            'properti' => 'Properti',
-            'pendidikan' => 'Pendidikan',
-            'lainnya' => 'Lainnya',
-        ];
+        $categories = $this->categories();
 
         return view('financial_targets.edit', compact('target', 'categories'));
     }
@@ -167,7 +153,7 @@ class FinancialTargetController extends BaseController
 
         $target->update($validated);
 
-        return redirect()->route('targets.show', $target->id)->with('success', 'Target finansial berhasil diperbarui.');
+        return redirect()->route('targets.show', $target->id)->with('success', __('targets.updated_success'));
     }
 
     public function destroy(FinancialTarget $target)
@@ -178,7 +164,7 @@ class FinancialTargetController extends BaseController
 
         $target->delete();
 
-        return redirect()->route('targets.index')->with('success', 'Target finansial berhasil dihapus.');
+        return redirect()->route('targets.index')->with('success', __('targets.deleted_success'));
     }
 
     public function addDeposit(Request $request, FinancialTarget $target)
@@ -210,7 +196,7 @@ class FinancialTargetController extends BaseController
         
         $target->save();
 
-        return redirect()->back()->with('success', 'Setoran berhasil dicatat.');
+        return redirect()->back()->with('success', __('targets.deposit_added_success'));
     }
 
     public function removeDeposit(FinancialTargetDeposit $deposit)
@@ -230,7 +216,19 @@ class FinancialTargetController extends BaseController
         $target->save();
         $deposit->delete();
 
-        return redirect()->back()->with('success', 'Setoran berhasil dihapus.');
+        return redirect()->back()->with('success', __('targets.deposit_deleted_success'));
+    }
+
+    private function categories(): array
+    {
+        return [
+            'tabungan' => __('targets.category_savings'),
+            'investasi' => __('targets.category_investment'),
+            'asuransi' => __('targets.category_insurance'),
+            'properti' => __('targets.category_property'),
+            'pendidikan' => __('targets.category_education'),
+            'lainnya' => __('targets.category_other'),
+        ];
     }
 
     private function getMonthlyBreakdown(FinancialTarget $target): array

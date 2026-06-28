@@ -127,13 +127,13 @@ class FinancialTarget extends Model
 
         if ($average >= $recommended * 0.9) {
             $status = 'on-track';
-            $message = 'Sedang sesuai target';
+            $message = __('targets.performance_on_track');
         } elseif ($average >= $recommended * 0.7) {
             $status = 'at-risk';
-            $message = 'Perlu ditingkatkan';
+            $message = __('targets.performance_at_risk');
         } else {
             $status = 'behind';
-            $message = 'Tertinggal dari target';
+            $message = __('targets.performance_behind');
         }
 
         return [

@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'page_title' => 'Smart Finance - Analisa Keuangan',
-    'title' => 'Analisa Keuangan',
+    'page_title' => 'Smart Finance - Perencanaan Keuangan',
+    'title' => 'Perencanaan Keuangan',
     'monthly_input' => 'Input Bulanan',
     'total_income' => 'Total pemasukan',
     'use_template' => 'Gunakan Template Kategori (Opsional)',

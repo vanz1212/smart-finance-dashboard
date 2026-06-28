@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'page_title' => 'Smart Finance - Financial Analysis',
-    'title' => 'Financial Analysis',
+    'page_title' => 'Smart Finance - Financial Planning',
+    'title' => 'Financial Planning',
     'monthly_input' => 'Monthly Input',
     'total_income' => 'Total income',
     'use_template' => 'Use Category Template (Optional)',

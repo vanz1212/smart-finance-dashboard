@@ -38,7 +38,7 @@ return [
     'services_title_before' => 'Alat yang',
     'services_title_accent' => 'dirancang khusus',
 
-    'service1_title' => 'Analisa Keuangan',
+    'service1_title' => 'Perencanaan Keuangan',
     'service1_desc' => 'Hitung rasio pengeluaran, tabungan, cicilan, dan dana darurat. Cocok untuk memantau arus kas bulanan dan melihat posisi keuangan secara cepat.',
 
     'service2_title' => 'Perpajakan',

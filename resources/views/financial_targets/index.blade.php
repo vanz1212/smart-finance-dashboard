@@ -8,12 +8,18 @@
         $formatRupiah = fn($value) => 'Rp ' . number_format($value, 0, ',', '.');
         $formatPercent = fn($value) => number_format($value, 1, ',', '.') . '%';
         $categoryLabels = [
-            'tabungan' => 'Tabungan',
-            'investasi' => 'Investasi',
-            'asuransi' => 'Asuransi',
-            'properti' => 'Properti',
-            'pendidikan' => 'Pendidikan',
-            'lainnya' => 'Lainnya',
+            'tabungan' => __('targets.category_savings'),
+            'investasi' => __('targets.category_investment'),
+            'asuransi' => __('targets.category_insurance'),
+            'properti' => __('targets.category_property'),
+            'pendidikan' => __('targets.category_education'),
+            'lainnya' => __('targets.category_other'),
+        ];
+        $statusLabels = [
+            'active' => __('targets.active'),
+            'completed' => __('targets.completed'),
+            'paused' => __('targets.paused'),
+            'abandoned' => __('targets.abandoned'),
         ];
         $categoryColors = [
             'tabungan' => '#14b8a6',
@@ -382,42 +388,42 @@
         <div class="workspace-inner">
             <section class="workspace-hero module-hero">
                 <div class="module-hero-panel module-hero-copy">
-                    <span class="workspace-kicker">Financial Goals</span>
-                    <h1>Target Finansial</h1>
-                    <p>Tetapkan dan monitor target finansial Anda dengan tracking progres real-time, rekomendasi setoran, dan dashboard komprehensif.</p>
+                    <span class="workspace-kicker">{{ __('targets.kicker') }}</span>
+                    <h1>{{ __('targets.hero_title') }}</h1>
+                    <p>{{ __('targets.hero_desc') }}</p>
                 </div>
                 <aside class="module-hero-panel module-hero-summary">
                     <div style="display:flex; gap: 8px; margin-bottom: 12px;">
-                        <span style="padding: 6px 12px; background: #14b8a6; color: #042f2e; border-radius: 999px; font-weight: 900; font-size: 0.8rem;">{{ $stats['active_targets'] }} Aktif</span>
-                        <span style="padding: 6px 12px; background: rgba(255,255,255,0.1); color: rgba(248,250,252,0.78); border-radius: 999px; font-weight: 900; font-size: 0.8rem;">{{ $stats['completed_targets'] }} Tercapai</span>
+                        <span style="padding: 6px 12px; background: #14b8a6; color: #042f2e; border-radius: 999px; font-weight: 900; font-size: 0.8rem;">{{ $stats['active_targets'] }} {{ __('targets.active') }}</span>
+                        <span style="padding: 6px 12px; background: rgba(255,255,255,0.1); color: rgba(248,250,252,0.78); border-radius: 999px; font-weight: 900; font-size: 0.8rem;">{{ $stats['completed_targets'] }} {{ __('targets.completed') }}</span>
                     </div>
                     <strong>{{ $formatPercent($stats['overall_progress']) }}</strong>
-                    <span>Progres keseluruhan dari semua target finansial Anda.</span>
+                    <span>{{ __('targets.overall_progress_desc') }}</span>
                 </aside>
             </section>
 
             <div class="stats-grid">
                 <div class="stat-card">
-                    <div class="stat-label">Total Target</div>
+                    <div class="stat-label">{{ __('targets.total_targets') }}</div>
                     <div class="stat-value">{{ $stats['total_targets'] }}</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-label">Target Nominal</div>
+                    <div class="stat-label">{{ __('targets.target_amount') }}</div>
                     <div class="stat-value" style="font-size: 1.2rem;">{{ $formatRupiah($stats['total_target_amount']) }}</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-label">Terkumpul</div>
+                    <div class="stat-label">{{ __('targets.collected') }}</div>
                     <div class="stat-value" style="font-size: 1.2rem;">{{ $formatRupiah($stats['total_collected']) }}</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-label">Sisa Target</div>
+                    <div class="stat-label">{{ __('targets.remaining_target') }}</div>
                     <div class="stat-value" style="font-size: 1.2rem;">{{ $formatRupiah($stats['total_target_amount'] - $stats['total_collected']) }}</div>
                 </div>
             </div>
 
             <div class="action-buttons">
-                <a href="{{ route('targets.create') }}" class="btn-primary">+ Buat Target Baru</a>
-                <a href="{{ route('finance.index') }}" style="padding: 12px 24px; border-radius: 999px; background: rgba(255,255,255,0.08); color: rgba(248,250,252,0.78); text-decoration: none; font-weight: 900; border: 1px solid rgba(255,255,255,0.12); transition: all 0.2s;">Kembali ke Analisis</a>
+                <a href="{{ route('targets.create') }}" class="btn-primary">+ {{ __('targets.create_new') }}</a>
+                <a href="{{ route('finance.index') }}" style="padding: 12px 24px; border-radius: 999px; background: rgba(255,255,255,0.08); color: rgba(248,250,252,0.78); text-decoration: none; font-weight: 900; border: 1px solid rgba(255,255,255,0.12); transition: all 0.2s;">{{ __('targets.back_to_analysis') }}</a>
             </div>
 
             @if ($targets->count() > 0)
@@ -428,12 +434,12 @@
                                 <div style="flex: 1;">
                                     <h3 class="target-title">{{ $target->name }}</h3>
                                     <span class="target-category-badge" style="background-color: {{ $categoryColors[$target->category] ?? '#64748b' }};">
-                                        {{ $categoryLabels[$target->category] ?? 'Lainnya' }}
+                                        {{ $categoryLabels[$target->category] ?? __('targets.category_other') }}
                                     </span>
                                 </div>
                                 @if ($target->status !== 'active')
                                     <span style="padding: 4px 8px; border-radius: 6px; background: rgba(255,255,255,0.1); font-size: 0.7rem; font-weight: 800; white-space: nowrap;">
-                                        {{ ucfirst($target->status) }}
+                                        {{ $statusLabels[$target->status] ?? ucfirst($target->status) }}
                                     </span>
                                 @endif
                             </div>
@@ -447,45 +453,45 @@
                                     <div class="progress-fill" style="width: {{ min($target->progress, 100) }}%;"></div>
                                 </div>
                                 <div class="progress-info">
-                                    <span>{{ $formatPercent($target->progress) }} tercapai</span>
+                                    <span>{{ $formatPercent($target->progress) }} {{ __('targets.achieved_suffix') }}</span>
                                     <strong>{{ $formatRupiah($target->current_amount) }} / {{ $formatRupiah($target->target_amount) }}</strong>
                                 </div>
                             </div>
 
                             <div class="target-amount">
                                 <div class="amount-item">
-                                    <div class="amount-label">Target</div>
+                                    <div class="amount-label">{{ __('targets.target_monthly') }}</div>
                                     <div class="amount-value">{{ $formatRupiah($target->target_amount) }}</div>
                                 </div>
                                 <div class="amount-item">
-                                    <div class="amount-label">Sisa</div>
+                                    <div class="amount-label">{{ __('targets.remaining') }}</div>
                                     <div class="amount-value">{{ $formatRupiah($target->remaining) }}</div>
                                 </div>
                             </div>
 
                             <div class="target-deadline">
-                                <span class="deadline-label">📅 Tenggat:</span>
-                                <span class="deadline-value">{{ $target->target_date->format('d M Y') }} ({{ $target->days_remaining }} hari)</span>
+                                <span class="deadline-label">{{ __('targets.deadline') }}:</span>
+                                <span class="deadline-value">{{ $target->target_date->format('d M Y') }} ({{ $target->days_remaining }} {{ __('targets.days') }})</span>
                             </div>
 
                             <div class="target-performance">
-                                <div class="performance-label">Status Setoran:</div>
+                                <div class="performance-label">{{ __('targets.deposit_status') }}</div>
                                 <div class="performance-status {{ $target->performance['status'] }}">
                                     <span class="status-dot" style="background-color: currentColor;"></span>
                                     {{ $target->performance['message'] }}
                                 </div>
                                 <p style="margin: 8px 0 0; font-size: 0.75rem; color: rgba(248,250,252,0.5);">
-                                    Target: {{ $formatRupiah($target->performance['recommended']) }}/bln | Realisasi: {{ $formatRupiah($target->performance['average']) }}/bln
+                                    {{ __('targets.target_monthly') }}: {{ $formatRupiah($target->performance['recommended']) }}/{{ __('targets.per_month_short') }} | {{ __('targets.actual_monthly') }}: {{ $formatRupiah($target->performance['average']) }}/{{ __('targets.per_month_short') }}
                                 </p>
                             </div>
 
                             <div class="target-actions">
-                                <a href="{{ route('targets.show', $target->id) }}" class="btn-action">Lihat Detail</a>
-                                <a href="{{ route('targets.edit', $target->id) }}" class="btn-action">Edit</a>
-                                <form action="{{ route('targets.destroy', $target->id) }}" method="POST" style="flex: 1; margin: 0;" onsubmit="return confirm('Hapus target ini?')">
+                                <a href="{{ route('targets.show', $target->id) }}" class="btn-action">{{ __('targets.view_detail') }}</a>
+                                <a href="{{ route('targets.edit', $target->id) }}" class="btn-action">{{ __('targets.edit') }}</a>
+                                <form action="{{ route('targets.destroy', $target->id) }}" method="POST" style="flex: 1; margin: 0;" onsubmit="return confirm('{{ __('targets.delete_target_confirm') }}')">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn-action" style="width: 100%; height: 100%;">Hapus</button>
+                                    <button type="submit" class="btn-action" style="width: 100%; height: 100%;">{{ __('targets.delete') }}</button>
                                 </form>
                             </div>
                         </div>
@@ -493,9 +499,9 @@
                 </div>
             @else
                 <div class="empty-state">
-                    <h3>Belum Ada Target</h3>
-                    <p>Mulai dengan membuat target finansial pertama Anda untuk merencanakan masa depan yang lebih baik.</p>
-                    <a href="{{ route('targets.create') }}" class="btn-primary">Buat Target Pertama</a>
+                    <h3>{{ __('targets.empty_title') }}</h3>
+                    <p>{{ __('targets.empty_desc') }}</p>
+                    <a href="{{ route('targets.create') }}" class="btn-primary">{{ __('targets.create_first') }}</a>
                 </div>
             @endif
         </div>
