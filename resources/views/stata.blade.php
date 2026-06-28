@@ -80,6 +80,84 @@
                 ['cmd' => 'help', 'desc' => 'Membuka dokumentasi command dari dalam Stata.', 'example' => 'help regress'],
             ],
         ];
+
+        if (app()->getLocale() === 'en') {
+            $stataCommandGroups = [
+                'Data and Files' => [
+                    ['cmd' => 'use', 'desc' => 'Open a Stata dataset with the .dta extension.', 'example' => 'use data_keuangan.dta, clear'],
+                    ['cmd' => 'import excel', 'desc' => 'Import data from an Excel file into Stata.', 'example' => 'import excel "data.xlsx", firstrow clear'],
+                    ['cmd' => 'import delimited', 'desc' => 'Import CSV, TSV, or other delimited text files.', 'example' => 'import delimited "data.csv", clear'],
+                    ['cmd' => 'save', 'desc' => 'Save the active dataset as a .dta file.', 'example' => 'save data_bersih.dta, replace'],
+                    ['cmd' => 'describe', 'desc' => 'Show dataset structure, variable names, data types, and labels.', 'example' => 'describe'],
+                    ['cmd' => 'codebook', 'desc' => 'Inspect variable contents, missing values, value ranges, and labels.', 'example' => 'codebook income expense'],
+                    ['cmd' => 'list', 'desc' => 'Display selected observations in table form.', 'example' => 'list income expense in 1/10'],
+                    ['cmd' => 'browse', 'desc' => 'Open the data editor in view mode.', 'example' => 'browse income expense saving'],
+                ],
+                'Creating and Editing Variables' => [
+                    ['cmd' => 'generate', 'desc' => 'Create a new variable from a formula or fixed value.', 'example' => 'generate saving_rate = saving / income'],
+                    ['cmd' => 'replace', 'desc' => 'Modify values in an existing variable.', 'example' => 'replace saving_rate = 0 if saving_rate < 0'],
+                    ['cmd' => 'egen', 'desc' => 'Create variables with extended functions such as group means or totals.', 'example' => 'bysort region: egen avg_income = mean(income)'],
+                    ['cmd' => 'recode', 'desc' => 'Regroup numeric variable values into new categories.', 'example' => 'recode age (18/25=1) (26/40=2), gen(age_group)'],
+                    ['cmd' => 'encode', 'desc' => 'Convert a string category variable into a labeled numeric variable.', 'example' => 'encode province, gen(province_id)'],
+                    ['cmd' => 'rename', 'desc' => 'Rename a variable.', 'example' => 'rename monthly_income income'],
+                    ['cmd' => 'label variable', 'desc' => 'Add a descriptive label to a variable.', 'example' => 'label variable income "Monthly income"'],
+                    ['cmd' => 'keep / drop', 'desc' => 'Keep or remove selected variables or observations.', 'example' => 'keep income expense saving'],
+                ],
+                'Cleaning and Structuring Data' => [
+                    ['cmd' => 'sort', 'desc' => 'Sort data by one or more variables.', 'example' => 'sort year province'],
+                    ['cmd' => 'bysort', 'desc' => 'Run a command by group after sorting the data.', 'example' => 'bysort province: summarize income'],
+                    ['cmd' => 'duplicates', 'desc' => 'Detect or remove duplicate records.', 'example' => 'duplicates report id year'],
+                    ['cmd' => 'merge', 'desc' => 'Join datasets using matching keys or IDs.', 'example' => 'merge 1:1 id using data_demografi.dta'],
+                    ['cmd' => 'append', 'desc' => 'Add observations from another dataset.', 'example' => 'append using data_2025.dta'],
+                    ['cmd' => 'reshape', 'desc' => 'Convert data between wide and long formats.', 'example' => 'reshape long income expense, i(id) j(year)'],
+                    ['cmd' => 'collapse', 'desc' => 'Create a summary dataset based on selected statistics.', 'example' => 'collapse (mean) income expense, by(province)'],
+                    ['cmd' => 'compress', 'desc' => 'Reduce dataset size by optimizing data types.', 'example' => 'compress'],
+                ],
+                'Descriptive Statistics and Tables' => [
+                    ['cmd' => 'summarize', 'desc' => 'Produce mean, standard deviation, minimum, maximum, and observation counts.', 'example' => 'summarize income expense saving'],
+                    ['cmd' => 'tabulate', 'desc' => 'Create a one-way or two-way frequency table.', 'example' => 'tabulate education gender, row'],
+                    ['cmd' => 'tabstat', 'desc' => 'Create more flexible summary-statistics tables.', 'example' => 'tabstat income, stat(mean sd min max) by(region)'],
+                    ['cmd' => 'table', 'desc' => 'Create modern tables for frequencies, summaries, and command results.', 'example' => 'table region, statistic(mean income) statistic(sd income)'],
+                    ['cmd' => 'correlate', 'desc' => 'Calculate correlations between numeric variables.', 'example' => 'correlate gdp inflation unemployment'],
+                    ['cmd' => 'pwcorr', 'desc' => 'Calculate pairwise correlations, often with significance values.', 'example' => 'pwcorr income saving expense, sig'],
+                ],
+                'Charts' => [
+                    ['cmd' => 'histogram', 'desc' => 'Create a histogram of a numeric variable distribution.', 'example' => 'histogram income, normal'],
+                    ['cmd' => 'scatter', 'desc' => 'Create a scatter plot for two variables.', 'example' => 'scatter saving income'],
+                    ['cmd' => 'twoway', 'desc' => 'Create combined charts such as scatter plots with fitted lines.', 'example' => 'twoway (scatter saving income) (lfit saving income)'],
+                    ['cmd' => 'graph bar', 'desc' => 'Create bar charts by category.', 'example' => 'graph bar income, over(region)'],
+                    ['cmd' => 'graph box', 'desc' => 'Create box plots to inspect spread and outliers.', 'example' => 'graph box income, over(region)'],
+                ],
+                'Regression, Tests, and Postestimation' => [
+                    ['cmd' => 'regress', 'desc' => 'Run ordinary least squares linear regression.', 'example' => 'regress saving income expense'],
+                    ['cmd' => 'logit', 'desc' => 'Run logistic regression for binary dependent variables.', 'example' => 'logit default income debt_ratio'],
+                    ['cmd' => 'probit', 'desc' => 'Run a probit model for binary outcomes.', 'example' => 'probit default income debt_ratio'],
+                    ['cmd' => 'poisson', 'desc' => 'Run a regression model for count data.', 'example' => 'poisson claims income age'],
+                    ['cmd' => 'anova', 'desc' => 'Run analysis of variance to compare group means.', 'example' => 'anova income region education'],
+                    ['cmd' => 'ttest', 'desc' => 'Test mean differences for one sample, two samples, or paired samples.', 'example' => 'ttest income, by(gender)'],
+                    ['cmd' => 'swilk', 'desc' => 'Run the Shapiro-Wilk normality test.', 'example' => 'swilk income'],
+                    ['cmd' => 'test', 'desc' => 'Run linear hypothesis tests after model estimation.', 'example' => 'test income = expense'],
+                    ['cmd' => 'margins', 'desc' => 'Calculate predictions, marginal means, or marginal effects after a model.', 'example' => 'margins, dydx(income)'],
+                    ['cmd' => 'predict', 'desc' => 'Generate predicted values or residuals after estimation.', 'example' => 'predict yhat, xb'],
+                ],
+                'Panel and Time Series' => [
+                    ['cmd' => 'xtset', 'desc' => 'Declare the panel data structure.', 'example' => 'xtset firm_id year'],
+                    ['cmd' => 'xtreg', 'desc' => 'Run fixed-effects or random-effects panel regression.', 'example' => 'xtreg profit investment inflation, fe'],
+                    ['cmd' => 'hausman', 'desc' => 'Compare fixed-effects and random-effects estimators.', 'example' => 'hausman fixed random'],
+                    ['cmd' => 'tsset', 'desc' => 'Declare the time-series data structure.', 'example' => 'tsset year'],
+                    ['cmd' => 'arima', 'desc' => 'Fit an ARIMA model for time-series analysis.', 'example' => 'arima inflation, arima(1,1,1)'],
+                    ['cmd' => 'dfuller', 'desc' => 'Run the Augmented Dickey-Fuller unit-root test.', 'example' => 'dfuller inflation, lags(1)'],
+                ],
+                'Workflow and Output' => [
+                    ['cmd' => 'log using', 'desc' => 'Record Stata session output to a log file.', 'example' => 'log using hasil_analisis.log, replace'],
+                    ['cmd' => 'do', 'desc' => 'Run a do-file containing a sequence of commands.', 'example' => 'do analisis_keuangan.do'],
+                    ['cmd' => 'set more off', 'desc' => 'Prevent long output from pausing page by page while scripts run.', 'example' => 'set more off'],
+                    ['cmd' => 'estimates store', 'desc' => 'Store model estimation results for comparison.', 'example' => 'estimates store model1'],
+                    ['cmd' => 'estimates table', 'desc' => 'Display several estimation results in one table.', 'example' => 'estimates table model1 model2, stats(N r2)'],
+                    ['cmd' => 'help', 'desc' => 'Open command documentation from inside Stata.', 'example' => 'help regress'],
+                ],
+            ];
+        }
     @endphp
 
     <style>
@@ -876,7 +954,7 @@
                 <div class="workbench-heading">
                     <div>
                         <span class="stata-kicker">DTA Workspace</span>
-                        <h2>Data Editor & Instant Commands</h2>
+                        <h2>{{ __('stata.data_editor_title') }}</h2>
                     </div>
                     <p>{{ __('stata.import_desc') }}</p>
                 </div>
@@ -900,10 +978,10 @@
                         <label class="stata-file-drop">
                             <span>
                                 <input type="file" name="stata_file" accept=".dta,application/octet-stream" required>
-                                <small>Format .dta, maksimum 25 MB. File disimpan privat dan hanya terhubung ke sesi akun ini.</small>
+                                <small>{{ __('stata.file_hint') }}</small>
                             </span>
                         </label>
-                        <button class="stata-import-button" type="submit">Import dan Baca Dataset</button>
+                        <button class="stata-import-button" type="submit">{{ __('stata.import_and_read') }}</button>
                     </form>
 
                     <aside class="stata-dataset-card">
@@ -911,19 +989,19 @@
                         @if ($stataDataset)
                             <p>{{ $stataDataset['name'] }}</p>
                             <div class="dataset-facts">
-                                <div><span>Observasi</span><strong>{{ number_format($stataDataset['summary']['rows'], 0, ',', '.') }}</strong></div>
-                                <div><span>Variabel</span><strong>{{ $stataDataset['summary']['columns'] }}</strong></div>
-                                <div><span>Numerik</span><strong>{{ $stataDataset['summary']['numeric_columns'] }}</strong></div>
-                                <div><span>Ukuran</span><strong>{{ number_format($stataDataset['size'] / 1048576, 2, ',', '.') }} MB</strong></div>
+                                <div><span>{{ __('stata.observations') }}</span><strong>{{ number_format($stataDataset['summary']['rows'], 0, ',', '.') }}</strong></div>
+                                <div><span>{{ __('stata.variables') }}</span><strong>{{ $stataDataset['summary']['columns'] }}</strong></div>
+                                <div><span>{{ __('stata.numeric') }}</span><strong>{{ $stataDataset['summary']['numeric_columns'] }}</strong></div>
+                                <div><span>{{ __('stata.size') }}</span><strong>{{ number_format($stataDataset['size'] / 1048576, 2, ',', '.') }} MB</strong></div>
                             </div>
                             <p>{{ $stataDataset['summary']['data_label'] }}</p>
                             <form action="{{ route('stata.clear') }}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button class="stata-clear-button" type="submit">Tutup Dataset</button>
+                                <button class="stata-clear-button" type="submit">{{ __('stata.close_dataset') }}</button>
                             </form>
                         @else
-                            <p>Belum ada dataset aktif. Pilih file `.dta` untuk membuka workspace.</p>
+                            <p>{{ __('stata.no_active_workspace') }}</p>
                         @endif
                     </aside>
                 </div>
@@ -934,9 +1012,9 @@
                         <aside class="stata-variable-panel">
                             <h3>Variables</h3>
                             <div class="variable-tools">
-                                <button class="variable-tool" type="button" data-select-variables="all">Pilih Semua</button>
-                                <button class="variable-tool" type="button" data-select-variables="numeric">Numerik</button>
-                                <button class="variable-tool" type="button" data-select-variables="none">Bersihkan</button>
+                                <button class="variable-tool" type="button" data-select-variables="all">{{ __('stata.select_all') }}</button>
+                                <button class="variable-tool" type="button" data-select-variables="numeric">{{ __('stata.numeric') }}</button>
+                                <button class="variable-tool" type="button" data-select-variables="none">{{ __('stata.clear_selection') }}</button>
                             </div>
                             <div class="stata-variable-list">
                                 @foreach ($stataDataset['variables'] as $variable)
@@ -953,24 +1031,24 @@
                         </aside>
 
                         <section class="stata-editor-panel">
-                            <h3>Command Toolbar</h3>
+                            <h3>{{ __('stata.command_toolbar') }}</h3>
                             <div class="stata-command-bar">
                                 <button class="stata-command-button" name="command" value="describe" type="submit">Describe</button>
                                 <button class="stata-command-button" name="command" value="summarize" type="submit">Summarize</button>
-                                <button class="stata-command-button" name="command" value="list" type="submit">List Data</button>
-                                <button class="stata-command-button" name="command" value="missing" type="submit">Missing Values</button>
+                                <button class="stata-command-button" name="command" value="list" type="submit">{{ __('stata.list_data') }}</button>
+                                <button class="stata-command-button" name="command" value="missing" type="submit">{{ __('stata.missing_values') }}</button>
                                 <button class="stata-command-button" name="command" value="correlate" type="submit">Correlate</button>
                                 <button class="stata-command-button" name="command" value="tabulate" type="submit">Tabulate</button>
-                                <select class="stata-sort-direction" name="direction" aria-label="Arah urutan">
+                                <select class="stata-sort-direction" name="direction" aria-label="{{ __('stata.sort_direction') }}">
                                     <option value="asc">Ascending</option>
                                     <option value="desc">Descending</option>
                                 </select>
-                                <button class="stata-command-button" name="command" value="sort" type="submit">Sort Preview</button>
+                                <button class="stata-command-button" name="command" value="sort" type="submit">{{ __('stata.sort_preview') }}</button>
                                 <button class="stata-command-button" name="command" value="regress" type="submit">Regress</button>
                             </div>
 
-                            <h3>Data Preview</h3>
-                            <p>Maksimal 20 observasi pertama dari file yang diimpor.</p>
+                            <h3>{{ __('stata.data_preview') }}</h3>
+                            <p>{{ __('stata.preview_desc') }}</p>
                             <div class="stata-table-wrap">
                                 <table class="stata-live-table">
                                     <thead><tr>@foreach ($stataDataset['preview']['columns'] as $column)<th>{{ $column }}</th>@endforeach</tr></thead>
@@ -987,7 +1065,7 @@
 
                 @if ($stataOutput)
                     <section id="stata-output" class="stata-result-panel">
-                        <span class="stata-kicker">Results Window</span>
+                        <span class="stata-kicker">{{ __('stata.results_window') }}</span>
                         <h3>{{ $stataOutput['title'] }}</h3>
                         <code class="stata-result-command">{{ $stataOutput['command'] }}</code>
                         <p>{{ $stataOutput['message'] }}</p>

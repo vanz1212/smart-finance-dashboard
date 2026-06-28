@@ -42,7 +42,7 @@ class StataController extends BaseController
                 'max:25600',
                 function (string $attribute, mixed $value, \Closure $fail): void {
                     if (strtolower((string) $value->getClientOriginalExtension()) !== 'dta') {
-                        $fail('File harus menggunakan format Stata .dta.');
+                        $fail(__('stata.file_must_be_dta'));
                     }
                 },
             ],
@@ -65,11 +65,11 @@ class StataController extends BaseController
             Log::warning('Stata import failed.', ['exception' => $exception]);
 
             if (str_contains($exception->getMessage(), 'ModuleNotFoundError')) {
-                $message = 'Dependency parser belum lengkap. Jalankan .venv\\Scripts\\python.exe -m pip install -r requirements.txt.';
+                $message = __('stata.parser_dependency_missing');
             } elseif (str_contains($exception->getMessage(), 'Python')) {
                 $message = $exception->getMessage();
             } else {
-                $message = 'File .dta tidak dapat dibaca. Gunakan file biner asli yang diekspor langsung dari Stata, bukan isi file yang disalin sebagai teks.';
+                $message = __('stata.file_unreadable');
             }
 
             return back()->withErrors([
@@ -94,7 +94,7 @@ class StataController extends BaseController
         $request->session()->forget('stata_output');
 
         return redirect()->to(route('stata').'#stata-workbench')
-            ->with('stata_status', 'Dataset berhasil diimpor dan siap dianalisis.');
+            ->with('stata_status', __('stata.import_success'));
     }
 
     public function run(Request $request)
@@ -110,7 +110,7 @@ class StataController extends BaseController
         $relativePath = data_get($dataset, 'path');
 
         if (! is_string($relativePath) || ! Storage::disk('local')->exists($relativePath)) {
-            return back()->withErrors(['stata_command' => 'Impor file .dta terlebih dahulu.']);
+            return back()->withErrors(['stata_command' => __('stata.import_first')]);
         }
 
         try {
@@ -141,7 +141,7 @@ class StataController extends BaseController
 
         $request->session()->forget(['stata_dataset', 'stata_output']);
 
-        return redirect()->route('stata')->with('stata_status', 'Dataset telah ditutup.');
+        return redirect()->route('stata')->with('stata_status', __('stata.dataset_closed'));
     }
 
     private function runTool(string $filePath, array $payload): array
@@ -159,10 +159,10 @@ class StataController extends BaseController
             $failedResult = json_decode($process->getOutput(), true);
             $message = data_get($failedResult, 'error')
                 ?: trim($process->getErrorOutput())
-                ?: 'Parser Stata gagal dijalankan.';
+                ?: __('stata.parser_failed');
 
             if (str_contains(strtolower($message), 'not recognized') || str_contains(strtolower($message), 'not found')) {
-                $message = 'Python tidak dapat dijalankan oleh Laravel. Atur STATA_PYTHON_BINARY ke lokasi python.exe lalu restart server.';
+                $message = __('stata.python_not_available');
             }
 
             throw new RuntimeException(Str::limit($message, 500));
@@ -183,7 +183,7 @@ class StataController extends BaseController
 
         if ($configured !== '') {
             if ((str_contains($configured, '/') || str_contains($configured, '\\')) && ! is_file($configured)) {
-                throw new RuntimeException('Python tidak ditemukan di STATA_PYTHON_BINARY: '.$configured);
+                throw new RuntimeException(__('stata.python_not_found', ['path' => $configured]));
             }
 
             return [$configured];
