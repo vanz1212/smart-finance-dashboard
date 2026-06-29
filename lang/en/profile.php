@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'page_title' => 'Profile - Smart Finance',
+    'page_title' => 'Profile - Nexio',
 ];

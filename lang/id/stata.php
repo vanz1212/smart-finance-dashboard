@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'page_title' => 'Stata - Smart Finance Dashboard',
+    'page_title' => 'Stata - Nexio Dashboard',
     'title' => 'Stata',
     'hero_desc' => 'Ruang analisis statistik untuk data ekonomi: korelasi, regresi linear, statistik deskriptif, dan interpretasi output yang mudah dibaca.',
     'back_to_selector' => 'Kembali ke Selector',

@@ -126,4 +126,57 @@ class AuthController extends BaseController
             'user' => Auth::user(),
         ]);
     }
+
+    public function updateUsername(Request $request)
+    {
+        $request->validate([
+            'username' => ['required', 'string', 'max:60', 'alpha_dash', 'unique:users,username,' . Auth::id()],
+        ], [
+            'username.unique' => 'Username ini sudah digunakan.',
+            'username.alpha_dash' => 'Username hanya boleh berisi huruf, angka, strip, dan garis bawah.',
+        ]);
+
+        $user = User::find(Auth::id());
+        $user->username = $request->username;
+        $user->save();
+
+        return back()->with('success', 'Username berhasil diperbarui.');
+    }
+
+    public function updateEmail(Request $request)
+    {
+        $user = User::find(Auth::id());
+
+        if ($user->email_verified_at) {
+            return back()->with('info', 'Email Anda sudah terverifikasi dan tidak dapat diubah lagi.');
+        }
+
+        $request->validate([
+            'email' => ['required', 'email', 'max:255', 'unique:users,email,' . Auth::id()],
+        ], [
+            'email.unique' => 'Email ini sudah digunakan oleh pengguna lain.',
+            'email.email' => 'Format email tidak valid.',
+        ]);
+
+        $user->email = $request->email;
+        // Jika OTP sedang aktif, batalkan agar user harus minta lagi untuk email barunya
+        $user->otp_code = null;
+        $user->otp_expires_at = null;
+        $user->save();
+
+        return back()->with('success_email', 'Email berhasil diperbarui. Silakan minta kode verifikasi baru.');
+    }
+
+    public function updateAvatar(Request $request)
+    {
+        $request->validate([
+            'avatar' => ['required', 'string', 'max:255'],
+        ]);
+
+        $user = User::find(Auth::id());
+        $user->avatar = $request->avatar;
+        $user->save();
+
+        return back()->with('success_avatar', 'Avatar berhasil diperbarui!');
+    }
 }

@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'page_title' => 'Taxation - Smart Finance Dashboard',
+    'page_title' => 'Taxation - Nexio Dashboard',
     'title' => 'Taxation',
     'disclaimer_desc' => 'This calculation is a personal estimate and simulation based on the Average Effective Rate (TER) and Income Tax Article 17. Please continue to refer to DJP Online for official tax filing.',
     'important' => 'Important:',

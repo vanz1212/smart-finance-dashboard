@@ -69,11 +69,11 @@
         display: grid;
         place-items: center;
         border-radius: 11px;
-        background: #14b86f;
-        color: #042f2e;
+        background: var(--accent-primary);
+        color: #ffffff;
         font-size: 1.35rem;
         font-weight: 950;
-        box-shadow: 0 10px 28px rgba(20, 184, 111, .22);
+        box-shadow: 0 10px 28px rgba(99, 102, 241, .3);
     }
 
     body.module-page .main-nav {
@@ -87,7 +87,7 @@
         overflow-x: auto;
         padding: 2px 0 5px;
         scrollbar-width: thin;
-        scrollbar-color: rgba(243, 201, 105, .45) transparent;
+        scrollbar-color: rgba(99, 102, 241, .45) transparent;
     }
 
     body.module-page .main-nav a,
@@ -135,12 +135,12 @@
         position: absolute;
         inset: 0;
         z-index: 1;
-        border: 1px solid rgba(255, 232, 166, .72);
+        border: 1px solid rgba(147, 197, 253, .4);
         border-radius: 999px;
-        background: linear-gradient(135deg, rgba(242, 205, 112, .96), rgba(214, 173, 74, .94));
+        background: linear-gradient(135deg, var(--accent-primary), var(--accent-hover));
         box-shadow:
-            0 8px 24px rgba(214, 173, 74, .18),
-            inset 0 1px 0 rgba(255, 255, 255, .42);
+            0 8px 24px rgba(99, 102, 241, .25),
+            inset 0 1px 0 rgba(255, 255, 255, .2);
         view-transition-name: module-active-tab;
         contain: layout paint;
     }
@@ -177,7 +177,7 @@
         background-image:
             linear-gradient(180deg, rgba(3, 15, 17, .84) 0%, rgba(4, 17, 19, .94) 48%, #050c0f 100%),
             url('{{ asset('images/backgroundfinance.jpg') }}'),
-            radial-gradient(circle at 82% 0%, rgba(20, 184, 111, .14), transparent 38%) !important;
+            radial-gradient(circle at 82% 0%, rgba(99, 102, 241, .2), transparent 38%) !important;
         background-position: top center, top center, top center !important;
         background-size: 100% 100%, 100% auto, 100% 100% !important;
         background-repeat: no-repeat !important;

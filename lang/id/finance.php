@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'page_title' => 'Smart Finance - Perencanaan Keuangan',
+    'page_title' => 'Nexio - Perencanaan Keuangan',
     'title' => 'Perencanaan Keuangan',
     'monthly_input' => 'Input Bulanan',
     'total_income' => 'Total pemasukan',

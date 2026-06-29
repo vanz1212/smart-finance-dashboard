@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Admin Users - Smart Finance')
+@section('title', 'Admin Users - Nexio')
 
 @section('content')
     <style>
@@ -29,7 +29,7 @@
             padding: 28px;
             color: #f8fafc;
             background:
-                linear-gradient(180deg, rgba(5, 12, 15, 0.72), rgba(5, 12, 15, 0.96)),
+                linear-gradient(135deg, rgba(7, 11, 20, 0.8) 0%, rgba(7, 11, 20, 0.98) 100%),
                 url('{{ asset('images/backgroundfinance.jpg') }}') center / cover fixed no-repeat;
         }
 
@@ -37,11 +37,12 @@
             width: min(1280px, 100%);
             margin: 0 auto;
             padding: 28px;
-            border: 1px solid rgba(255, 255, 255, 0.14);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 18px;
-            background: linear-gradient(180deg, rgba(13, 47, 51, 0.86), rgba(6, 24, 32, 0.92));
-            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.42);
-            backdrop-filter: blur(14px);
+            background: rgba(7, 10, 19, 0.85);
+            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
         }
 
         .admin-header {
@@ -87,12 +88,19 @@
             text-align: center;
             white-space: nowrap;
             background: rgba(255, 255, 255, 0.06);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .admin-actions a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(255, 255, 255, 0.1);
+            filter: brightness(1.15);
         }
 
         .admin-actions a.primary {
-            background: #14b86f;
-            border-color: #14b86f;
-            color: #052e2b;
+            background: #6366f1;
+            border-color: #6366f1;
+            color: #ffffff;
         }
 
         .flash {
@@ -162,8 +170,8 @@
         }
 
         .role-admin {
-            background: rgba(243, 201, 105, 0.96);
-            color: #052e2b;
+            background: rgba(99, 102, 241, 0.9);
+            color: #ffffff;
         }
 
         .role-user {
@@ -197,11 +205,19 @@
             text-align: center;
             white-space: nowrap;
             cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .row-actions a:hover,
+        .row-actions button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+            filter: brightness(1.15);
         }
 
         .row-actions .edit {
-            background: rgba(20, 184, 111, 0.16);
-            border-color: rgba(20, 184, 111, 0.36);
+            background: rgba(99, 102, 241, 0.16);
+            border-color: rgba(99, 102, 241, 0.36);
         }
 
         .row-actions .danger {
@@ -236,13 +252,38 @@
         .role-form select {
             min-width: 124px;
             padding: 0 38px 0 18px;
+            appearance: none;
+            background-image: url('data:image/svg+xml;utf8,<svg fill="%23ffffff" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 10px top 50%;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .role-form select:hover,
+        .role-form select:focus {
+            border-color: rgba(255, 255, 255, 0.4);
+            background-color: rgba(255, 255, 255, 0.12);
+        }
+
+        .role-form select option {
+            background-color: #0f172a;
+            color: #ffffff;
+            font-weight: 600;
         }
 
         .role-form button {
             padding: 0 22px;
             cursor: pointer;
-            background: rgba(20, 184, 111, 0.16);
-            border-color: rgba(20, 184, 111, 0.36);
+            background: rgba(99, 102, 241, 0.16);
+            border-color: rgba(99, 102, 241, 0.36);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .role-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(99, 102, 241, 0.2);
+            filter: brightness(1.15);
         }
 
         .admin-footer {
@@ -379,7 +420,7 @@
         <section class="admin-card">
             <div class="admin-header">
                 <div>
-                    <span style="color:#f3c969;font-weight:900;letter-spacing:.12em;text-transform:uppercase;">Admin Access</span>
+                    <span style="color:#818cf8;font-weight:900;letter-spacing:.12em;text-transform:uppercase;">Admin Access</span>
                     <h1>Manajemen User</h1>
                     <p>Lihat profil user, buka detail akun, edit data, ubah role, atau hapus user langsung dari panel ini.</p>
                 </div>

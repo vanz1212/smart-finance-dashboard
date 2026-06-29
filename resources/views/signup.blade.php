@@ -3,549 +3,461 @@
 @section('title', __('auth.page_title_signup'))
 
 @section('content')
-    <style>
-        .site-header,
-        .site-footer {
-            display: none !important;
-        }
-
-        body {
-            background: var(--bg-primary);
-        }
-
-        body > .container {
-            max-width: none;
-            width: 100%;
-            min-height: 100vh;
-            padding: 0;
-        }
-
-        .content {
-            min-height: 100vh;
-        }
-
-        .auth-scene {
-            min-height: 100vh;
-            display: grid;
-            place-items: center;
-            padding: 32px 18px;
-            position: relative;
-            overflow: hidden;
-            background:
-                linear-gradient(180deg, rgba(7, 22, 28, 0.18), rgba(5, 18, 24, 0.66)),
-                url('{{ asset('images/backgroundfinance.jpg') }}') center / cover no-repeat;
-        }
-
-        .auth-scene::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background:
-                linear-gradient(90deg, rgba(4, 18, 22, 0.34), rgba(10, 72, 67, 0.16), rgba(4, 18, 22, 0.34)),
-                radial-gradient(circle at 50% 8%, rgba(245, 199, 92, 0.22), transparent 24%);
-            pointer-events: none;
-        }
-
-        .auth-card {
-            width: min(560px, 100%);
-            position: relative;
-            z-index: 1;
-            padding: 34px 38px 30px;
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            border-radius: 24px;
-            background: linear-gradient(180deg, rgba(13, 47, 51, 0.74), rgba(6, 24, 32, 0.78));
-            box-shadow: 0 28px 80px rgba(3, 16, 22, 0.5);
-            backdrop-filter: blur(18px);
-            color: #f8fafc;
-        }
-
-        .back-home {
-            position: absolute;
-            top: 22px;
-            left: 22px;
-            z-index: 2;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            min-height: 40px;
-            padding: 0 14px;
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            border-radius: 999px;
-            background: rgba(6, 24, 32, 0.44);
-            color: #ffffff;
-            text-decoration: none;
-            font-weight: 800;
-            backdrop-filter: blur(12px);
-        }
-
-        .back-home:hover {
-            border-color: rgba(243, 201, 105, 0.75);
-            color: #f3c969;
-        }
-
-        .auth-mark {
-            width: 42px;
-            height: 42px;
-            margin: 0 auto 18px;
-            border-radius: 50%;
-            border: 2px dashed rgba(255, 255, 255, 0.78);
-            box-shadow: 0 0 28px rgba(245, 199, 92, 0.32);
-        }
-
-        .auth-card h1 {
-            margin: 0;
-            text-align: center;
-            font-size: clamp(2.2rem, 6vw, 3.4rem);
-            line-height: 1.05;
-            font-weight: 600;
-            letter-spacing: 0;
-        }
-
-        .auth-card h1 span {
-            color: #f3c969;
-        }
-
-        .auth-card .subtitle {
-            max-width: 420px;
-            margin: 14px auto 28px;
-            color: rgba(248, 250, 252, 0.72);
-            text-align: center;
-            line-height: 1.55;
-        }
-
-        .modern-login-form {
-            display: grid;
-            gap: 18px;
-        }
-
-        .modern-field {
-            display: grid;
-            gap: 8px;
-        }
-
-        .modern-field span {
-            color: rgba(248, 250, 252, 0.72);
-            font-size: 0.82rem;
-            font-weight: 600;
-        }
-
-        .input-shell {
-            display: flex;
-            align-items: center;
-            min-height: 54px;
-            border: 1px solid rgba(255, 255, 255, 0.22);
-            border-radius: 18px;
-            background: rgba(21, 24, 56, 0.34);
-            transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-        }
-
-        .input-shell:focus-within {
-            border-color: rgba(20, 184, 166, 0.95);
-            box-shadow: 0 0 0 4px rgba(20, 184, 166, 0.18);
-            background: rgba(21, 24, 56, 0.52);
-        }
-
-        .input-shell input {
-            width: 100%;
-            min-width: 0;
-            border: 0;
-            outline: 0;
-            padding: 0 18px;
-            background: transparent;
-            color: #ffffff;
-            font: inherit;
-        }
-
-        .input-shell input::placeholder {
-            color: rgba(248, 250, 252, 0.58);
-        }
-
-        .input-shell input:-webkit-autofill,
-        .input-shell input:-webkit-autofill:hover,
-        .input-shell input:-webkit-autofill:focus,
-        .input-shell input:-webkit-autofill:active {
-            -webkit-text-fill-color: #ffffff;
-            caret-color: #ffffff;
-            border-radius: 18px;
-            -webkit-box-shadow: 0 0 0 1000px rgba(21, 24, 56, 0.52) inset;
-            box-shadow: 0 0 0 1000px rgba(21, 24, 56, 0.52) inset;
-            transition: background-color 9999s ease-in-out 0s;
-        }
-
-        .password-toggle {
-            flex: 0 0 auto;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 46px;
-            height: 46px;
-            margin-right: 6px;
-            border: 0;
-            border-radius: 14px;
-            background: transparent;
-            color: rgba(248, 250, 252, 0.78);
-            cursor: pointer;
-            transition: background 0.2s ease, color 0.2s ease;
-        }
-
-        .password-toggle:hover {
-            background: rgba(255, 255, 255, 0.08);
-            color: #ffffff;
-        }
-
-        .password-toggle svg {
-            width: 20px;
-            height: 20px;
-            stroke: currentColor;
-        }
-
-        .password-requirements {
-            display: none;
-            gap: 8px;
-            margin: -2px 0 0;
-            padding: 14px 16px;
-            border: 1px solid rgba(20, 184, 166, 0.24);
-            border-radius: 14px;
-            background: rgba(20, 184, 166, 0.08);
-            color: rgba(248, 250, 252, 0.76);
-            font-size: 0.84rem;
-            line-height: 1.45;
-        }
-
-        .password-requirements.is-visible {
-            display: grid;
-        }
-
-        .password-requirements strong {
-            color: #ffffff;
-        }
-
-        .password-requirements span::before {
-            content: "✕";
-            margin-right: 8px;
-            color: #fca5a5;
-            font-weight: 900;
-        }
-
-        .password-requirements span.is-valid::before {
-            content: "✓";
-            color: #5eead4;
-        }
-
-        .password-requirements span.is-valid {
-            color: #ecfeff;
-        }
-
-        .password-requirements span.is-invalid {
-            color: rgba(248, 250, 252, 0.76);
-        }
-
-        .password-match {
-            display: none;
-            margin: -4px 0 0;
-            font-size: 0.84rem;
-            line-height: 1.45;
-            color: rgba(248, 250, 252, 0.76);
-        }
-
-        .password-match.is-visible {
-            display: block;
-        }
-
-        .password-match.is-valid {
-            color: #5eead4;
-        }
-
-        .password-match.is-invalid {
-            color: #fca5a5;
-        }
-
-        [data-theme="light"] body {
-            background: var(--bg-primary);
-        }
-
-        [data-theme="light"] .auth-scene::before {
-            background:
-                linear-gradient(90deg, rgba(255, 255, 255, 0.24), rgba(91, 141, 239, 0.12), rgba(255, 255, 255, 0.24)),
-                radial-gradient(circle at 50% 8%, rgba(245, 199, 92, 0.18), transparent 24%);
-        }
-
-        [data-theme="light"] .auth-card {
-            border-color: rgba(148, 163, 184, 0.24);
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(241, 245, 249, 0.94));
-            box-shadow: 0 24px 60px rgba(15, 23, 42, 0.16);
-            color: #0f172a;
-        }
-
-        [data-theme="light"] .back-home {
-            border-color: rgba(148, 163, 184, 0.28);
-            background: rgba(255, 255, 255, 0.78);
-            color: #0f172a;
-        }
-
-        [data-theme="light"] .auth-mark {
-            border-color: rgba(15, 23, 42, 0.42);
-            box-shadow: 0 0 20px rgba(245, 199, 92, 0.18);
-        }
-
-        [data-theme="light"] .auth-card .subtitle,
-        [data-theme="light"] .modern-field span,
-        [data-theme="light"] .password-requirements,
-        [data-theme="light"] .password-match {
-            color: #475569;
-        }
-
-        [data-theme="light"] .input-shell {
-            border-color: rgba(148, 163, 184, 0.26);
-            background: rgba(226, 232, 240, 0.72);
-        }
-
-        [data-theme="light"] .input-shell:focus-within {
-            background: rgba(255, 255, 255, 0.96);
-        }
-
-        [data-theme="light"] .input-shell input,
-        [data-theme="light"] .auth-footer a {
-            color: #0f172a;
-        }
-
-        [data-theme="light"] .input-shell input::placeholder,
-        [data-theme="light"] .password-toggle {
-            color: #64748b;
-        }
-
-        [data-theme="light"] .input-shell input:-webkit-autofill,
-        [data-theme="light"] .input-shell input:-webkit-autofill:hover,
-        [data-theme="light"] .input-shell input:-webkit-autofill:focus,
-        [data-theme="light"] .input-shell input:-webkit-autofill:active {
-            -webkit-text-fill-color: #0f172a;
-            caret-color: #0f172a;
-            -webkit-box-shadow: 0 0 0 1000px rgba(255, 255, 255, 0.96) inset;
-            box-shadow: 0 0 0 1000px rgba(255, 255, 255, 0.96) inset;
-        }
-
-        [data-theme="light"] .password-requirements {
-            border-color: rgba(20, 184, 166, 0.22);
-            background: rgba(20, 184, 166, 0.08);
-        }
-
-        .login-submit {
-            min-height: 56px;
-            margin-top: 2px;
-            border: 0;
-            border-radius: 999px;
-            background: #ffffff;
-            color: #1f2937;
-            cursor: pointer;
-            font: inherit;
-            font-weight: 800;
-            box-shadow: 0 18px 35px rgba(20, 184, 166, 0.14);
-        }
-
-        .auth-footer {
-            margin: 26px 0 0;
-            color: rgba(248, 250, 252, 0.68);
-            text-align: center;
-            font-size: 0.9rem;
-        }
-
-        .auth-footer a {
-            color: #ffffff;
-            text-decoration: none;
-            font-weight: 700;
-        }
-
-        .auth-alert {
-            padding: 12px 14px;
-            border: 1px solid rgba(252, 165, 165, 0.55);
-            border-radius: 16px;
-            background: rgba(127, 29, 29, 0.32);
-            color: #fee2e2;
-            font-weight: 700;
-        }
-
-        @media (max-width: 620px) {
-            .auth-card {
-                padding: 28px 22px 24px;
-                border-radius: 20px;
-            }
-        }
-    </style>
-
-    <section class="auth-scene">
-        <a class="back-home" href="{{ route('home') }}">← Beranda</a>
-
-        <div class="auth-card">
-            <div class="auth-mark" aria-hidden="true"></div>
-            <h1>Buat <span>Akun</span></h1>
-            <p class="subtitle">Daftarkan akun baru untuk mengakses dashboard, Smart Finance, Perpajakan, dan Stata.</p>
-
-            <form class="modern-login-form" action="{{ route('signup.process') }}" method="POST">
-                @csrf
-
-                @if ($errors->any())
-                    <div class="auth-alert">{{ $errors->first() }}</div>
-                @endif
-
-                <label class="modern-field">
-                    <span>Nama Lengkap</span>
-                    <div class="input-shell">
-                        <input type="text" name="name" value="{{ old('name') }}" placeholder="Nama kamu" required autofocus>
-                    </div>
-                </label>
-
-                <label class="modern-field">
-                    <span>Username</span>
-                    <div class="input-shell">
-                        <input type="text" name="username" value="{{ old('username') }}" placeholder="username_kamu" required>
-                    </div>
-                </label>
-
-                <label class="modern-field">
-                    <span>Email</span>
-                    <div class="input-shell">
-                        <input type="email" name="email" value="{{ old('email') }}" placeholder="Enter your email" required>
-                    </div>
-                </label>
-
-                <label class="modern-field">
-                    <span>Password</span>
-                    <div class="input-shell">
-                        <input
-                            id="signupPassword"
-                            type="password"
-                            name="password"
-                            minlength="8"
-                            pattern="(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).{8,}"
-                            title="Minimal 8 karakter dan wajib memiliki huruf kapital, angka, serta simbol."
-                            autocomplete="new-password"
-                            required
-                        >
-                        <button type="button" class="password-toggle" data-password-toggle="signupPassword" aria-label="Tampilkan password">
-                            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                                <path d="M2 12C4.6 7.8 8 5.7 12 5.7C16 5.7 19.4 7.8 22 12C19.4 16.2 16 18.3 12 18.3C8 18.3 4.6 16.2 2 12Z" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                                <circle cx="12" cy="12" r="3.2" stroke-width="1.8"/>
-                            </svg>
-                        </button>
-                    </div>
-                </label>
-
-                <label class="modern-field">
-                    <span>Konfirmasi Password</span>
-                    <div class="input-shell">
-                        <input id="signupPasswordConfirmation" type="password" name="password_confirmation" autocomplete="new-password" required>
-                        <button type="button" class="password-toggle" data-password-toggle="signupPasswordConfirmation" aria-label="Tampilkan konfirmasi password">
-                            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                                <path d="M2 12C4.6 7.8 8 5.7 12 5.7C16 5.7 19.4 7.8 22 12C19.4 16.2 16 18.3 12 18.3C8 18.3 4.6 16.2 2 12Z" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                                <circle cx="12" cy="12" r="3.2" stroke-width="1.8"/>
-                            </svg>
-                        </button>
-                    </div>
-                </label>
-
-                <div class="password-requirements" id="passwordRequirements">
-                    <strong>Syarat password:</strong>
-                    <span data-rule="length">Minimal 8 karakter</span>
-                    <span data-rule="uppercase">Memiliki setidaknya satu huruf kapital</span>
-                    <span data-rule="number">Memiliki setidaknya satu angka</span>
-                    <span data-rule="symbol">Memiliki setidaknya satu simbol, seperti ! @ # $ %</span>
-                </div>
-
-                <p class="password-match" id="passwordMatchMessage"></p>
-
-                <button type="submit" class="login-submit">Daftar Sekarang</button>
-            </form>
-
-            <p class="auth-footer">Sudah punya akun? <a href="{{ route('login') }}">Masuk di sini</a></p>
+<style>
+    .site-header, .site-footer { display: none !important; }
+    
+    body, html { 
+        margin: 0; 
+        padding: 0; 
+        height: 100%; 
+        font-family: 'Inter', sans-serif; 
+        background: #070b14; 
+    }
+    
+    body > .container { 
+        max-width: none; 
+        width: 100%; 
+        min-height: 100vh; 
+        padding: 0; 
+    }
+    
+    .content { 
+        min-height: 100vh; 
+        display: flex; 
+        align-items: center; 
+        justify-content: center;
+        padding: 40px 20px;
+        background: url('{{ asset('images/Loginbackground.jpg') }}') center / cover fixed no-repeat;
+        position: relative;
+    }
+    
+    .content::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(5, 10, 20, 0.4); 
+    }
+    
+    .split-layout {
+        display: flex;
+        width: 100%;
+        max-width: 1300px;
+        min-height: 600px;
+        height: auto;
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.7);
+        position: relative;
+        z-index: 1;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .split-left {
+        flex: 1.2;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 60px;
+        color: white;
+        background: linear-gradient(135deg, rgba(15, 23, 42, 0.6), rgba(11, 17, 32, 0.85));
+        backdrop-filter: blur(12px);
+    }
+    
+    .hero-content {
+        position: relative;
+        z-index: 1;
+        max-width: 520px;
+    }
+    
+    .hero-content h1 {
+        font-size: clamp(2.5rem, 5vw, 4.2rem);
+        font-weight: 800;
+        margin-bottom: 20px;
+        line-height: 1.1;
+        letter-spacing: -0.5px;
+    }
+    
+    .hero-content p {
+        font-size: 1.1rem;
+        color: rgba(255,255,255,0.7);
+        line-height: 1.6;
+    }
+    
+    .presented-by {
+        position: absolute;
+        bottom: 40px;
+        left: 60px;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: rgba(255,255,255,0.1);
+        backdrop-filter: blur(8px);
+        padding: 10px 24px;
+        border-radius: 999px;
+        color: rgba(255,255,255,0.9);
+        font-weight: 500;
+        font-size: 1rem;
+        border: 1px solid rgba(255,255,255,0.05);
+    }
+    .presented-by img {
+        height: 22px;
+        object-fit: contain;
+    }
+
+    .split-right {
+        flex: 1.1;
+        background: rgba(7, 10, 19, 0.95);
+        backdrop-filter: blur(24px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 60px 40px;
+        position: relative;
+        border-left: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .form-container {
+        width: 100%;
+        max-width: 480px;
+        display: flex;
+        flex-direction: column;
+        padding: 20px 0;
+    }
+    
+    .form-main h2 {
+        color: white;
+        font-size: 2.2rem;
+        margin-bottom: 30px;
+        font-weight: 700;
+    }
+
+    .minimal-field {
+        position: relative;
+    }
+
+    .minimal-field input {
+        width: 100%;
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid rgba(255,255,255,0.15);
+        color: white;
+        font-size: 1rem;
+        padding: 10px 0;
+        transition: border-color 0.3s;
+    }
+    .minimal-field input:focus {
+        outline: none;
+        border-bottom-color: #6366f1;
+    }
+    .minimal-field input::placeholder {
+        color: transparent;
+    }
+
+    /* Fix for Chrome autofill background */
+    .minimal-field input:-webkit-autofill,
+    .minimal-field input:-webkit-autofill:hover, 
+    .minimal-field input:-webkit-autofill:focus, 
+    .minimal-field input:-webkit-autofill:active {
+        -webkit-box-shadow: 0 0 0 30px #0a1120 inset !important;
+        -webkit-text-fill-color: white !important;
+        transition: background-color 5000s ease-in-out 0s;
+    }
+
+    .minimal-field label {
+        position: absolute;
+        left: 0;
+        top: 10px;
+        color: rgba(255,255,255,0.5);
+        font-size: 0.95rem;
+        pointer-events: none;
+        transition: 0.3s ease all;
+    }
+
+    .minimal-field input:focus ~ label,
+    .minimal-field input:not(:placeholder-shown) ~ label {
+        top: -16px;
+        font-size: 0.75rem;
+        color: #6366f1;
+    }
+
+    .submit-btn {
+        width: 100%;
+        background: #3b82f6;
+        color: white;
+        border: none;
+        padding: 14px;
+        border-radius: 6px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        margin-top: 10px;
+        transition: background 0.2s, transform 0.1s;
+    }
+    .submit-btn:hover {
+        background: #2563eb;
+    }
+    .submit-btn:active {
+        transform: scale(0.98);
+    }
+
+    .separator {
+        display: flex;
+        align-items: center;
+        text-align: center;
+        margin: 20px 0;
+        color: rgba(255,255,255,0.4);
+        font-size: 0.85rem;
+    }
+    .separator::before, .separator::after {
+        content: '';
+        flex: 1;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .separator:not(:empty)::before {
+        margin-right: .25em;
+    }
+    .separator:not(:empty)::after {
+        margin-left: .25em;
+    }
+
+    .google-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        width: 100%;
+        background: transparent;
+        border: 1px solid rgba(255,255,255,0.2);
+        color: white;
+        padding: 12px;
+        border-radius: 6px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: background 0.2s;
+    }
+    .google-btn:hover {
+        background: rgba(255,255,255,0.05);
+    }
+    .google-btn img {
+        height: 20px;
+    }
+
+    .form-footer {
+        margin-top: 24px;
+        text-align: center;
+        color: rgba(255,255,255,0.5);
+        font-size: 0.9rem;
+    }
+    .form-footer a {
+        color: #3b82f6;
+        text-decoration: none;
+        font-weight: 600;
+    }
+    .form-footer a:hover {
+        text-decoration: underline;
+    }
+
+    .back-home {
+        position: absolute;
+        top: 24px;
+        right: 30px;
+        color: rgba(255,255,255,0.5);
+        text-decoration: none;
+        font-size: 1.2rem;
+        display: flex;
+        align-items: center;
+        transition: color 0.2s;
+        z-index: 10;
+    }
+    .back-home:hover {
+        color: white;
+    }
+
+    .toggle-password {
+        position: absolute;
+        right: 0;
+        top: 8px;
+        cursor: pointer;
+        color: rgba(255,255,255,0.4);
+        transition: color 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 4px;
+        z-index: 10;
+    }
+    .toggle-password:hover {
+        color: rgba(255,255,255,0.8);
+    }
+    .minimal-field input[type="password"],
+    .minimal-field input[type="text"].pass-visible {
+        padding-right: 36px;
+    }
+
+    @media (max-width: 900px) {
+        .split-layout { flex-direction: column; height: auto; max-height: none; min-height: 100vh; border-radius: 0; }
+        .content { padding: 0; }
+        .split-left { padding: 60px 30px; flex: none; min-height: 300px; }
+        .presented-by { position: relative; bottom: auto; left: auto; margin-top: 30px; width: fit-content; }
+        .split-right { flex: 1; padding: 40px 30px; }
+        .form-container { max-width: 100%; }
+        .back-home { top: 15px; right: 20px; }
+    }
+
+    .password-strength-bar {
+        height: 3px;
+        background: rgba(255,255,255,0.1);
+        border-radius: 3px;
+        margin-top: 8px;
+        overflow: hidden;
+        width: 100%;
+    }
+    .strength-fill {
+        height: 100%;
+        width: 0%;
+        background: #ef4444; 
+        transition: width 0.3s ease, background-color 0.3s ease;
+    }
+    .password-strength-text {
+        font-size: 0.75rem;
+        color: rgba(255,255,255,0.5);
+        margin-top: 4px;
+        text-align: right;
+    }
+</style>
+
+
+<div class="split-layout">
+    <div class="split-left">
+        <div class="hero-content">
+            <h1>Let's Get Started</h1>
+            <p>Daftarkan akun baru untuk membuka akses penuh ke semua fitur Nexio Dashboard. Atur dan pantau finansial Anda sekarang.</p>
         </div>
-    </section>
+        <div class="presented-by">
+            presented by <img src="{{ asset('images/nexio_logo.png') }}" alt="Nexio">
+        </div>
+    </div>
+    <div class="split-right">
+        <a href="{{ route('home') }}" class="back-home">✕</a>
+        <div class="form-container">
+            <div class="form-main">
+                <h2>Sign up</h2>
+                @if($errors->any())
+                    <div style="background: rgba(239, 68, 68, 0.1); color: #ef4444; padding: 12px; border-radius: 4px; margin-bottom: 20px; font-size: 0.9rem;">
+                        {{ $errors->first() }}
+                    </div>
+                @endif
+                <form method="POST" action="{{ route('signup.process') }}">
+                    @csrf
 
-    <script>
-        (() => {
-            const passwordInput = document.getElementById('signupPassword');
-            const confirmationInput = document.getElementById('signupPasswordConfirmation');
-            const requirements = document.getElementById('passwordRequirements');
-            const matchMessage = document.getElementById('passwordMatchMessage');
+                    <div class="minimal-field" style="margin-bottom: 20px;">
+                        <input type="text" name="name" id="name" required placeholder=" " value="{{ old('name') }}">
+                        <label for="name">Your name</label>
+                    </div>
+                    <div class="minimal-field" style="margin-bottom: 20px;">
+                        <input type="email" name="email" id="email" required placeholder=" " value="{{ old('email') }}">
+                        <label for="email">Your Email</label>
+                    </div>
+                    <div class="minimal-field" style="margin-bottom: 20px;">
+                        <input type="password" name="password" id="password" required placeholder=" ">
+                        <label for="password">Create Password</label>
+                        <span class="toggle-password" onclick="togglePass(this, 'password')">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        </span>
+                        <div class="password-strength-bar"><div class="strength-fill" id="strength-fill"></div></div>
+                        <div class="password-strength-text" id="strength-text"></div>
+                    </div>
+                    <div class="minimal-field" style="margin-bottom: 20px;">
+                        <input type="password" name="password_confirmation" id="password_confirmation" required placeholder=" ">
+                        <label for="password_confirmation">Repeat password</label>
+                        <span class="toggle-password" onclick="togglePass(this, 'password_confirmation')">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        </span>
+                    </div>
+        
+                    <button type="submit" class="submit-btn">Sign up</button>
+                    
+                    <div class="separator">OR</div>
+                    
+                    <a href="{{ route('google.login') }}" class="google-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="20px" height="20px">
+                            <path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"/>
+                            <path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"/>
+                            <path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"/>
+                            <path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"/>
+                        </svg>
+                        Sign up with Google
+                    </a>
 
-            if (!passwordInput || !confirmationInput || !requirements || !matchMessage) {
-                return;
-            }
+                    <div class="form-footer">
+                        Already a Member? <a href="{{ route('login') }}">Sign in here</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
-            const rules = {
-                length: (value) => value.length >= 8,
-                uppercase: (value) => /[A-Z]/.test(value),
-                number: (value) => /[0-9]/.test(value),
-                symbol: (value) => /[^A-Za-z0-9]/.test(value),
-            };
+<script>
+function togglePass(el, inputId) {
+    const input = document.getElementById(inputId);
+    const eyeOpen = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>';
+    const eyeClosed = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>';
+    
+    if (input.type === 'password') {
+        input.type = 'text';
+        input.classList.add('pass-visible');
+        el.innerHTML = eyeClosed;
+    } else {
+        input.type = 'password';
+        input.classList.remove('pass-visible');
+        el.innerHTML = eyeOpen;
+    }
+}
 
-            const ruleElements = Object.fromEntries(
-                Object.keys(rules).map((rule) => [rule, requirements.querySelector(`[data-rule="${rule}"]`)])
-            );
-
-            const updateRequirements = () => {
-                const value = passwordInput.value;
-                const shouldShow = value.length > 0 || document.activeElement === passwordInput;
-
-                requirements.classList.toggle('is-visible', shouldShow);
-
-                Object.entries(rules).forEach(([rule, validator]) => {
-                    const element = ruleElements[rule];
-                    if (!element) {
-                        return;
-                    }
-
-                    const isValid = validator(value);
-                    element.classList.toggle('is-valid', isValid);
-                    element.classList.toggle('is-invalid', !isValid);
-                });
-            };
-
-            const updateConfirmation = () => {
-                const passwordValue = passwordInput.value;
-                const confirmationValue = confirmationInput.value;
-                const shouldShow = confirmationValue.length > 0 || document.activeElement === confirmationInput;
-
-                matchMessage.classList.toggle('is-visible', shouldShow);
-
-                if (!shouldShow) {
-                    matchMessage.textContent = '';
-                    matchMessage.classList.remove('is-valid', 'is-invalid');
-                    return;
-                }
-
-                const matches = passwordValue.length > 0 && confirmationValue === passwordValue;
-                matchMessage.textContent = matches ? '✓ Konfirmasi password sudah sesuai.' : '✕ Konfirmasi password belum sama.';
-                matchMessage.classList.toggle('is-valid', matches);
-                matchMessage.classList.toggle('is-invalid', !matches);
-            };
-
-            passwordInput.addEventListener('focus', updateRequirements);
-            passwordInput.addEventListener('input', () => {
-                updateRequirements();
-                updateConfirmation();
-            });
-            passwordInput.addEventListener('blur', updateRequirements);
-
-            confirmationInput.addEventListener('focus', updateConfirmation);
-            confirmationInput.addEventListener('input', updateConfirmation);
-            confirmationInput.addEventListener('blur', updateConfirmation);
-
-            document.querySelectorAll('[data-password-toggle]').forEach((button) => {
-                button.addEventListener('click', () => {
-                    const input = document.getElementById(button.dataset.passwordToggle);
-
-                    if (!input) {
-                        return;
-                    }
-
-                    const showing = input.type === 'text';
-                    input.type = showing ? 'password' : 'text';
-                    button.setAttribute('aria-label', showing ? 'Tampilkan password' : 'Sembunyikan password');
-                });
-            });
-
-            updateRequirements();
-            updateConfirmation();
-        })();
-    </script>
+document.addEventListener('DOMContentLoaded', function() {
+    const passInput = document.getElementById('password');
+    const fill = document.getElementById('strength-fill');
+    const text = document.getElementById('strength-text');
+    
+    passInput.addEventListener('input', function() {
+        const val = passInput.value;
+        let strength = 0;
+        
+        if(val.length > 0) strength += 1;
+        if(val.length >= 6) strength += 1;
+        if(val.length >= 8 && /[A-Z]/.test(val) && /[0-9]/.test(val)) strength += 1;
+        if(val.length >= 10 && /[^A-Za-z0-9]/.test(val)) strength += 1;
+        
+        if(val.length === 0) {
+            fill.style.width = '0%';
+            text.textContent = '';
+        } else if(strength <= 1) {
+            fill.style.width = '25%';
+            fill.style.backgroundColor = '#ef4444'; // Red
+            text.textContent = 'Lemah';
+            text.style.color = '#ef4444';
+        } else if(strength === 2) {
+            fill.style.width = '50%';
+            fill.style.backgroundColor = '#f59e0b'; // Yellow
+            text.textContent = 'Lumayan';
+            text.style.color = '#f59e0b';
+        } else if(strength === 3) {
+            fill.style.width = '75%';
+            fill.style.backgroundColor = '#10b981'; // Green
+            text.textContent = 'Kuat';
+            text.style.color = '#10b981';
+        } else {
+            fill.style.width = '100%';
+            fill.style.backgroundColor = '#059669'; // Emerald
+            text.textContent = 'Sangat Kuat';
+            text.style.color = '#059669';
+        }
+    });
+});
+</script>
 @endsection
+

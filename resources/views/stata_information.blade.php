@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Tutorial Stata - Smart Finance')
+@section('title', 'Tutorial Stata - Nexio')
 @section('body-class', 'stata-information-page')
 
 @section('content')
@@ -290,7 +290,7 @@
 
     <div class="stata-info-shell">
         <nav class="stata-info-nav" aria-label="Navigasi tutorial Stata">
-            <a class="stata-info-brand" href="{{ route('home') }}">SMART FINANCE</a>
+            <a class="stata-info-brand" href="{{ route('home') }}">NEXIO</a>
             <div class="stata-info-nav-actions">
                 <a href="{{ route('home') }}">Beranda</a>
                 @auth

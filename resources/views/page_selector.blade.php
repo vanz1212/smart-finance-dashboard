@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'User Dashboard - Smart Finance')
+@section('title', 'User Dashboard - Nexio')
 
 @section('content')
     @php
@@ -15,8 +15,8 @@
         } else {
             $greeting = __('app.good_night');
         }
-        $userName = auth()->user()->name ?? 'Guest';
-        $firstName = explode(' ', $userName)[0];
+        $userName = auth()->user()->username ?? 'Guest';
+        $firstName = $userName;
         $formatRupiah = fn ($value) => 'Rp ' . number_format($value, 0, ',', '.');
         $ptkpTable = [
             'TK/0' => 54000000,
@@ -1060,11 +1060,20 @@
             }
         </style>
 <header class="selector-head">
-            <div class="selector-logo"><span>SF</span><span>UI</span></div>
-            <div class="selector-title"><span class="brand-mark" aria-hidden="true"></span> SMART FINANCE</div>
+            <div class="selector-logo"><img src="{{ asset('images/nexio_logo.png') }}" alt="Nexio Logo" style="height: 48px; border-radius: 12px; object-fit: contain;"></div>
+            <div class="selector-title"><span class="brand-mark" aria-hidden="true"></span> NEXIO</div>
             <div class="head-actions" style="justify-self: end; display: flex; align-items: center; gap: 12px; margin-right: 14px;">
                 <div class="profile-actions" style="display: flex; gap: 8px;">
-                    <a href="{{ route('profile') }}" class="header-btn" style="font-size: 0.85rem; padding: 6px 14px; background: transparent; color: var(--text-main); border: 1px solid var(--border-color); border-radius: 99px; text-decoration: none; font-weight: 600;">{{ __('app.profile') }}</a>
+                    <a href="{{ route('home') }}" class="header-btn" style="font-size: 0.85rem; padding: 6px 14px; background: rgba(255,255,255,0.05); color: var(--text-main); border: 1px solid var(--border-color); border-radius: 99px; text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 6px;">
+                        <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                        Beranda Awal
+                    </a>
+                    <a href="{{ route('profile') }}" class="header-btn" style="font-size: 0.85rem; padding: 6px 14px; background: transparent; color: var(--text-main); border: 1px solid var(--border-color); border-radius: 99px; text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 6px;">
+                        @if(auth()->check() && auth()->user()->avatar)
+                            <img src="{{ asset(auth()->user()->avatar) }}" alt="Avatar" style="width:18px; height:18px; border-radius:50%; object-fit:cover;">
+                        @endif
+                        {{ __('app.profile') }}
+                    </a>
                     @if ($isLoggedIn)
                         <form action="{{ route('logout') }}" method="POST" style="margin:0;">
                             @csrf
@@ -1075,7 +1084,7 @@
                     @endif
                 </div>
                 @if(auth()->check() && auth()->user()->role === 'admin')
-                    <a href="{{ route('dashboard.admin') }}" class="header-btn admin-btn" style="font-size: 0.85rem; padding: 6px 14px; background: var(--accent-primary); color: var(--accent-hover); border-radius: 99px; text-decoration: none; font-weight: bold;">{{ __('app.admin_panel') }}</a>
+                    <a href="{{ route('dashboard.admin') }}" class="header-btn admin-btn" style="font-size: 0.85rem; padding: 6px 14px; background: var(--accent-primary); color: #ffffff; border-radius: 99px; text-decoration: none; font-weight: bold;">{{ __('app.admin_panel') }}</a>
                 @endif
                 <div style="display: flex; gap: 8px; align-items: center; font-weight: bold; font-size: 0.9rem;">
                     <a href="{{ url('/lang/id') }}" style="text-decoration: none; color: {{ App::getLocale() === 'id' ? 'var(--accent-primary)' : 'var(--text-main)' }};">ID</a>

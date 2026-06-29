@@ -2903,3 +2903,357 @@ LINE 1: select * from \"financial_analyses\" where \"user_id\" = $1 orde...
 #49 D:\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\resources\\server.php(16): require_once('D:\\\\SmartFinance...')
 #50 {main}
 "} 
+[2026-06-29 06:50:02] local.ERROR: Route [login.submit] not defined. (View: C:\Users\KINDY\Documents\Magang Project\SmartFinanceDashboard\resources\views\login.blade.php) {"exception":"[object] (Illuminate\\View\\ViewException(code: 0): Route [login.submit] not defined. (View: C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\resources\\views\\login.blade.php) at C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\UrlGenerator.php:467)
+[stacktrace]
+#0 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\PhpEngine.php(60): Illuminate\\View\\Engines\\CompilerEngine->handleViewException(Object(Symfony\\Component\\Routing\\Exception\\RouteNotFoundException), 1)
+#1 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\CompilerEngine.php(70): Illuminate\\View\\Engines\\PhpEngine->evaluatePath('C:\\\\Users\\\\KINDY\\\\...', Array)
+#2 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(195): Illuminate\\View\\Engines\\CompilerEngine->get('C:\\\\Users\\\\KINDY\\\\...', Array)
+#3 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(178): Illuminate\\View\\View->getContents()
+#4 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(147): Illuminate\\View\\View->renderContents()
+#5 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Response.php(69): Illuminate\\View\\View->render()
+#6 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Response.php(35): Illuminate\\Http\\Response->setContent(Object(Illuminate\\View\\View))
+#7 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(906): Illuminate\\Http\\Response->__construct(Object(Illuminate\\View\\View), 200, Array)
+#8 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(875): Illuminate\\Routing\\Router::toResponse(Object(Illuminate\\Http\\Request), Object(Illuminate\\View\\View))
+#9 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(797): Illuminate\\Routing\\Router->prepareResponse(Object(Illuminate\\Http\\Request), Object(Illuminate\\View\\View))
+#10 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(141): Illuminate\\Routing\\Router->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#11 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\app\\Http\\Middleware\\SetLocale.php(25): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#12 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): App\\Http\\Middleware\\SetLocale->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#13 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Middleware\\SubstituteBindings.php(50): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#14 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Routing\\Middleware\\SubstituteBindings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#15 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\VerifyCsrfToken.php(78): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#16 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\VerifyCsrfToken->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#17 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Middleware\\ShareErrorsFromSession.php(49): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#18 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\View\\Middleware\\ShareErrorsFromSession->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#19 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Session\\Middleware\\StartSession.php(121): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#20 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Session\\Middleware\\StartSession.php(64): Illuminate\\Session\\Middleware\\StartSession->handleStatefulRequest(Object(Illuminate\\Http\\Request), Object(Illuminate\\Session\\Store), Object(Closure))
+#21 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Session\\Middleware\\StartSession->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#22 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Cookie\\Middleware\\AddQueuedCookiesToResponse.php(37): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#23 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Cookie\\Middleware\\AddQueuedCookiesToResponse->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#24 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Cookie\\Middleware\\EncryptCookies.php(67): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#25 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Cookie\\Middleware\\EncryptCookies->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#26 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(116): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#27 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(797): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#28 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(776): Illuminate\\Routing\\Router->runRouteWithinStack(Object(Illuminate\\Routing\\Route), Object(Illuminate\\Http\\Request))
+#29 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(740): Illuminate\\Routing\\Router->runRoute(Object(Illuminate\\Http\\Request), Object(Illuminate\\Routing\\Route))
+#30 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(729): Illuminate\\Routing\\Router->dispatchToRoute(Object(Illuminate\\Http\\Request))
+#31 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(190): Illuminate\\Routing\\Router->dispatch(Object(Illuminate\\Http\\Request))
+#32 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(141): Illuminate\\Foundation\\Http\\Kernel->Illuminate\\Foundation\\Http\\{closure}(Object(Illuminate\\Http\\Request))
+#33 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#34 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull.php(31): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#35 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#36 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#37 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TrimStrings.php(40): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#38 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\TrimStrings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#39 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize.php(27): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#40 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#41 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\app\\Http\\Middleware\\PreventRequestsDuringMaintenance.php(19): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#42 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): App\\Http\\Middleware\\PreventRequestsDuringMaintenance->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#43 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\HandleCors.php(49): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#44 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Http\\Middleware\\HandleCors->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#45 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\TrustProxies.php(39): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#46 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Http\\Middleware\\TrustProxies->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#47 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(116): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#48 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(165): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#49 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(134): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter(Object(Illuminate\\Http\\Request))
+#50 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\public\\index.php(18): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#51 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\resources\\server.php(16): require_once('C:\\\\Users\\\\KINDY\\\\...')
+#52 {main}
+
+[previous exception] [object] (Symfony\\Component\\Routing\\Exception\\RouteNotFoundException(code: 0): Route [login.submit] not defined. at C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\UrlGenerator.php:467)
+[stacktrace]
+#0 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\helpers.php(826): Illuminate\\Routing\\UrlGenerator->route('login.submit', Array, true)
+#1 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\storage\\framework\\views\\195e0cbea60d0e047e74361edb7647ee10d9931b.php(258): route('login.submit')
+#2 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\Filesystem.php(109): require('C:\\\\Users\\\\KINDY\\\\...')
+#3 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\Filesystem.php(110): Illuminate\\Filesystem\\Filesystem::Illuminate\\Filesystem\\{closure}()
+#4 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\PhpEngine.php(58): Illuminate\\Filesystem\\Filesystem->getRequire('C:\\\\Users\\\\KINDY\\\\...', Array)
+#5 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\CompilerEngine.php(70): Illuminate\\View\\Engines\\PhpEngine->evaluatePath('C:\\\\Users\\\\KINDY\\\\...', Array)
+#6 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(195): Illuminate\\View\\Engines\\CompilerEngine->get('C:\\\\Users\\\\KINDY\\\\...', Array)
+#7 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(178): Illuminate\\View\\View->getContents()
+#8 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(147): Illuminate\\View\\View->renderContents()
+#9 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Response.php(69): Illuminate\\View\\View->render()
+#10 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Response.php(35): Illuminate\\Http\\Response->setContent(Object(Illuminate\\View\\View))
+#11 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(906): Illuminate\\Http\\Response->__construct(Object(Illuminate\\View\\View), 200, Array)
+#12 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(875): Illuminate\\Routing\\Router::toResponse(Object(Illuminate\\Http\\Request), Object(Illuminate\\View\\View))
+#13 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(797): Illuminate\\Routing\\Router->prepareResponse(Object(Illuminate\\Http\\Request), Object(Illuminate\\View\\View))
+#14 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(141): Illuminate\\Routing\\Router->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#15 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\app\\Http\\Middleware\\SetLocale.php(25): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#16 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): App\\Http\\Middleware\\SetLocale->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#17 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Middleware\\SubstituteBindings.php(50): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#18 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Routing\\Middleware\\SubstituteBindings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#19 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\VerifyCsrfToken.php(78): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#20 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\VerifyCsrfToken->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#21 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Middleware\\ShareErrorsFromSession.php(49): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#22 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\View\\Middleware\\ShareErrorsFromSession->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#23 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Session\\Middleware\\StartSession.php(121): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#24 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Session\\Middleware\\StartSession.php(64): Illuminate\\Session\\Middleware\\StartSession->handleStatefulRequest(Object(Illuminate\\Http\\Request), Object(Illuminate\\Session\\Store), Object(Closure))
+#25 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Session\\Middleware\\StartSession->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#26 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Cookie\\Middleware\\AddQueuedCookiesToResponse.php(37): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#27 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Cookie\\Middleware\\AddQueuedCookiesToResponse->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#28 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Cookie\\Middleware\\EncryptCookies.php(67): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#29 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Cookie\\Middleware\\EncryptCookies->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#30 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(116): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#31 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(797): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#32 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(776): Illuminate\\Routing\\Router->runRouteWithinStack(Object(Illuminate\\Routing\\Route), Object(Illuminate\\Http\\Request))
+#33 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(740): Illuminate\\Routing\\Router->runRoute(Object(Illuminate\\Http\\Request), Object(Illuminate\\Routing\\Route))
+#34 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(729): Illuminate\\Routing\\Router->dispatchToRoute(Object(Illuminate\\Http\\Request))
+#35 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(190): Illuminate\\Routing\\Router->dispatch(Object(Illuminate\\Http\\Request))
+#36 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(141): Illuminate\\Foundation\\Http\\Kernel->Illuminate\\Foundation\\Http\\{closure}(Object(Illuminate\\Http\\Request))
+#37 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#38 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull.php(31): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#39 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#40 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#41 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TrimStrings.php(40): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#42 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\TrimStrings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#43 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize.php(27): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#44 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#45 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\app\\Http\\Middleware\\PreventRequestsDuringMaintenance.php(19): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#46 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): App\\Http\\Middleware\\PreventRequestsDuringMaintenance->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#47 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\HandleCors.php(49): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#48 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Http\\Middleware\\HandleCors->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#49 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\TrustProxies.php(39): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#50 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Http\\Middleware\\TrustProxies->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#51 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(116): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#52 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(165): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#53 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(134): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter(Object(Illuminate\\Http\\Request))
+#54 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\public\\index.php(18): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#55 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\resources\\server.php(16): require_once('C:\\\\Users\\\\KINDY\\\\...')
+#56 {main}
+"} 
+[2026-06-29 07:27:03] local.ERROR: Changing columns for table "users" requires Doctrine DBAL. Please install the doctrine/dbal package. {"exception":"[object] (RuntimeException(code: 0): Changing columns for table \"users\" requires Doctrine DBAL. Please install the doctrine/dbal package. at C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Schema\\Grammars\\ChangeColumn.php:30)
+[stacktrace]
+#0 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Schema\\Grammars\\Grammar.php(86): Illuminate\\Database\\Schema\\Grammars\\ChangeColumn::compile(Object(Illuminate\\Database\\Schema\\Grammars\\PostgresGrammar), Object(Illuminate\\Database\\Schema\\Blueprint), Object(Illuminate\\Support\\Fluent), Object(Illuminate\\Database\\PostgresConnection))
+#1 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Schema\\Blueprint.php(135): Illuminate\\Database\\Schema\\Grammars\\Grammar->compileChange(Object(Illuminate\\Database\\Schema\\Blueprint), Object(Illuminate\\Support\\Fluent), Object(Illuminate\\Database\\PostgresConnection))
+#2 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Schema\\Blueprint.php(108): Illuminate\\Database\\Schema\\Blueprint->toSql(Object(Illuminate\\Database\\PostgresConnection), Object(Illuminate\\Database\\Schema\\Grammars\\PostgresGrammar))
+#3 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Schema\\Builder.php(439): Illuminate\\Database\\Schema\\Blueprint->build(Object(Illuminate\\Database\\PostgresConnection), Object(Illuminate\\Database\\Schema\\Grammars\\PostgresGrammar))
+#4 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Schema\\Builder.php(269): Illuminate\\Database\\Schema\\Builder->build(Object(Illuminate\\Database\\Schema\\Blueprint))
+#5 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Support\\Facades\\Facade.php(338): Illuminate\\Database\\Schema\\Builder->table('users', Object(Closure))
+#6 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\database\\migrations\\2026_06_29_072629_add_google_id_to_users_table.php(14): Illuminate\\Support\\Facades\\Facade::__callStatic('table', Array)
+#7 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Migrations\\Migrator.php(496): Illuminate\\Database\\Migrations\\Migration@anonymous->up()
+#8 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Migrations\\Migrator.php(414): Illuminate\\Database\\Migrations\\Migrator->runMethod(Object(Illuminate\\Database\\PostgresConnection), Object(Illuminate\\Database\\Migrations\\Migration@anonymous), 'up')
+#9 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Concerns\\ManagesTransactions.php(30): Illuminate\\Database\\Migrations\\Migrator->Illuminate\\Database\\Migrations\\{closure}(Object(Illuminate\\Database\\PostgresConnection))
+#10 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Migrations\\Migrator.php(422): Illuminate\\Database\\Connection->transaction(Object(Closure))
+#11 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Migrations\\Migrator.php(224): Illuminate\\Database\\Migrations\\Migrator->runMigration(Object(Illuminate\\Database\\Migrations\\Migration@anonymous), 'up')
+#12 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\View\\Components\\Task.php(37): Illuminate\\Database\\Migrations\\Migrator->Illuminate\\Database\\Migrations\\{closure}()
+#13 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Migrations\\Migrator.php(778): Illuminate\\Console\\View\\Components\\Task->render('2026_06_29_0726...', Object(Closure))
+#14 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Migrations\\Migrator.php(224): Illuminate\\Database\\Migrations\\Migrator->write('Illuminate\\\\Cons...', '2026_06_29_0726...', Object(Closure))
+#15 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Migrations\\Migrator.php(189): Illuminate\\Database\\Migrations\\Migrator->runUp('C:\\\\Users\\\\KINDY\\\\...', 5, false)
+#16 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Migrations\\Migrator.php(132): Illuminate\\Database\\Migrations\\Migrator->runPending(Array, Array)
+#17 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Console\\Migrations\\MigrateCommand.php(88): Illuminate\\Database\\Migrations\\Migrator->run(Array, Array)
+#18 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Migrations\\Migrator.php(636): Illuminate\\Database\\Console\\Migrations\\MigrateCommand->Illuminate\\Database\\Console\\Migrations\\{closure}()
+#19 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Console\\Migrations\\MigrateCommand.php(81): Illuminate\\Database\\Migrations\\Migrator->usingConnection(NULL, Object(Closure))
+#20 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(36): Illuminate\\Database\\Console\\Migrations\\MigrateCommand->handle()
+#21 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Util.php(41): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#22 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(93): Illuminate\\Container\\Util::unwrapIfClosure(Object(Closure))
+#23 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(35): Illuminate\\Container\\BoundMethod::callBoundMethod(Object(Illuminate\\Foundation\\Application), Array, Object(Closure))
+#24 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(661): Illuminate\\Container\\BoundMethod::call(Object(Illuminate\\Foundation\\Application), Array, Array, NULL)
+#25 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Command.php(183): Illuminate\\Container\\Container->call(Array)
+#26 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\symfony\\console\\Command\\Command.php(326): Illuminate\\Console\\Command->execute(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Illuminate\\Console\\OutputStyle))
+#27 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Command.php(152): Symfony\\Component\\Console\\Command\\Command->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Illuminate\\Console\\OutputStyle))
+#28 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\symfony\\console\\Application.php(1098): Illuminate\\Console\\Command->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#29 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\symfony\\console\\Application.php(324): Symfony\\Component\\Console\\Application->doRunCommand(Object(Illuminate\\Database\\Console\\Migrations\\MigrateCommand), Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#30 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\symfony\\console\\Application.php(175): Symfony\\Component\\Console\\Application->doRun(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#31 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Application.php(102): Symfony\\Component\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#32 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(155): Illuminate\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#33 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#34 {main}
+"} 
+[2026-06-29 07:28:18] local.ERROR: Class "Laravel\Socialite\Facades\Socialite" not found {"exception":"[object] (Error(code: 0): Class \"Laravel\\Socialite\\Facades\\Socialite\" not found at C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\app\\Http\\Controllers\\GoogleAuthController.php:19)
+[stacktrace]
+#0 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\ControllerDispatcher.php(46): App\\Http\\Controllers\\GoogleAuthController->redirect()
+#1 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php(259): Illuminate\\Routing\\ControllerDispatcher->dispatch(Object(Illuminate\\Routing\\Route), Object(App\\Http\\Controllers\\GoogleAuthController), 'redirect')
+#2 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php(205): Illuminate\\Routing\\Route->runController()
+#3 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(798): Illuminate\\Routing\\Route->run()
+#4 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(141): Illuminate\\Routing\\Router->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#5 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\app\\Http\\Middleware\\SetLocale.php(25): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#6 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): App\\Http\\Middleware\\SetLocale->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#7 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Middleware\\SubstituteBindings.php(50): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#8 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Routing\\Middleware\\SubstituteBindings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#9 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\VerifyCsrfToken.php(78): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#10 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\VerifyCsrfToken->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#11 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Middleware\\ShareErrorsFromSession.php(49): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#12 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\View\\Middleware\\ShareErrorsFromSession->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#13 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Session\\Middleware\\StartSession.php(121): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#14 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Session\\Middleware\\StartSession.php(64): Illuminate\\Session\\Middleware\\StartSession->handleStatefulRequest(Object(Illuminate\\Http\\Request), Object(Illuminate\\Session\\Store), Object(Closure))
+#15 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Session\\Middleware\\StartSession->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#16 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Cookie\\Middleware\\AddQueuedCookiesToResponse.php(37): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#17 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Cookie\\Middleware\\AddQueuedCookiesToResponse->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#18 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Cookie\\Middleware\\EncryptCookies.php(67): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#19 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Cookie\\Middleware\\EncryptCookies->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#20 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(116): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#21 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(797): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#22 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(776): Illuminate\\Routing\\Router->runRouteWithinStack(Object(Illuminate\\Routing\\Route), Object(Illuminate\\Http\\Request))
+#23 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(740): Illuminate\\Routing\\Router->runRoute(Object(Illuminate\\Http\\Request), Object(Illuminate\\Routing\\Route))
+#24 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(729): Illuminate\\Routing\\Router->dispatchToRoute(Object(Illuminate\\Http\\Request))
+#25 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(190): Illuminate\\Routing\\Router->dispatch(Object(Illuminate\\Http\\Request))
+#26 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(141): Illuminate\\Foundation\\Http\\Kernel->Illuminate\\Foundation\\Http\\{closure}(Object(Illuminate\\Http\\Request))
+#27 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#28 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull.php(31): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#29 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#30 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#31 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TrimStrings.php(40): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#32 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\TrimStrings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#33 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize.php(27): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#34 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#35 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\app\\Http\\Middleware\\PreventRequestsDuringMaintenance.php(19): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#36 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): App\\Http\\Middleware\\PreventRequestsDuringMaintenance->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#37 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\HandleCors.php(49): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#38 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Http\\Middleware\\HandleCors->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#39 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\TrustProxies.php(39): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#40 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Http\\Middleware\\TrustProxies->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#41 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(116): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#42 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(165): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#43 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(134): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter(Object(Illuminate\\Http\\Request))
+#44 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\public\\index.php(18): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#45 C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\resources\\server.php(16): require_once('C:\\\\Users\\\\KINDY\\\\...')
+#46 {main}
+"} 
+[2026-06-29 07:36:58] local.ERROR: Cannot redeclare App\Http\Controllers\AuthController::logout() {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Cannot redeclare App\\Http\\Controllers\\AuthController::logout() at C:\\Users\\KINDY\\Documents\\Magang Project\\SmartFinanceDashboard\\app\\Http\\Controllers\\AuthController.php:130)
+[stacktrace]
+#0 {main}
+"} 
+[2026-06-29 07:49:26] local.DEBUG: From: Smart Finance Analytics Dashboard <hello@example.com>
+To: alkindirosyadi@gmail.com
+Subject: Kode Verifikasi Email - Smart Finance
+MIME-Version: 1.0
+Date: Mon, 29 Jun 2026 07:49:25 +0000
+Message-ID: <47a3d2b64d820cb04f35ea408576bb22@example.com>
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html>
+<html lang=3D"id">
+<head>
+    <meta charset=3D"UTF-8"=
+>
+    <meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-sc=
+ale=3D1.0">
+    <title>Kode OTP Smart Finance</title>
+    <style>
+   =
+     body {
+            font-family: 'Inter', -apple-system, BlinkMacSyst=
+emFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            bac=
+kground-color: #f8fafc;
+            color: #0f172a;
+            line-he=
+ight: 1.6;
+            margin: 0;
+            padding: 0;
+        }=
+
+        .container {
+            max-width: 600px;
+            margi=
+n: 40px auto;
+            background-color: #ffffff;
+            border=
+-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+=
+            overflow: hidden;
+        }
+        .header {
+           =
+ background-color: #141c2a;
+            color: #ffffff;
+            pad=
+ding: 30px 40px;
+            text-align: center;
+        }
+        .h=
+eader h1 {
+            margin: 0;
+            font-size: 24px;
+      =
+      font-weight: 800;
+            letter-spacing: -0.5px;
+        }=
+
+        .content {
+            padding: 40px;
+            text-align=
+: center;
+        }
+        .content p {
+            font-size: 16px;=
+
+            color: #475569;
+            margin-bottom: 30px;
+       =
+ }
+        .otp-box {
+            background-color: #f1f5f9;
+        =
+    border: 2px dashed #cbd5e1;
+            border-radius: 12px;
+      =
+      padding: 20px;
+            margin: 0 auto 30px;
+            displ=
+ay: inline-block;
+        }
+        .otp-code {
+            font-size=
+: 36px;
+            font-weight: 900;
+            color: #4f46e5;
+   =
+         letter-spacing: 6px;
+            margin: 0;
+        }
+      =
+  .warning {
+            font-size: 14px;
+            color: #ef4444;=
+
+            font-weight: 600;
+        }
+        .footer {
+        =
+    background-color: #f8fafc;
+            padding: 20px 40px;
+        =
+    text-align: center;
+            border-top: 1px solid #e2e8f0;
+    =
+        font-size: 13px;
+            color: #94a3b8;
+        }
+    </=
+style>
+</head>
+<body>
+    <div class=3D"container">
+        <div cl=
+ass=3D"header">
+            <h1>Smart Finance</h1>
+        </div>
+   =
+     <div class=3D"content">
+                            <h2>Verifikasi E=
+mail Anda</h2>
+                <p>Terima kasih telah bergabung dengan Sma=
+rt Finance. Silakan gunakan kode OTP berikut untuk memverifikasi alamat ema=
+il Anda:</p>
+                       =20
+            <div class=3D"otp-box=
+">
+                <p class=3D"otp-code">145222</p>
+            </div>=
+
+           =20
+            <p class=3D"warning">Kode ini akan kedaluwars=
+a dalam 15 menit. Jangan bagikan kode ini kepada siapa pun.</p>
+         =
+  =20
+                    </div>
+        <div class=3D"footer">
+       =
+     <p>&copy; 2026 Nexio Dashboard. Semua Hak Dilindungi.</p>
+        </=
+div>
+    </div>
+</body>
+</html>
+  

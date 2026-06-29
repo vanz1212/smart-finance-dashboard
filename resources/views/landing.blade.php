@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Smart Finance Dashboard')
+@section('title', 'Nexio Dashboard')
 
 @section('content')
     @php
@@ -62,8 +62,8 @@
             min-height: 100vh;
             color: var(--text-main);
             background:
-                radial-gradient(circle at 50% 0%, rgba(243, 201, 105, 0.18), transparent 28%),
-                linear-gradient(180deg, rgba(5, 12, 15, 0.9), rgba(5, 12, 15, 0.98));
+                radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.18), transparent 28%),
+                linear-gradient(180deg, rgba(11, 17, 32, 0.9), rgba(11, 17, 32, 0.98));
         }
 
         .landing-nav {
@@ -229,7 +229,7 @@
         }
 
         .hero-copy h1 em {
-            color: #f3c969;
+            color: #818cf8;
             font-family: Georgia, serif;
             font-style: italic;
             font-weight: 500;
@@ -277,7 +277,7 @@
         }
 
         [data-theme="light"] .landing-login {
-            background: #14b8a6;
+            background: #6366f1;
             color: #ffffff !important;
         }
 
@@ -319,7 +319,7 @@
         }
 
         [data-theme="light"] .hero-copy h1 em {
-            color: #0f766e;
+            color: #4338ca;
         }
 
         [data-theme="light"] .hero-visual {
@@ -361,7 +361,7 @@
             width: 28px;
             height: 28px;
             border-radius: 50%;
-            background: #f3c969;
+            background: #818cf8;
             color: #052e2b;
         }
 
@@ -404,8 +404,8 @@
 
         .hero-slider-dot.is-active {
             width: 34px;
-            background: #f3c969;
-            border-color: #f3c969;
+            background: #818cf8;
+            border-color: #818cf8;
         }
 
         .hero-slider-nav {
@@ -454,7 +454,7 @@
             padding: 2px 8px;
             border-radius: 999px;
             background: rgba(255, 255, 255, 0.08);
-            color: #f3c969;
+            color: #818cf8;
         }
 
         .landing-about {
@@ -506,7 +506,7 @@
 
         .section-title h2 em {
             display: block;
-            color: #f3c969;
+            color: #818cf8;
             font-family: Georgia, serif;
             font-weight: 500;
         }
@@ -526,7 +526,7 @@
             padding: 24px;
             border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 8px;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(243, 201, 105, 0.08));
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(99, 102, 241, 0.08));
             animation: cardReveal 0.75s ease-out both;
             animation-timeline: view();
             animation-range: entry 0% cover 34%;
@@ -587,9 +587,9 @@
         }
 
         .company-contact-list {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 12px 22px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
         }
 
         .company-contact-list a,
@@ -602,7 +602,7 @@
 
         .company-contact-list a:hover,
         .company-quick-links a:hover {
-            color: #f3c969;
+            color: #818cf8;
         }
 
         .company-quick-links {
@@ -613,16 +613,18 @@
         .company-quick-links a::after {
             content: ">";
             margin-left: 8px;
-            color: #f3c969;
+            color: #818cf8;
             font-size: 1.25rem;
             font-weight: 900;
         }
 
         .company-footer-bottom {
             padding: 22px max(20px, calc((100% - 1160px) / 2));
-            background: #14b86f;
-            color: #052e2b;
-            font-weight: 800;
+            background: rgba(0, 0, 0, 0.2);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 500;
+            text-align: center;
         }
 
         .company-footer-bottom p {
@@ -654,11 +656,11 @@
         @keyframes wordFloat {
             0%, 100% {
                 transform: translateY(0);
-                text-shadow: 0 0 0 rgba(243, 201, 105, 0);
+                text-shadow: 0 0 0 rgba(99, 102, 241, 0);
             }
             50% {
                 transform: translateY(-4px);
-                text-shadow: 0 0 22px rgba(243, 201, 105, 0.42);
+                text-shadow: 0 0 22px rgba(99, 102, 241, 0.42);
             }
         }
 
@@ -666,12 +668,12 @@
             0%, 100% {
                 transform: scale(1);
                 border-color: rgba(255, 255, 255, 0.16);
-                box-shadow: 0 0 0 rgba(243, 201, 105, 0);
+                box-shadow: 0 0 0 rgba(99, 102, 241, 0);
             }
             50% {
                 transform: scale(1.018);
-                border-color: rgba(243, 201, 105, 0.42);
-                box-shadow: 0 0 26px rgba(243, 201, 105, 0.16);
+                border-color: rgba(99, 102, 241, 0.42);
+                box-shadow: 0 0 26px rgba(99, 102, 241, 0.16);
             }
         }
 
@@ -835,8 +837,8 @@
         }
 
         .lang-toggle a.is-active {
-            background: rgba(243, 201, 105, .18);
-            color: #f3c969;
+            background: rgba(99, 102, 241, .18);
+            color: #818cf8;
         }
 
         /* Language Popup Overlay */
@@ -847,7 +849,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(5, 12, 15, .82);
+            background: rgba(11, 17, 32, .82);
             backdrop-filter: blur(12px);
             opacity: 0;
             visibility: hidden;
@@ -864,7 +866,7 @@
             padding: 44px 38px;
             border-radius: 24px;
             border: 1px solid rgba(255, 255, 255, .12);
-            background: linear-gradient(160deg, rgba(255, 255, 255, .1), rgba(243, 201, 105, .06));
+            background: linear-gradient(160deg, rgba(255, 255, 255, .1), rgba(99, 102, 241, .06));
             backdrop-filter: blur(32px);
             text-align: center;
             transform: translateY(24px) scale(.96);
@@ -912,8 +914,8 @@
         }
 
         .lang-popup-btn:hover {
-            background: rgba(243, 201, 105, .14);
-            border-color: rgba(243, 201, 105, .3);
+            background: rgba(99, 102, 241, .14);
+            border-color: rgba(99, 102, 241, .3);
             transform: scale(1.02);
         }
 
@@ -932,10 +934,13 @@
                     <a href="{{ route('lang.switch', 'en') }}" class="{{ app()->getLocale() === 'en' ? 'is-active' : '' }}">EN</a>
                 </div>
                 @auth
-                    <form class="landing-logout-form" action="{{ route('logout') }}" method="POST">
-                        @csrf
-                        <button class="landing-logout" type="submit">{{ __('landing.logout') }}</button>
-                    </form>
+                    <div class="landing-auth-actions">
+                        <a class="landing-login" style="margin-right: 12px; min-height: 42px; display: inline-flex; align-items: center; justify-content: center; padding: 0 20px; border-radius: 999px; background: #6366f1; color: #ffffff !important; font-weight: 700; text-decoration: none;" href="{{ route('dashboard') }}">Dashboard</a>
+                        <form class="landing-logout-form" action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button class="landing-logout" type="submit">{{ __('landing.logout') }}</button>
+                        </form>
+                    </div>
                 @else
                     <a class="landing-login" href="{{ route('login') }}">{{ __('landing.login') }}</a>
                 @endauth
@@ -1007,17 +1012,21 @@
         <footer class="company-footer">
             <div class="company-footer-main">
                 <section class="company-footer-column">
-                    <h3>Smart Finance Analytics</h3>
+                    <h3>Nexio</h3>
                     <p>{!! __('landing.footer_address') !!}</p>
                 </section>
 
                 <section class="company-footer-column">
                     <h3>{{ __('landing.footer_contact_title') }}</h3>
                     <div class="company-contact-list">
-                        <a href="tel:+6281234567890">+62 812-3456-7890</a>
-                        <span>{{ __('landing.footer_schedule_days') }}</span>
-                        <a href="mailto:support@smartfinance.id">support@smartfinance.id</a>
-                        <span>{{ __('landing.footer_schedule_hours') }}</span>
+                        <div style="display: flex; flex-direction: column; gap: 4px;">
+                            <a href="tel:+6287784070117" style="font-weight: bold; font-size: 1.1rem;">+62 877-8407-0117</a>
+                            <span style="font-size: 0.9rem; opacity: 0.7;">{{ __('landing.footer_schedule_days') }}</span>
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 4px;">
+                            <a href="mailto:nexio.sf@gmail.com" style="font-weight: bold; font-size: 1.1rem;">nexio.sf@gmail.com</a>
+                            <span style="font-size: 0.9rem; opacity: 0.7;">{{ __('landing.footer_schedule_hours') }}</span>
+                        </div>
                     </div>
                 </section>
 

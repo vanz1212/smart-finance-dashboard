@@ -16,7 +16,7 @@
             'lainnya' => 'Lainnya',
         ];
         $categoryColors = [
-            'tabungan' => '#14b8a6',
+            'tabungan' => var(--accent-primary),
             'investasi' => '#6366f1',
             'asuransi' => '#f59e0b',
             'properti' => '#8b5cf6',
@@ -139,7 +139,7 @@
         .progress-fill {
             height: 100%;
             border-radius: 999px;
-            background: #14b8a6;
+            background: var(--accent-primary);
             transition: width 0.3s;
         }
 
@@ -170,7 +170,7 @@
         }
 
         .info-value {
-            color: #f3c969;
+            color: var(--accent-hover);
             font-size: 1.1rem;
             font-weight: 900;
         }
@@ -192,8 +192,8 @@
             border-radius: 50%;
         }
 
-        .status-on-track { color: #14b8a6; }
-        .status-at-risk { color: #f3c969; }
+        .status-on-track { color: var(--accent-primary); }
+        .status-at-risk { color: var(--accent-hover); }
         .status-behind { color: #fb7185; }
 
         .deposits-section {
@@ -228,15 +228,15 @@
 
         .form-input:focus {
             outline: 3px solid rgba(20, 184, 166, 0.18);
-            border-color: #14b8a6;
+            border-color: var(--accent-primary);
         }
 
         .btn-add {
             padding: 10px 16px;
             border: none;
             border-radius: 8px;
-            background: #14b8a6;
-            color: #042f2e;
+            background: var(--accent-primary);
+            color: #ffffff;
             font-weight: 800;
             cursor: pointer;
             transition: all 0.2s;
@@ -259,7 +259,7 @@
             padding: 16px;
             background: rgba(255, 255, 255, 0.04);
             border-radius: 10px;
-            border-left: 4px solid #14b8a6;
+            border-left: 4px solid var(--accent-primary);
             margin-bottom: 8px;
         }
 
@@ -293,7 +293,7 @@
         .deposit-amount {
             font-weight: 900;
             font-size: 1.05rem;
-            color: #14b8a6;
+            color: var(--accent-primary);
         }
 
         .btn-delete {
@@ -333,7 +333,7 @@
 
         .breakdown-bar {
             flex: 1;
-            background: #14b8a6;
+            background: var(--accent-primary);
             border-radius: 4px 4px 0 0;
             opacity: 0.7;
             transition: all 0.2s;
@@ -366,7 +366,7 @@
         }
 
         .quick-stat-value {
-            color: #f3c969;
+            color: var(--accent-hover);
             font-size: 1.3rem;
             font-weight: 900;
         }
@@ -396,7 +396,7 @@
         .btn-action:hover {
             border-color: rgba(20, 184, 166, 0.4);
             background: rgba(20, 184, 166, 0.1);
-            color: #14b8a6;
+            color: var(--accent-primary);
         }
 
         @media (max-width: 900px) {
@@ -468,7 +468,7 @@
                     </div>
                 </div>
                 <div style="text-align: right;">
-                    <div style="font-size: 2.5rem; font-weight: 900; color: #f3c969;">{{ $formatPercent($target->progress) }}</div>
+                    <div style="font-size: 2.5rem; font-weight: 900; color: var(--accent-hover);">{{ $formatPercent($target->progress) }}</div>
                     <div style="color: rgba(248, 250, 252, 0.6); font-size: 0.85rem;">Tercapai</div>
                 </div>
             </div>
@@ -481,7 +481,7 @@
                         </div>
                         <div class="progress-info">
                             <span>{{ $formatRupiah($target->current_amount) }} / {{ $formatRupiah($target->target_amount) }}</span>
-                            <span style="color: #14b8a6;">{{ $formatRupiah($target->remaining) }} lagi</span>
+                            <span style="color: var(--accent-primary);">{{ $formatRupiah($target->remaining) }} lagi</span>
                         </div>
                     </div>
 
@@ -496,7 +496,7 @@
                         </div>
                         <div class="info-item">
                             <div class="info-label">Sisa Butuh</div>
-                            <div class="info-value" style="color: #14b8a6;">{{ $formatRupiah($target->remaining) }}</div>
+                            <div class="info-value" style="color: var(--accent-primary);">{{ $formatRupiah($target->remaining) }}</div>
                         </div>
                         <div class="info-item">
                             <div class="info-label">Tenggat</div>
@@ -665,11 +665,11 @@
     <script>
         @if ($target->performance['status'] === 'on-track')
             document.querySelectorAll('[style*="--status-color"]').forEach(el => {
-                el.style.setProperty('--status-color', '#14b8a6', 'important');
+                el.style.setProperty('--status-color', var(--accent-primary), 'important');
             });
         @elseif ($target->performance['status'] === 'at-risk')
             document.querySelectorAll('[style*="--status-color"]').forEach(el => {
-                el.style.setProperty('--status-color', '#f3c969', 'important');
+                el.style.setProperty('--status-color', var(--accent-hover), 'important');
             });
         @else
             document.querySelectorAll('[style*="--status-color"]').forEach(el => {
@@ -678,7 +678,7 @@
         @endif
     </script>
     @if(session('success'))
-        <div id="success-popup" style="position: fixed; bottom: 30px; right: 30px; background: #14b8a6; color: #042f2e; padding: 16px 24px; border-radius: 12px; font-weight: 800; box-shadow: 0 10px 25px rgba(20, 184, 166, 0.3); z-index: 9999; display: flex; align-items: center; gap: 12px; animation: slideUp 0.4s ease forwards;">
+        <div id="success-popup" style="position: fixed; bottom: 30px; right: 30px; background: var(--accent-primary); color: #ffffff; padding: 16px 24px; border-radius: 12px; font-weight: 800; box-shadow: 0 10px 25px rgba(20, 184, 166, 0.3); z-index: 9999; display: flex; align-items: center; gap: 12px; animation: slideUp 0.4s ease forwards;">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
             {{ session('success') }}
         </div>

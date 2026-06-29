@@ -7,6 +7,7 @@ use App\Http\Controllers\FinancialTargetController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\StataController;
 use App\Http\Controllers\TaxController;
+use App\Http\Controllers\GoogleAuthController;
 use App\Http\Middleware\Authenticate;
 use Illuminate\Support\Facades\Route;
 
@@ -28,6 +29,14 @@ Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.process');
 Route::get('/signup', [AuthController::class, 'showSignup'])->name('signup');
 Route::post('/signup', [AuthController::class, 'register'])->name('signup.process');
+
+Route::get('/forgot-password', [App\Http\Controllers\ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+Route::post('/forgot-password', [App\Http\Controllers\ForgotPasswordController::class, 'sendResetOtp'])->name('password.email');
+Route::get('/reset-password', [App\Http\Controllers\ForgotPasswordController::class, 'showResetPasswordForm'])->name('password.reset.form');
+Route::post('/reset-password', [App\Http\Controllers\ForgotPasswordController::class, 'resetPassword'])->name('password.update');
+
+Route::get('/auth/google', [App\Http\Controllers\GoogleAuthController::class, 'redirect'])->name('google.login');
+Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback'])->name('google.callback');
 
 Route::middleware(Authenticate::class)->group(function () {
     Route::get('/dashboard', function () {
@@ -78,6 +87,11 @@ Route::middleware(Authenticate::class)->group(function () {
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/profile', [AuthController::class, 'profile'])->name('profile');
+    Route::post('/profile/update-username', [AuthController::class, 'updateUsername'])->name('profile.update-username');
+    Route::post('/profile/update-email', [AuthController::class, 'updateEmail'])->name('profile.update-email');
+    Route::post('/profile/update-avatar', [AuthController::class, 'updateAvatar'])->name('profile.update-avatar');
+    Route::post('/profile/send-otp', [App\Http\Controllers\VerificationController::class, 'sendOtp'])->name('profile.send-otp');
+    Route::post('/profile/verify-otp', [App\Http\Controllers\VerificationController::class, 'verifyOtp'])->name('profile.verify-otp');
     Route::get('/smart-finance', [FinanceController::class, 'index'])
         ->middleware('activity:page_open,smart_finance,Smart Finance')
         ->name('finance.index');

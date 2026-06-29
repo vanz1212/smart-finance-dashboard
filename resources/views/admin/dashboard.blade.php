@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Admin Dashboard - Smart Finance')
+@section('title', 'Admin Dashboard - Nexio')
 
 @section('content')
     <style>
@@ -30,20 +30,24 @@
             place-items: center;
             padding: 28px;
             color: #f8fafc;
-            background: linear-gradient(180deg, rgba(5, 12, 15, 0.72), rgba(5, 12, 15, 0.96));
+            background:
+                linear-gradient(135deg, rgba(7, 11, 20, 0.8) 0%, rgba(7, 11, 20, 0.98) 100%),
+                url('{{ asset('images/backgroundfinance.jpg') }}') center / cover fixed no-repeat;
         }
 
         .admin-card {
             width: min(780px, 100%);
             padding: 34px;
-            border: 1px solid rgba(255, 255, 255, 0.14);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 16px;
-            background: linear-gradient(180deg, rgba(13, 47, 51, 0.82), rgba(6, 24, 32, 0.88));
-            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.42);
+            background: rgba(7, 10, 19, 0.85);
+            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
         }
 
         .admin-card span {
-            color: #f3c969;
+            color: #818cf8;
             font-size: 0.8rem;
             font-weight: 900;
             letter-spacing: 0.12em;
@@ -75,8 +79,8 @@
             justify-content: center;
             padding: 0 18px;
             border-radius: 999px;
-            background: #14b86f;
-            color: #052e2b;
+            background: #6366f1;
+            color: #ffffff;
             font-weight: 900;
             text-decoration: none;
         }

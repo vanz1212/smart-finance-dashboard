@@ -55,7 +55,7 @@ return [
     'footer_info_title' => 'Information',
     'footer_about_link' => 'About Us',
     'footer_dashboard_link' => 'Go to Dashboard',
-    'footer_copyright' => '&copy; :year Smart Finance Analytics | Privacy Policy | Terms and Conditions',
+    'footer_copyright' => '&copy; :year Nexio Analytics | Privacy Policy | Terms and Conditions',
 
     // Language popup
     'lang_popup_title' => 'Choose Language',

@@ -2,14 +2,14 @@
 
 return [
     // Layout nav
-    'brand' => 'SMART FINANCE',
+    'brand' => 'NEXIO',
     'home' => 'Home',
     'profile' => 'Profile',
     'logout' => 'Logout',
     'login' => 'Login',
     'admin_panel' => 'Admin Panel',
     'toggle_theme' => 'Toggle Theme',
-    'footer' => '© 2026 Smart Finance Analytics Dashboard. Built for economics students and economic data users.',
+    'footer' => '© 2026 Nexio Analytics Dashboard. Built for economics students and economic data users.',
 
     // Greetings
     'good_morning' => 'Good Morning',
@@ -18,7 +18,7 @@ return [
     'good_night' => 'Good Night',
 
     // Dashboard / Page Selector
-    'welcome_text' => 'Welcome to Smart Finance. Select a module below to start your analysis today.',
+    'welcome_text' => 'Welcome to Nexio. Select a module below to start your analysis today.',
     'module_smart_finance' => 'Smart Finance',
     'module_perpajakan' => 'Taxation',
     'module_stata' => 'Stata',

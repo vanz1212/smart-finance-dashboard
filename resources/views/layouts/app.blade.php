@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'SMART FINANCE ANALYTICS DASHBOARD')</title>
+    <title>@yield('title', 'NEXIO DASHBOARD')</title>
+    <link rel="icon" type="image/png" href="{{ asset('images/nexio_logo.png') }}">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/dark.css" id="flatpickr-theme">
@@ -12,26 +13,26 @@
     <style>
         :root {
             --font-main: 'Inter', sans-serif;
-            --bg-primary: #071316;
-            --bg-secondary: #061418;
-            --bg-panel: #071b20;
+            --bg-primary: #0f172a;
+            --bg-secondary: #0b1120;
+            --bg-panel: #1e293b;
             --text-main: #f8fafc;
             --text-muted: rgba(248, 250, 252, 0.72);
             --border-color: rgba(255, 255, 255, 0.08);
-            --accent-primary: #f3c969;
-            --accent-hover: #052e2b;
+            --accent-primary: #6366f1;
+            --accent-hover: #3b82f6;
             --nav-bg: rgba(255, 255, 255, 0.12);
         }
 
         [data-theme="light"] {
-            --bg-primary: #f1f5f9;
+            --bg-primary: #f8fafc;
             --bg-secondary: #ffffff;
             --bg-panel: #ffffff;
             --text-main: #0f172a;
             --text-muted: #64748b;
             --border-color: rgba(0, 0, 0, 0.1);
-            --accent-primary: #14b8a6;
-            --accent-hover: #ffffff;
+            --accent-primary: #4f46e5;
+            --accent-hover: #2563eb;
             --nav-bg: rgba(0, 0, 0, 0.05);
         }
 
@@ -69,8 +70,8 @@
     <div class="container">
         <header class="site-header">
             <a class="brand" href="{{ route('dashboard.user') }}" aria-label="{{ __('app.home') }}">
-                <span class="brand-symbol" aria-hidden="true">S</span>
-                <span>SMART FINANCE</span>
+                <img src="{{ asset('images/nexio_logo.png') }}" alt="Nexio Logo" style="height: 38px; border-radius: 8px; object-fit: contain;">
+                <span>NEXIO</span>
             </a>
             <nav class="main-nav" aria-label="Navigasi utama">
                 <div style="display: flex; gap: 8px; align-items: center; font-weight: bold; font-size: 0.9rem;">
@@ -83,7 +84,7 @@
                 </button>
                 <a class="{{ request()->routeIs('dashboard.user', 'page.selector') ? 'is-active' : '' }}" href="{{ route('dashboard.user') }}">{{ __('app.home') }}</a>
                 <a class="module-nav-link {{ request()->routeIs('finance.*') ? 'is-active' : '' }}" data-module-nav href="{{ route('finance.index') }}">
-                    <span class="module-tab-label">Smart Finance</span>
+                    <span class="module-tab-label">{{ __('app.module_smart_finance') }}</span>
                     @if (request()->routeIs('finance.*'))
                         <span class="module-active-pill" aria-hidden="true"></span>
                     @endif
@@ -107,7 +108,12 @@
                     @endif
                 </a>
                 @auth
-                    <a class="{{ request()->routeIs('profile') ? 'is-active' : '' }}" href="{{ route('profile') }}">{{ __('app.profile') }}</a>
+                    <a class="{{ request()->routeIs('profile') ? 'is-active' : '' }}" href="{{ route('profile') }}" style="display:flex; align-items:center; gap:6px;">
+                        @if(auth()->user()->avatar)
+                            <img src="{{ asset(auth()->user()->avatar) }}" alt="Avatar" style="width:18px; height:18px; border-radius:50%; object-fit:cover;">
+                        @endif
+                        {{ __('app.profile') }}
+                    </a>
                     <form action="{{ route('logout') }}" method="POST" class="nav-form">
                         @csrf
                         <button type="submit">{{ __('app.logout') }}</button>

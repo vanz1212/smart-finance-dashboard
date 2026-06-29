@@ -55,7 +55,7 @@ return [
     'footer_info_title' => 'Informasi',
     'footer_about_link' => 'Tentang Kami',
     'footer_dashboard_link' => 'Masuk ke Dashboard',
-    'footer_copyright' => '&copy; :year Smart Finance Analytics | Kebijakan Privasi | Syarat dan Ketentuan',
+    'footer_copyright' => '&copy; :year Nexio Analytics | Kebijakan Privasi | Syarat dan Ketentuan',
 
     // Language popup
     'lang_popup_title' => 'Pilih Bahasa',

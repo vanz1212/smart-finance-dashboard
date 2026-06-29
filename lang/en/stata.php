@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'page_title' => 'Stata - Smart Finance Dashboard',
+    'page_title' => 'Stata - Nexio Dashboard',
     'title' => 'Stata',
     'hero_desc' => 'A statistical analysis workspace for economic data: correlation, linear regression, descriptive statistics, and easy-to-read output interpretation.',
     'back_to_selector' => 'Back to Selector',

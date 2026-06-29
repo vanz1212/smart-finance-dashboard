@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Laporan Smart Finance</title>
+    <title>Laporan Nexio</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -13,7 +13,7 @@
         }
         .header {
             text-align: center;
-            border-bottom: 2px solid #14b8a6;
+            border-bottom: 2px solid #6366f1;
             padding-bottom: 20px;
             margin-bottom: 30px;
         }
@@ -63,7 +63,7 @@
             font-weight: bold;
             color: #fff;
         }
-        .status-success { background-color: #14b8a6; }
+        .status-success { background-color: #6366f1; }
         .status-warning { background-color: #f59e0b; }
         .status-danger { background-color: #ef4444; }
         
@@ -83,7 +83,7 @@
     @endphp
 
     <div class="header">
-        <h1>Laporan Smart Finance</h1>
+        <h1>Laporan Nexio</h1>
         <p>Nama Pengguna: {{ $user->name ?? 'User' }}</p>
         <p>Periode Analisis: {{ $result['periode'] }}</p>
     </div>
@@ -180,7 +180,7 @@
     </ul>
     
     <div style="margin-top: 50px; text-align: center; color: #9ca3af; font-size: 12px;">
-        Dicetak pada: {{ date('d-m-Y H:i') }} | Smart Finance Dashboard
+        Dicetak pada: {{ date('d-m-Y H:i') }} | Nexio Dashboard
     </div>
 </body>
 </html>

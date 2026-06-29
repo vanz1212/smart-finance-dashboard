@@ -3,447 +3,398 @@
 @section('title', __('auth.page_title_login'))
 
 @section('content')
-    <style>
-        .site-header,
-        .site-footer {
-            display: none !important;
-        }
+<style>
+    .site-header, .site-footer { display: none !important; }
+    
+    .toggle-password {
+        position: absolute;
+        right: 0;
+        top: 8px;
+        cursor: pointer;
+        color: rgba(255,255,255,0.4);
+        transition: color 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 4px;
+        z-index: 10;
+    }
+    .toggle-password:hover {
+        color: rgba(255,255,255,0.8);
+    }
+    .minimal-field input[type="password"],
+    .minimal-field input[type="text"].pass-visible {
+        padding-right: 36px;
+    }
 
-        body {
-            background: var(--bg-primary);
-        }
+    
+    body, html { 
+        margin: 0; 
+        padding: 0; 
+        height: 100%; 
+        font-family: 'Inter', sans-serif; 
+        background: #070b14; 
+    }
+    
+    body > .container { 
+        max-width: none; 
+        width: 100%; 
+        min-height: 100vh; 
+        padding: 0; 
+    }
+    
+    .content { 
+        min-height: 100vh; 
+        display: flex; 
+        align-items: center; 
+        justify-content: center;
+        padding: 40px 20px;
+        background: url('{{ asset('images/Loginbackground.jpg') }}') center / cover fixed no-repeat;
+        position: relative;
+    }
+    
+    .content::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(5, 10, 20, 0.4); 
+    }
+    
+    .split-layout {
+        display: flex;
+        width: 100%;
+        max-width: 1300px;
+        min-height: 600px;
+        height: auto;
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.7);
+        position: relative;
+        z-index: 1;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .split-left {
+        flex: 1.2;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 60px;
+        color: white;
+        background: linear-gradient(135deg, rgba(15, 23, 42, 0.6), rgba(11, 17, 32, 0.85));
+        backdrop-filter: blur(12px);
+    }
+    
+    .hero-content {
+        position: relative;
+        z-index: 1;
+        max-width: 520px;
+    }
+    
+    .hero-content h1 {
+        font-size: clamp(2.5rem, 5vw, 4.2rem);
+        font-weight: 800;
+        margin-bottom: 20px;
+        line-height: 1.1;
+        letter-spacing: -0.5px;
+    }
+    
+    .hero-content p {
+        font-size: 1.1rem;
+        color: rgba(255,255,255,0.7);
+        line-height: 1.6;
+    }
+    
+    .presented-by {
+        position: absolute;
+        bottom: 40px;
+        left: 60px;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: rgba(255,255,255,0.1);
+        backdrop-filter: blur(8px);
+        padding: 10px 24px;
+        border-radius: 999px;
+        color: rgba(255,255,255,0.9);
+        font-weight: 500;
+        font-size: 1rem;
+        border: 1px solid rgba(255,255,255,0.05);
+    }
+    .presented-by img {
+        height: 22px;
+        object-fit: contain;
+    }
 
-        body > .container {
-            max-width: none;
-            width: 100%;
-            min-height: 100vh;
-            padding: 0;
-        }
+    .split-right {
+        flex: 1.1;
+        background: rgba(7, 10, 19, 0.95);
+        backdrop-filter: blur(24px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 60px 40px;
+        position: relative;
+        border-left: 1px solid rgba(255,255,255,0.05);
+    }
 
-        .content {
-            min-height: 100vh;
-        }
+    .form-container {
+        width: 100%;
+        max-width: 480px;
+        display: flex;
+        flex-direction: column;
+        padding: 20px 0;
+    }
+    
+    .form-main h2 {
+        color: white;
+        font-size: 2.2rem;
+        margin-bottom: 30px;
+        font-weight: 700;
+    }
 
-        .auth-scene {
-            min-height: 100vh;
-            display: grid;
-            place-items: center;
-            padding: 32px 18px;
-            position: relative;
-            overflow: hidden;
-            background:
-                linear-gradient(180deg, rgba(7, 22, 28, 0.18), rgba(5, 18, 24, 0.66)),
-                url('{{ asset('images/backgroundfinance.jpg') }}') center / cover no-repeat;
-        }
+    .minimal-field {
+        position: relative;
+    }
 
-        .auth-scene::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background:
-                linear-gradient(90deg, rgba(4, 18, 22, 0.34), rgba(10, 72, 67, 0.16), rgba(4, 18, 22, 0.34)),
-                radial-gradient(circle at 50% 8%, rgba(245, 199, 92, 0.22), transparent 24%);
-            pointer-events: none;
-        }
+    .minimal-field input {
+        width: 100%;
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid rgba(255,255,255,0.15);
+        color: white;
+        font-size: 1rem;
+        padding: 10px 0;
+        transition: border-color 0.3s;
+    }
+    .minimal-field input:focus {
+        outline: none;
+        border-bottom-color: #6366f1;
+    }
+    .minimal-field input::placeholder {
+        color: transparent;
+    }
 
-        .auth-card {
-            width: min(520px, 100%);
-            position: relative;
-            z-index: 1;
-            padding: 34px 38px 30px;
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            border-radius: 24px;
-            background: linear-gradient(180deg, rgba(13, 47, 51, 0.74), rgba(6, 24, 32, 0.78));
-            box-shadow: 0 28px 80px rgba(3, 16, 22, 0.5);
-            backdrop-filter: blur(18px);
-            color: #f8fafc;
-        }
+    /* Fix for Chrome autofill background */
+    .minimal-field input:-webkit-autofill,
+    .minimal-field input:-webkit-autofill:hover, 
+    .minimal-field input:-webkit-autofill:focus, 
+    .minimal-field input:-webkit-autofill:active {
+        -webkit-box-shadow: 0 0 0 30px #0a1120 inset !important;
+        -webkit-text-fill-color: white !important;
+        transition: background-color 5000s ease-in-out 0s;
+    }
 
-        .back-home {
-            position: absolute;
-            top: 22px;
-            left: 22px;
-            z-index: 2;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            min-height: 40px;
-            padding: 0 14px;
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            border-radius: 999px;
-            background: rgba(6, 24, 32, 0.44);
-            color: #ffffff;
-            text-decoration: none;
-            font-weight: 800;
-            backdrop-filter: blur(12px);
-        }
+    .minimal-field label {
+        position: absolute;
+        left: 0;
+        top: 10px;
+        color: rgba(255,255,255,0.5);
+        font-size: 0.95rem;
+        pointer-events: none;
+        transition: 0.3s ease all;
+    }
 
-        .back-home:hover {
-            border-color: rgba(243, 201, 105, 0.75);
-            color: #f3c969;
-        }
+    .minimal-field input:focus ~ label,
+    .minimal-field input:not(:placeholder-shown) ~ label {
+        top: -16px;
+        font-size: 0.75rem;
+        color: #6366f1;
+    }
 
-        .auth-mark {
-            width: 42px;
-            height: 42px;
-            margin: 0 auto 18px;
-            border-radius: 50%;
-            border: 2px dashed rgba(255, 255, 255, 0.78);
-            box-shadow: 0 0 28px rgba(245, 199, 92, 0.32);
-        }
+    .submit-btn {
+        width: 100%;
+        background: #3b82f6;
+        color: white;
+        border: none;
+        padding: 14px;
+        border-radius: 6px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        margin-top: 10px;
+        transition: background 0.2s, transform 0.1s;
+    }
+    .submit-btn:hover {
+        background: #2563eb;
+    }
+    .submit-btn:active {
+        transform: scale(0.98);
+    }
 
-        .auth-card h1 {
-            margin: 0;
-            text-align: center;
-            font-size: clamp(2.2rem, 6vw, 3.4rem);
-            line-height: 1.05;
-            font-weight: 600;
-            letter-spacing: 0;
-        }
+    .separator {
+        display: flex;
+        align-items: center;
+        text-align: center;
+        margin: 20px 0;
+        color: rgba(255,255,255,0.4);
+        font-size: 0.85rem;
+    }
+    .separator::before, .separator::after {
+        content: '';
+        flex: 1;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .separator:not(:empty)::before {
+        margin-right: .25em;
+    }
+    .separator:not(:empty)::after {
+        margin-left: .25em;
+    }
 
-        .auth-card h1 span {
-            color: #f3c969;
-        }
+    .google-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        width: 100%;
+        background: transparent;
+        border: 1px solid rgba(255,255,255,0.2);
+        color: white;
+        padding: 12px;
+        border-radius: 6px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: background 0.2s;
+    }
+    .google-btn:hover {
+        background: rgba(255,255,255,0.05);
+    }
+    .google-btn img {
+        height: 20px;
+    }
 
-        .auth-card .subtitle {
-            max-width: 390px;
-            margin: 14px auto 28px;
-            color: rgba(248, 250, 252, 0.72);
-            text-align: center;
-            line-height: 1.55;
-        }
+    .form-footer {
+        margin-top: 24px;
+        text-align: center;
+        color: rgba(255,255,255,0.5);
+        font-size: 0.9rem;
+    }
+    .form-footer a {
+        color: #3b82f6;
+        text-decoration: none;
+        font-weight: 600;
+    }
+    .form-footer a:hover {
+        text-decoration: underline;
+    }
 
-        .modern-login-form {
-            display: grid;
-            gap: 18px;
-        }
+    .back-home {
+        position: absolute;
+        top: 24px;
+        left: 30px;
+        color: rgba(255,255,255,0.7);
+        text-decoration: none;
+        font-size: 0.95rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: color 0.2s;
+        z-index: 10;
+        background: rgba(255,255,255,0.05);
+        padding: 8px 16px;
+        border-radius: 999px;
+        border: 1px solid rgba(255,255,255,0.1);
+    }
+    .back-home:hover {
+        color: white;
+        background: rgba(255,255,255,0.1);
+    }
 
-        .modern-field {
-            display: grid;
-            gap: 8px;
-        }
+    @media (max-width: 900px) {
+        .split-layout { flex-direction: column; height: auto; max-height: none; min-height: 100vh; border-radius: 0; }
+        .content { padding: 0; }
+        .split-left { padding: 60px 30px; flex: none; min-height: 300px; }
+        .presented-by { position: relative; bottom: auto; left: auto; margin-top: 30px; width: fit-content; }
+        .split-right { flex: 1; padding: 40px 30px; }
+        .form-container { max-width: 100%; }
+        .back-home { top: 15px; right: 20px; }
+    }
+</style>
 
-        .modern-field span {
-            color: rgba(248, 250, 252, 0.72);
-            font-size: 0.82rem;
-            font-weight: 600;
-        }
-
-        .input-shell {
-            display: flex;
-            align-items: center;
-            min-height: 54px;
-            border: 1px solid rgba(255, 255, 255, 0.22);
-            border-radius: 18px;
-            background: rgba(21, 24, 56, 0.34);
-            transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-        }
-
-        .input-shell:focus-within {
-            border-color: rgba(20, 184, 166, 0.95);
-            box-shadow: 0 0 0 4px rgba(20, 184, 166, 0.18);
-            background: rgba(21, 24, 56, 0.52);
-        }
-
-        .input-shell input {
-            width: 100%;
-            min-width: 0;
-            border: 0;
-            outline: 0;
-            padding: 0 18px;
-            background: transparent;
-            color: #ffffff;
-            font: inherit;
-        }
-
-        .input-shell input::placeholder {
-            color: rgba(248, 250, 252, 0.58);
-        }
-
-        .input-shell input:-webkit-autofill,
-        .input-shell input:-webkit-autofill:hover,
-        .input-shell input:-webkit-autofill:focus,
-        .input-shell input:-webkit-autofill:active {
-            -webkit-text-fill-color: #ffffff;
-            caret-color: #ffffff;
-            border-radius: 18px;
-            -webkit-box-shadow: 0 0 0 1000px rgba(21, 24, 56, 0.52) inset;
-            box-shadow: 0 0 0 1000px rgba(21, 24, 56, 0.52) inset;
-            transition: background-color 9999s ease-in-out 0s;
-        }
-
-        .password-toggle {
-            flex: 0 0 auto;
-            margin-right: 10px;
-            padding: 8px 10px;
-            border: 0;
-            background: transparent;
-            color: rgba(248, 250, 252, 0.72);
-            cursor: pointer;
-            font: inherit;
-            font-size: 0.82rem;
-        }
-
-        .form-options {
-            display: flex;
-            justify-content: space-between;
-            gap: 16px;
-            align-items: center;
-            color: rgba(248, 250, 252, 0.78);
-            font-size: 0.9rem;
-        }
-
-        .remember {
-            display: inline-flex;
-            gap: 9px;
-            align-items: center;
-        }
-
-        .remember input {
-            width: 16px;
-            height: 16px;
-            accent-color: #14b8a6;
-        }
-
-        .form-options a,
-        .auth-footer a {
-            color: #ffffff;
-            text-decoration: none;
-            font-weight: 700;
-        }
-
-        .login-submit {
-            min-height: 56px;
-            margin-top: 2px;
-            border: 0;
-            border-radius: 999px;
-            background: #ffffff;
-            color: #1f2937;
-            cursor: pointer;
-            font: inherit;
-            font-weight: 800;
-            box-shadow: 0 18px 35px rgba(20, 184, 166, 0.14);
-        }
-
-        .quick-home {
-            min-height: 50px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid rgba(243, 201, 105, 0.42);
-            border-radius: 999px;
-            background: rgba(243, 201, 105, 0.08);
-            color: #f3c969;
-            text-decoration: none;
-            font-weight: 800;
-        }
-
-        [data-theme="light"] body {
-            background: var(--bg-primary);
-        }
-
-        [data-theme="light"] .auth-scene::before {
-            background:
-                linear-gradient(90deg, rgba(255, 255, 255, 0.24), rgba(91, 141, 239, 0.12), rgba(255, 255, 255, 0.24)),
-                radial-gradient(circle at 50% 8%, rgba(245, 199, 92, 0.18), transparent 24%);
-        }
-
-        [data-theme="light"] .auth-card {
-            border-color: rgba(148, 163, 184, 0.24);
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(241, 245, 249, 0.94));
-            box-shadow: 0 24px 60px rgba(15, 23, 42, 0.16);
-            color: #0f172a;
-        }
-
-        [data-theme="light"] .back-home {
-            border-color: rgba(148, 163, 184, 0.28);
-            background: rgba(255, 255, 255, 0.78);
-            color: #0f172a;
-        }
-
-        [data-theme="light"] .auth-mark {
-            border-color: rgba(15, 23, 42, 0.42);
-            box-shadow: 0 0 20px rgba(245, 199, 92, 0.18);
-        }
-
-        [data-theme="light"] .auth-card .subtitle,
-        [data-theme="light"] .modern-field span,
-        [data-theme="light"] .form-options {
-            color: #475569;
-        }
-
-        [data-theme="light"] .input-shell {
-            border-color: rgba(148, 163, 184, 0.26);
-            background: rgba(226, 232, 240, 0.72);
-        }
-
-        [data-theme="light"] .input-shell:focus-within {
-            background: rgba(255, 255, 255, 0.96);
-        }
-
-        [data-theme="light"] .input-shell input,
-        [data-theme="light"] .form-options a,
-        [data-theme="light"] .auth-footer a {
-            color: #0f172a;
-        }
-
-        [data-theme="light"] .input-shell input::placeholder,
-        [data-theme="light"] .password-toggle {
-            color: #64748b;
-        }
-
-        [data-theme="light"] .input-shell input:-webkit-autofill,
-        [data-theme="light"] .input-shell input:-webkit-autofill:hover,
-        [data-theme="light"] .input-shell input:-webkit-autofill:focus,
-        [data-theme="light"] .input-shell input:-webkit-autofill:active {
-            -webkit-text-fill-color: #0f172a;
-            caret-color: #0f172a;
-            -webkit-box-shadow: 0 0 0 1000px rgba(255, 255, 255, 0.96) inset;
-            box-shadow: 0 0 0 1000px rgba(255, 255, 255, 0.96) inset;
-        }
-
-        [data-theme="light"] .login-submit {
-            background: linear-gradient(135deg, #14b8a6, #0f766e);
-            color: #f8fafc;
-            box-shadow: 0 16px 32px rgba(20, 184, 166, 0.18);
-        }
-
-        [data-theme="light"] .quick-home {
-            background: rgba(245, 199, 92, 0.14);
-            color: #8a5a00;
-        }
-
-        .quick-home:hover {
-            background: rgba(243, 201, 105, 0.15);
-            color: #ffffff;
-        }
-
-        .divider {
-            display: grid;
-            grid-template-columns: 1fr auto 1fr;
-            gap: 18px;
-            align-items: center;
-            margin: 8px 0;
-            color: rgba(248, 250, 252, 0.56);
-        }
-
-        .divider::before,
-        .divider::after {
-            content: "";
-            height: 1px;
-            background: rgba(255, 255, 255, 0.18);
-        }
-
-        .google-button {
-            min-height: 54px;
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            border-radius: 999px;
-            background: rgba(255, 255, 255, 0.04);
-            color: #ffffff;
-            font: inherit;
-            font-weight: 700;
-        }
-
-        .quick-home,
-        .divider,
-        .google-button {
-            display: none;
-        }
-
-        .auth-footer {
-            margin: 26px 0 0;
-            color: rgba(248, 250, 252, 0.68);
-            text-align: center;
-            font-size: 0.9rem;
-        }
-
-        .login-note {
-            margin: 0;
-            color: rgba(248, 250, 252, 0.68);
-            text-align: center;
-            font-size: 0.88rem;
-            line-height: 1.55;
-        }
-
-        .auth-alert {
-            padding: 12px 14px;
-            border: 1px solid rgba(252, 165, 165, 0.55);
-            border-radius: 16px;
-            background: rgba(127, 29, 29, 0.32);
-            color: #fee2e2;
-            font-weight: 700;
-        }
-
-        @media (max-width: 620px) {
-            .auth-card {
-                padding: 28px 22px 24px;
-                border-radius: 20px;
-            }
-
-            .form-options {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-        }
-    </style>
-
-    <section class="auth-scene">
-        <a class="back-home" href="{{ route('home') }}">← Beranda</a>
-
-        <div class="auth-card">
-            <div class="auth-mark" aria-hidden="true"></div>
-            <h1>Welcome <span>back!</span></h1>
-            <p class="subtitle">Sign in to access your finance dashboard, tax tools, and personal analysis workspace.</p>
-
-            <form class="modern-login-form" action="{{ route('login.process') }}" method="POST">
-                @csrf
-
-                @if ($errors->any())
-                    <div class="auth-alert">Email atau password belum benar.</div>
-                @endif
-
-                <label class="modern-field">
-                    <span>Email</span>
-                    <div class="input-shell">
-                        <input type="email" name="email" value="{{ old('email') }}" placeholder="Enter your email" required autofocus>
-                    </div>
-                </label>
-
-                <label class="modern-field">
-                    <span>Password</span>
-                    <div class="input-shell">
-                        <input id="passwordInput" type="password" name="password" placeholder="Enter your password" required>
-                        <button class="password-toggle" type="button" onclick="toggleLoginPassword()">Show</button>
-                    </div>
-                </label>
-
-                <div class="form-options">
-                    <label class="remember">
-                        <input type="checkbox" name="remember" value="1" checked>
-                        <span>Remember me</span>
-                    </label>
-                    <a href="{{ route('login') }}">Forgot password?</a>
-                </div>
-
-                <button type="submit" class="login-submit">Log In</button>
-
-                <p class="login-note">Akun baru menggunakan password minimal 8 karakter yang memiliki huruf kapital, angka, dan simbol.</p>
-
-                <a class="quick-home" href="{{ route('dashboard') }}">Masuk Ke Halaman Utama</a>
-
-                <div class="divider">Or</div>
-
-                <button type="button" class="google-button">Sign In with Google</button>
-            </form>
-
-            <p class="auth-footer">Don't have an account? <a href="{{ route('signup') }}">Sign Up</a></p>
+<div class="split-layout">
+    <div class="split-left">
+        <div class="hero-content">
+            <h1>Welcome Back</h1>
+            <p>Akses kembali Nexio Dashboard untuk melanjutkan analisis arus kas, perpajakan, dan makroekonomi Anda dengan cerdas dan mudah.</p>
         </div>
-    </section>
+        <div class="presented-by">
+            presented by <img src="{{ asset('images/nexio_logo.png') }}" alt="Nexio">
+        </div>
+    </div>
+    <div class="split-right">
+        <a href="{{ route('home') }}" class="back-home">
+            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            Kembali ke Beranda
+        </a>
+        <div class="form-container">
+            <div class="form-main">
+                <h2>Sign in</h2>
+                @if($errors->any())
+                    <div style="background: rgba(239, 68, 68, 0.1); color: #ef4444; padding: 12px; border-radius: 4px; margin-bottom: 20px; font-size: 0.9rem;">
+                        {{ $errors->first() }}
+                    </div>
+                @endif
+                <form method="POST" action="{{ route('login.process') }}">
+                    @csrf
 
-    <script>
-        function toggleLoginPassword() {
-            const input = document.getElementById('passwordInput');
-            input.type = input.type === 'password' ? 'text' : 'password';
-        }
-    </script>
+                    <div class="minimal-field" style="margin-bottom: 30px;">
+                        <input type="email" name="email" id="email" required placeholder=" " value="{{ old('email') }}">
+                        <label for="email">Your Email</label>
+                    </div>
+                    <div class="minimal-field" style="margin-bottom: 30px;">
+                        <input type="password" name="password" id="password" required placeholder=" ">
+                        <label for="password">Password</label>
+                        <span class="toggle-password" onclick="togglePass(this, 'password')">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        </span>
+                    </div>
+
+                    <div style="text-align: right; margin-top: -20px; margin-bottom: 20px;">
+                        <a href="{{ route('password.request') }}" style="color: #3b82f6; text-decoration: none; font-size: 0.85rem; font-weight: 500;">Lupa Password?</a>
+                    </div>
+        
+                    <button type="submit" class="submit-btn">Sign in</button>
+                    
+                    <div class="separator">OR</div>
+                    
+                    <a href="{{ route('google.login') }}" class="google-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="20px" height="20px">
+                            <path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"/>
+                            <path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"/>
+                            <path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"/>
+                            <path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"/>
+                        </svg>
+                        Sign in with Google
+                    </a>
+
+                    <div class="form-footer">
+                        Not a Member? <a href="{{ route('signup') }}">Sign up here</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
+
+<script>
+function togglePass(el, inputId) {
+    const input = document.getElementById(inputId);
+    const eyeOpen = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>';
+    const eyeClosed = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>';
+    
+    if (input.type === 'password') {
+        input.type = 'text';
+        input.classList.add('pass-visible');
+        el.innerHTML = eyeClosed;
+    } else {
+        input.type = 'password';
+        input.classList.remove('pass-visible');
+        el.innerHTML = eyeOpen;
+    }
+}
+</script>

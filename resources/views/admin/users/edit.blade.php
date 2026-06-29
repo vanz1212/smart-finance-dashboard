@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Edit User - Smart Finance')
+@section('title', 'Edit User - Nexio')
 
 @section('content')
     <style>
@@ -14,17 +14,19 @@
             padding: 28px;
             color: #f8fafc;
             background:
-                linear-gradient(180deg, rgba(5, 12, 15, 0.72), rgba(5, 12, 15, 0.96)),
+                linear-gradient(135deg, rgba(7, 11, 20, 0.8) 0%, rgba(7, 11, 20, 0.98) 100%),
                 url('{{ asset('images/backgroundfinance.jpg') }}') center / cover fixed no-repeat;
         }
         .admin-card {
             width: min(980px, 100%);
             margin: 0 auto;
             padding: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.14);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 18px;
-            background: linear-gradient(180deg, rgba(13, 47, 51, 0.86), rgba(6, 24, 32, 0.92));
-            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.42);
+            background: rgba(7, 10, 19, 0.85);
+            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
         }
         .topbar {
             display: flex;
@@ -47,9 +49,9 @@
             background: rgba(255, 255, 255, 0.06);
         }
         .topbar a.primary {
-            background: #14b86f;
-            border-color: #14b86f;
-            color: #052e2b;
+            background: #6366f1;
+            border-color: #6366f1;
+            color: #ffffff;
         }
         .edit-grid {
             display: grid;
@@ -95,8 +97,11 @@
         }
         .actions a,
         .actions button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             min-height: 44px;
-            padding: 0 16px;
+            padding: 0 24px;
             border-radius: 999px;
             border: 1px solid rgba(255, 255, 255, 0.16);
             background: rgba(255, 255, 255, 0.06);
@@ -105,11 +110,16 @@
             font: inherit;
             font-weight: 900;
             cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .actions a:hover {
+            background: rgba(255, 255, 255, 0.12);
         }
         .actions .primary {
-            background: #14b86f;
-            border-color: #14b86f;
-            color: #052e2b;
+            background: #6366f1;
+            border-color: #6366f1;
+            color: #ffffff;
         }
         .error-box {
             margin-top: 16px;
@@ -170,7 +180,7 @@
                 <a href="{{ route('admin.users.index') }}">Daftar User</a>
             </div>
 
-            <span style="color:#f3c969;font-weight:900;letter-spacing:.12em;text-transform:uppercase;">Edit User</span>
+            <span style="color:#818cf8;font-weight:900;letter-spacing:.12em;text-transform:uppercase;">Edit User</span>
             <h1 style="margin:12px 0 8px;font-size:clamp(2rem,5vw,3.2rem);line-height:1;">{{ $user->name }}</h1>
             <p style="color:rgba(248,250,252,.72);line-height:1.7;">Ubah profil user, role, atau password dari sini.</p>
 

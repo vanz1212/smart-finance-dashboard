@@ -6,9 +6,9 @@
     <section class="auth-page">
         <div class="auth-panel">
             <div class="auth-copy">
-                <div class="auth-brand-mark">SF</div>
+                <div class="auth-brand-mark">NX</div>
                 <span class="eyebrow">Akses dashboard</span>
-                <h1>Smart Finance Analytics</h1>
+                <h1>Nexio Analytics</h1>
                 <p>Masuk untuk mengelola analisis keuangan, perpajakan, dan data ekonomi dalam satu ruang kerja.</p>
 
                 <div class="auth-stat-grid">

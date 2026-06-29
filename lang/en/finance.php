@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'page_title' => 'Smart Finance - Financial Planning',
+    'page_title' => 'Nexio - Financial Planning',
     'title' => 'Financial Planning',
     'monthly_input' => 'Monthly Input',
     'total_income' => 'Total income',

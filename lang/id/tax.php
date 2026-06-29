@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'page_title' => 'Perpajakan - Smart Finance Dashboard',
+    'page_title' => 'Perpajakan - Nexio Dashboard',
     'title' => 'Perpajakan',
     'disclaimer_desc' => 'Hasil kalkulasi ini merupakan estimasi dan simulasi pribadi berdasarkan Tarif Efektif Rata-Rata (TER) dan PPh Pasal 17. Harap tetap mengacu pada DJP Online untuk pelaporan pajak resmi Anda.',
     'important' => 'Penting:',

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Informasi Perpajakan - Smart Finance')
+@section('title', 'Informasi Perpajakan - Nexio')
 @section('body-class', 'tax-information-page')
 
 @section('content')
@@ -235,7 +235,7 @@
 
     <div class="tax-info-shell">
         <nav class="tax-info-nav" aria-label="Navigasi informasi perpajakan">
-            <a class="tax-info-brand" href="{{ route('home') }}">SMART FINANCE</a>
+            <a class="tax-info-brand" href="{{ route('home') }}">NEXIO</a>
             <div class="tax-info-nav-actions">
                 <a href="{{ route('home') }}">Beranda</a>
                 @auth

@@ -13,7 +13,7 @@
         }
         .header {
             text-align: center;
-            border-bottom: 2px solid #14b8a6;
+            border-bottom: 2px solid #6366f1;
             padding-bottom: 20px;
             margin-bottom: 30px;
         }
@@ -160,7 +160,7 @@
     </table>
 
     <div style="margin-top: 50px; text-align: center; color: #9ca3af; font-size: 12px;">
-        Dicetak pada: {{ date('d-m-Y H:i') }} | Smart Finance Dashboard
+        Dicetak pada: {{ date('d-m-Y H:i') }} | Nexio Dashboard
     </div>
 </body>
 </html>
