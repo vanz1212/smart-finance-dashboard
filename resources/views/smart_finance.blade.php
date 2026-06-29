@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Smart Finance - Analisa Keuangan')
+@section('title', __('finance.page_title'))
 @section('body-class', 'module-page')
 
 @section('content')
@@ -892,6 +892,12 @@
             color: var(--text-main);
         }
 
+        [data-theme="light"],
+        [data-theme="light"] body {
+            background: var(--bg-primary) !important;
+            color: var(--text-main) !important;
+        }
+
         body {
             display: block;
         }
@@ -1139,9 +1145,9 @@
                             <p>{{ $result ? __('finance.summary_period_prefix') . ' ' . $translatePeriode($result['periode']) : __('finance.results_will_appear') }}</p>
                         </div>
                         @if ($result && isset($request) && $request->has('load_id'))
-                            <a href="{{ route('finance.export-pdf', $request->input('load_id')) }}" class="btn-use" style="background: #ef4444; color: white;" target="_blank">Export PDF</a>
+                            <a href="{{ route('finance.export-pdf', $request->input('load_id')) }}" class="btn-use" style="background: #ef4444; color: white;" target="_blank">{{ __('finance.export_pdf') }}</a>
                         @elseif ($result && $history->last())
-                            <a href="{{ route('finance.export-pdf', $history->last()->id) }}" class="btn-use" style="background: #ef4444; color: white;" target="_blank">Export PDF</a>
+                            <a href="{{ route('finance.export-pdf', $history->last()->id) }}" class="btn-use" style="background: #ef4444; color: white;" target="_blank">{{ __('finance.export_pdf') }}</a>
                         @endif
                     </div>
 
@@ -1345,15 +1351,15 @@
                                     <strong>{{ $result['months_to_target'] }} {{ __('finance.months') }}</strong>
                                     @if ($result['saldo_tabungan'] !== null || $result['setoran_tabungan'] !== null)
                                         <p style="margin-top:8px;line-height:1.6;color:rgba(248,250,252,0.66);font-size:0.84rem;">
-                                            Target: {{ $formatRupiah($result['target_saving']) }}<br>
-                                            Saldo saat ini: {{ $formatRupiah($result['effective_saldo']) }}<br>
-                                            Setoran/{{ __('finance.months') }}: {{ $formatRupiah($result['effective_setoran']) }}
+                                            {{ __('finance.target_label') }}: {{ $formatRupiah($result['target_saving']) }}<br>
+                                            {{ __('finance.current_balance_label') }}: {{ $formatRupiah($result['effective_saldo']) }}<br>
+                                            {{ __('finance.deposit_per_month', ['months' => __('finance.months')]) }}: {{ $formatRupiah($result['effective_setoran']) }}
                                             @if ($result['saldo_tabungan'] === null)
                                                 <br><em style="color:var(--accent-primary);font-size:0.78rem;">{{ __('finance.savings_balance_more_accurate') }}</em>
                                             @endif
                                         </p>
                                     @else
-                                        <p>Target: {{ $formatRupiah($result['target_saving']) }}. {{ __('finance.fill_savings_details') }}</p>
+                                        <p>{{ __('finance.target_label') }}: {{ $formatRupiah($result['target_saving']) }}. {{ __('finance.fill_savings_details') }}</p>
                                     @endif
                                 @else
                                     <strong>{{ __('finance.not_available') }}</strong>

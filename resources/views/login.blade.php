@@ -10,7 +10,7 @@
         }
 
         body {
-            background: #111827;
+            background: var(--bg-primary);
         }
 
         body > .container {
@@ -236,6 +236,81 @@
             color: #f3c969;
             text-decoration: none;
             font-weight: 800;
+        }
+
+        [data-theme="light"] body {
+            background: var(--bg-primary);
+        }
+
+        [data-theme="light"] .auth-scene::before {
+            background:
+                linear-gradient(90deg, rgba(255, 255, 255, 0.24), rgba(91, 141, 239, 0.12), rgba(255, 255, 255, 0.24)),
+                radial-gradient(circle at 50% 8%, rgba(245, 199, 92, 0.18), transparent 24%);
+        }
+
+        [data-theme="light"] .auth-card {
+            border-color: rgba(148, 163, 184, 0.24);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(241, 245, 249, 0.94));
+            box-shadow: 0 24px 60px rgba(15, 23, 42, 0.16);
+            color: #0f172a;
+        }
+
+        [data-theme="light"] .back-home {
+            border-color: rgba(148, 163, 184, 0.28);
+            background: rgba(255, 255, 255, 0.78);
+            color: #0f172a;
+        }
+
+        [data-theme="light"] .auth-mark {
+            border-color: rgba(15, 23, 42, 0.42);
+            box-shadow: 0 0 20px rgba(245, 199, 92, 0.18);
+        }
+
+        [data-theme="light"] .auth-card .subtitle,
+        [data-theme="light"] .modern-field span,
+        [data-theme="light"] .form-options {
+            color: #475569;
+        }
+
+        [data-theme="light"] .input-shell {
+            border-color: rgba(148, 163, 184, 0.26);
+            background: rgba(226, 232, 240, 0.72);
+        }
+
+        [data-theme="light"] .input-shell:focus-within {
+            background: rgba(255, 255, 255, 0.96);
+        }
+
+        [data-theme="light"] .input-shell input,
+        [data-theme="light"] .form-options a,
+        [data-theme="light"] .auth-footer a {
+            color: #0f172a;
+        }
+
+        [data-theme="light"] .input-shell input::placeholder,
+        [data-theme="light"] .password-toggle {
+            color: #64748b;
+        }
+
+        [data-theme="light"] .input-shell input:-webkit-autofill,
+        [data-theme="light"] .input-shell input:-webkit-autofill:hover,
+        [data-theme="light"] .input-shell input:-webkit-autofill:focus,
+        [data-theme="light"] .input-shell input:-webkit-autofill:active {
+            -webkit-text-fill-color: #0f172a;
+            caret-color: #0f172a;
+            -webkit-box-shadow: 0 0 0 1000px rgba(255, 255, 255, 0.96) inset;
+            box-shadow: 0 0 0 1000px rgba(255, 255, 255, 0.96) inset;
+        }
+
+        [data-theme="light"] .login-submit {
+            background: linear-gradient(135deg, #14b8a6, #0f766e);
+            color: #f8fafc;
+            box-shadow: 0 16px 32px rgba(20, 184, 166, 0.18);
+        }
+
+        [data-theme="light"] .quick-home {
+            background: rgba(245, 199, 92, 0.14);
+            color: #8a5a00;
         }
 
         .quick-home:hover {

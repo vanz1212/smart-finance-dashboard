@@ -5,7 +5,7 @@
 @section('content')
     @php
         $isLoggedIn = auth()->check();
-        $hour = date('H');
+        $hour = now('Asia/Jakarta')->hour;
         if ($hour < 11) {
             $greeting = __('app.good_morning');
         } elseif ($hour < 15) {

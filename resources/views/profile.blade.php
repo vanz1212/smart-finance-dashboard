@@ -10,7 +10,7 @@
         }
 
         body {
-            background: #061418;
+            background: var(--bg-primary);
         }
 
         body > .container {
@@ -129,6 +129,41 @@
             .profile-info {
                 grid-template-columns: 1fr;
             }
+        }
+
+        [data-theme="light"] .profile-page {
+            color: #0f172a;
+            background:
+                linear-gradient(180deg, rgba(255, 255, 255, 0.68), rgba(241, 245, 249, 0.86)),
+                url('{{ asset('images/backgroundfinance.jpg') }}') center / cover fixed no-repeat;
+        }
+
+        [data-theme="light"] .profile-card {
+            border-color: rgba(148, 163, 184, 0.22);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(241, 245, 249, 0.96));
+            box-shadow: 0 24px 60px rgba(15, 23, 42, 0.14);
+        }
+
+        [data-theme="light"] .profile-card p,
+        [data-theme="light"] .profile-info-item small {
+            color: #64748b;
+        }
+
+        [data-theme="light"] .profile-info-item {
+            border-color: rgba(148, 163, 184, 0.2);
+            background: rgba(255, 255, 255, 0.72);
+        }
+
+        [data-theme="light"] .profile-info-item strong,
+        [data-theme="light"] .profile-actions a,
+        [data-theme="light"] .profile-actions button {
+            color: #0f172a;
+        }
+
+        [data-theme="light"] .profile-actions a,
+        [data-theme="light"] .profile-actions button {
+            border-color: rgba(148, 163, 184, 0.22);
+            background: rgba(255, 255, 255, 0.76);
         }
     </style>
 

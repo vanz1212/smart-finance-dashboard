@@ -154,6 +154,12 @@
             color: var(--text-main);
         }
 
+        [data-theme="light"],
+        [data-theme="light"] body {
+            background: var(--bg-primary) !important;
+            color: var(--text-main) !important;
+        }
+
         body {
             display: block;
         }

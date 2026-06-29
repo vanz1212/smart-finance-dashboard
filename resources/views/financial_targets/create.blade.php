@@ -202,6 +202,12 @@
             color: #f8fafc;
         }
 
+        [data-theme="light"],
+        [data-theme="light"] body {
+            background: var(--bg-primary) !important;
+            color: var(--text-main) !important;
+        }
+
         body::before {
             opacity: .16 !important;
         }

@@ -8,7 +8,7 @@
         .site-header,
         .site-footer { display: none !important; }
 
-        body { background: #061316; }
+        body { background: var(--bg-primary); }
 
         body > .container {
             width: 100%;
@@ -158,6 +158,57 @@
             color: rgba(248, 250, 252, .54);
             font-size: .84rem;
             line-height: 1.6;
+        }
+
+        [data-theme="light"] body {
+            background: var(--bg-primary);
+        }
+
+        [data-theme="light"] .tax-info-shell {
+            color: var(--text-main);
+            background:
+                linear-gradient(180deg, rgba(241, 245, 249, .84), rgba(248, 250, 252, 1) 680px),
+                url('{{ asset('images/slidev2.jpg') }}') center top / cover no-repeat;
+        }
+
+        [data-theme="light"] .tax-info-brand,
+        [data-theme="light"] .tax-info-nav-actions a,
+        [data-theme="light"] .tax-info-hero p,
+        [data-theme="light"] .tax-info-section-head p,
+        [data-theme="light"] .tax-info-card p,
+        [data-theme="light"] .tax-login-panel p,
+        [data-theme="light"] .tax-info-note {
+            color: rgba(15, 23, 42, .78);
+        }
+
+        [data-theme="light"] .tax-info-nav-actions a,
+        [data-theme="light"] .tax-info-button {
+            border-color: rgba(15, 23, 42, .14);
+            background: rgba(255, 255, 255, .72);
+            color: #0f172a;
+        }
+
+        [data-theme="light"] .tax-info-nav-actions .primary,
+        [data-theme="light"] .tax-info-button.primary {
+            border-color: #14b8a6;
+            color: #ffffff;
+            background: #14b8a6;
+        }
+
+        [data-theme="light"] .tax-info-kicker,
+        [data-theme="light"] .tax-info-card .number {
+            color: #0f766e;
+        }
+
+        [data-theme="light"] .tax-info-card,
+        [data-theme="light"] .tax-login-panel {
+            border-color: rgba(15, 23, 42, .12);
+            background: rgba(255, 255, 255, .82);
+            box-shadow: 0 18px 48px rgba(15, 23, 42, .08);
+        }
+
+        [data-theme="light"] .tax-info-card a {
+            color: #0f766e;
         }
 
         @media (max-width: 820px) {

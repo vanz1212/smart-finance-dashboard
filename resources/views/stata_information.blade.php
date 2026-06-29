@@ -8,7 +8,7 @@
         .site-header,
         .site-footer { display: none !important; }
 
-        body { background: #061316; }
+        body { background: var(--bg-primary); }
 
         body > .container {
             width: 100%;
@@ -192,6 +192,67 @@
             color: rgba(248, 250, 252, .5);
             font-size: .84rem;
             line-height: 1.6;
+        }
+
+        [data-theme="light"] body {
+            background: var(--bg-primary);
+        }
+
+        [data-theme="light"] .stata-info-shell {
+            color: var(--text-main);
+            background:
+                linear-gradient(180deg, rgba(241, 245, 249, .82), rgba(248, 250, 252, 1) 680px),
+                url('{{ asset('images/slidev3.jpg') }}') center top / cover no-repeat;
+        }
+
+        [data-theme="light"] .stata-info-brand,
+        [data-theme="light"] .stata-info-nav-actions a,
+        [data-theme="light"] .stata-info-hero p,
+        [data-theme="light"] .stata-info-section-head p,
+        [data-theme="light"] .stata-info-card p,
+        [data-theme="light"] .stata-step p,
+        [data-theme="light"] .stata-login-panel p,
+        [data-theme="light"] .stata-info-note {
+            color: rgba(15, 23, 42, .78);
+        }
+
+        [data-theme="light"] .stata-info-nav-actions a,
+        [data-theme="light"] .stata-info-button {
+            border-color: rgba(15, 23, 42, .14);
+            background: rgba(255, 255, 255, .72);
+            color: #0f172a;
+        }
+
+        [data-theme="light"] .stata-info-nav-actions .primary,
+        [data-theme="light"] .stata-info-button.primary {
+            border-color: #14b8a6;
+            color: #ffffff;
+            background: #14b8a6;
+        }
+
+        [data-theme="light"] .stata-info-kicker,
+        [data-theme="light"] .stata-info-card .number,
+        [data-theme="light"] .stata-step strong,
+        [data-theme="light"] .stata-info-card a {
+            color: #0f766e;
+        }
+
+        [data-theme="light"] .stata-info-card,
+        [data-theme="light"] .stata-learning-path,
+        [data-theme="light"] .stata-login-panel {
+            border-color: rgba(15, 23, 42, .12);
+            background: rgba(255, 255, 255, .82);
+            box-shadow: 0 18px 48px rgba(15, 23, 42, .08);
+        }
+
+        [data-theme="light"] .stata-step {
+            border-right-color: rgba(15, 23, 42, .1);
+        }
+
+        [data-theme="light"] .stata-command {
+            border-color: rgba(20, 184, 166, .22);
+            color: #0f766e;
+            background: rgba(15, 23, 42, .04);
         }
 
         @media (max-width: 940px) {

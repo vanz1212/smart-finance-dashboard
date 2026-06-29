@@ -106,4 +106,8 @@ return [
     'recommendation_status_ok' => 'OK',
     'recommendation_status_warning' => 'Waspada',
     'recommendation_status_critical' => 'Kritis',
+    'export_pdf' => 'Export PDF',
+    'target_label' => 'Target',
+    'current_balance_label' => 'Saldo saat ini',
+    'deposit_per_month' => 'Setoran/:months',
 ];

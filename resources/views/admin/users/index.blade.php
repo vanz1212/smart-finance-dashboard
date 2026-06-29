@@ -10,7 +10,7 @@
         }
 
         body {
-            background: #061418;
+            background: var(--bg-primary);
         }
 
         body > .container {
@@ -322,6 +322,56 @@
             .row-actions {
                 justify-content: flex-start;
             }
+        }
+
+        [data-theme="light"] .admin-shell {
+            color: #0f172a;
+            background:
+                linear-gradient(180deg, rgba(255, 255, 255, 0.7), rgba(241, 245, 249, 0.88)),
+                url('{{ asset('images/backgroundfinance.jpg') }}') center / cover fixed no-repeat;
+        }
+
+        [data-theme="light"] .admin-card,
+        [data-theme="light"] .user-table,
+        [data-theme="light"] .log-section {
+            border-color: rgba(148, 163, 184, 0.22);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(248, 250, 252, 0.94));
+            box-shadow: 0 24px 60px rgba(15, 23, 42, 0.14);
+        }
+
+        [data-theme="light"] .admin-header p,
+        [data-theme="light"] .user-row span,
+        [data-theme="light"] .log-section p,
+        [data-theme="light"] .log-table small,
+        [data-theme="light"] .empty-state,
+        [data-theme="light"] .flash {
+            color: #64748b;
+        }
+
+        [data-theme="light"] .admin-actions a,
+        [data-theme="light"] .row-actions a,
+        [data-theme="light"] .row-actions button,
+        [data-theme="light"] .role-form select,
+        [data-theme="light"] .role-form button {
+            border-color: rgba(148, 163, 184, 0.22);
+            background: rgba(255, 255, 255, 0.8);
+            color: #0f172a;
+        }
+
+        [data-theme="light"] .user-head {
+            background: rgba(226, 232, 240, 0.88);
+            color: #475569;
+        }
+
+        [data-theme="light"] .user-row,
+        [data-theme="light"] .log-table th,
+        [data-theme="light"] .log-table td {
+            border-color: rgba(148, 163, 184, 0.18);
+        }
+
+        [data-theme="light"] .user-row strong,
+        [data-theme="light"] .log-table td {
+            color: #0f172a;
         }
     </style>
 

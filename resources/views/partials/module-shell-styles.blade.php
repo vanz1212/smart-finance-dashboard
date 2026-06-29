@@ -4,7 +4,7 @@
     }
 
     html {
-        background: #050c0f;
+        background: var(--bg-primary);
     }
 
     body.module-page {
@@ -164,7 +164,10 @@
 
     body.module-page .finance-workspace,
     body.module-page .tax-workspace,
-    body.module-page .stata-workspace {
+    body.module-page .stata-workspace,
+    body.module-page .targets-workspace,
+    body.module-page .form-workspace,
+    body.module-page .detail-workspace {
         view-transition-name: module-workspace;
         width: 100% !important;
         min-height: calc(100vh - 76px) !important;
@@ -466,6 +469,233 @@
 
     body.module-page .site-footer {
         display: none !important;
+    }
+
+    [data-theme="light"] body.module-page {
+        --module-surface: rgba(255, 255, 255, .92);
+        --module-surface-raised: rgba(255, 255, 255, .98);
+        --module-surface-soft: rgba(15, 23, 42, .045);
+        --module-border: rgba(15, 23, 42, .12);
+        --module-text: #0f172a;
+        --module-muted: #475569;
+        --module-accent: #0f766e;
+        --module-green: #14b8a6;
+        background: var(--bg-primary) !important;
+        color: var(--module-text);
+    }
+
+    [data-theme="light"] body.module-page .site-header {
+        border-bottom-color: rgba(15, 23, 42, .1) !important;
+        background: rgba(255, 255, 255, .9) !important;
+        box-shadow: 0 12px 34px rgba(15, 23, 42, .08);
+    }
+
+    [data-theme="light"] body.module-page .brand,
+    [data-theme="light"] body.module-page .main-nav a,
+    [data-theme="light"] body.module-page .nav-form button {
+        color: rgba(15, 23, 42, .72) !important;
+    }
+
+    [data-theme="light"] body.module-page .main-nav a:hover,
+    [data-theme="light"] body.module-page .nav-form button:hover {
+        color: #0f172a !important;
+        border-color: rgba(15, 23, 42, .12) !important;
+        background: rgba(15, 23, 42, .06) !important;
+    }
+
+    [data-theme="light"] body.module-page .main-nav a.is-active {
+        color: #ffffff !important;
+    }
+
+    [data-theme="light"] body.module-page .module-active-pill {
+        border-color: rgba(20, 184, 166, .4);
+        background: linear-gradient(135deg, rgba(20, 184, 166, .98), rgba(13, 148, 136, .96));
+        box-shadow:
+            0 10px 24px rgba(20, 184, 166, .18),
+            inset 0 1px 0 rgba(255, 255, 255, .5);
+    }
+
+    [data-theme="light"] body.module-page .finance-workspace,
+    [data-theme="light"] body.module-page .tax-workspace,
+    [data-theme="light"] body.module-page .stata-workspace,
+    [data-theme="light"] body.module-page .targets-workspace,
+    [data-theme="light"] body.module-page .form-workspace,
+    [data-theme="light"] body.module-page .detail-workspace {
+        background-color: var(--bg-primary) !important;
+        background-image:
+            linear-gradient(180deg, rgba(241, 245, 249, .92) 0%, rgba(248, 250, 252, .96) 52%, rgba(241, 245, 249, 1) 100%),
+            url('{{ asset('images/backgroundfinance.jpg') }}'),
+            radial-gradient(circle at 82% 0%, rgba(20, 184, 166, .14), transparent 38%) !important;
+    }
+
+    [data-theme="light"] body.module-page .module-hero-panel {
+        background:
+            linear-gradient(145deg, rgba(255, 255, 255, .96), rgba(240, 253, 250, .9) 68%) !important;
+        box-shadow: 0 24px 70px rgba(15, 23, 42, .1) !important;
+    }
+
+    [data-theme="light"] body.module-page .module-hero-copy p,
+    [data-theme="light"] body.module-page .module-hero-summary span,
+    [data-theme="light"] body.module-page p,
+    [data-theme="light"] body.module-page .panel-heading p,
+    [data-theme="light"] body.module-page .tax-panel p,
+    [data-theme="light"] body.module-page .stata-panel p,
+    [data-theme="light"] body.module-page .feature-card p,
+    [data-theme="light"] body.module-page .tutorial-content p,
+    [data-theme="light"] body.module-page .stata-command-item p {
+        color: var(--module-muted) !important;
+    }
+
+    [data-theme="light"] body.module-page .workspace-panel,
+    [data-theme="light"] body.module-page .tax-panel,
+    [data-theme="light"] body.module-page .stata-panel,
+    [data-theme="light"] body.module-page .feature-card,
+    [data-theme="light"] body.module-page .stata-console,
+    [data-theme="light"] body.module-page .stat-card,
+    [data-theme="light"] body.module-page .target-card,
+    [data-theme="light"] body.module-page .form-panel,
+    [data-theme="light"] body.module-page .header-section,
+    [data-theme="light"] body.module-page .panel {
+        border-color: var(--module-border) !important;
+        background: var(--module-surface) !important;
+        box-shadow: 0 18px 52px rgba(15, 23, 42, .08) !important;
+    }
+
+    [data-theme="light"] body.module-page .metric-tile,
+    [data-theme="light"] body.module-page .tax-metric,
+    [data-theme="light"] body.module-page .tax-note,
+    [data-theme="light"] body.module-page .stata-data-card,
+    [data-theme="light"] body.module-page .insight-box,
+    [data-theme="light"] body.module-page .empty-state,
+    [data-theme="light"] body.module-page .goal-card,
+    [data-theme="light"] body.module-page .breakdown-item,
+    [data-theme="light"] body.module-page .tutorial-step,
+    [data-theme="light"] body.module-page .stata-command-group,
+    [data-theme="light"] body.module-page .stata-command-item,
+    [data-theme="light"] body.module-page .stat-card,
+    [data-theme="light"] body.module-page .target-card,
+    [data-theme="light"] body.module-page .back-link,
+    [data-theme="light"] body.module-page .info-item,
+    [data-theme="light"] body.module-page .status-indicator,
+    [data-theme="light"] body.module-page .deposit-form,
+    [data-theme="light"] body.module-page .deposit-item,
+    [data-theme="light"] body.module-page .monthly-breakdown,
+    [data-theme="light"] body.module-page .quick-stat,
+    [data-theme="light"] body.module-page .amount-item,
+    [data-theme="light"] body.module-page .target-deadline,
+    [data-theme="light"] body.module-page .target-performance {
+        border-color: rgba(15, 23, 42, .1) !important;
+        background: var(--module-surface-soft) !important;
+    }
+
+    [data-theme="light"] body.module-page .finance-form-grid span,
+    [data-theme="light"] body.module-page .tax-form span,
+    [data-theme="light"] body.module-page .metric-tile span,
+    [data-theme="light"] body.module-page .tax-metric span,
+    [data-theme="light"] body.module-page .stata-data-card span,
+    [data-theme="light"] body.module-page .goal-card span,
+    [data-theme="light"] body.module-page .stat-label,
+    [data-theme="light"] body.module-page .form-header p,
+    [data-theme="light"] body.module-page .form-group label,
+    [data-theme="light"] body.module-page .progress-info,
+    [data-theme="light"] body.module-page .info-label,
+    [data-theme="light"] body.module-page .deposit-date,
+    [data-theme="light"] body.module-page .quick-stat-label,
+    [data-theme="light"] body.module-page .amount-label,
+    [data-theme="light"] body.module-page .deadline-label,
+    [data-theme="light"] body.module-page .performance-label,
+    [data-theme="light"] body.module-page .template-label,
+    [data-theme="light"] body.module-page .expense-section-label,
+    [data-theme="light"] body.module-page .template-name,
+    [data-theme="light"] body.module-page .template-btn,
+    [data-theme="light"] body.module-page .debt-toggle,
+    [data-theme="light"] body.module-page .expense-row input[type="text"],
+    [data-theme="light"] body.module-page .template-desc,
+    [data-theme="light"] body.module-page .expense-section-hint {
+        color: var(--module-text) !important;
+    }
+
+    [data-theme="light"] body.module-page .template-desc,
+    [data-theme="light"] body.module-page .expense-section-hint {
+        opacity: .72;
+    }
+
+    [data-theme="light"] body.module-page .template-btn,
+    [data-theme="light"] body.module-page .finance-form-grid input,
+    [data-theme="light"] body.module-page .tax-form input,
+    [data-theme="light"] body.module-page .tax-form select,
+    [data-theme="light"] body.module-page .expense-row input[type="text"],
+    [data-theme="light"] body.module-page .form-group input,
+    [data-theme="light"] body.module-page .form-group textarea,
+    [data-theme="light"] body.module-page .form-group select,
+    [data-theme="light"] body.module-page .form-input,
+    [data-theme="light"] body.module-page .btn-action {
+        border-color: rgba(15, 23, 42, .14) !important;
+        background: rgba(255, 255, 255, .78) !important;
+        color: var(--module-text) !important;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, .7);
+    }
+
+    [data-theme="light"] body.module-page .finance-form-grid input:focus,
+    [data-theme="light"] body.module-page .tax-form input:focus,
+    [data-theme="light"] body.module-page .tax-form select:focus,
+    [data-theme="light"] body.module-page .expense-row input[type="text"]:focus,
+    [data-theme="light"] body.module-page .form-group input:focus,
+    [data-theme="light"] body.module-page .form-group textarea:focus,
+    [data-theme="light"] body.module-page .form-group select:focus,
+    [data-theme="light"] body.module-page .form-input:focus {
+        border-color: rgba(20, 184, 166, .64) !important;
+        background: #ffffff !important;
+    }
+
+    [data-theme="light"] body.module-page .btn-action:hover {
+        border-color: rgba(20, 184, 166, .42) !important;
+        background: rgba(20, 184, 166, .1) !important;
+        color: #0f766e !important;
+    }
+
+    [data-theme="light"] body.module-page .progress-bar {
+        background: rgba(15, 23, 42, .1) !important;
+    }
+
+    [data-theme="light"] body.module-page .progress-info strong,
+    [data-theme="light"] body.module-page .info-value,
+    [data-theme="light"] body.module-page .quick-stat-value,
+    [data-theme="light"] body.module-page .deadline-value,
+    [data-theme="light"] body.module-page .progress-info strong {
+        color: #0f766e !important;
+    }
+
+    [data-theme="light"] body.module-page .deposit-note {
+        color: #334155 !important;
+    }
+
+    [data-theme="light"] body.module-page .workspace-button,
+    [data-theme="light"] body.module-page .tax-button,
+    [data-theme="light"] body.module-page .module-hero-action,
+    [data-theme="light"] body.module-page .stata-action,
+    [data-theme="light"] body.module-page .btn-primary {
+        border-color: rgba(20, 184, 166, .5) !important;
+        background: linear-gradient(135deg, #14b8a6, #0d9488) !important;
+        color: #ffffff !important;
+        box-shadow: 0 12px 28px rgba(20, 184, 166, .16);
+    }
+
+    [data-theme="light"] body.module-page .tax-table,
+    [data-theme="light"] body.module-page .stata-output-table {
+        border-color: rgba(15, 23, 42, .12);
+        background: rgba(255, 255, 255, .76);
+    }
+
+    [data-theme="light"] body.module-page .tax-table th,
+    [data-theme="light"] body.module-page .stata-output-table th {
+        background: rgba(15, 23, 42, .06) !important;
+        color: #0f172a !important;
+    }
+
+    [data-theme="light"] body.module-page .tax-table td,
+    [data-theme="light"] body.module-page .stata-output-table td {
+        color: #334155 !important;
     }
 
     ::view-transition-old(root),

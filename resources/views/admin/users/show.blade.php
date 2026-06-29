@@ -6,7 +6,7 @@
     <style>
         .site-header,
         .site-footer { display: none !important; }
-        body { background: #061418; }
+        body { background: var(--bg-primary); }
         body > .container { max-width: none; width: 100%; min-height: 100vh; padding: 0; }
         .content { min-height: 100vh; }
         .admin-shell {
@@ -113,6 +113,41 @@
         }
         @media (max-width: 640px) {
             .profile-grid { grid-template-columns: 1fr; }
+        }
+
+        [data-theme="light"] .admin-shell {
+            color: #0f172a;
+            background:
+                linear-gradient(180deg, rgba(255, 255, 255, 0.7), rgba(241, 245, 249, 0.88)),
+                url('{{ asset('images/backgroundfinance.jpg') }}') center / cover fixed no-repeat;
+        }
+
+        [data-theme="light"] .admin-card {
+            border-color: rgba(148, 163, 184, 0.22);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(241, 245, 249, 0.96));
+            box-shadow: 0 24px 60px rgba(15, 23, 42, 0.14);
+        }
+
+        [data-theme="light"] .topbar a,
+        [data-theme="light"] .actions a,
+        [data-theme="light"] .actions button {
+            border-color: rgba(148, 163, 184, 0.22);
+            background: rgba(255, 255, 255, 0.8);
+            color: #0f172a;
+        }
+
+        [data-theme="light"] .profile-item {
+            border-color: rgba(148, 163, 184, 0.2);
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        [data-theme="light"] .profile-item small,
+        [data-theme="light"] p[style*='rgba(248,250,252'] {
+            color: #64748b !important;
+        }
+
+        [data-theme="light"] .profile-item strong {
+            color: #0f172a;
         }
     </style>
 

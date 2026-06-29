@@ -10,7 +10,7 @@
         }
 
         body {
-            background: #061418;
+            background: var(--bg-primary);
         }
 
         body > .container {
@@ -79,6 +79,27 @@
             color: #052e2b;
             font-weight: 900;
             text-decoration: none;
+        }
+
+        [data-theme="light"] .admin-page {
+            color: #0f172a;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(241, 245, 249, 0.92));
+        }
+
+        [data-theme="light"] .admin-card {
+            border-color: rgba(148, 163, 184, 0.22);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(241, 245, 249, 0.96));
+            box-shadow: 0 24px 60px rgba(15, 23, 42, 0.14);
+        }
+
+        [data-theme="light"] .admin-card p {
+            color: #64748b;
+        }
+
+        [data-theme="light"] .admin-actions a:not(.primary) {
+            border: 1px solid rgba(148, 163, 184, 0.22);
+            background: rgba(255, 255, 255, 0.76);
+            color: #0f172a;
         }
     </style>
 
