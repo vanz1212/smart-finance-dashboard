@@ -887,8 +887,8 @@
             margin: 0;
             overflow-x: hidden;
             background:
-                radial-gradient(circle at 82% 0%, rgba(24, 191, 117, .16), transparent 34%),
-                linear-gradient(135deg, #06191b 0%, #071f22 48%, #091011 100%) !important;
+                radial-gradient(circle at 50% 0%, rgba(99, 102, 241, .18), transparent 28%),
+                linear-gradient(180deg, rgba(11, 17, 32, .9), rgba(11, 17, 32, .98)) !important;
             color: var(--text-main);
         }
 

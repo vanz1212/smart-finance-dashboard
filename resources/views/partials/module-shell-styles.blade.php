@@ -8,17 +8,19 @@
     }
 
     body.module-page {
-        --module-surface: rgba(8, 34, 37, .96);
-        --module-surface-raised: rgba(13, 43, 46, .97);
+        --module-surface: rgba(30, 41, 59, .9);
+        --module-surface-raised: rgba(51, 65, 85, .92);
         --module-surface-soft: rgba(255, 255, 255, .055);
-        --module-border: rgba(164, 190, 190, .2);
+        --module-border: rgba(148, 163, 184, .18);
         --module-text: #f7faf9;
-        --module-muted: #b9c8c7;
-        --module-accent: #e6c46d;
-        --module-green: #20bd7a;
+        --module-muted: rgba(248, 250, 252, .72);
+        --module-accent: #818cf8;
+        --module-green: #6366f1;
         min-width: 320px;
         min-height: 100vh;
-        background: #050c0f !important;
+        background:
+            radial-gradient(circle at 50% 0%, rgba(99, 102, 241, .18), transparent 28%),
+            linear-gradient(180deg, rgba(11, 17, 32, .9), rgba(11, 17, 32, .98)) !important;
         color: var(--module-text);
     }
 
@@ -45,8 +47,8 @@
         padding: 14px clamp(18px, 4vw, 70px) !important;
         border: 0 !important;
         border-bottom: 1px solid rgba(255, 255, 255, .1) !important;
-        background: rgba(5, 23, 24, .92);
-        box-shadow: 0 12px 36px rgba(0, 0, 0, .2);
+        background: rgba(11, 17, 32, .9);
+        box-shadow: 0 12px 36px rgba(0, 0, 0, .18);
         backdrop-filter: blur(18px);
     }
 
@@ -173,13 +175,14 @@
         min-height: calc(100vh - 76px) !important;
         margin: 0 !important;
         padding: clamp(30px, 4vw, 64px) clamp(18px, 4vw, 70px) clamp(54px, 7vw, 100px) !important;
-        background-color: #071719 !important;
+        background-color: var(--bg-primary) !important;
         background-image:
-            linear-gradient(180deg, rgba(3, 15, 17, .84) 0%, rgba(4, 17, 19, .94) 48%, #050c0f 100%),
+            radial-gradient(circle at 50% 0%, rgba(99, 102, 241, .18), transparent 28%),
+            linear-gradient(180deg, rgba(11, 17, 32, .9), rgba(11, 17, 32, .98)),
             url('{{ asset('images/backgroundfinance.jpg') }}'),
-            radial-gradient(circle at 82% 0%, rgba(99, 102, 241, .2), transparent 38%) !important;
-        background-position: top center, top center, top center !important;
-        background-size: 100% 100%, 100% auto, 100% 100% !important;
+            linear-gradient(90deg, rgba(137, 23, 23, .35), rgba(8, 20, 24, .45)) !important;
+        background-position: top center, top center, top center, top center !important;
+        background-size: 100% 100%, 100% 100%, 100% auto, 100% 100% !important;
         background-repeat: no-repeat !important;
         background-attachment: scroll !important;
     }
@@ -211,8 +214,8 @@
         border: 1px solid var(--module-border);
         border-radius: 18px;
         background:
-            linear-gradient(145deg, rgba(19, 63, 65, .98), var(--module-surface) 68%);
-        box-shadow: 0 24px 70px rgba(0, 0, 0, .34);
+            linear-gradient(145deg, rgba(51, 65, 85, .94), var(--module-surface) 68%);
+        box-shadow: 0 24px 70px rgba(0, 0, 0, .26);
         backdrop-filter: blur(16px);
     }
 
@@ -304,7 +307,7 @@
     body.module-page .feature-card,
     body.module-page .stata-console {
         border: 1px solid var(--module-border) !important;
-        background: var(--module-surface) !important;
+        background: linear-gradient(180deg, rgba(30, 41, 59, .9), rgba(15, 23, 42, .88)) !important;
         box-shadow: 0 18px 52px rgba(0, 0, 0, .24) !important;
         backdrop-filter: blur(16px);
     }
@@ -480,7 +483,9 @@
         --module-muted: #475569;
         --module-accent: #0f766e;
         --module-green: #14b8a6;
-        background: var(--bg-primary) !important;
+        background:
+            radial-gradient(circle at 50% 0%, rgba(20, 184, 166, .14), transparent 28%),
+            linear-gradient(180deg, rgba(241, 245, 249, .96), rgba(248, 250, 252, 1)) !important;
         color: var(--module-text);
     }
 
@@ -523,14 +528,15 @@
     [data-theme="light"] body.module-page .detail-workspace {
         background-color: var(--bg-primary) !important;
         background-image:
-            linear-gradient(180deg, rgba(241, 245, 249, .92) 0%, rgba(248, 250, 252, .96) 52%, rgba(241, 245, 249, 1) 100%),
+            radial-gradient(circle at 50% 0%, rgba(20, 184, 166, .14), transparent 28%),
+            linear-gradient(180deg, rgba(241, 245, 249, .96), rgba(248, 250, 252, 1)),
             url('{{ asset('images/backgroundfinance.jpg') }}'),
-            radial-gradient(circle at 82% 0%, rgba(20, 184, 166, .14), transparent 38%) !important;
+            linear-gradient(90deg, rgba(13, 148, 136, .18), rgba(248, 250, 252, .58)) !important;
     }
 
     [data-theme="light"] body.module-page .module-hero-panel {
         background:
-            linear-gradient(145deg, rgba(255, 255, 255, .96), rgba(240, 253, 250, .9) 68%) !important;
+            linear-gradient(145deg, rgba(255, 255, 255, .96), rgba(238, 242, 255, .86) 68%) !important;
         box-shadow: 0 24px 70px rgba(15, 23, 42, .1) !important;
     }
 
