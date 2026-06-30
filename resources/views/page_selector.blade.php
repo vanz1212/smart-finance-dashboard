@@ -139,12 +139,68 @@
             align-items: center;
         }
 
+        .profile-actions,
+        .language-switcher {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .header-btn,
+        .language-switcher a,
+        .theme-toggle {
+            min-height: 36px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 999px;
+            background: var(--nav-bg);
+            color: var(--text-main);
+            text-decoration: none;
+            cursor: pointer;
+            font: inherit;
+            font-size: 0.85rem;
+            font-weight: 700;
+            line-height: 1;
+            white-space: nowrap;
+            transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .header-btn:hover,
+        .language-switcher a:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-primary);
+            background: rgba(99, 102, 241, 0.14);
+            color: var(--accent-primary);
+            box-shadow: 0 8px 22px rgba(99, 102, 241, 0.16);
+        }
+
+        .admin-btn {
+            border-color: var(--accent-primary);
+            background: var(--accent-primary);
+            color: #ffffff;
+        }
+
+        .language-switcher a.is-active {
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+            background: rgba(99, 102, 241, 0.14);
+        }
+
+        .theme-toggle {
+            width: 40px;
+            padding-inline: 0;
+            font-size: 1.05rem;
+        }
+
         .head-actions form,
         .side-footer form {
             margin: 0;
         }
 
-        .head-actions button,
         .side-footer button {
             padding: 10px 18px;
             border: 2px solid rgba(255, 255, 255, 0.78);
@@ -156,7 +212,6 @@
             font-weight: 900;
         }
 
-        .head-actions button:hover,
         .side-footer button:hover {
             background: var(--accent-primary);
             border-color: var(--accent-primary);
@@ -353,7 +408,7 @@
             border: 1px solid rgba(20, 184, 111, 0.28);
             border-radius: 12px;
             background: rgba(20, 184, 111, 0.08);
-            color: rgba(248, 250, 252, 0.84);
+            color: var(--text-muted);
             line-height: 1.6;
             font-size: 0.9rem;
         }
@@ -362,6 +417,7 @@
             overflow: hidden;
             border: 1px solid rgba(91, 130, 142, 0.64);
             border-radius: 12px;
+            background: rgba(255, 255, 255, 0.02);
         }
 
         .table-head,
@@ -374,7 +430,7 @@
         }
 
         .table-head {
-            background: rgba(81, 124, 137, 0.72);
+            background: var(--nav-bg);
             color: var(--text-muted);
             font-size: 0.84rem;
             font-weight: 900;
@@ -734,7 +790,7 @@
 
             .table-row > span::before {
                 content: attr(data-label);
-                color: rgba(248, 250, 252, 0.52);
+                color: var(--text-muted);
                 font-size: 0.76rem;
                 font-weight: 800;
                 letter-spacing: 0.04em;
@@ -1011,6 +1067,79 @@
             grid-template-columns: 1fr auto 1fr;
         }
 
+        [data-theme="light"] .selector-shell,
+        [data-theme="light"] .dashboard-frame {
+            background:
+                radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.08), transparent 34%),
+                var(--bg-primary);
+            color: var(--text-main);
+        }
+
+        [data-theme="light"] .selector-head,
+        [data-theme="light"] .selector-sidebar {
+            background: rgba(255, 255, 255, 0.88);
+            border-color: var(--border-color);
+            box-shadow: 0 12px 34px rgba(15, 23, 42, 0.06);
+        }
+
+        [data-theme="light"] .selector-logo span + span,
+        [data-theme="light"] .case-link,
+        [data-theme="light"] .head-actions button,
+        [data-theme="light"] .side-footer button {
+            border-color: var(--border-color);
+        }
+
+        [data-theme="light"] .header-btn,
+        [data-theme="light"] .language-switcher a,
+        [data-theme="light"] .theme-toggle {
+            background: rgba(255, 255, 255, 0.72);
+            color: var(--text-main);
+            border-color: var(--border-color);
+        }
+
+        [data-theme="light"] .header-btn:hover,
+        [data-theme="light"] .language-switcher a:hover {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--accent-primary);
+            box-shadow: 0 8px 22px rgba(99, 102, 241, 0.12);
+        }
+
+        [data-theme="light"] .admin-btn {
+            background: var(--accent-primary);
+            color: #ffffff;
+        }
+
+        [data-theme="light"] .side-menu button.is-active,
+        [data-theme="light"] .side-menu button:hover,
+        [data-theme="light"] .side-menu a:hover,
+        [data-theme="light"] .side-footer a:hover,
+        [data-theme="light"] .side-footer button:hover {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--text-main);
+            box-shadow: inset 3px 0 0 var(--accent-primary);
+        }
+
+        [data-theme="light"] .module-table,
+        [data-theme="light"] .tool-panel,
+        [data-theme="light"] .quick-card,
+        [data-theme="light"] .feature-card,
+        [data-theme="light"] .data-card {
+            border-color: rgba(15, 23, 42, 0.1);
+            background: rgba(255, 255, 255, 0.78);
+            box-shadow: 0 18px 48px rgba(15, 23, 42, 0.06);
+        }
+
+        [data-theme="light"] .table-head,
+        [data-theme="light"] .mini-table th {
+            background: rgba(15, 23, 42, 0.06);
+            color: #475569;
+        }
+
+        [data-theme="light"] .selector-form input,
+        [data-theme="light"] .selector-form select {
+            background: rgba(255, 255, 255, 0.82);
+        }
+
         .selector-logo {
             justify-self: start;
         }
@@ -1042,18 +1171,18 @@
             }
             .header-btn:hover {
                 transform: translateY(-3px) scale(1.05);
-                box-shadow: 0 8px 20px rgba(243, 201, 105, 0.25) !important;
+                box-shadow: 0 8px 20px rgba(99, 102, 241, 0.18) !important;
                 border-color: var(--accent-primary) !important;
-                background: rgba(243, 201, 105, 0.1) !important;
+                background: rgba(99, 102, 241, 0.12) !important;
                 color: var(--accent-primary) !important;
             }
             .header-btn.admin-btn:hover {
                 background: var(--accent-hover) !important;
-                color: var(--accent-primary) !important;
+                color: #ffffff !important;
             }
             .theme-toggle:hover {
                 transform: rotate(15deg) scale(1.15) !important;
-                box-shadow: 0 0 15px rgba(243, 201, 105, 0.4) !important;
+                box-shadow: 0 0 15px rgba(99, 102, 241, 0.28) !important;
             }
             .module-card {
                 border-radius: 12px; /* fallback */
@@ -1062,13 +1191,13 @@
 <header class="selector-head">
             <div class="selector-logo"><img src="{{ asset('images/nexio_logo.png') }}" alt="Nexio Logo" style="height: 48px; border-radius: 12px; object-fit: contain;"></div>
             <div class="selector-title"><span class="brand-mark" aria-hidden="true"></span> NEXIO</div>
-            <div class="head-actions" style="justify-self: end; display: flex; align-items: center; gap: 12px; margin-right: 14px;">
-                <div class="profile-actions" style="display: flex; gap: 8px;">
-                    <a href="{{ route('home') }}" class="header-btn" style="font-size: 0.85rem; padding: 6px 14px; background: rgba(255,255,255,0.05); color: var(--text-main); border: 1px solid var(--border-color); border-radius: 99px; text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 6px;">
+            <div class="head-actions">
+                <div class="profile-actions">
+                    <a href="{{ route('home') }}" class="header-btn">
                         <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                         Beranda Awal
                     </a>
-                    <a href="{{ route('profile') }}" class="header-btn" style="font-size: 0.85rem; padding: 6px 14px; background: transparent; color: var(--text-main); border: 1px solid var(--border-color); border-radius: 99px; text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 6px;">
+                    <a href="{{ route('profile') }}" class="header-btn">
                         @if(auth()->check() && auth()->user()->avatar)
                             <img src="{{ asset(auth()->user()->avatar) }}" alt="Avatar" style="width:18px; height:18px; border-radius:50%; object-fit:cover;">
                         @endif
@@ -1077,21 +1206,21 @@
                     @if ($isLoggedIn)
                         <form action="{{ route('logout') }}" method="POST" style="margin:0;">
                             @csrf
-                            <button type="submit" class="header-btn" style="font-size: 0.85rem; padding: 6px 14px; background: transparent; color: var(--text-main); border: 1px solid var(--border-color); border-radius: 99px; cursor:pointer; font-weight: 600;">{{ __('app.logout') }}</button>
+                            <button type="submit" class="header-btn">{{ __('app.logout') }}</button>
                         </form>
                     @else
-                        <a href="{{ route('login') }}" class="header-btn" style="font-size: 0.85rem; padding: 6px 14px; background: transparent; color: var(--text-main); border: 1px solid var(--border-color); border-radius: 99px; text-decoration: none; font-weight: 600;">{{ __('app.login') }}</a>
+                        <a href="{{ route('login') }}" class="header-btn">{{ __('app.login') }}</a>
                     @endif
                 </div>
                 @if(auth()->check() && auth()->user()->role === 'admin')
-                    <a href="{{ route('dashboard.admin') }}" class="header-btn admin-btn" style="font-size: 0.85rem; padding: 6px 14px; background: var(--accent-primary); color: #ffffff; border-radius: 99px; text-decoration: none; font-weight: bold;">{{ __('app.admin_panel') }}</a>
+                    <a href="{{ route('dashboard.admin') }}" class="header-btn admin-btn">{{ __('app.admin_panel') }}</a>
                 @endif
-                <div style="display: flex; gap: 8px; align-items: center; font-weight: bold; font-size: 0.9rem;">
-                    <a href="{{ url('/lang/id') }}" style="text-decoration: none; color: {{ App::getLocale() === 'id' ? 'var(--accent-primary)' : 'var(--text-main)' }};">ID</a>
+                <div class="language-switcher">
+                    <a class="{{ App::getLocale() === 'id' ? 'is-active' : '' }}" href="{{ url('/lang/id') }}">ID</a>
                     <span style="color: var(--text-muted);">|</span>
-                    <a href="{{ url('/lang/en') }}" style="text-decoration: none; color: {{ App::getLocale() === 'en' ? 'var(--accent-primary)' : 'var(--text-main)' }};">EN</a>
+                    <a class="{{ App::getLocale() === 'en' ? 'is-active' : '' }}" href="{{ url('/lang/en') }}">EN</a>
                 </div>
-                <button class="theme-toggle" aria-label="Toggle Theme" style="border: 1px solid var(--border-color); background: transparent; color: var(--text-main); cursor: pointer; padding: 6px 10px; border-radius: 99px; font-size: 1.1rem; transition: all 0.2s;">
+                <button class="theme-toggle" aria-label="Toggle Theme">
                     <span class="theme-icon">🌙</span>
                 </button>
             </div>

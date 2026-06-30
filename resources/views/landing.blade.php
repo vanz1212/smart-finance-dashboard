@@ -328,6 +328,31 @@
             box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
         }
 
+        [data-theme="light"] .landing-about small,
+        [data-theme="light"] .service-card small {
+            color: rgba(15, 23, 42, 0.48);
+        }
+
+        [data-theme="light"] .landing-about p,
+        [data-theme="light"] .section-title h2,
+        [data-theme="light"] .service-card h3 {
+            color: #0f172a;
+        }
+
+        [data-theme="light"] .section-title h2 em {
+            color: #6366f1;
+        }
+
+        [data-theme="light"] .service-card {
+            border-color: rgba(15, 23, 42, 0.08);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(238, 242, 255, 0.84));
+            box-shadow: 0 20px 50px rgba(15, 23, 42, 0.06);
+        }
+
+        [data-theme="light"] .service-card p {
+            color: rgba(15, 23, 42, 0.66);
+        }
+
         .hero-visual img {
             width: 100%;
             max-width: clamp(280px, 34vw, 540px);
