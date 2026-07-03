@@ -1193,11 +1193,11 @@
             <div class="selector-title"><span class="brand-mark" aria-hidden="true"></span> NEXIO</div>
             <div class="head-actions">
                 <div class="profile-actions">
-                    <a href="{{ route('home') }}" class="header-btn">
+                    <a wire:navigate href="{{ route('home') }}" class="header-btn">
                         <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                         Beranda Awal
                     </a>
-                    <a href="{{ route('profile') }}" class="header-btn">
+                    <a wire:navigate href="{{ route('profile') }}" class="header-btn">
                         @if(auth()->check() && auth()->user()->avatar)
                             <img src="{{ asset(auth()->user()->avatar) }}" alt="Avatar" style="width:18px; height:18px; border-radius:50%; object-fit:cover;">
                         @endif
@@ -1209,11 +1209,11 @@
                             <button type="submit" class="header-btn">{{ __('app.logout') }}</button>
                         </form>
                     @else
-                        <a href="{{ route('login') }}" class="header-btn">{{ __('app.login') }}</a>
+                        <a wire:navigate href="{{ route('login') }}" class="header-btn">{{ __('app.login') }}</a>
                     @endif
                 </div>
                 @if(auth()->check() && auth()->user()->role === 'admin')
-                    <a href="{{ route('dashboard.admin') }}" class="header-btn admin-btn">{{ __('app.admin_panel') }}</a>
+                    <a wire:navigate href="{{ route('dashboard.admin') }}" class="header-btn admin-btn">{{ __('app.admin_panel') }}</a>
                 @endif
                 <div class="language-switcher">
                     <a class="{{ App::getLocale() === 'id' ? 'is-active' : '' }}" href="{{ url('/lang/id') }}">ID</a>
@@ -1360,7 +1360,7 @@
                             }
                         </style>
                         <div class="module-container">
-                            <a class="module-card" href="{{ route('finance.index') }}">
+                            <a wire:navigate class="module-card" href="{{ route('finance.index') }}">
                                 <div class="module-icon-wrap" style="background: linear-gradient(135deg, rgba(20,184,166,0.2), rgba(20,184,166,0.05)); --card-accent: rgba(20,184,166,0.3);">📊</div>
                                 <div class="module-info">
                                     <h3 class="module-title">{{ __('app.module_smart_finance') }}</h3>
@@ -1369,7 +1369,7 @@
                                 </div>
                             </a>
                             
-                            <a class="module-card" href="{{ route('perpajakan.index') }}">
+                            <a wire:navigate class="module-card" href="{{ route('perpajakan.index') }}">
                                 <div class="module-icon-wrap" style="background: linear-gradient(135deg, rgba(243,201,105,0.2), rgba(243,201,105,0.05)); --card-accent: rgba(243,201,105,0.3);">🧾</div>
                                 <div class="module-info">
                                     <h3 class="module-title">{{ __('app.module_perpajakan') }}</h3>
@@ -1378,7 +1378,7 @@
                                 </div>
                             </a>
 
-                            <a class="module-card" href="{{ route('stata') }}">
+                            <a wire:navigate class="module-card" href="{{ route('stata') }}">
                                 <div class="module-icon-wrap" style="background: linear-gradient(135deg, rgba(168,85,247,0.2), rgba(168,85,247,0.05)); --card-accent: rgba(168,85,247,0.3);">📈</div>
                                 <div class="module-info">
                                     <h3 class="module-title">{{ __('app.module_stata') }}</h3>
@@ -1387,7 +1387,7 @@
                                 </div>
                             </a>
 
-                            <a class="module-card" href="{{ route('targets.index') }}">
+                            <a wire:navigate class="module-card" href="{{ route('targets.index') }}">
                                 <div class="module-icon-wrap" style="background: linear-gradient(135deg, rgba(239,68,68,0.2), rgba(239,68,68,0.05)); --card-accent: rgba(239,68,68,0.3);">🎯</div>
                                 <div class="module-info">
                                     <h3 class="module-title">{{ __('app.module_targets') }}</h3>

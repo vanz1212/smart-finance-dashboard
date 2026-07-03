@@ -196,8 +196,91 @@
     }
 
     body.module-page .workspace-topbar,
-    body.module-page .tax-topbar {
-        display: none !important;
+    body.module-page .tax-topbar,
+    body.module-page .stata-topbar,
+    body.module-page .targets-topbar {
+        display: block !important;
+        margin-bottom: 30px !important;
+    }
+
+    body.module-page .module-switcher {
+        min-height: 68px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        padding: 12px 14px;
+        border: 1px solid rgba(255, 255, 255, .1);
+        border-radius: 18px;
+        background: rgba(11, 17, 32, .72);
+        box-shadow: 0 18px 48px rgba(0, 0, 0, .2);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+    }
+
+    body.module-page .module-switcher-brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        color: #ffffff;
+        text-decoration: none;
+        font-weight: 950;
+        letter-spacing: .06em;
+        white-space: nowrap;
+    }
+
+    body.module-page .module-switcher-brand span {
+        width: 38px;
+        height: 38px;
+        display: grid;
+        place-items: center;
+        border-radius: 12px;
+        background: linear-gradient(135deg, var(--accent-primary), var(--accent-hover));
+        color: #ffffff;
+        box-shadow: 0 10px 28px rgba(99, 102, 241, .28);
+    }
+
+    body.module-page .module-switcher-nav {
+        min-width: 0;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 8px;
+        overflow-x: auto;
+        padding-bottom: 2px;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(99, 102, 241, .45) transparent;
+    }
+
+    body.module-page .module-switcher-nav a {
+        min-height: 42px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 auto;
+        padding: 0 15px;
+        border: 1px solid transparent;
+        border-radius: 999px;
+        color: rgba(248, 250, 252, .76);
+        background: transparent;
+        text-decoration: none;
+        font-weight: 850;
+        white-space: nowrap;
+        transition: color .2s ease, background .2s ease, border-color .2s ease, transform .2s ease;
+    }
+
+    body.module-page .module-switcher-nav a:hover {
+        color: #ffffff;
+        border-color: rgba(255, 255, 255, .14);
+        background: rgba(255, 255, 255, .07);
+        transform: translateY(-1px);
+    }
+
+    body.module-page .module-switcher-nav a.is-active {
+        color: #ffffff;
+        border-color: rgba(147, 197, 253, .36);
+        background: linear-gradient(135deg, var(--accent-primary), var(--accent-hover));
+        box-shadow: 0 8px 24px rgba(99, 102, 241, .25);
     }
 
     body.module-page .module-hero {
@@ -567,6 +650,33 @@
         box-shadow: 0 18px 52px rgba(15, 23, 42, .08) !important;
     }
 
+    [data-theme="light"] body.module-page .module-switcher {
+        border-color: rgba(15, 23, 42, .1);
+        background: rgba(255, 255, 255, .82);
+        box-shadow: 0 18px 48px rgba(15, 23, 42, .08);
+    }
+
+    [data-theme="light"] body.module-page .module-switcher-brand {
+        color: #0f172a;
+    }
+
+    [data-theme="light"] body.module-page .module-switcher-nav a {
+        color: rgba(15, 23, 42, .72);
+    }
+
+    [data-theme="light"] body.module-page .module-switcher-nav a:hover {
+        color: #0f172a;
+        border-color: rgba(15, 23, 42, .12);
+        background: rgba(15, 23, 42, .06);
+    }
+
+    [data-theme="light"] body.module-page .module-switcher-nav a.is-active {
+        color: #ffffff;
+        border-color: rgba(20, 184, 166, .38);
+        background: linear-gradient(135deg, #14b8a6, #0d9488);
+        box-shadow: 0 10px 24px rgba(20, 184, 166, .18);
+    }
+
     [data-theme="light"] body.module-page .metric-tile,
     [data-theme="light"] body.module-page .tax-metric,
     [data-theme="light"] body.module-page .tax-note,
@@ -765,6 +875,16 @@
         }
 
         body.module-page .main-nav {
+            justify-content: flex-start;
+        }
+
+        body.module-page .module-switcher {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+        body.module-page .module-switcher-nav {
+            width: 100%;
             justify-content: flex-start;
         }
 

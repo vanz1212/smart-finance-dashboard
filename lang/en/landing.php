@@ -51,7 +51,7 @@ return [
     'footer_address' => "Jl. Finansial No. 12<br>Jakarta, Indonesia<br>Financial analysis, taxation, and statistics platform.",
     'footer_contact_title' => 'Contact Us',
     'footer_schedule_days' => 'Monday - Friday',
-    'footer_schedule_hours' => '09:00 AM - 05:00 PM (GMT+7)',
+    'footer_schedule_hours' => '09:00 - 17:00 WIB',
     'footer_info_title' => 'Information',
     'footer_about_link' => 'About Us',
     'footer_dashboard_link' => 'Go to Dashboard',

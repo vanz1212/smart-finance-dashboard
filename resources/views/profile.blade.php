@@ -31,8 +31,9 @@
             padding: 28px;
             color: #f8fafc;
             background:
-                linear-gradient(135deg, rgba(7, 11, 20, 0.85) 0%, rgba(7, 11, 20, 0.98) 100%),
-                url('{{ asset('images/backgroundfinance.jpg') }}') center / cover fixed no-repeat;
+                radial-gradient(ellipse at 80% 0%, rgba(16, 185, 129, 0.12), transparent 50%),
+                radial-gradient(ellipse at 20% 100%, rgba(99, 102, 241, 0.08), transparent 50%),
+                linear-gradient(180deg, var(--bg-primary), var(--bg-secondary));
         }
 
         .profile-dashboard {
@@ -41,9 +42,9 @@
             min-height: 650px;
             border-radius: 20px;
             overflow: hidden;
-            background: rgba(7, 10, 19, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 60px rgba(0,0,0,.25);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
         }

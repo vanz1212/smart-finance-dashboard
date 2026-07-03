@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Laravel\Socialite\Facades\Socialite;
 use Exception;
 use Illuminate\Support\Str;
@@ -66,6 +67,11 @@ class GoogleAuthController extends Controller
             }
             
         } catch (Exception $e) {
+            Log::warning('Google login failed.', [
+                'message' => $e->getMessage(),
+                'exception' => get_class($e),
+            ]);
+
             return redirect()->route('login')->withErrors(['email' => 'Gagal login menggunakan Google. Silakan coba lagi.']);
         }
     }

@@ -1,9 +1,4 @@
-@extends('layouts.app')
-
-@section('title', __('finance.page_title'))
-@section('body-class', 'module-page')
-
-@section('content')
+<div class="module-page" data-page-title="{{ __('finance.page_title') }}">
     @php
         $formatRupiah = fn ($value) => 'Rp ' . number_format($value, 0, ',', '.');
         $formatPercent = fn ($value) => number_format($value, 1, ',', '.') . '%';
@@ -888,7 +883,7 @@
     <main class="finance-workspace">
         <div class="workspace-inner">
             <div class="workspace-topbar">
-                <strong>SmartFinance.</strong>
+                @include('partials.module-switcher')
             </div>
 
             @if (session('success'))
@@ -917,8 +912,8 @@
             </section>
 
             <section class="workspace-grid">
-                <form class="workspace-panel workspace-panel-inner" action="{{ route('finance.analyze') }}" method="POST">
-                    @csrf
+                <form class="workspace-panel workspace-panel-inner" wire:submit="analyze">
+                    
                     @php
                         // Build initial expense rows for the dynamic form
                         if ($result && !empty($result['expense_items'])) {
@@ -941,9 +936,9 @@
                     <div class="finance-form-grid">
                         <label>
                             <span>{{ __('finance.period_label') }}</span>
-                            <input type="month" name="periode" value="{{ old('periode', $result['periode'] ?? date('Y-m')) }}" required>
+                            <input type="month" wire:model="periode" value="{{ old('periode', $result['periode'] ?? date('Y-m')) }}" required>
                         </label>
-                        <label><span>{{ __('finance.total_income') }}</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input name="pemasukan" value="{{ $formatRupiahInput(old('pemasukan', $result['income'] ?? '')) }}" inputmode="numeric" autocomplete="off" required></div></label>
+                        <label><span>{{ __('finance.total_income') }}</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input wire:model="pemasukan" value="{{ $formatRupiahInput(old('pemasukan', $result['income'] ?? '')) }}" inputmode="numeric" autocomplete="off" required></div></label>
                     </div>
 
                     {{-- Template selector for expense categories --}}
@@ -975,12 +970,12 @@
                     </div>
 
                     <div class="finance-form-grid" style="margin-top:16px;">
-                        <label><span>{{ __('finance.monthly_savings') }}</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input name="tabungan" value="{{ $formatRupiahInput(old('tabungan', $result['saving'] ?? '')) }}" inputmode="numeric" autocomplete="off" required></div></label>
-                        <label><span>{{ __('finance.current_savings_balance') }}</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input name="saldo_tabungan" value="{{ $formatRupiahInput(old('saldo_tabungan', $result['saldo_tabungan'] ?? '')) }}" inputmode="numeric" autocomplete="off"></div></label>
-                        <label><span>{{ __('finance.monthly_deposit') }}</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input name="setoran_tabungan" value="{{ $formatRupiahInput(old('setoran_tabungan', $result['setoran_tabungan'] ?? '')) }}" inputmode="numeric" autocomplete="off"></div></label>
-                        <label><span>{{ __('finance.investment') }}</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input name="investasi" value="{{ $formatRupiahInput(old('investasi', $result['investment'] ?? '')) }}" inputmode="numeric" autocomplete="off" required></div></label>
-                        <label><span>{{ __('finance.emergency_fund') }}</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input name="dana_darurat" value="{{ $formatRupiahInput(old('dana_darurat', $result['emergency_fund'] ?? '')) }}" inputmode="numeric" autocomplete="off" required></div></label>
-                        <label><span>{{ __('finance.savings_target') }}</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input name="target_tabungan" value="{{ $formatRupiahInput(old('target_tabungan', $result['target_saving'] ?? '')) }}" inputmode="numeric" autocomplete="off"></div></label>
+                        <label><span>{{ __('finance.monthly_savings') }}</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input wire:model="tabungan" value="{{ $formatRupiahInput(old('tabungan', $result['saving'] ?? '')) }}" inputmode="numeric" autocomplete="off" required></div></label>
+                        <label><span>{{ __('finance.current_savings_balance') }}</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input wire:model="saldo_tabungan" value="{{ $formatRupiahInput(old('saldo_tabungan', $result['saldo_tabungan'] ?? '')) }}" inputmode="numeric" autocomplete="off"></div></label>
+                        <label><span>{{ __('finance.monthly_deposit') }}</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input wire:model="setoran_tabungan" value="{{ $formatRupiahInput(old('setoran_tabungan', $result['setoran_tabungan'] ?? '')) }}" inputmode="numeric" autocomplete="off"></div></label>
+                        <label><span>{{ __('finance.investment') }}</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input wire:model="investasi" value="{{ $formatRupiahInput(old('investasi', $result['investment'] ?? '')) }}" inputmode="numeric" autocomplete="off" required></div></label>
+                        <label><span>{{ __('finance.emergency_fund') }}</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input wire:model="dana_darurat" value="{{ $formatRupiahInput(old('dana_darurat', $result['emergency_fund'] ?? '')) }}" inputmode="numeric" autocomplete="off" required></div></label>
+                        <label><span>{{ __('finance.savings_target') }}</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input wire:model="target_tabungan" value="{{ $formatRupiahInput(old('target_tabungan', $result['target_saving'] ?? '')) }}" inputmode="numeric" autocomplete="off"></div></label>
                     </div>
 
                     {{-- Pass initial expense data to JavaScript --}}
@@ -1284,8 +1279,8 @@
                                         <td>
                                             <div class="action-buttons">
                                                 <a href="{{ route('finance.index', ['load_id' => $item->id]) }}" class="btn-use">{{ __('finance.use_analysis') }}</a>
-                                                <form action="{{ route('finance.destroy', $item->id) }}" method="POST" onsubmit="return confirm('{{ __('finance.delete_history_confirm') }}')">
-                                                    @csrf
+                                                <form class="workspace-panel workspace-panel-inner" wire:submit="analyze">
+                                                    
                                                     @method('DELETE')
                                                     <button type="submit" class="btn-delete">{{ __('finance.delete') }}</button>
                                                 </form>
@@ -1717,7 +1712,7 @@
         document.addEventListener('DOMContentLoaded', function () {
             // Template selector functionality
             var templateBtns = document.querySelectorAll('.template-btn');
-            var incomeInput = document.querySelector('input[name="pemasukan"]');
+            var incomeInput = document.querySelector('input[wire:model="pemasukan"]');
             var expenseList = document.getElementById('expense-list');
 
             if (templateBtns.length > 0 && incomeInput && expenseList) {
@@ -1937,4 +1932,4 @@
             }
         });
     </script>
-@endsection
+</div>

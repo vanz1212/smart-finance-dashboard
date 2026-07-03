@@ -3,6 +3,8 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\FinanceController;
+use App\Livewire\SmartFinance;
+use App\Livewire\Perpajakan;
 use App\Http\Controllers\FinancialTargetController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\StataController;
@@ -92,7 +94,7 @@ Route::middleware(Authenticate::class)->group(function () {
     Route::post('/profile/update-avatar', [AuthController::class, 'updateAvatar'])->name('profile.update-avatar');
     Route::post('/profile/send-otp', [App\Http\Controllers\VerificationController::class, 'sendOtp'])->name('profile.send-otp');
     Route::post('/profile/verify-otp', [App\Http\Controllers\VerificationController::class, 'verifyOtp'])->name('profile.verify-otp');
-    Route::get('/smart-finance', [FinanceController::class, 'index'])
+    Route::get('/smart-finance', SmartFinance::class)
         ->middleware('activity:page_open,smart_finance,Smart Finance')
         ->name('finance.index');
     Route::post('/smart-finance', [FinanceController::class, 'analyze'])->name('finance.analyze');
@@ -118,7 +120,7 @@ Route::middleware(Authenticate::class)->group(function () {
     Route::post('/stata/import', [StataController::class, 'import'])->name('stata.import');
     Route::post('/stata/command', [StataController::class, 'run'])->name('stata.command');
     Route::delete('/stata/dataset', [StataController::class, 'clear'])->name('stata.clear');
-    Route::get('/perpajakan', [TaxController::class, 'index'])
+    Route::get('/perpajakan', Perpajakan::class)
         ->middleware('activity:page_open,perpajakan,Perpajakan')
         ->name('perpajakan.index');
     Route::post('/perpajakan', [TaxController::class, 'calculate'])->name('perpajakan.calculate');

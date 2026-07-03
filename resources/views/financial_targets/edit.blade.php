@@ -234,6 +234,10 @@
 
     <main class="form-workspace">
         <div class="workspace-inner">
+            <div class="targets-topbar">
+                @include('partials.module-switcher')
+            </div>
+
             <div class="form-panel">
                 <div class="form-header">
                     <h1>Edit Target Finansial</h1>

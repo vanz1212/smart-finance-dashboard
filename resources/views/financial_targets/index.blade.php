@@ -36,10 +36,11 @@
             margin: -24px;
             min-height: calc(100vh - 1px);
             padding: 34px 24px 56px;
-            color: #f8fafc;
+            color: var(--text-main);
             background:
-                linear-gradient(180deg, rgba(5, 12, 15, 0.76), rgba(5, 12, 15, 0.97)),
-                url('{{ asset('images/backgroundfinance.jpg') }}') center / cover fixed no-repeat;
+                radial-gradient(ellipse at 80% 0%, rgba(16, 185, 129, 0.12), transparent 50%),
+                radial-gradient(ellipse at 20% 100%, rgba(99, 102, 241, 0.08), transparent 50%),
+                linear-gradient(180deg, var(--bg-primary), var(--bg-secondary));
         }
 
         .workspace-inner {
@@ -93,9 +94,15 @@
 
         .stat-card {
             padding: 18px;
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 12px;
-            background: rgba(13, 47, 51, 0.6);
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 14px;
+            background: rgba(255,255,255,.04);
+            transition: all 0.25s ease;
+        }
+        .stat-card:hover { 
+            background: rgba(255,255,255,.07); 
+            border-color: rgba(255,255,255,.15);
+            transform: translateY(-2px); 
         }
 
         .stat-label {
@@ -143,18 +150,18 @@
         }
 
         .target-card {
-            padding: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 14px;
-            background: linear-gradient(180deg, rgba(13, 47, 51, 0.78), rgba(6, 24, 32, 0.84));
-            box-shadow: 0 28px 80px rgba(0, 0, 0, 0.34);
+            padding: 24px;
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 16px;
+            background: rgba(15, 23, 42, 0.6);
             backdrop-filter: blur(16px);
-            transition: all 0.3s;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
         }
 
         .target-card:hover {
-            border-color: rgba(20, 184, 166, 0.3);
-            background: linear-gradient(180deg, rgba(13, 47, 51, 0.88), rgba(6, 24, 32, 0.92));
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0,0,0,.2);
+            border-color: rgba(255,255,255,.15);
         }
 
         .target-header {
@@ -392,6 +399,10 @@
 
     <main class="targets-workspace">
         <div class="workspace-inner">
+            <div class="targets-topbar">
+                @include('partials.module-switcher')
+            </div>
+
             <section class="workspace-hero module-hero">
                 <div class="module-hero-panel module-hero-copy">
                     <span class="workspace-kicker">{{ __('targets.kicker') }}</span>

@@ -455,6 +455,10 @@
 
     <main class="detail-workspace">
         <div class="workspace-inner">
+            <div class="targets-topbar">
+                @include('partials.module-switcher')
+            </div>
+
             <a href="{{ route('targets.index') }}" class="back-link">← Kembali ke Target Finansial</a>
 
             <div class="header-section" style="--category-color: {{ $categoryColors[$target->category] ?? '#64748b' }};">
