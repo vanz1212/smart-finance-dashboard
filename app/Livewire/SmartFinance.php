@@ -40,7 +40,7 @@ class SmartFinance extends Component
 
     public function mount()
     {
-        $this->periode = date('F Y');
+        $this->periode = date('Y-m');
         $this->loadData();
     }
 
@@ -103,6 +103,49 @@ class SmartFinance extends Component
             return (float) preg_replace('/[^0-9]/', '', $value);
         }
         return (float) $value;
+    }
+
+    
+    public function applyTemplate($templateId = null)
+    {
+        if (empty($templateId)) return;
+
+        $this->pemasukan = $this->normalize($this->pemasukan);
+        if ($this->pemasukan <= 0) {
+            $this->addError('pemasukan', __('finance.select_income_first'));
+            return;
+        }
+
+        $categories = null;
+
+        if (is_numeric($templateId)) {
+            $template = ExpenseCategoryTemplate::find($templateId);
+            if ($template) {
+                $categories = $template->categories;
+            }
+        } else {
+            $defaults = ExpenseCategoryTemplate::getDefaults();
+            foreach ($defaults as $default) {
+                $id = strtolower(str_replace([' ', '&'], ['_', 'and'], $default['name']));
+                if ($id === $templateId) {
+                    $categories = $default['categories'];
+                    break;
+                }
+            }
+        }
+
+        if (!$categories) return;
+
+        $this->expenses = [];
+        $this->usingDynamic = true;
+        foreach ($categories as $category) {
+            $amount = ($this->pemasukan * $category['ratio_percent']) / 100;
+            $this->expenses[] = [
+                'name' => $category['name'],
+                'amount' => round($amount, 2),
+                'is_debt' => $category['is_debt'] ?? false,
+            ];
+        }
     }
 
     public function addExpenseRow()
@@ -386,7 +429,8 @@ class SmartFinance extends Component
             if (empty($templates)) {
                 $defaults = ExpenseCategoryTemplate::getDefaults();
                 return array_map(function ($default) {
-                    return array_merge(['id' => null], $default);
+                    $id = strtolower(str_replace([' ', '&'], ['_', 'and'], $default['name']));
+                    return array_merge(['id' => $id], $default);
                 }, $defaults);
             }
     

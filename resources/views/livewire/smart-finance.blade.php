@@ -938,7 +938,7 @@
                             <span>{{ __('finance.period_label') }}</span>
                             <input type="month" wire:model="periode" value="{{ old('periode', $result['periode'] ?? date('Y-m')) }}" required>
                         </label>
-                        <label><span>{{ __('finance.total_income') }}</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input wire:model="pemasukan" value="{{ $formatRupiahInput(old('pemasukan', $result['income'] ?? '')) }}" inputmode="numeric" autocomplete="off" required></div></label>
+                        <label><span>{{ __('finance.total_income') }}</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" x-data x-on:input="$el.value = $el.value.replace(/[^0-9]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, '.')" wire:model="pemasukan" value="{{ $formatRupiahInput(old('pemasukan', $result['income'] ?? '')) }}" inputmode="numeric" autocomplete="off" required></div></label>
                     </div>
 
                     {{-- Template selector for expense categories --}}
@@ -947,7 +947,7 @@
                         <label class="template-label">{{ __('finance.use_template') }}</label>
                         <div class="template-grid">
                             @foreach ($templates as $template)
-                                <button type="button" class="template-btn" data-template-id="{{ $template['id'] ?? '' }}" title="{{ $template['description'] ?? '' }}">
+                                <button type="button" class="template-btn" wire:click.prevent="applyTemplate('{{ $template['id'] }}')" title="{{ $template['description'] ?? '' }}">
                                     <span class="template-name">{{ __($template['name']) }}</span>
                                     <span class="template-desc">{{ __($template['type']) }}</span>
                                 </button>
@@ -962,24 +962,42 @@
                             <span class="expense-section-label">{{ __('finance.expense_category') }}</span>
                             <span class="expense-section-hint">{!! __('finance.check_debt') !!}</span>
                         </div>
-                        <div id="expense-list"></div>
-                        <button type="button" id="add-expense-btn" class="btn-add-expense">
+                        
+                        <div id="expense-list">
+                            @if(count($expenses) > 0)
+                                @foreach($expenses as $index => $expense)
+                                    <div class="expense-row">
+                                        <input type="text" wire:model="expenses.{{ $index }}.name" placeholder="{{ __('finance.category_name') }}" autocomplete="off" required>
+                                        <div class="money-field" style="position:relative;">
+                                            <span class="money-prefix">Rp</span>
+                                            <input type="text" class="expense-amount" wire:model="expenses.{{ $index }}.amount" x-data x-init="$el.value = String($el.value).replace(/[^0-9]/g, '').replace(/\\B(?=(\\d{3})+(?!\\d))/g, '.')" x-on:input="$el.value = $el.value.replace(/[^0-9]/g, '').replace(/\\B(?=(\\d{3})+(?!\\d))/g, '.')" inputmode="numeric" autocomplete="off" required style="padding-left:42px;">
+                                        </div>
+                                        <label class="debt-toggle" title="{{ __('finance.mark_as_debt') }}">
+                                            <input type="checkbox" wire:model="expenses.{{ $index }}.is_debt"> {{ __('finance.installment_label') }}
+                                        </label>
+                                        <button type="button" class="btn-remove-expense" wire:click.prevent="removeExpenseRow({{ $index }})" title="{{ __('finance.remove_category') }}">✕</button>
+                                    </div>
+                                @endforeach
+                            @endif
+                        </div>
+
+                        <button type="button" id="add-expense-btn" wire:click.prevent="addExpenseRow" class="btn-add-expense">
                             <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
                             {{ __('finance.add_category') }}
                         </button>
                     </div>
 
                     <div class="finance-form-grid" style="margin-top:16px;">
-                        <label><span>{{ __('finance.monthly_savings') }}</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input wire:model="tabungan" value="{{ $formatRupiahInput(old('tabungan', $result['saving'] ?? '')) }}" inputmode="numeric" autocomplete="off" required></div></label>
-                        <label><span>{{ __('finance.current_savings_balance') }}</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input wire:model="saldo_tabungan" value="{{ $formatRupiahInput(old('saldo_tabungan', $result['saldo_tabungan'] ?? '')) }}" inputmode="numeric" autocomplete="off"></div></label>
-                        <label><span>{{ __('finance.monthly_deposit') }}</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input wire:model="setoran_tabungan" value="{{ $formatRupiahInput(old('setoran_tabungan', $result['setoran_tabungan'] ?? '')) }}" inputmode="numeric" autocomplete="off"></div></label>
-                        <label><span>{{ __('finance.investment') }}</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input wire:model="investasi" value="{{ $formatRupiahInput(old('investasi', $result['investment'] ?? '')) }}" inputmode="numeric" autocomplete="off" required></div></label>
-                        <label><span>{{ __('finance.emergency_fund') }}</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input wire:model="dana_darurat" value="{{ $formatRupiahInput(old('dana_darurat', $result['emergency_fund'] ?? '')) }}" inputmode="numeric" autocomplete="off" required></div></label>
-                        <label><span>{{ __('finance.savings_target') }}</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" data-rupiah-input wire:model="target_tabungan" value="{{ $formatRupiahInput(old('target_tabungan', $result['target_saving'] ?? '')) }}" inputmode="numeric" autocomplete="off"></div></label>
+                        <label><span>{{ __('finance.monthly_savings') }}</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" x-data x-on:input="$el.value = $el.value.replace(/[^0-9]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, '.')" wire:model="tabungan" value="{{ $formatRupiahInput(old('tabungan', $result['saving'] ?? '')) }}" inputmode="numeric" autocomplete="off" required></div></label>
+                        <label><span>{{ __('finance.current_savings_balance') }}</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" x-data x-on:input="$el.value = $el.value.replace(/[^0-9]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, '.')" wire:model="saldo_tabungan" value="{{ $formatRupiahInput(old('saldo_tabungan', $result['saldo_tabungan'] ?? '')) }}" inputmode="numeric" autocomplete="off"></div></label>
+                        <label><span>{{ __('finance.monthly_deposit') }}</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" x-data x-on:input="$el.value = $el.value.replace(/[^0-9]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, '.')" wire:model="setoran_tabungan" value="{{ $formatRupiahInput(old('setoran_tabungan', $result['setoran_tabungan'] ?? '')) }}" inputmode="numeric" autocomplete="off"></div></label>
+                        <label><span>{{ __('finance.investment') }}</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" x-data x-on:input="$el.value = $el.value.replace(/[^0-9]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, '.')" wire:model="investasi" value="{{ $formatRupiahInput(old('investasi', $result['investment'] ?? '')) }}" inputmode="numeric" autocomplete="off" required></div></label>
+                        <label><span>{{ __('finance.emergency_fund') }}</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" x-data x-on:input="$el.value = $el.value.replace(/[^0-9]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, '.')" wire:model="dana_darurat" value="{{ $formatRupiahInput(old('dana_darurat', $result['emergency_fund'] ?? '')) }}" inputmode="numeric" autocomplete="off" required></div></label>
+                        <label><span>{{ __('finance.savings_target') }}</span><div class="money-field"><span class="money-prefix">Rp</span><input type="text" x-data x-on:input="$el.value = $el.value.replace(/[^0-9]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, '.')" wire:model="target_tabungan" value="{{ $formatRupiahInput(old('target_tabungan', $result['target_saving'] ?? '')) }}" inputmode="numeric" autocomplete="off"></div></label>
                     </div>
 
                     {{-- Pass initial expense data to JavaScript --}}
-                    <script id="initial-expenses-data" type="application/json">{!! json_encode($initialExpenses) !!}</script>
+                    
 
                     <button class="workspace-button" type="submit">{{ __('finance.calculate') }}</button>
                 </form>
@@ -1674,151 +1692,11 @@
     </script>
     @endif
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var fields = document.querySelectorAll('[data-rupiah-input]');
-
-            function formatRupiah(value) {
-                var digits = String(value || '').replace(/[^0-9]/g, '');
-
-                if (!digits) {
-                    return '';
-                }
-
-                return digits.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-            }
-
-            function normalizeField(input) {
-                var digits = input.value.replace(/[^0-9]/g, '');
-                input.value = formatRupiah(digits);
-            }
-
-            fields.forEach(function (field) {
-                normalizeField(field);
-
-                field.addEventListener('input', function () {
-                    normalizeField(field);
-                });
-
-                field.form && field.form.addEventListener('submit', function () {
-                    field.value = field.value.replace(/[^0-9]/g, '');
-                });
-            });
-        });
-    </script>
+    
 
     {{-- ── Template selector and category trend chart ──────── --}}
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Template selector functionality
-            var templateBtns = document.querySelectorAll('.template-btn');
-            var incomeInput = document.querySelector('input[wire:model="pemasukan"]');
-            var expenseList = document.getElementById('expense-list');
-
-            if (templateBtns.length > 0 && incomeInput && expenseList) {
-                templateBtns.forEach(function (btn) {
-                    btn.addEventListener('click', function (e) {
-                        e.preventDefault();
-                        
-                        var templateId = this.getAttribute('data-template-id');
-                        var income = parseFloat(incomeInput.value.replace(/[^0-9]/g, '')) || 0;
-
-                        if (income <= 0) {
-                            alert('{{ __('finance.select_income_first') }}');
-                            return;
-                        }
-
-                        fetch('{{ route("finance.apply-template") }}', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || '{{ csrf_token() }}'
-                            },
-                            body: JSON.stringify({
-                                template_id: templateId,
-                                income: income
-                            })
-                        })
-                        .then(function(res) { return res.json(); })
-                        .then(function(data) {
-                            if (data.error) {
-                                alert(data.error);
-                                return;
-                            }
-
-                            // Clear existing rows
-                            expenseList.innerHTML = '';
-
-                            // Add new rows from template
-                            var rowIndex = 0;
-                            var PALETTE = [
-                                'var(--accent-primary)','#6366f1','#fb7185','var(--accent-primary)',
-                                '#10b981','#38bdf8','#f97316','#a78bfa',
-                                '#34d399','#fbbf24','#e879f9','#60a5fa'
-                            ];
-
-                            function formatRp(val) {
-                                var digits = String(val || '').replace(/[^0-9]/g, '');
-                                if (!digits) return '';
-                                return digits.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-                            }
-
-                            function escHtml(s) {
-                                return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-                            }
-
-                            data.expenses.forEach(function(expense) {
-                                var idx = rowIndex++;
-                                var row = document.createElement('div');
-                                row.className = 'expense-row';
-                                row.dataset.index = idx;
-
-                                var color = PALETTE[idx % PALETTE.length];
-                                var amount = formatRp(String(expense.amount || 0));
-                                var isDebt = expense.is_debt ? ' checked' : '';
-
-                                row.innerHTML =
-                                    '<input type="text" name="expenses[' + idx + '][name]" value="' + escHtml(expense.name) + '" placeholder="{{ __('finance.category_name') }}" autocomplete="off" required>' +
-                                    '<div class="money-field" style="position:relative;">' +
-                                        '<span class="money-prefix">Rp</span>' +
-                                        '<input type="text" name="expenses[' + idx + '][amount]" value="' + escHtml(amount) + '" class="expense-amount" inputmode="numeric" autocomplete="off" required style="padding-left:42px;">' +
-                                    '</div>' +
-                                    '<label class="debt-toggle" title="{{ __('finance.mark_as_debt') }}">' +
-                                        '<input type="checkbox" name="expenses[' + idx + '][is_debt]" value="1"' + isDebt + '>' +
-                                        '{{ __('finance.installment_label') }}' +
-                                    '</label>' +
-                                    '<button type="button" class="btn-remove-expense" title="{{ __('finance.remove_category') }}">✕</button>';
-
-                                row.style.borderLeft = '3px solid ' + color;
-                                row.style.paddingLeft = '8px';
-
-                                var amountInput = row.querySelector('.expense-amount');
-                                amountInput.addEventListener('input', function() {
-                                    var cursor = this.selectionStart;
-                                    var before = this.value.length;
-                                    this.value = formatRp(this.value);
-                                    var diff = this.value.length - before;
-                                    try { this.setSelectionRange(cursor + diff, cursor + diff); } catch(e) {}
-                                });
-
-                                row.querySelector('.btn-remove-expense').addEventListener('click', function () {
-                                    row.style.opacity = '0';
-                                    row.style.transform = 'translateY(-6px)';
-                                    row.style.transition = 'opacity 0.18s, transform 0.18s';
-                                    setTimeout(function() { row.remove(); }, 180);
-                                });
-
-                                expenseList.appendChild(row);
-                            });
-                        })
-                        .catch(function(err) {
-                            console.error('Error applying template:', err);
-                            alert('{{ __('finance.template_failed') }}');
-                        });
-                    });
-                });
-            }
-
             // Category trend chart
             var categoryTrendCanvas = document.getElementById('categoryTrendChart');
             if (categoryTrendCanvas && typeof Chart !== 'undefined') {
