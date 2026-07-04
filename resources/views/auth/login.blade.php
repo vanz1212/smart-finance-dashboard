@@ -44,7 +44,7 @@
                         name="email"
                         value="{{ old('email') }}"
                         autocomplete="email"
-                        placeholder="admin@smartfinance.test"
+                        placeholder="admin@nexio.test"
                         required
                         autofocus
                     >

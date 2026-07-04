@@ -220,7 +220,10 @@
     <main class="tax-workspace">
         <div class="tax-inner">
             <div class="tax-topbar">
-                <strong>SmartFinance.</strong>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <img src="{{ asset('images/nexio_logo.png') }}" alt="Nexio Logo" style="height: 24px; width: auto;">
+                    <strong>NEXIO</strong>
+                </div>
             </div>
             
             <div class="disclaimer-alert">

@@ -31,8 +31,8 @@ return [
     'slide_nav' => 'Slide navigation',
 
     // About
-    'about_label' => 'About SmartFinance',
-    'about_text' => 'SmartFinance helps you read your financial condition faster: cash flow, savings ratio, debt, emergency funds, and taxes — all in one ecosystem.',
+    'about_label' => 'About Nexio',
+    'about_text' => 'Nexio helps you read your financial condition faster: cash flow, savings ratio, debt, emergency funds, and taxes — all in one ecosystem.',
 
     // Services
     'services_title_before' => 'Tools that',
@@ -46,6 +46,9 @@ return [
 
     'service3_title' => 'Stata',
     'service3_desc' => 'A statistical and economic analysis workspace for academic needs. Supports learning pathways, data exploration, and result interpretation.',
+
+    'service4_title' => 'Financial Target',
+    'service4_desc' => 'Set and track your financial goals to ensure you stay on path towards achieving them. Plan for the future with precision.',
 
     // Footer
     'footer_address' => "Jl. Finansial No. 12<br>Jakarta, Indonesia<br>Financial analysis, taxation, and statistics platform.",

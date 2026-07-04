@@ -888,7 +888,10 @@
     <main class="finance-workspace">
         <div class="workspace-inner">
             <div class="workspace-topbar">
-                <strong>SmartFinance.</strong>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <img src="{{ asset('images/nexio_logo.png') }}" alt="Nexio Logo" style="height: 24px; width: auto;">
+                    <strong>NEXIO</strong>
+                </div>
             </div>
 
             @if (session('success'))

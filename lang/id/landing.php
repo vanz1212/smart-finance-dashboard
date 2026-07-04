@@ -31,8 +31,8 @@ return [
     'slide_nav' => 'Navigasi slide',
 
     // About
-    'about_label' => 'Tentang SmartFinance',
-    'about_text' => 'SmartFinance membantu membaca kondisi keuangan dengan lebih cepat: arus kas, rasio tabungan, utang, dana darurat, dan pajak dalam satu ekosistem.',
+    'about_label' => 'Tentang Nexio',
+    'about_text' => 'Nexio membantu membaca kondisi keuangan dengan lebih cepat: arus kas, rasio tabungan, utang, dana darurat, dan pajak dalam satu ekosistem.',
 
     // Services
     'services_title_before' => 'Alat yang',
@@ -46,6 +46,9 @@ return [
 
     'service3_title' => 'Stata',
     'service3_desc' => 'Ruang analisis statistik dan ekonomi untuk kebutuhan akademik. Mendukung alur belajar, eksplorasi data, dan interpretasi hasil analisis.',
+
+    'service4_title' => 'Target Keuangan',
+    'service4_desc' => 'Tetapkan dan pantau tujuan keuangan Anda untuk memastikan Anda tetap pada jalur pencapaian. Rencanakan masa depan dengan akurat.',
 
     // Footer
     'footer_address' => "Jl. Finansial No. 12<br>Jakarta, Indonesia<br>Platform analisa keuangan, perpajakan, dan statistik.",

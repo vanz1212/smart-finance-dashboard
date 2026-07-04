@@ -395,9 +395,87 @@ class SmartFinance extends Component
 
     
         private function normalizeRupiah($value): string
-        {
-            return preg_replace('/[^0-9]/', '', (string) $value) ?: '0';
+    {
+        return preg_replace('/[^0-9]/', '', (string) $value) ?: '0';
+    }
+
+    private function ratio(float $value, float $base): float
+    {
+        return $base > 0 ? ($value / $base) * 100 : 0;
+    }
+
+    private function assessFinancialHealth(
+        float $netCashflow,
+        float $expenseRatio,
+        float $savingRatio,
+        float $debtRatio,
+        float $emergencyMonths
+    ): array {
+        $recommendations = [];
+        $score = 100;
+
+        if ($netCashflow < 0) {
+            $score -= 30;
+            $recommendations[] = __('finance.recommendation_cashflow_negative');
         }
+
+        if ($expenseRatio > 70) {
+            $score -= 25;
+            $recommendations[] = __('finance.recommendation_expense_ratio_high');
+        } elseif ($expenseRatio > 60) {
+            $score -= 15;
+            $recommendations[] = __('finance.recommendation_expense_ratio_warn');
+        }
+
+        if ($savingRatio < 10) {
+            $score -= 20;
+            $recommendations[] = __('finance.recommendation_saving_ratio_low');
+        } elseif ($savingRatio < 20) {
+            $score -= 10;
+            $recommendations[] = __('finance.recommendation_saving_ratio_mid');
+        }
+
+        if ($debtRatio > 30) {
+            $score -= 25;
+            $recommendations[] = __('finance.recommendation_debt_ratio_high');
+        } elseif ($debtRatio > 20) {
+            $score -= 10;
+            $recommendations[] = __('finance.recommendation_debt_ratio_warn');
+        }
+
+        if ($emergencyMonths < 3) {
+            $score -= 15;
+            $recommendations[] = __('finance.recommendation_emergency_low');
+        }
+
+        if (empty($recommendations)) {
+            $recommendations[] = __('finance.recommendation_finance_healthy');
+        }
+
+        if ($score >= 80) {
+            $status = __('finance.status_healthy');
+            $class = 'success';
+        } elseif ($score >= 55) {
+            $status = __('finance.status_warning');
+            $class = 'warning';
+        } else {
+            $status = __('finance.status_risky');
+            $class = 'danger';
+        }
+
+        return compact('status', 'class', 'recommendations');
+    }
+
+    private function normalizeCategoryKey(string $name): string
+    {
+        return match ($name) {
+            __('finance.basic_needs'), 'Kebutuhan pokok', 'Basic needs' => 'basic_needs',
+            __('finance.transportation'), 'Transportasi', 'Transportation' => 'transportation',
+            __('finance.debt_installment'), 'Cicilan/utang', 'Installment/Debt', 'Installment' => 'debt_installment',
+            __('finance.lifestyle'), 'Gaya hidup', 'Lifestyle' => 'lifestyle',
+            default => strtolower(trim(preg_replace('/[^a-z0-9]+/i', '_', $name), '_')),
+        };
+    }
 
     #[Layout('layouts.app')]
     public function render()

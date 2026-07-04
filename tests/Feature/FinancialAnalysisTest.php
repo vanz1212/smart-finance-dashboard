@@ -23,7 +23,7 @@ class FinancialAnalysisTest extends TestCase
 
         $response = $this->actingAs($user)->get(route('finance.index'));
         $response->assertStatus(200);
-        $response->assertSee('Input Bulanan');
+        $response->assertSee(__('finance.monthly_input'));
     }
 
     public function test_user_can_submit_and_store_financial_analysis(): void
@@ -46,7 +46,7 @@ class FinancialAnalysisTest extends TestCase
         $response = $this->actingAs($user)->post(route('finance.analyze'), $data);
 
         $response->assertStatus(200);
-        $response->assertSee('Sehat'); // Status should be Sehat based on input ratios
+        $response->assertSee(__('finance.status_healthy')); // Status should be Sehat based on input ratios
 
         $this->assertDatabaseHas('financial_analyses', [
             'user_id' => $user->id,

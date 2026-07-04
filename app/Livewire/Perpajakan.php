@@ -130,11 +130,57 @@ class Perpajakan extends Component
         $ptkp_tahunan = self::PTKP[$status] ?? self::PTKP['TK/0'];
         $hasil = [];
 
-        if ($metode === 'ter') {
-            $hasil = $this->calculateTER($penghasilanBulanan, $status, $penghasilanTidakTeratur, $iuranPensiun, $zakat, $ptkp_tahunan);
+        $biayaJabatanBulanan = min($penghasilanBulanan * 0.05, 500000);
+        
+        $penghasilanTahunan = $penghasilanBulanan * 12;
+        $biayaJabatanTahunan = min(($penghasilanTahunan + $penghasilanTidakTeratur) * 0.05, 6000000);
+        $pengurangTahunan = $biayaJabatanTahunan + ($iuranPensiun * 12) + $zakat; // Zakat dihitung tahunan di sini sbg contoh
+        
+        $penghasilanNeto = max(($penghasilanTahunan + $penghasilanTidakTeratur) - $pengurangTahunan, 0);
+        $ptkp = $ptkp_tahunan;
+        $pkpSebelumPembulatan = max($penghasilanNeto - $ptkp, 0);
+        $pkp = floor($pkpSebelumPembulatan / 1000) * 1000;
+        
+        // PPh Tahunan
+        $calculationTahunan = $this->calculateProgressiveTax($pkp);
+        $estimasiPajakTahunan = $calculationTahunan['total_tax'];
+        
+        // PPh Kurang/Lebih Bayar
+        $pajakTerutang = max($estimasiPajakTahunan - $kreditPajak, 0);
+
+        // Jika metode TER (Bulanan)
+        $terCategory = self::PTKP_TER_CATEGORY[$status];
+        $terRate = $this->getTerRate($terCategory, $penghasilanBulanan); // Simplification of lookup table
+        $estimasiPajakBulananTER = $penghasilanBulanan * $terRate;
+
+        // Tentukan output berdasarkan metode
+        if ($metode === 'ter' && $tahun >= 2024) {
+            $estimasiPajakBulanan = $estimasiPajakBulananTER;
+            $catatan = __('tax.ter_note', [
+                'category' => $terCategory,
+                'rate' => number_format($terRate * 100, 2, ',', '.'),
+            ]);
         } else {
-            $hasil = $this->calculateTahunanLama($penghasilanBulanan, $penghasilanTidakTeratur, $iuranPensiun, $zakat, $ptkp_tahunan, $kreditPajak);
+            $estimasiPajakBulanan = $estimasiPajakTahunan / 12;
+            $catatan = __('tax.annual_note');
         }
+
+        $hasil = [
+            'biaya_jabatan_bulanan' => $biayaJabatanBulanan,
+            'penghasilan_tahunan' => $penghasilanTahunan,
+            'pengurang_tahunan' => $pengurangTahunan,
+            'penghasilan_neto' => $penghasilanNeto,
+            'ptkp' => $ptkp,
+            'pkp' => $pkp,
+            'estimasi_pajak_tahunan' => $estimasiPajakTahunan,
+            'estimasi_pajak_bulanan' => $estimasiPajakBulanan,
+            'pajak_kurang_bayar' => $pajakTerutang,
+            'status_pajak' => $this->taxLevel($estimasiPajakTahunan),
+            'catatan' => $catatan,
+            'breakdown' => $calculationTahunan['breakdown'],
+            'ter_category' => $terCategory,
+            'ter_rate' => $terRate * 100,
+        ];
 
         $hasil['tahun_pajak'] = $tahun;
         $hasil['metode_perhitungan'] = $metode;
@@ -149,6 +195,16 @@ class Perpajakan extends Component
 
         $analysis = TaxAnalysis::create([
             'user_id' => Auth::id(),
+            'tahun_pajak' => $tahun,
+            'penghasilan_bulanan' => $penghasilanBulanan,
+            'penghasilan_tidak_teratur' => $penghasilanTidakTeratur,
+            'biaya_jabatan' => $biayaJabatanBulanan,
+            'iuran_pensiun' => $iuranPensiun,
+            'zakat' => $zakat,
+            'kredit_pajak' => $kreditPajak,
+            'status_wajib_pajak' => $status,
+            'metode_perhitungan' => $metode,
+            'estimasi_pajak' => $estimasiPajakTahunan,
             'hasil_json' => $hasil,
         ]);
 
@@ -187,6 +243,50 @@ class Perpajakan extends Component
         {
             return array_keys(self::PTKP);
         }
+
+    private function calculateProgressiveTax(float $pkp): array
+    {
+        $remaining = $pkp;
+        $previousLimit = 0;
+        $totalTax = 0;
+        $breakdown = [];
+
+        foreach (self::TAX_BRACKETS as $bracket) {
+            if ($remaining <= 0) {
+                break;
+            }
+
+            $upperLimit = $bracket['upper_limit'];
+            $layerAmount = $upperLimit === null
+                ? $remaining
+                : min($remaining, $upperLimit - $previousLimit);
+            $layerTax = $layerAmount * $bracket['rate'];
+
+            $breakdown[] = [
+                'label' => $bracket['label'],
+                'rate' => $bracket['rate'],
+                'taxable_amount' => $layerAmount,
+                'tax' => $layerTax,
+            ];
+
+            $totalTax += $layerTax;
+            $remaining -= $layerAmount;
+            $previousLimit = $upperLimit ?? $previousLimit;
+        }
+
+        return [
+            'total_tax' => $totalTax,
+            'breakdown' => $breakdown,
+        ];
+    }
+
+    private function taxLevel(float $tax): string
+    {
+        if ($tax <= 0) return 'Tidak kena pajak';
+        if ($tax < 1000000) return 'Pajak rendah';
+        if ($tax <= 5000000) return 'Pajak normal';
+        return 'Pajak tinggi';
+    }
 
     #[Layout('layouts.app')]
     public function render()

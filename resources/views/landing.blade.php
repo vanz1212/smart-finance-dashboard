@@ -538,7 +538,7 @@
 
         .service-grid {
             display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
+            grid-template-columns: repeat(4, minmax(0, 1fr));
             gap: 20px;
             width: min(100%, 980px);
             margin: 0 auto;
@@ -563,6 +563,10 @@
 
         .service-card:nth-child(3) {
             animation-delay: 0.16s;
+        }
+
+        .service-card:nth-child(4) {
+            animation-delay: 0.24s;
         }
 
         .service-card small {
@@ -952,7 +956,10 @@
 
     <main class="landing-shell">
         <nav class="landing-nav">
-            <a class="landing-brand" href="{{ route('home') }}">SmartFinance.</a>
+            <a class="landing-brand" href="{{ route('home') }}" style="display: flex; align-items: center; gap: 8px; text-decoration: none;">
+                <img src="{{ asset('images/nexio_logo.png') }}" alt="Nexio Logo" style="height: 24px; width: auto;">
+                <span>NEXIO</span>
+            </a>
             <div class="landing-links">
                 <div class="lang-toggle">
                     <a href="{{ route('lang.switch', 'id') }}" class="{{ app()->getLocale() === 'id' ? 'is-active' : '' }}">ID</a>
@@ -1030,6 +1037,11 @@
                     <small>03</small>
                     <h3>{{ __('landing.service3_title') }}</h3>
                     <p>{{ __('landing.service3_desc') }}</p>
+                </article>
+                <article class="service-card">
+                    <small>04</small>
+                    <h3>{{ __('landing.service4_title') }}</h3>
+                    <p>{{ __('landing.service4_desc') }}</p>
                 </article>
             </div>
         </section>
