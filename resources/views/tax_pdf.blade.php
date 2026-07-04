@@ -83,7 +83,7 @@
             </tr>
             <tr>
                 <td><strong>Metode Perhitungan:</strong></td>
-                <td>{{ strtoupper($result['metode']) }}</td>
+                <td>{{ strtoupper($result['metode_perhitungan'] ?? $result['metode'] ?? '') }}</td>
             </tr>
         </table>
     </div>
@@ -92,7 +92,7 @@
     <table>
         <tr>
             <td>Penghasilan Bruto (Gaji + THR/Bonus)</td>
-            <td class="text-right">{{ $formatRupiah($result['penghasilan_tahunan'] + $result['penghasilan_tidak_teratur']) }}</td>
+            <td class="text-right">{{ $formatRupiah($result['penghasilan_tahunan'] + ($result['input']['penghasilan_tidak_teratur'] ?? $result['penghasilan_tidak_teratur'] ?? 0)) }}</td>
         </tr>
         <tr>
             <td>Biaya Jabatan (Tahunan)</td>
@@ -100,11 +100,11 @@
         </tr>
         <tr>
             <td>Iuran Pensiun / BPJS (Tahunan)</td>
-            <td class="text-right">{{ $formatRupiah($result['iuran_pensiun'] * 12) }}</td>
+            <td class="text-right">{{ $formatRupiah(($result['input']['iuran_pensiun'] ?? $result['iuran_pensiun'] ?? 0) * 12) }}</td>
         </tr>
         <tr>
             <td>Zakat (Resmi)</td>
-            <td class="text-right">{{ $formatRupiah($result['zakat']) }}</td>
+            <td class="text-right">{{ $formatRupiah($result['input']['zakat'] ?? $result['zakat'] ?? 0) }}</td>
         </tr>
         <tr style="background-color: #f3f4f6; font-weight: bold;">
             <td>Penghasilan Neto</td>
@@ -150,7 +150,7 @@
             </tr>
             <tr>
                 <td colspan="2" class="text-right">Kredit Pajak (Telah Dipotong)</td>
-                <td class="text-right">({{ $formatRupiah($result['kredit_pajak']) }})</td>
+                <td class="text-right">({{ $formatRupiah($result['input']['kredit_pajak'] ?? $result['kredit_pajak'] ?? 0) }})</td>
             </tr>
             <tr style="background-color: #fee2e2; font-weight: bold; color: #b91c1c;">
                 <td colspan="2" class="text-right">Pajak Kurang (Lebih) Bayar</td>

@@ -1315,10 +1315,12 @@
     </main>
 
     @if (isset($history) && count($history) > 0)
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                var ctx = document.getElementById('financeTrendChart').getContext('2d');
+            (function () {
+                function initFinanceChart() {
+                    var canvas = document.getElementById('financeTrendChart');
+                    if (!canvas) return;
+                    var ctx = canvas.getContext('2d');
                 
                 var monthsMap = {
                     '01': 'Jan', '02': 'Feb', '03': 'Mar', '04': 'Apr',
@@ -1339,6 +1341,9 @@
                 var allExpense = {!! json_encode($history->map(fn($item) => (float)$item->calculated['total_expenses'])->toArray()) !!};
                 var allSaving = {!! json_encode($history->map(fn($item) => (float)$item->calculated['total_saving_investment'])->toArray()) !!};
                 var allCashflow = {!! json_encode($history->map(fn($item) => (float)$item->calculated['net_cashflow'])->toArray()) !!};
+
+                var existingChart = Chart.getChart(ctx.canvas);
+                if (existingChart) existingChart.destroy();
 
                 var chart = new Chart(ctx, {
                     type: 'line',
@@ -1491,7 +1496,23 @@
                         updateChartRange(range);
                     });
                 });
-            });
+                }
+
+                var checkAndInitFinance = function() {
+                    if (typeof Chart !== 'undefined') {
+                        initFinanceChart();
+                    } else {
+                        if (!document.getElementById('chartjs-script')) {
+                            var s = document.createElement('script');
+                            s.id = 'chartjs-script';
+                            s.src = 'https://cdn.jsdelivr.net/npm/chart.js';
+                            document.head.appendChild(s);
+                        }
+                        setTimeout(checkAndInitFinance, 100);
+                    }
+                };
+                checkAndInitFinance();
+            })();
         </script>
     @endif
 
@@ -1625,6 +1646,9 @@
 
                 var total = amounts.reduce(function(s, v) { return s + v; }, 0);
 
+                var existingChart = Chart.getChart(canvas);
+                if (existingChart) existingChart.destroy();
+
                 var chart = new Chart(canvas.getContext('2d'), {
                     type: 'doughnut',
                     data: {
@@ -1680,14 +1704,20 @@
             }
 
             // Chart.js may already be loaded (from the trend chart block above)
-            if (typeof Chart !== 'undefined') {
-                initDonut();
-            } else {
-                var s = document.createElement('script');
-                s.src = 'https://cdn.jsdelivr.net/npm/chart.js';
-                s.onload = initDonut;
-                document.head.appendChild(s);
-            }
+            var checkAndInitDonut = function() {
+                if (typeof Chart !== 'undefined') {
+                    initDonut();
+                } else {
+                    if (!document.getElementById('chartjs-script')) {
+                        var s = document.createElement('script');
+                        s.id = 'chartjs-script';
+                        s.src = 'https://cdn.jsdelivr.net/npm/chart.js';
+                        document.head.appendChild(s);
+                    }
+                    setTimeout(checkAndInitDonut, 100);
+                }
+            };
+            checkAndInitDonut();
         })();
     </script>
     @endif
@@ -1696,10 +1726,11 @@
 
     {{-- ── Template selector and category trend chart ──────── --}}
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Category trend chart
-            var categoryTrendCanvas = document.getElementById('categoryTrendChart');
-            if (categoryTrendCanvas && typeof Chart !== 'undefined') {
+        (function () {
+            function initCategoryTrendChart() {
+                // Category trend chart
+                var categoryTrendCanvas = document.getElementById('categoryTrendChart');
+                if (categoryTrendCanvas) {
                 var categoryHistory = {!! json_encode($categoryHistory ?? []) !!};
                 var monthsMap = {
                     '01': 'Jan', '02': 'Feb', '03': 'Mar', '04': 'Apr',
@@ -1741,6 +1772,9 @@
                             fill: false
                         });
                     });
+
+                    var existingChart = Chart.getChart(categoryTrendCanvas);
+                    if (existingChart) existingChart.destroy();
 
                     new Chart(categoryTrendCanvas.getContext('2d'), {
                         type: 'line',
@@ -1808,7 +1842,22 @@
                     });
                 }
             }
-        });
+
+            var checkAndInitCategory = function() {
+                if (typeof Chart !== 'undefined') {
+                    initCategoryTrendChart();
+                } else {
+                    if (!document.getElementById('chartjs-script')) {
+                        var s = document.createElement('script');
+                        s.id = 'chartjs-script';
+                        s.src = 'https://cdn.jsdelivr.net/npm/chart.js';
+                        document.head.appendChild(s);
+                    }
+                    setTimeout(checkAndInitCategory, 100);
+                }
+            };
+            checkAndInitCategory();
+        })();
     </script>
 </div>
 

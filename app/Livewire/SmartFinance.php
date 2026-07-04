@@ -74,25 +74,34 @@ class SmartFinance extends Component
         $this->categories = $this->expenseCategories();
     }
 
+    private function formatForInput($value)
+    {
+        if ($value === null || $value === '') return '';
+        return number_format((float) $this->normalize($value), 0, ',', '.');
+    }
+
     private function fillForm($analysis)
     {
         $this->periode = $analysis->periode;
-        $this->pemasukan = $analysis->pemasukan;
-        $this->tabungan = $analysis->tabungan;
-        $this->saldo_tabungan = $analysis->saldo_tabungan;
-        $this->setoran_tabungan = $analysis->setoran_tabungan;
-        $this->investasi = $analysis->investasi;
-        $this->dana_darurat = $analysis->dana_darurat;
-        $this->target_tabungan = $analysis->target_tabungan;
+        $this->pemasukan = $this->formatForInput($analysis->pemasukan);
+        $this->tabungan = $this->formatForInput($analysis->tabungan);
+        $this->saldo_tabungan = $this->formatForInput($analysis->saldo_tabungan);
+        $this->setoran_tabungan = $this->formatForInput($analysis->setoran_tabungan);
+        $this->investasi = $this->formatForInput($analysis->investasi);
+        $this->dana_darurat = $this->formatForInput($analysis->dana_darurat);
+        $this->target_tabungan = $this->formatForInput($analysis->target_tabungan);
 
         if ($analysis->expenses_json) {
             $this->expenses = $analysis->expenses_json;
+            foreach ($this->expenses as &$expense) {
+                $expense['amount'] = $this->formatForInput($expense['amount']);
+            }
             $this->usingDynamic = true;
         } else {
-            $this->kebutuhan_pokok = $analysis->kebutuhan_pokok;
-            $this->transportasi = $analysis->transportasi;
-            $this->cicilan = $analysis->cicilan;
-            $this->gaya_hidup = $analysis->gaya_hidup;
+            $this->kebutuhan_pokok = $this->formatForInput($analysis->kebutuhan_pokok);
+            $this->transportasi = $this->formatForInput($analysis->transportasi);
+            $this->cicilan = $this->formatForInput($analysis->cicilan);
+            $this->gaya_hidup = $this->formatForInput($analysis->gaya_hidup);
             $this->usingDynamic = false;
         }
     }
@@ -110,8 +119,8 @@ class SmartFinance extends Component
     {
         if (empty($templateId)) return;
 
-        $this->pemasukan = $this->normalize($this->pemasukan);
-        if ($this->pemasukan <= 0) {
+        $pemasukanFloat = $this->normalize($this->pemasukan);
+        if ($pemasukanFloat <= 0) {
             $this->addError('pemasukan', __('finance.select_income_first'));
             return;
         }
@@ -139,18 +148,20 @@ class SmartFinance extends Component
         $this->expenses = [];
         $this->usingDynamic = true;
         foreach ($categories as $category) {
-            $amount = ($this->pemasukan * $category['ratio_percent']) / 100;
+            $amount = ($pemasukanFloat * $category['ratio_percent']) / 100;
             $this->expenses[] = [
                 'name' => $category['name'],
-                'amount' => round($amount, 2),
+                'amount' => $this->formatForInput($amount),
                 'is_debt' => $category['is_debt'] ?? false,
             ];
         }
+        
+        $this->pemasukan = $this->formatForInput($pemasukanFloat);
     }
 
     public function addExpenseRow()
     {
-        $this->expenses[] = ['name' => '', 'amount' => 0, 'is_debt' => false];
+        $this->expenses[] = ['name' => '', 'amount' => '', 'is_debt' => false];
     }
 
     public function removeExpenseRow($index)
@@ -524,6 +535,14 @@ class SmartFinance extends Component
     #[Layout('layouts.app')]
     public function render()
     {
+        if ($this->history) {
+            foreach ($this->history as $item) {
+                if (!isset($item->calculated) && $item instanceof \App\Models\FinancialAnalysis) {
+                    $item->calculated = $this->calculateResults($item->toArray());
+                }
+            }
+        }
+
         return view('livewire.smart-finance');
     }
 }

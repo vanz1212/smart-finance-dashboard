@@ -161,6 +161,7 @@
             content: "";
             position: absolute;
             display: block;
+            box-sizing: border-box;
         }
 
         .tax-icon.calculator::before {
@@ -273,17 +274,17 @@
             color: #93c5fd;
             background: rgba(96, 165, 250, .1);
         }
-        .field-icon.calendar::before { inset: 5px 4px 4px; border: 2px solid currentColor; border-radius: 4px; }
-        .field-icon.calendar::after { left: 5px; right: 5px; top: 8px; height: 2px; background: currentColor; }
+        .field-icon.calendar::before { inset: 4px; border: 2px solid currentColor; border-radius: 4px; }
+        .field-icon.calendar::after { left: 4px; right: 4px; top: 8px; height: 2px; background: currentColor; }
         .field-icon.method::before { inset: 4px; border: 2px solid currentColor; border-radius: 50%; }
-        .field-icon.method::after { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
-        .field-icon.user::before { left: 7px; top: 4px; width: 6px; height: 6px; border: 2px solid currentColor; border-radius: 50%; }
-        .field-icon.user::after { left: 4px; right: 4px; bottom: 4px; height: 7px; border: 2px solid currentColor; border-radius: 8px 8px 4px 4px; }
-        .field-icon.money::before { inset: 5px 3px; border: 2px solid currentColor; border-radius: 5px; }
-        .field-icon.money::after { right: 5px; top: 9px; width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+        .field-icon.method::after { width: 6px; height: 6px; left: 7px; top: 7px; border-radius: 50%; background: currentColor; }
+        .field-icon.user::before { left: 7px; top: 3px; width: 6px; height: 6px; border: 2px solid currentColor; border-radius: 50%; }
+        .field-icon.user::after { left: 3px; right: 3px; bottom: 3px; height: 7px; border: 2px solid currentColor; border-radius: 8px 8px 3px 3px; }
+        .field-icon.money::before { inset: 4px 3px; border: 2px solid currentColor; border-radius: 4px; }
+        .field-icon.money::after { right: 5px; top: 7px; width: 4px; height: 4px; border-radius: 50%; background: currentColor; }
         .field-icon.minus::before { left: 5px; right: 5px; top: 9px; height: 2px; background: currentColor; }
-        .field-icon.credit::before { inset: 5px 3px; border: 2px solid currentColor; border-radius: 4px; }
-        .field-icon.credit::after { left: 6px; right: 6px; top: 10px; height: 2px; background: currentColor; }
+        .field-icon.credit::before { inset: 4px 3px; border: 2px solid currentColor; border-radius: 4px; }
+        .field-icon.credit::after { left: 5px; right: 5px; top: 9px; height: 2px; background: currentColor; }
         .tax-form select option { background: #0f172a; color: #fff; }
         .tax-form input:focus, .tax-form select:focus { 
             outline: none; 
@@ -575,13 +576,13 @@
                             </label>
 
                             <div class="tax-section-chip col-12"><i class="field-icon money" aria-hidden="true"></i>{{ __('tax.income_section') }}</div>
-                            <label class="col-6"><span><i class="field-icon money" aria-hidden="true"></i>{{ __('tax.monthly_salary') }}</span><input type="number" wire:model="penghasilan_bulanan" value="{{ old('penghasilan_bulanan') }}" min="0" step="1000" placeholder="0" required></label>
-                            <label class="col-6"><span><i class="field-icon money" aria-hidden="true"></i>{{ __('tax.annual_bonus') }}</span><input type="number" wire:model="penghasilan_tidak_teratur" value="{{ old('penghasilan_tidak_teratur') }}" min="0" step="1000" placeholder="0" required></label>
+                            <label class="col-6"><span><i class="field-icon money" aria-hidden="true"></i>{{ __('tax.monthly_salary') }}</span><input type="text" x-data x-on:input="$el.value = $el.value.replace(/[^0-9]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, '.')" wire:model="penghasilan_bulanan" value="{{ old('penghasilan_bulanan') }}" inputmode="numeric" autocomplete="off" placeholder="0" required></label>
+                            <label class="col-6"><span><i class="field-icon money" aria-hidden="true"></i>{{ __('tax.annual_bonus') }}</span><input type="text" x-data x-on:input="$el.value = $el.value.replace(/[^0-9]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, '.')" wire:model="penghasilan_tidak_teratur" value="{{ old('penghasilan_tidak_teratur') }}" inputmode="numeric" autocomplete="off" placeholder="0" required></label>
 
                             <div class="tax-section-chip col-12"><i class="field-icon minus" aria-hidden="true"></i>{{ __('tax.deduction_section') }}</div>
-                            <label class="col-6"><span><i class="field-icon minus" aria-hidden="true"></i>{{ __('tax.pension_bpjs') }}</span><input type="number" wire:model="iuran_pensiun" value="{{ old('iuran_pensiun') }}" min="0" step="1000" placeholder="0" required></label>
-                            <label class="col-6"><span><i class="field-icon minus" aria-hidden="true"></i>{{ __('tax.official_zakat') }}</span><input type="number" wire:model="zakat" value="{{ old('zakat') }}" min="0" step="1000" placeholder="0" required></label>
-                            <label class="col-6"><span><i class="field-icon credit" aria-hidden="true"></i>{{ __('tax.tax_credit') }}</span><input type="number" wire:model="kredit_pajak" value="{{ old('kredit_pajak') }}" min="0" step="1000" placeholder="0" required></label>
+                            <label class="col-6"><span><i class="field-icon minus" aria-hidden="true"></i>{{ __('tax.pension_bpjs') }}</span><input type="text" x-data x-on:input="$el.value = $el.value.replace(/[^0-9]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, '.')" wire:model="iuran_pensiun" value="{{ old('iuran_pensiun') }}" inputmode="numeric" autocomplete="off" placeholder="0" required></label>
+                            <label class="col-6"><span><i class="field-icon minus" aria-hidden="true"></i>{{ __('tax.official_zakat') }}</span><input type="text" x-data x-on:input="$el.value = $el.value.replace(/[^0-9]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, '.')" wire:model="zakat" value="{{ old('zakat') }}" inputmode="numeric" autocomplete="off" placeholder="0" required></label>
+                            <label class="col-6"><span><i class="field-icon credit" aria-hidden="true"></i>{{ __('tax.tax_credit') }}</span><input type="text" x-data x-on:input="$el.value = $el.value.replace(/[^0-9]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, '.')" wire:model="kredit_pajak" value="{{ old('kredit_pajak') }}" inputmode="numeric" autocomplete="off" placeholder="0" required></label>
                         </div>
                         <button class="tax-button" type="submit"><span>{{ __('tax.calculate_tax') }}</span></button>
                     </form>
@@ -604,10 +605,7 @@
                                         </div>
                                         <div style="display: flex; gap: 8px;">
                                             <a href="{{ route('perpajakan.index', ['load_id' => $item->id]) }}" class="btn-use" style="background: var(--accent-primary); color: #fff;">{{ __('tax.view') }}</a>
-                                            <form class="workspace-panel workspace-panel-inner" wire:submit="calculate">
-                                                 @method('DELETE')
-                                                <button type="submit" class="btn-use" style="background: #ef4444; color: #fff; border:none; cursor:pointer;">{{ __('tax.delete') }}</button>
-                                            </form>
+                                            <button type="button" class="btn-use" wire:click="deleteHistory({{ $item->id }})" wire:confirm="{{ __('tax.confirm_delete_history') }}" style="background: #ef4444; color: #fff; border:none; cursor:pointer;">{{ __('tax.delete') }}</button>
                                         </div>
                                     </div>
                                 @endforeach

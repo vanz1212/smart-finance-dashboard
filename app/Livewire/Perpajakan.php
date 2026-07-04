@@ -90,16 +90,22 @@ class Perpajakan extends Component
         }
     }
 
+    private function formatForInput($value)
+    {
+        if ($value === null || $value === '') return '';
+        return number_format((float) $this->normalize($value), 0, ',', '.');
+    }
+
     private function fillForm($result)
     {
         $this->tahun_pajak = $result['tahun_pajak'] ?? date('Y');
         $this->metode_perhitungan = $result['metode_perhitungan'] ?? 'ter';
         $this->status_wajib_pajak = $result['status_wajib_pajak'] ?? 'TK/0';
-        $this->penghasilan_bulanan = $result['input']['penghasilan_bulanan'] ?? 0;
-        $this->penghasilan_tidak_teratur = $result['input']['penghasilan_tidak_teratur'] ?? 0;
-        $this->iuran_pensiun = $result['input']['iuran_pensiun'] ?? 0;
-        $this->zakat = $result['input']['zakat'] ?? 0;
-        $this->kredit_pajak = $result['input']['kredit_pajak'] ?? 0;
+        $this->penghasilan_bulanan = $this->formatForInput($result['input']['penghasilan_bulanan'] ?? 0);
+        $this->penghasilan_tidak_teratur = $this->formatForInput($result['input']['penghasilan_tidak_teratur'] ?? 0);
+        $this->iuran_pensiun = $this->formatForInput($result['input']['iuran_pensiun'] ?? 0);
+        $this->zakat = $this->formatForInput($result['input']['zakat'] ?? 0);
+        $this->kredit_pajak = $this->formatForInput($result['input']['kredit_pajak'] ?? 0);
     }
 
     public function normalize($value)
@@ -112,20 +118,15 @@ class Perpajakan extends Component
 
     public function calculate()
     {
-        $this->penghasilan_bulanan = $this->normalize($this->penghasilan_bulanan);
-        $this->penghasilan_tidak_teratur = $this->normalize($this->penghasilan_tidak_teratur);
-        $this->iuran_pensiun = $this->normalize($this->iuran_pensiun);
-        $this->zakat = $this->normalize($this->zakat);
-        $this->kredit_pajak = $this->normalize($this->kredit_pajak);
+        $penghasilanBulanan = $this->normalize($this->penghasilan_bulanan);
+        $penghasilanTidakTeratur = $this->normalize($this->penghasilan_tidak_teratur);
+        $iuranPensiun = $this->normalize($this->iuran_pensiun);
+        $zakat = $this->normalize($this->zakat);
+        $kreditPajak = $this->normalize($this->kredit_pajak);
 
         $metode = $this->metode_perhitungan;
         $tahun = $this->tahun_pajak;
         $status = $this->status_wajib_pajak;
-        $penghasilanBulanan = $this->penghasilan_bulanan;
-        $penghasilanTidakTeratur = $this->penghasilan_tidak_teratur;
-        $iuranPensiun = $this->iuran_pensiun;
-        $zakat = $this->zakat;
-        $kreditPajak = $this->kredit_pajak;
         
         $ptkp_tahunan = self::PTKP[$status] ?? self::PTKP['TK/0'];
         $hasil = [];
@@ -210,6 +211,33 @@ class Perpajakan extends Component
 
         $this->loadData();
         $this->dispatch('taxUpdated');
+    }
+
+    public function deleteHistory($id)
+    {
+        $userId = Auth::id();
+        $analysis = TaxAnalysis::where('user_id', $userId)->find($id);
+        
+        if ($analysis) {
+            $analysis->delete();
+            
+            // If the deleted analysis is currently loaded, clear the result
+            if ($this->result && $this->result['id'] == $id) {
+                $this->result = null;
+                $this->history = TaxAnalysis::where('user_id', $userId)
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+                    
+                if ($this->history->count() > 0) {
+                    $latest = $this->history->first();
+                    $this->result = $latest->hasil_json;
+                    $this->result['id'] = $latest->id;
+                    $this->fillForm($latest->hasil_json);
+                }
+            } else {
+                $this->loadData();
+            }
+        }
     }
 
     
