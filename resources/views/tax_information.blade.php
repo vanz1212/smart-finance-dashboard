@@ -237,7 +237,7 @@
         <nav class="tax-info-nav" aria-label="Navigasi informasi perpajakan">
             <a class="tax-info-brand" href="{{ route('home') }}">NEXIO</a>
             <div class="tax-info-nav-actions">
-                <a href="{{ route('home') }}">Beranda</a>
+                <a href="{{ route('home') }}">{{ __('app.home') }}</a>
                 @auth
                     <a class="primary" href="{{ route('perpajakan.index') }}">Buka Modul</a>
                 @else

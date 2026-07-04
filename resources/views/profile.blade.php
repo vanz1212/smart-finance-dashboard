@@ -501,7 +501,7 @@
                 <p style="color:rgba(255,255,255,0.7);line-height:1.7;max-width:500px;margin:0 auto 24px;">Silakan login terlebih dahulu untuk memuat profile dan mengakses informasi akun Anda.</p>
                 <div style="display: flex; gap: 14px; justify-content: center;">
                     <a href="{{ route('login') }}" style="background: #6366f1; color: #fff; padding: 12px 24px; border-radius: 12px; font-weight: 700; text-decoration: none; transition: transform 0.2s;">Login Sekarang</a>
-                    <a href="{{ route('home') }}" style="background: rgba(255,255,255,0.1); color: #fff; padding: 12px 24px; border-radius: 12px; font-weight: 700; text-decoration: none; border: 1px solid rgba(255,255,255,0.2); transition: transform 0.2s;">Kembali ke Beranda</a>
+                    <a href="{{ route('home') }}" style="background: rgba(255,255,255,0.1); color: #fff; padding: 12px 24px; border-radius: 12px; font-weight: 700; text-decoration: none; border: 1px solid rgba(255,255,255,0.2); transition: transform 0.2s;">{{ __('app.back_to_home') }}</a>
                 </div>
             </section>
         @endif

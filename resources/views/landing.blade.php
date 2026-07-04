@@ -952,6 +952,82 @@
             font-size: 1.4rem;
             line-height: 1;
         }
+
+        /* Lang Toggle Light Theme */
+        [data-theme="light"] .lang-toggle {
+            border-color: rgba(15, 23, 42, .12);
+            background: rgba(15, 23, 42, .04);
+        }
+
+        [data-theme="light"] .lang-toggle a:hover {
+            background: rgba(15, 23, 42, .08);
+            color: #0f172a;
+        }
+
+        [data-theme="light"] .lang-toggle a.is-active {
+            background: rgba(99, 102, 241, .14);
+            color: #4f46e5;
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, .16);
+            background: rgba(255, 255, 255, .06);
+            color: rgba(248, 250, 252, .84);
+            cursor: pointer;
+            transition: all .2s ease;
+            position: relative;
+            margin-left: 12px;
+        }
+
+        .theme-toggle-btn:hover {
+            background: rgba(255, 255, 255, .11);
+            color: #ffffff;
+        }
+
+        [data-theme="light"] .theme-toggle-btn {
+            border-color: rgba(15, 23, 42, .12);
+            color: rgba(15, 23, 42, .8);
+            background: rgba(15, 23, 42, .04);
+        }
+
+        [data-theme="light"] .theme-toggle-btn:hover {
+            color: #0f172a;
+            background: rgba(15, 23, 42, .08);
+        }
+        
+        .theme-toggle-btn svg {
+            width: 18px;
+            height: 18px;
+            position: absolute;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .theme-toggle-btn .sun-icon {
+            opacity: 0;
+            transform: rotate(-90deg);
+        }
+
+        .theme-toggle-btn .moon-icon {
+            opacity: 1;
+            transform: rotate(0);
+        }
+
+        [data-theme="light"] .theme-toggle-btn .sun-icon {
+            opacity: 1;
+            transform: rotate(0);
+        }
+
+        [data-theme="light"] .theme-toggle-btn .moon-icon {
+            opacity: 0;
+            transform: rotate(90deg);
+        }
     </style>
 
     <main class="landing-shell">
@@ -961,9 +1037,15 @@
                 <span>NEXIO</span>
             </a>
             <div class="landing-links">
-                <div class="lang-toggle">
-                    <a href="{{ route('lang.switch', 'id') }}" class="{{ app()->getLocale() === 'id' ? 'is-active' : '' }}">ID</a>
-                    <a href="{{ route('lang.switch', 'en') }}" class="{{ app()->getLocale() === 'en' ? 'is-active' : '' }}">EN</a>
+                <div style="display: flex; align-items: center;">
+                    <div class="lang-toggle">
+                        <a href="{{ route('lang.switch', 'id') }}" class="{{ app()->getLocale() === 'id' ? 'is-active' : '' }}">ID</a>
+                        <a href="{{ route('lang.switch', 'en') }}" class="{{ app()->getLocale() === 'en' ? 'is-active' : '' }}">EN</a>
+                    </div>
+                    <button type="button" class="theme-toggle theme-toggle-btn" aria-label="Toggle Theme" data-theme-toggle>
+                        <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                        <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                    </button>
                 </div>
                 @auth
                     <div class="landing-auth-actions">

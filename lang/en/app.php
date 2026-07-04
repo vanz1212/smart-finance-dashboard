@@ -9,13 +9,14 @@ return [
     'login' => 'Login',
     'admin_panel' => 'Admin Panel',
     'toggle_theme' => 'Toggle Theme',
+    'back_to_home' => 'Back to Home',
     'footer' => '© 2026 Nexio Analytics Dashboard. Built for economics students and economic data users.',
 
     // Greetings
     'good_morning' => 'Good Morning',
     'good_afternoon' => 'Good Afternoon',
     'good_evening' => 'Good Evening',
-    'good_night' => 'Good Night',
+    'good_night' => 'Good Evening',
 
     // Dashboard / Page Selector
     'welcome_text' => 'Welcome to Nexio. Select a module below to start your analysis today.',

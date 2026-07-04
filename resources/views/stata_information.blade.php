@@ -292,7 +292,7 @@
         <nav class="stata-info-nav" aria-label="Navigasi tutorial Stata">
             <a class="stata-info-brand" href="{{ route('home') }}">NEXIO</a>
             <div class="stata-info-nav-actions">
-                <a href="{{ route('home') }}">Beranda</a>
+                <a href="{{ route('home') }}">{{ __('app.home') }}</a>
                 @auth
                     <a class="primary" href="{{ route('stata') }}">Buka Modul</a>
                 @else

@@ -9,6 +9,7 @@ return [
     'login' => 'Login',
     'admin_panel' => 'Admin Panel',
     'toggle_theme' => 'Ganti Tema',
+    'back_to_home' => 'Kembali ke Beranda',
     'footer' => '© 2026 Nexio Analytics Dashboard. Dibuat untuk mahasiswa ekonomi dan pengguna data ekonomi.',
 
     // Greetings

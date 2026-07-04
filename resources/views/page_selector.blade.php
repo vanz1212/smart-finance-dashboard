@@ -1193,13 +1193,16 @@
             [data-theme="light"] .icon-moon { display: none; }
         </style>
 <header class="selector-head">
-            <div class="selector-logo"><img src="{{ asset('images/nexio_logo.png') }}" alt="Nexio Logo" style="height: 48px; border-radius: 12px; object-fit: contain;"></div>
-            <div class="selector-title"><span class="brand-mark" aria-hidden="true"></span> NEXIO</div>
+            <div class="selector-logo" style="display: flex; align-items: center; gap: 16px;">
+                <img src="{{ asset('images/nexio_logo.png') }}" alt="Nexio Logo" style="height: 48px; border-radius: 12px; object-fit: contain;">
+                <div class="selector-title" style="margin: 0;">NEXIO</div>
+            </div>
+            <div></div>
             <div class="head-actions">
                 <div class="profile-actions">
                     <a wire:navigate href="{{ route('home') }}" class="header-btn">
                         <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-                        Beranda Awal
+                        {{ __('app.home') }}
                     </a>
                     <a wire:navigate href="{{ route('profile') }}" class="header-btn">
                         @if(auth()->check() && auth()->user()->avatar)
