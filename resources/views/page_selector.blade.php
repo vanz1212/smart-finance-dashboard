@@ -1187,6 +1187,10 @@
             .module-card {
                 border-radius: 12px; /* fallback */
             }
+            .icon-sun { display: none; }
+            .icon-moon { display: inline; }
+            [data-theme="light"] .icon-sun { display: inline; }
+            [data-theme="light"] .icon-moon { display: none; }
         </style>
 <header class="selector-head">
             <div class="selector-logo"><img src="{{ asset('images/nexio_logo.png') }}" alt="Nexio Logo" style="height: 48px; border-radius: 12px; object-fit: contain;"></div>
@@ -1220,8 +1224,9 @@
                     <span style="color: var(--text-muted);">|</span>
                     <a class="{{ App::getLocale() === 'en' ? 'is-active' : '' }}" href="{{ url('/lang/en') }}">EN</a>
                 </div>
-                <button class="theme-toggle" aria-label="Toggle Theme">
-                    <span class="theme-icon">🌙</span>
+                <button class="theme-toggle" data-theme-toggle aria-label="Toggle Theme">
+                    <span class="theme-icon icon-moon">🌙</span>
+                    <span class="theme-icon icon-sun">☀️</span>
                 </button>
             </div>
         </header>
@@ -1301,10 +1306,10 @@
                             }
                             [data-theme="light"] .module-card:hover {
                                 background: rgba(255, 255, 255, 0.85);
-                                border-color: rgba(20, 184, 166, 0.3);
+                                border-color: rgba(99, 102, 241, 0.3);
                                 box-shadow:
-                                    0 20px 50px -12px rgba(20, 184, 166, 0.15),
-                                    0 0 0 1px rgba(20, 184, 166, 0.1);
+                                    0 20px 50px -12px rgba(99, 102, 241, 0.15),
+                                    0 0 0 1px rgba(99, 102, 241, 0.1);
                             }
                             .module-icon-wrap {
                                 width: clamp(64px, 10vh, 80px);
@@ -1354,14 +1359,14 @@
                                 border: 1px solid rgba(243, 201, 105, 0.2);
                             }
                             [data-theme="light"] .module-badge {
-                                background: rgba(20, 184, 166, 0.1);
-                                color: #0d9488;
-                                border-color: rgba(20, 184, 166, 0.2);
+                                background: rgba(99, 102, 241, 0.1);
+                                color: #4f46e5;
+                                border-color: rgba(99, 102, 241, 0.2);
                             }
                         </style>
                         <div class="module-container">
                             <a wire:navigate class="module-card" href="{{ route('finance.index') }}">
-                                <div class="module-icon-wrap" style="background: linear-gradient(135deg, rgba(20,184,166,0.2), rgba(20,184,166,0.05)); --card-accent: rgba(20,184,166,0.3);">📊</div>
+                                <div class="module-icon-wrap" style="background: linear-gradient(135deg, rgba(99, 102, 241,0.2), rgba(99, 102, 241,0.05)); --card-accent: rgba(99, 102, 241,0.3);">📊</div>
                                 <div class="module-info">
                                     <h3 class="module-title">{{ __('app.module_smart_finance') }}</h3>
                                     <p class="module-desc">{{ __('app.desc_smart_finance') }}</p>
@@ -1418,3 +1423,4 @@
         });
     </script>
 @endsection
+

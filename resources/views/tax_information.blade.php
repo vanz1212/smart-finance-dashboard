@@ -190,14 +190,14 @@
 
         [data-theme="light"] .tax-info-nav-actions .primary,
         [data-theme="light"] .tax-info-button.primary {
-            border-color: #14b8a6;
+            border-color: #6366f1;
             color: #ffffff;
-            background: #14b8a6;
+            background: #6366f1;
         }
 
         [data-theme="light"] .tax-info-kicker,
         [data-theme="light"] .tax-info-card .number {
-            color: #0f766e;
+            color: #6366f1;
         }
 
         [data-theme="light"] .tax-info-card,
@@ -208,7 +208,7 @@
         }
 
         [data-theme="light"] .tax-info-card a {
-            color: #0f766e;
+            color: #6366f1;
         }
 
         @media (max-width: 820px) {
@@ -320,3 +320,4 @@
         </main>
     </div>
 @endsection
+

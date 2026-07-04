@@ -224,7 +224,7 @@
         }
 
         .finance-form-grid input:focus {
-            outline: 3px solid rgba(20, 184, 166, 0.18);
+            outline: 3px solid rgba(99, 102, 241, 0.18);
             border-color: var(--accent-primary);
         }
 
@@ -355,8 +355,8 @@
         }
 
         .breakdown-item.highlight {
-            border-color: rgba(20, 184, 166, 0.38);
-            background: rgba(20, 184, 166, 0.09);
+            border-color: rgba(99, 102, 241, 0.38);
+            background: rgba(99, 102, 241, 0.09);
         }
 
         /* Monthly comparison styles */
@@ -472,7 +472,7 @@
         }
 
         .btn-use:hover {
-            background: #0d9488;
+            background: #4f46e5;
             transform: translateY(-1px);
         }
 
@@ -497,8 +497,8 @@
 
         .alert-success-banner {
             padding: 14px 18px;
-            border: 1px solid rgba(20, 184, 166, 0.3);
-            background: rgba(20, 184, 166, 0.12);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            background: rgba(99, 102, 241, 0.12);
             border-radius: 10px;
             margin-bottom: 24px;
             color: var(--accent-primary);
@@ -594,7 +594,7 @@
         }
 
         .expense-row input[type="text"]:focus {
-            outline: 3px solid rgba(20, 184, 166, 0.18);
+            outline: 3px solid rgba(99, 102, 241, 0.18);
             border-color: var(--accent-primary);
         }
 
@@ -666,9 +666,9 @@
         }
 
         .btn-add-expense:hover {
-            border-color: rgba(20, 184, 166, 0.5);
+            border-color: rgba(99, 102, 241, 0.5);
             color: var(--accent-primary);
-            background: rgba(20, 184, 166, 0.06);
+            background: rgba(99, 102, 241, 0.06);
         }
 
         /* ── Budget donut chart ───────────────────────────── */
@@ -760,8 +760,8 @@
         }
 
         .template-btn:hover {
-            border-color: rgba(20, 184, 166, 0.4);
-            background: rgba(20, 184, 166, 0.08);
+            border-color: rgba(99, 102, 241, 0.4);
+            background: rgba(99, 102, 241, 0.08);
             color: var(--accent-primary);
         }
 
@@ -843,7 +843,7 @@
         }
 
         .recommendation-badge.ok {
-            background: rgba(20, 184, 166, 0.2);
+            background: rgba(99, 102, 241, 0.2);
             color: var(--accent-primary);
         }
 
@@ -1054,7 +1054,7 @@
 
                     @if ($result)
                     <!-- What-If Simulation -->
-                    <div class="insight-box" style="background: rgba(20, 184, 166, 0.05); border-color: rgba(20, 184, 166, 0.3);">
+                    <div class="insight-box" style="background: rgba(99, 102, 241, 0.05); border-color: rgba(99, 102, 241, 0.3);">
                         <h3 style="color: var(--accent-primary); margin-bottom: 15px;">{{ __('finance.what_if_simulation') }}</h3>
                         <p style="font-size: 0.85rem; color: rgba(248, 250, 252, 0.7); margin-bottom: 20px;">
                             {{ __('finance.simulation_intro') }}
@@ -1941,3 +1941,4 @@
         });
     </script>
 @endsection
+

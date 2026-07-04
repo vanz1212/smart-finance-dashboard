@@ -225,16 +225,16 @@
 
         [data-theme="light"] .stata-info-nav-actions .primary,
         [data-theme="light"] .stata-info-button.primary {
-            border-color: #14b8a6;
+            border-color: #6366f1;
             color: #ffffff;
-            background: #14b8a6;
+            background: #6366f1;
         }
 
         [data-theme="light"] .stata-info-kicker,
         [data-theme="light"] .stata-info-card .number,
         [data-theme="light"] .stata-step strong,
         [data-theme="light"] .stata-info-card a {
-            color: #0f766e;
+            color: #6366f1;
         }
 
         [data-theme="light"] .stata-info-card,
@@ -250,8 +250,8 @@
         }
 
         [data-theme="light"] .stata-command {
-            border-color: rgba(20, 184, 166, .22);
-            color: #0f766e;
+            border-color: rgba(99, 102, 241, .22);
+            color: #6366f1;
             background: rgba(15, 23, 42, .04);
         }
 
@@ -401,3 +401,4 @@
         </main>
     </div>
 @endsection
+

@@ -180,7 +180,7 @@
             radial-gradient(circle at 50% 0%, rgba(99, 102, 241, .18), transparent 28%),
             linear-gradient(180deg, rgba(11, 17, 32, .9), rgba(11, 17, 32, .98)),
             url('{{ asset('images/backgroundfinance.jpg') }}'),
-            linear-gradient(90deg, rgba(137, 23, 23, .35), rgba(8, 20, 24, .45)) !important;
+            linear-gradient(90deg, rgba(99, 102, 241, .15), rgba(8, 20, 24, .45)) !important;
         background-position: top center, top center, top center, top center !important;
         background-size: 100% 100%, 100% 100%, 100% auto, 100% 100% !important;
         background-repeat: no-repeat !important;
@@ -467,7 +467,7 @@
 
     body.module-page .template-btn:hover {
         color: #052e2b !important;
-        background: rgba(32, 189, 122, .12) !important;
+        background: rgba(99, 102, 241, .12) !important;
     }
 
     body.module-page .finance-form-grid input,
@@ -486,8 +486,8 @@
     body.module-page .tax-form input:focus,
     body.module-page .tax-form select:focus,
     body.module-page .expense-row input[type="text"]:focus {
-        outline: 3px solid rgba(32, 189, 122, .18) !important;
-        border-color: rgba(54, 211, 145, .72) !important;
+        outline: 3px solid rgba(99, 102, 241, .18) !important;
+        border-color: rgba(99, 102, 241, .72) !important;
         background: rgba(4, 27, 29, .94) !important;
     }
 
@@ -543,7 +543,7 @@
 
     body.module-page .feature-card:hover {
         transform: translateY(-3px);
-        border-color: rgba(32, 189, 122, .42) !important;
+        border-color: rgba(99, 102, 241, .42) !important;
         background: var(--module-surface-raised) !important;
     }
 
@@ -564,10 +564,10 @@
         --module-border: rgba(15, 23, 42, .12);
         --module-text: #0f172a;
         --module-muted: #475569;
-        --module-accent: #0f766e;
-        --module-green: #14b8a6;
+        --module-accent: #4f46e5;
+        --module-green: #4f46e5;
         background:
-            radial-gradient(circle at 50% 0%, rgba(20, 184, 166, .14), transparent 28%),
+            radial-gradient(circle at 50% 0%, rgba(79, 70, 229, .14), transparent 28%),
             linear-gradient(180deg, rgba(241, 245, 249, .96), rgba(248, 250, 252, 1)) !important;
         color: var(--module-text);
     }
@@ -596,10 +596,10 @@
     }
 
     [data-theme="light"] body.module-page .module-active-pill {
-        border-color: rgba(20, 184, 166, .4);
-        background: linear-gradient(135deg, rgba(20, 184, 166, .98), rgba(13, 148, 136, .96));
+        border-color: rgba(79, 70, 229, .4);
+        background: linear-gradient(135deg, rgba(79, 70, 229, .98), rgba(67, 56, 202, .96));
         box-shadow:
-            0 10px 24px rgba(20, 184, 166, .18),
+            0 10px 24px rgba(79, 70, 229, .18),
             inset 0 1px 0 rgba(255, 255, 255, .5);
     }
 
@@ -611,10 +611,10 @@
     [data-theme="light"] body.module-page .detail-workspace {
         background-color: var(--bg-primary) !important;
         background-image:
-            radial-gradient(circle at 50% 0%, rgba(20, 184, 166, .14), transparent 28%),
+            radial-gradient(circle at 50% 0%, rgba(79, 70, 229, .14), transparent 28%),
             linear-gradient(180deg, rgba(241, 245, 249, .96), rgba(248, 250, 252, 1)),
             url('{{ asset('images/backgroundfinance.jpg') }}'),
-            linear-gradient(90deg, rgba(13, 148, 136, .18), rgba(248, 250, 252, .58)) !important;
+            linear-gradient(90deg, rgba(67, 56, 202, .18), rgba(248, 250, 252, .58)) !important;
     }
 
     [data-theme="light"] body.module-page .module-hero-panel {
@@ -672,9 +672,9 @@
 
     [data-theme="light"] body.module-page .module-switcher-nav a.is-active {
         color: #ffffff;
-        border-color: rgba(20, 184, 166, .38);
-        background: linear-gradient(135deg, #14b8a6, #0d9488);
-        box-shadow: 0 10px 24px rgba(20, 184, 166, .18);
+        border-color: rgba(79, 70, 229, .38);
+        background: linear-gradient(135deg, #4f46e5, #4338ca);
+        box-shadow: 0 10px 24px rgba(79, 70, 229, .18);
     }
 
     [data-theme="light"] body.module-page .metric-tile,
@@ -760,14 +760,14 @@
     [data-theme="light"] body.module-page .form-group textarea:focus,
     [data-theme="light"] body.module-page .form-group select:focus,
     [data-theme="light"] body.module-page .form-input:focus {
-        border-color: rgba(20, 184, 166, .64) !important;
+        border-color: rgba(79, 70, 229, .64) !important;
         background: #ffffff !important;
     }
 
     [data-theme="light"] body.module-page .btn-action:hover {
-        border-color: rgba(20, 184, 166, .42) !important;
-        background: rgba(20, 184, 166, .1) !important;
-        color: #0f766e !important;
+        border-color: rgba(79, 70, 229, .42) !important;
+        background: rgba(79, 70, 229, .1) !important;
+        color: #4f46e5 !important;
     }
 
     [data-theme="light"] body.module-page .progress-bar {
@@ -779,7 +779,7 @@
     [data-theme="light"] body.module-page .quick-stat-value,
     [data-theme="light"] body.module-page .deadline-value,
     [data-theme="light"] body.module-page .progress-info strong {
-        color: #0f766e !important;
+        color: #4f46e5 !important;
     }
 
     [data-theme="light"] body.module-page .deposit-note {
@@ -791,10 +791,10 @@
     [data-theme="light"] body.module-page .module-hero-action,
     [data-theme="light"] body.module-page .stata-action,
     [data-theme="light"] body.module-page .btn-primary {
-        border-color: rgba(20, 184, 166, .5) !important;
-        background: linear-gradient(135deg, #14b8a6, #0d9488) !important;
+        border-color: rgba(79, 70, 229, .5) !important;
+        background: linear-gradient(135deg, #4f46e5, #4338ca) !important;
         color: #ffffff !important;
-        box-shadow: 0 12px 28px rgba(20, 184, 166, .16);
+        box-shadow: 0 12px 28px rgba(79, 70, 229, .16);
     }
 
     [data-theme="light"] body.module-page .tax-table,
@@ -938,3 +938,5 @@
         }
     }
 </style>
+
+

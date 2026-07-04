@@ -187,7 +187,7 @@
             position: absolute;
             inset: 0;
             background:
-                linear-gradient(90deg, rgba(137, 23, 23, 0.82) 0%, rgba(137, 23, 23, 0.55) 20%, rgba(8, 20, 24, 0.24) 56%, rgba(8, 20, 24, 0.58) 100%),
+                linear-gradient(90deg, rgba(99, 102, 241, 0.82) 0%, rgba(99, 102, 241, 0.55) 20%, rgba(8, 20, 24, 0.24) 56%, rgba(8, 20, 24, 0.58) 100%),
                 var(--slide-image) center / cover no-repeat;
             z-index: -2;
         }
@@ -267,7 +267,7 @@
         [data-theme="light"] .landing-shell {
             color: var(--text-main);
             background:
-                radial-gradient(circle at 50% 0%, rgba(20, 184, 166, 0.14), transparent 28%),
+                radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.14), transparent 28%),
                 linear-gradient(180deg, rgba(241, 245, 249, 0.96), rgba(248, 250, 252, 1));
         }
 
@@ -301,7 +301,7 @@
 
         [data-theme="light"] .hero-slide::before {
             background:
-                linear-gradient(90deg, rgba(13, 148, 136, 0.28) 0%, rgba(13, 148, 136, 0.12) 22%, rgba(248, 250, 252, 0.18) 58%, rgba(248, 250, 252, 0.58) 100%),
+                linear-gradient(90deg, rgba(99, 102, 241, 0.28) 0%, rgba(99, 102, 241, 0.12) 22%, rgba(248, 250, 252, 0.18) 58%, rgba(248, 250, 252, 0.58) 100%),
                 var(--slide-image) center / cover no-repeat;
         }
 
@@ -1179,3 +1179,5 @@
         })();
     </script>
 @endsection
+
+

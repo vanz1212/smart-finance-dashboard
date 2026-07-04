@@ -374,7 +374,7 @@
             margin-top: 12px;
             padding: 11px 13px;
             border-left: 3px solid var(--accent-primary);
-            background: rgba(20,184,166,.08);
+            background: rgba(99, 102, 241,.08);
             color: rgba(248,250,252,.74);
             line-height: 1.6;
         }
@@ -388,9 +388,9 @@
 
         .tutorial-checklist div {
             padding: 14px;
-            border: 1px solid rgba(20,184,166,.26);
+            border: 1px solid rgba(99, 102, 241,.26);
             border-radius: 10px;
-            background: rgba(20,184,166,.07);
+            background: rgba(99, 102, 241,.07);
             color: rgba(248,250,252,.78);
             line-height: 1.55;
         }
@@ -484,9 +484,9 @@
         .stata-source-note {
             margin-top: 16px;
             padding: 14px 16px;
-            border: 1px solid rgba(20, 184, 166, .32);
+            border: 1px solid rgba(99, 102, 241, .32);
             border-radius: 12px;
-            background: rgba(20, 184, 166, .08);
+            background: rgba(99, 102, 241, .08);
             color: rgba(248,250,252,.72);
             line-height: 1.65;
         }
@@ -862,3 +862,4 @@
         });
     </script>
 @endsection
+

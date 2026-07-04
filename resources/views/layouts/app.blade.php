@@ -29,10 +29,7 @@
         </main>
     </div>
 
-    <button class="nexio-floating-theme" type="button" aria-label="Toggle theme">
-        <span class="nexio-sun" aria-hidden="true"></span>
-        <span class="nexio-moon" aria-hidden="true"></span>
-    </button>
+
 
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
@@ -50,7 +47,7 @@
                 document.body.classList.add('page-ready');
 
                 var flatpickrTheme = document.getElementById('flatpickr-theme');
-                var themeButtons = document.querySelectorAll('.nexio-floating-theme, [data-theme-toggle]');
+                var themeButtons = document.querySelectorAll('[data-theme-toggle], .theme-toggle');
 
                 function applyTheme(theme) {
                     document.documentElement.setAttribute('data-theme', theme);

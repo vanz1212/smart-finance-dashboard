@@ -226,9 +226,11 @@
             text-transform: uppercase;
         }
         
-        .tax-form { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 15px; margin-top: 20px;}
+        .tax-form { display: grid; grid-template-columns: repeat(12, minmax(0,1fr)); gap: 15px; margin-top: 20px;}
         .tax-form label { display: grid; gap: 8px; }
-        .tax-form label.full { grid-column: 1 / -1; }
+        .tax-form .col-4 { grid-column: span 4; }
+        .tax-form .col-6 { grid-column: span 6; }
+        .tax-form .col-12, .tax-form label.full { grid-column: 1 / -1; }
         .tax-form span { color: rgba(248,250,252,.7); font-size: .84rem; font-weight: 700; display: flex; align-items: center; gap: 7px; }
         .tax-form input, .tax-form select { 
             min-height: 48px; width: 100%; 
@@ -470,8 +472,29 @@
         }
 
         @media (max-width: 900px) { .tax-topbar, .tax-hero { align-items: flex-start; flex-direction: column; } .tax-grid, .tax-reference { grid-template-columns: 1fr; } }
-        @media (max-width: 620px) { .tax-workspace { margin: -24px; padding-inline: 14px; } .tax-form, .tax-metrics, .tax-result-cards { grid-template-columns: 1fr; } }
-            </style>
+        @media (max-width: 620px) { .tax-workspace { margin: -24px; padding-inline: 14px; } .tax-form, .tax-metrics, .tax-result-cards { grid-template-columns: 1fr; } .tax-form .col-4, .tax-form .col-6 { grid-column: 1 / -1; } }
+        
+        /* Light Theme Fixes */
+        [data-theme="light"] .disclaimer-alert {
+            color: #b45309;
+            background: rgba(245, 158, 11, 0.15);
+            border-color: rgba(245, 158, 11, 0.4);
+        }
+        [data-theme="light"] .tax-result-card {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(255, 255, 255, 0.9));
+            border-color: rgba(99, 102, 241, 0.2);
+        }
+        [data-theme="light"] .tax-result-card.green {
+            background: linear-gradient(135deg, rgba(34, 211, 238, 0.08), rgba(255, 255, 255, 0.9));
+            border-color: rgba(34, 211, 238, 0.3);
+        }
+        [data-theme="light"] .tax-result-card h3 {
+            color: #0f172a;
+        }
+        [data-theme="light"] .tax-result-card span {
+            color: #475569;
+        }
+    </style>
 
     @include('partials.module-shell-styles')
 
@@ -517,7 +540,7 @@
                             </div>
                         </div>
                         <div class="tax-form">
-                            <label>
+                            <label class="col-6">
                                 <span><i class="field-icon calendar" aria-hidden="true"></i>{{ __('tax.tax_year') }}</span>
                                 <div class="select-shell">
                                     <select wire:model="tahun_pajak" required>
@@ -526,7 +549,7 @@
                                     </select>
                                 </div>
                             </label>
-                            <label>
+                            <label class="col-6">
                                 <span><i class="field-icon method" aria-hidden="true"></i>{{ __('tax.calc_method') }}</span>
                                 <div class="select-shell">
                                     <select wire:model="metode_perhitungan" required>
@@ -535,7 +558,7 @@
                                     </select>
                                 </div>
                             </label>
-                            <label class="full">
+                            <label class="col-12">
                                 <span><i class="field-icon user" aria-hidden="true"></i>{{ __('tax.taxpayer_status') }} 
                                     <div class="tooltip">ℹ️
                                         <span class="tooltiptext">{!! __('tax.ptkp_tooltip') !!}</span>
@@ -551,14 +574,14 @@
                                 </div>
                             </label>
 
-                            <div class="tax-section-chip"><i class="field-icon money" aria-hidden="true"></i>{{ __('tax.income_section') }}</div>
-                            <label><span><i class="field-icon money" aria-hidden="true"></i>{{ __('tax.monthly_salary') }}</span><input type="number" wire:model="penghasilan_bulanan" value="{{ old('penghasilan_bulanan') }}" min="0" step="1000" placeholder="0" required></label>
-                            <label><span><i class="field-icon money" aria-hidden="true"></i>{{ __('tax.annual_bonus') }}</span><input type="number" wire:model="penghasilan_tidak_teratur" value="{{ old('penghasilan_tidak_teratur') }}" min="0" step="1000" placeholder="0" required></label>
+                            <div class="tax-section-chip col-12"><i class="field-icon money" aria-hidden="true"></i>{{ __('tax.income_section') }}</div>
+                            <label class="col-6"><span><i class="field-icon money" aria-hidden="true"></i>{{ __('tax.monthly_salary') }}</span><input type="number" wire:model="penghasilan_bulanan" value="{{ old('penghasilan_bulanan') }}" min="0" step="1000" placeholder="0" required></label>
+                            <label class="col-6"><span><i class="field-icon money" aria-hidden="true"></i>{{ __('tax.annual_bonus') }}</span><input type="number" wire:model="penghasilan_tidak_teratur" value="{{ old('penghasilan_tidak_teratur') }}" min="0" step="1000" placeholder="0" required></label>
 
-                            <div class="tax-section-chip"><i class="field-icon minus" aria-hidden="true"></i>{{ __('tax.deduction_section') }}</div>
-                            <label><span><i class="field-icon minus" aria-hidden="true"></i>{{ __('tax.pension_bpjs') }}</span><input type="number" wire:model="iuran_pensiun" value="{{ old('iuran_pensiun') }}" min="0" step="1000" placeholder="0" required></label>
-                            <label><span><i class="field-icon minus" aria-hidden="true"></i>{{ __('tax.official_zakat') }}</span><input type="number" wire:model="zakat" value="{{ old('zakat') }}" min="0" step="1000" placeholder="0" required></label>
-                            <label class="full"><span><i class="field-icon credit" aria-hidden="true"></i>{{ __('tax.tax_credit') }}</span><input type="number" wire:model="kredit_pajak" value="{{ old('kredit_pajak') }}" min="0" step="1000" placeholder="0" required></label>
+                            <div class="tax-section-chip col-12"><i class="field-icon minus" aria-hidden="true"></i>{{ __('tax.deduction_section') }}</div>
+                            <label class="col-6"><span><i class="field-icon minus" aria-hidden="true"></i>{{ __('tax.pension_bpjs') }}</span><input type="number" wire:model="iuran_pensiun" value="{{ old('iuran_pensiun') }}" min="0" step="1000" placeholder="0" required></label>
+                            <label class="col-6"><span><i class="field-icon minus" aria-hidden="true"></i>{{ __('tax.official_zakat') }}</span><input type="number" wire:model="zakat" value="{{ old('zakat') }}" min="0" step="1000" placeholder="0" required></label>
+                            <label class="col-6"><span><i class="field-icon credit" aria-hidden="true"></i>{{ __('tax.tax_credit') }}</span><input type="number" wire:model="kredit_pajak" value="{{ old('kredit_pajak') }}" min="0" step="1000" placeholder="0" required></label>
                         </div>
                         <button class="tax-button" type="submit"><span>{{ __('tax.calculate_tax') }}</span></button>
                     </form>
@@ -610,12 +633,12 @@
                     </div>
                     
                     @if ($result)
-                        <div style="margin-bottom: 15px; padding: 10px; background: rgba(20,184,166,0.1); border-left: 3px solid var(--accent-primary); border-radius: 4px; font-size: 0.9rem;">
+                        <div style="margin-bottom: 15px; padding: 10px; background: rgba(99, 102, 241,0.1); border-left: 3px solid var(--accent-primary); border-radius: 4px; font-size: 0.9rem;">
                             <strong>{{ __('tax.method') }}</strong> {{ $translateTaxNote($result) }}
                         </div>
 
                         <div class="tax-metrics">
-                            <div class="tax-metric featured"><span>{{ __('tax.annual_gross_income') }}</span><strong>{{ $formatRupiah($result['penghasilan_tahunan'] + $result['penghasilan_tidak_teratur']) }}</strong></div>
+                            <div class="tax-metric featured"><span>{{ __('tax.annual_gross_income') }}</span><strong>{{ $formatRupiah($result['penghasilan_tahunan'] + ($result['input']['penghasilan_tidak_teratur'] ?? 0)) }}</strong></div>
                             <div class="tax-metric"><span>{{ __('tax.annual_deductions') }}</span><strong>{{ $formatRupiah($result['pengurang_tahunan']) }}</strong></div>
                             <div class="tax-metric"><span>{{ __('tax.net_income') }}</span><strong>{{ $formatRupiah($result['penghasilan_neto']) }}</strong></div>
                             <div class="tax-metric"><span>PTKP ({{ $result['status_wajib_pajak'] }})</span><strong>{{ $formatRupiah($result['ptkp']) }}</strong></div>
@@ -653,3 +676,4 @@
         </div>
     </main>
 </div>
+

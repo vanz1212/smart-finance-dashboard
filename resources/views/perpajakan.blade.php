@@ -334,7 +334,7 @@
                     </div>
                     
                     @if ($result)
-                        <div style="margin-bottom: 15px; padding: 10px; background: rgba(20,184,166,0.1); border-left: 3px solid var(--accent-primary); border-radius: 4px; font-size: 0.9rem;">
+                        <div style="margin-bottom: 15px; padding: 10px; background: rgba(99, 102, 241,0.1); border-left: 3px solid var(--accent-primary); border-radius: 4px; font-size: 0.9rem;">
                             <strong>{{ __('tax.method') }}</strong> {{ $translateTaxNote($result) }}
                         </div>
 
@@ -352,7 +352,7 @@
                                 <span style="font-size: 0.8rem; color: var(--accent-primary); font-weight: bold;">{{ __('tax.annual_pph_article_17') }}</span>
                                 <h3 style="margin: 5px 0 0; font-size: 1.5rem;">{{ $formatRupiah($result['estimasi_pajak_tahunan']) }}</h3>
                             </div>
-                            <div style="background: rgba(20, 184, 166, 0.1); padding: 15px; border-radius: 8px; border: 1px solid rgba(20, 184, 166, 0.3);">
+                            <div style="background: rgba(99, 102, 241, 0.1); padding: 15px; border-radius: 8px; border: 1px solid rgba(99, 102, 241, 0.3);">
                                 <span style="font-size: 0.8rem; color: var(--accent-primary); font-weight: bold;">{{ __('tax.est_monthly_tax') }}</span>
                                 <h3 style="margin: 5px 0 0; font-size: 1.5rem;">{{ $formatRupiah($result['estimasi_pajak_bulanan']) }}</h3>
                             </div>
@@ -377,3 +377,4 @@
         </div>
     </main>
 @endsection
+

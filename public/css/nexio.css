@@ -828,3 +828,9 @@ select.nexio-input option {
         font-size: 0.8rem;
     }
 }
+
+/* Logo handling for light theme */
+[data-theme="light"] img[src*="nexio_logo"] {
+    filter: invert(1) hue-rotate(180deg);
+}
+
