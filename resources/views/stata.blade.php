@@ -501,9 +501,93 @@
             text-decoration: underline;
         }
 
+        .stata-import-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 24px;
+            margin: 24px 0;
+            align-items: start;
+        }
+
+        .stata-file-drop {
+            display: block;
+            margin: 16px 0;
+            padding: 28px;
+            border: 2px dashed var(--module-border);
+            border-radius: 12px;
+            text-align: center;
+            background: var(--module-surface-soft);
+            cursor: pointer;
+            transition: all .2s ease;
+        }
+
+        .stata-file-drop:hover {
+            border-color: var(--accent-primary);
+            background: rgba(99, 102, 241, .05);
+        }
+        
+        .stata-file-drop small {
+            display: block;
+            margin-top: 8px;
+            color: var(--module-muted);
+        }
+
+        .stata-import-button, .stata-clear-button {
+            width: 100%;
+            min-height: 48px;
+            border-radius: 12px;
+            border: none;
+            background: var(--accent-primary);
+            color: #fff;
+            font-weight: 800;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all .2s ease;
+            box-shadow: 0 8px 24px rgba(99, 102, 241, .25);
+        }
+
+        .stata-import-button:hover, .stata-clear-button:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.1);
+            box-shadow: 0 12px 28px rgba(99, 102, 241, .35);
+        }
+
+        .stata-clear-button {
+            background: #ef4444;
+            margin-top: 18px;
+            box-shadow: 0 8px 24px rgba(239, 68, 68, .25);
+        }
+        
+        .stata-clear-button:hover {
+            box-shadow: 0 12px 28px rgba(239, 68, 68, .35);
+        }
+
+        .dataset-facts {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+            margin: 18px 0;
+            padding: 16px;
+            border-radius: 12px;
+            background: var(--module-surface-soft);
+            border: 1px solid var(--module-border);
+        }
+
+        .dataset-facts span {
+            display: block;
+            font-size: 0.82rem;
+            color: var(--module-muted);
+            margin-bottom: 4px;
+        }
+
+        .dataset-facts strong {
+            font-size: 1.1rem;
+            color: var(--text-main);
+        }
+
         @media (max-width: 900px) {
             .stata-topbar { align-items: flex-start; flex-direction: column; }
-            .stata-hero, .feature-grid, .stata-data-grid, .stata-command-list, .tutorial-checklist { grid-template-columns: 1fr; }
+            .stata-hero, .feature-grid, .stata-data-grid, .stata-command-list, .tutorial-checklist, .stata-import-grid { grid-template-columns: 1fr; }
             .stata-section-heading { align-items: flex-start; flex-direction: column; }
         }
 
@@ -577,7 +661,7 @@
                 @endif
 
                 <div class="stata-import-grid">
-                    <form class="stata-upload-card" action="{{ route('stata.import') }}" method="POST" enctype="multipart/form-data">
+                    <form class="stata-upload-card stata-panel stata-panel-inner" action="{{ route('stata.import') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <h3>{{ __('stata.import_file') }}</h3>
                         <label class="stata-file-drop">
@@ -589,7 +673,7 @@
                         <button class="stata-import-button" type="submit">{{ __('stata.import_and_read') }}</button>
                     </form>
 
-                    <aside class="stata-dataset-card">
+                    <aside class="stata-dataset-card stata-panel stata-panel-inner">
                         <h3>{{ __('stata.active_dataset') }}</h3>
                         @if ($stataDataset)
                             <p>{{ $stataDataset['name'] }}</p>

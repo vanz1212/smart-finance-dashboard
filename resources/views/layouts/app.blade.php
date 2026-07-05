@@ -61,6 +61,9 @@
                     }
                 }
 
+                var savedTheme = localStorage.getItem('nexio-theme') || localStorage.getItem('theme') || 'dark';
+                applyTheme(savedTheme);
+
                 themeButtons.forEach(function (button) {
                     if (button.dataset.nexioBound === 'theme') return;
                     button.dataset.nexioBound = 'theme';

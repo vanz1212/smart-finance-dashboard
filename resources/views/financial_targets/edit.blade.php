@@ -240,20 +240,20 @@
 
             <div class="form-panel">
                 <div class="form-header">
-                    <h1>Edit Target Finansial</h1>
-                    <p>Perbarui detail target finansial Anda.</p>
-                </div>
+                <h1>{{ __('targets.edit_heading') }}</h1>
+                <p>{{ __('targets.edit_desc') }}</p>
+            </div>
 
                 <form action="{{ route('targets.update', $target->id) }}" method="POST">
                     @csrf
                     @method('PUT')
 
                     <div class="form-info">
-                        💡 Sistem akan otomatis menghitung ulang rekomendasi setoran bulanan berdasarkan perubahan yang Anda buat.
+                        💡 {{ __('targets.auto_recalculation_note') }}
                     </div>
 
                     <div class="form-group">
-                        <label for="name">Nama Target <span style="color: #fb7185;">*</span></label>
+                        <label for="name">{{ __('targets.name_label') }} <span style="color: #fb7185;">*</span></label>
                         <input type="text" id="name" name="name" value="{{ old('name', $target->name) }}" required>
                         @error('name')
                             <span style="color: #fb7185; font-size: 0.8rem;">{{ $message }}</span>
@@ -261,7 +261,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="description">Deskripsi (Opsional)</label>
+                        <label for="description">{{ __('targets.description_optional') }}</label>
                         <textarea id="description" name="description">{{ old('description', $target->description) }}</textarea>
                         @error('description')
                             <span style="color: #fb7185; font-size: 0.8rem;">{{ $message }}</span>
@@ -270,7 +270,7 @@
 
                     <div class="form-grid">
                         <div class="form-group">
-                            <label for="category">Kategori <span style="color: #fb7185;">*</span></label>
+                            <label for="category">{{ __('targets.category_label') }} <span style="color: #fb7185;">*</span></label>
                             <select id="category" name="category" required>
                                 @foreach ($categories as $key => $label)
                                     <option value="{{ $key }}" {{ old('category', $target->category) === $key ? 'selected' : '' }}>{{ $label }}</option>
@@ -282,19 +282,19 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="priority">Prioritas</label>
+                            <label for="priority">{{ __('targets.priority_label') }}</label>
                             <select id="priority" name="priority">
-                                <option value="">Pilih Prioritas</option>
-                                <option value="1" {{ old('priority', $target->priority) == 1 ? 'selected' : '' }}>🔴 Tinggi</option>
-                                <option value="2" {{ old('priority', $target->priority) == 2 ? 'selected' : '' }}>🟡 Sedang</option>
-                                <option value="3" {{ old('priority', $target->priority) == 3 ? 'selected' : '' }}>🟢 Rendah</option>
+                                <option value="">{{ __('targets.choose_priority') }}</option>
+                                <option value="1" {{ old('priority', $target->priority) == 1 ? 'selected' : '' }}>🔴 {{ __('targets.priority_high') }}</option>
+                                <option value="2" {{ old('priority', $target->priority) == 2 ? 'selected' : '' }}>🟡 {{ __('targets.priority_medium') }}</option>
+                                <option value="3" {{ old('priority', $target->priority) == 3 ? 'selected' : '' }}>🟢 {{ __('targets.priority_low') }}</option>
                             </select>
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="target_amount">Target Nominal <span style="color: #fb7185;">*</span></label>
+                            <label for="target_amount">{{ __('targets.target_amount') }} <span style="color: #fb7185;">*</span></label>
                             <div class="money-field">
                                 <span class="money-prefix">Rp</span>
                                 <input type="text" id="target_amount" name="target_amount" data-rupiah-input value="{{ old('target_amount', number_format($target->target_amount, 0, ',', '.')) }}" required>
@@ -305,7 +305,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="current_amount">Saldo Saat Ini (Opsional)</label>
+                            <label for="current_amount">{{ __('targets.current_balance_optional') }}</label>
                             <div class="money-field">
                                 <span class="money-prefix">Rp</span>
                                 <input type="text" id="current_amount" name="current_amount" data-rupiah-input value="{{ old('current_amount', number_format($target->current_amount, 0, ',', '.')) }}">
@@ -318,7 +318,7 @@
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="target_date">Tenggat Waktu <span style="color: #fb7185;">*</span></label>
+                            <label for="target_date">{{ __('targets.target_date') }} <span style="color: #fb7185;">*</span></label>
                             <input type="date" id="target_date" name="target_date" value="{{ old('target_date', $target->target_date->format('Y-m-d')) }}" required>
                             @error('target_date')
                                 <span style="color: #fb7185; font-size: 0.8rem;">{{ $message }}</span>
@@ -326,12 +326,12 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="status">Status <span style="color: #fb7185;">*</span></label>
+                            <label for="status">{{ __('targets.status_label') }} <span style="color: #fb7185;">*</span></label>
                             <select id="status" name="status" required>
-                                <option value="active" {{ old('status', $target->status) === 'active' ? 'selected' : '' }}>Aktif</option>
-                                <option value="completed" {{ old('status', $target->status) === 'completed' ? 'selected' : '' }}>Tercapai</option>
-                                <option value="paused" {{ old('status', $target->status) === 'paused' ? 'selected' : '' }}>Ditangguhkan</option>
-                                <option value="abandoned" {{ old('status', $target->status) === 'abandoned' ? 'selected' : '' }}>Dibatalkan</option>
+                                <option value="active" {{ old('status', $target->status) === 'active' ? 'selected' : '' }}>{{ __('targets.active') }}</option>
+                                <option value="completed" {{ old('status', $target->status) === 'completed' ? 'selected' : '' }}>{{ __('targets.completed') }}</option>
+                                <option value="paused" {{ old('status', $target->status) === 'paused' ? 'selected' : '' }}>{{ __('targets.paused') }}</option>
+                                <option value="abandoned" {{ old('status', $target->status) === 'abandoned' ? 'selected' : '' }}>{{ __('targets.abandoned') }}</option>
                             </select>
                             @error('status')
                                 <span style="color: #fb7185; font-size: 0.8rem;">{{ $message }}</span>
@@ -340,8 +340,8 @@
                     </div>
 
                     <div class="form-actions">
-                        <button type="submit" class="btn-submit">Simpan Perubahan</button>
-                        <a href="{{ route('targets.show', $target->id) }}" class="btn-cancel">Batal</a>
+                        <button type="submit" class="btn-submit">{{ __('targets.save_changes') }}</button>
+                        <a href="{{ route('targets.show', $target->id) }}" class="btn-cancel">{{ __('targets.cancel') }}</a>
                     </div>
                 </form>
             </div>

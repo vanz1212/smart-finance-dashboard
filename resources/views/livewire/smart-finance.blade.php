@@ -3,7 +3,7 @@
         $formatRupiah = fn ($value) => 'Rp ' . number_format($value, 0, ',', '.');
         $formatPercent = fn ($value) => number_format($value, 1, ',', '.') . '%';
         $formatRupiahInput = function ($value) {
-            if ($value === null || $value === '') {
+            if ($value === null || $value === '' || (float) preg_replace('/[^0-9]/', '', (string) $value) === 0.0) {
                 return '';
             }
 

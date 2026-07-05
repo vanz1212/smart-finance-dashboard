@@ -240,19 +240,19 @@
 
             <div class="form-panel">
                 <div class="form-header">
-                    <h1>Target Finansial Baru</h1>
-                    <p>Tetapkan target finansial dengan nominal, tenggat waktu, dan sistem tracking otomatis.</p>
+                    <h1>{{ __('targets.create_heading') }}</h1>
+                    <p>{{ __('targets.create_desc') }}</p>
                 </div>
 
                 <form action="{{ route('targets.store') }}" method="POST">
                     @csrf
 
                     <div class="form-info">
-                        💡 Sistem akan otomatis menghitung rekomendasi setoran bulanan berdasarkan target nominal dan tenggat waktu.
+                        💡 {{ __('targets.auto_recommendation_note') }}
                     </div>
 
                     <div class="form-group">
-                        <label for="name">Nama Target <span style="color: #fb7185;">*</span></label>
+                        <label for="name">{{ __('targets.name_label') }} <span style="color: #fb7185;">*</span></label>
                         <input type="text" id="name" name="name" placeholder="contoh: Liburan ke Bali, Beli Motor" value="{{ old('name') }}" required>
                         @error('name')
                             <span style="color: #fb7185; font-size: 0.8rem;">{{ $message }}</span>
@@ -260,8 +260,8 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="description">Deskripsi (Opsional)</label>
-                        <textarea id="description" name="description" placeholder="Jelaskan tujuan atau detail target ini...">{{ old('description') }}</textarea>
+                        <label for="description">{{ __('targets.description_optional') }}</label>
+                        <textarea id="description" name="description" placeholder="{{ __('targets.description_placeholder') }}">{{ old('description') }}</textarea>
                         @error('description')
                             <span style="color: #fb7185; font-size: 0.8rem;">{{ $message }}</span>
                         @enderror
@@ -269,9 +269,9 @@
 
                     <div class="form-grid">
                         <div class="form-group">
-                            <label for="category">Kategori <span style="color: #fb7185;">*</span></label>
+                            <label for="category">{{ __('targets.category_label') }} <span style="color: #fb7185;">*</span></label>
                             <select id="category" name="category" required>
-                                <option value="">Pilih Kategori</option>
+                                <option value="">{{ __('targets.choose_category') }}</option>
                                 @foreach ($categories as $key => $label)
                                     <option value="{{ $key }}" {{ old('category') === $key ? 'selected' : '' }}>{{ $label }}</option>
                                 @endforeach
@@ -282,19 +282,19 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="priority">Prioritas</label>
+                            <label for="priority">{{ __('targets.priority_label') }}</label>
                             <select id="priority" name="priority">
-                                <option value="">Pilih Prioritas</option>
-                                <option value="1" {{ old('priority') === '1' ? 'selected' : '' }}>🔴 Tinggi</option>
-                                <option value="2" {{ old('priority') === '2' ? 'selected' : '' }}>🟡 Sedang</option>
-                                <option value="3" {{ old('priority') === '3' ? 'selected' : '' }}>🟢 Rendah</option>
+                                <option value="">{{ __('targets.choose_priority') }}</option>
+                                <option value="1" {{ old('priority') === '1' ? 'selected' : '' }}>🔴 {{ __('targets.priority_high') }}</option>
+                                <option value="2" {{ old('priority') === '2' ? 'selected' : '' }}>🟡 {{ __('targets.priority_medium') }}</option>
+                                <option value="3" {{ old('priority') === '3' ? 'selected' : '' }}>🟢 {{ __('targets.priority_low') }}</option>
                             </select>
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="target_amount">Target Nominal <span style="color: #fb7185;">*</span></label>
+                            <label for="target_amount">{{ __('targets.target_amount') }} <span style="color: #fb7185;">*</span></label>
                             <div class="money-field">
                                 <span class="money-prefix">Rp</span>
                                 <input type="text" id="target_amount" name="target_amount" placeholder="0" data-rupiah-input value="{{ old('target_amount') }}" required>
@@ -305,7 +305,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="current_amount">Saldo Awal (Opsional)</label>
+                            <label for="current_amount">{{ __('targets.initial_balance_optional') }}</label>
                             <div class="money-field">
                                 <span class="money-prefix">Rp</span>
                                 <input type="text" id="current_amount" name="current_amount" placeholder="0" data-rupiah-input value="{{ old('current_amount') }}">
@@ -317,7 +317,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="target_date">Tenggat Waktu <span style="color: #fb7185;">*</span></label>
+                        <label for="target_date">{{ __('targets.target_date') }} <span style="color: #fb7185;">*</span></label>
                         <input type="date" id="target_date" name="target_date" value="{{ old('target_date') }}" required>
                         @error('target_date')
                             <span style="color: #fb7185; font-size: 0.8rem;">{{ $message }}</span>
@@ -325,8 +325,8 @@
                     </div>
 
                     <div class="form-actions">
-                        <button type="submit" class="btn-submit">Buat Target</button>
-                        <a href="{{ route('targets.index') }}" class="btn-cancel">Batal</a>
+                        <button type="submit" class="btn-submit">{{ __('targets.create_button') }}</button>
+                        <a href="{{ route('targets.index') }}" class="btn-cancel">{{ __('targets.cancel') }}</a>
                     </div>
                 </form>
             </div>

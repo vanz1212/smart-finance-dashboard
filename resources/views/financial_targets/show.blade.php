@@ -459,7 +459,7 @@
                 @include('partials.module-switcher')
             </div>
 
-            <a href="{{ route('targets.index') }}" class="back-link">← Kembali ke Target Finansial</a>
+            <a href="{{ route('targets.index') }}" class="back-link">← {{ __('targets.back_to_targets') }}</a>
 
             <div class="header-section" style="--category-color: {{ $categoryColors[$target->category] ?? '#64748b' }};">
                 <div class="header-info">
@@ -468,13 +468,13 @@
                         <p style="margin: 12px 0 16px; color: rgba(248, 250, 252, 0.72); line-height: 1.6; font-size: 1.05rem; max-width: 600px;">{{ $target->description }}</p>
                     @endif
                     <div class="header-meta">
-                        <span class="badge badge-category">{{ $categoryLabels[$target->category] ?? 'Lainnya' }}</span>
+                        <span class="badge badge-category">{{ $categoryLabels[$target->category] ?? __('targets.category_other') }}</span>
                         <span class="badge badge-status">{{ ucfirst($target->status) }}</span>
                     </div>
                 </div>
                 <div style="text-align: right;">
                     <div style="font-size: 2.5rem; font-weight: 900; color: var(--accent-hover);">{{ $formatPercent($target->progress) }}</div>
-                    <div style="color: rgba(248, 250, 252, 0.6); font-size: 0.85rem;">Tercapai</div>
+                    <div style="color: rgba(248, 250, 252, 0.6); font-size: 0.85rem;">{{ __('targets.achieved') }}</div>
                 </div>
             </div>
 
@@ -492,19 +492,19 @@
 
                     <div class="info-grid">
                         <div class="info-item">
-                            <div class="info-label">Target Nominal</div>
+                            <div class="info-label">{{ __('targets.target_amount') }}</div>
                             <div class="info-value">{{ $formatRupiah($target->target_amount) }}</div>
                         </div>
                         <div class="info-item">
-                            <div class="info-label">Terkumpul</div>
+                            <div class="info-label">{{ __('targets.collected') }}</div>
                             <div class="info-value">{{ $formatRupiah($target->current_amount) }}</div>
                         </div>
                         <div class="info-item">
-                            <div class="info-label">Sisa Butuh</div>
+                            <div class="info-label">{{ __('targets.remaining_target') }}</div>
                             <div class="info-value" style="color: var(--accent-primary);">{{ $formatRupiah($target->remaining) }}</div>
                         </div>
                         <div class="info-item">
-                            <div class="info-label">Tenggat</div>
+                            <div class="info-label">{{ __('targets.deadline') }}</div>
                             <div class="info-value">{{ $target->target_date->format('d M Y') }}</div>
                         </div>
                     </div>
@@ -513,22 +513,22 @@
                         <span class="status-dot" style="background-color: currentColor;"></span>
                         <div>
                             <strong>{{ $target->performance['message'] }}</strong>
-                            <p style="margin: 4px 0 0; font-size: 0.8rem; color: inherit; opacity: 0.8;">Target: {{ $formatRupiah($target->performance['recommended']) }}/bln | Realisasi: {{ $formatRupiah($target->performance['average']) }}/bln</p>
+                            <p style="margin: 4px 0 0; font-size: 0.8rem; color: inherit; opacity: 0.8;">{{ __('targets.target_monthly') }}: {{ $formatRupiah($target->performance['recommended']) }}/{{ __('targets.per_month_short') }} | {{ __('targets.actual_monthly') }}: {{ $formatRupiah($target->performance['average']) }}/{{ __('targets.per_month_short') }}</p>
                         </div>
                     </div>
 
                     <div class="deposits-section">
-                        <h3 style="margin: 0 0 16px; font-size: 1rem; font-weight: 800;">Riwayat Setoran</h3>
+                        <h3 style="margin: 0 0 16px; font-size: 1rem; font-weight: 800;">{{ __('targets.deposit_history') }}</h3>
 
                         <div class="deposit-form">
                             <form action="{{ route('targets.add-deposit', $target->id) }}" method="POST" id="deposit-form">
                                 @csrf
                                 <div class="form-row">
-                                    <input type="text" name="amount" placeholder="Jumlah (Rp)" data-rupiah-input required class="form-input">
+                                    <input type="text" name="amount" placeholder="{{ __('targets.deposit_amount_placeholder') }}" data-rupiah-input required class="form-input">
                                     <input type="date" name="date" value="{{ date('Y-m-d') }}" max="{{ date('Y-m-d') }}" required class="form-input">
-                                    <button type="submit" class="btn-add">+ Catat</button>
+                                    <button type="submit" class="btn-add">+ {{ __('targets.add_deposit') }}</button>
                                 </div>
-                                <input type="text" name="note" placeholder="Catatan (opsional)" class="form-input" style="margin-top: 8px; width: 100%;">
+                                <input type="text" name="note" placeholder="{{ __('targets.deposit_note_placeholder') }}" class="form-input" style="margin-top: 8px; width: 100%;">
                             </form>
                         </div>
 
@@ -544,10 +544,10 @@
                                         </div>
                                         <div class="deposit-right">
                                             <div class="deposit-amount">{{ $formatRupiah($deposit->amount) }}</div>
-                                            <form action="{{ route('targets.remove-deposit', $deposit->id) }}" method="POST" style="margin: 0;" onsubmit="return confirm('Hapus setoran ini?')">
+                                            <form action="{{ route('targets.remove-deposit', $deposit->id) }}" method="POST" style="margin: 0;" onsubmit="return confirm('{{ __('targets.delete_deposit_confirm') }}')">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn-delete">Hapus</button>
+                                                <button type="submit" class="btn-delete">{{ __('targets.delete') }}</button>
                                             </form>
                                         </div>
                                     </div>
@@ -556,7 +556,7 @@
 
                             @if (!empty($monthlyBreakdown))
                             <div class="monthly-breakdown">
-                                <div class="breakdown-label">Setoran 12 Bulan Terakhir</div>
+                                <div class="breakdown-label">{{ __('targets.last_12_months_deposits') }}</div>
                                 <div class="breakdown-chart">
                                     @php
                                         $maxAmount = max(array_values($monthlyBreakdown)) ?: 1;
@@ -580,43 +580,43 @@
                         <h3 class="panel-title" style="margin-bottom: 16px;">Ringkasan</h3>
 
                         <div class="quick-stat">
-                            <div class="quick-stat-label">Hari Tersisa</div>
+                            <div class="quick-stat-label">{{ __('targets.days') }} {{ __('targets.remaining') }}</div>
                             <div class="quick-stat-value">{{ $target->days_remaining }}</div>
                         </div>
 
                         <div class="quick-stat">
-                            <div class="quick-stat-label">Setoran/Bulan</div>
+                            <div class="quick-stat-label">{{ __('targets.monthly_deposit') }}</div>
                             <div class="quick-stat-value" style="font-size: 1rem;">{{ $formatRupiah($target->recommended_monthly) }}</div>
                         </div>
 
                         <div class="quick-stat">
-                            <div class="quick-stat-label">Realisasi/Bulan</div>
+                            <div class="quick-stat-label">{{ __('targets.average_deposit') }}</div>
                             <div class="quick-stat-value" style="font-size: 1rem;">{{ $formatRupiah($target->performance['average']) }}</div>
                         </div>
 
                         <div class="quick-stat">
-                            <div class="quick-stat-label">Status</div>
+                            <div class="quick-stat-label">{{ __('targets.status') }}</div>
                             <div style="margin-top: 8px;">
                                 <span class="badge badge-status">
                                     @if ($target->is_achieved)
-                                        ✅ Tercapai
+                                        ✅ {{ __('targets.achieved') }}
                                     @elseif ($target->is_overdue)
-                                        ⏰ Terlewat
+                                        ⏰ {{ __('targets.overdue') }}
                                     @elseif ($target->days_remaining < 30)
-                                        ⚠️ Mendesak
+                                        ⚠️ {{ __('targets.urgent') }}
                                     @else
-                                        ✓ On Track
+                                        ✓ {{ __('targets.on_track') }}
                                     @endif
                                 </span>
                             </div>
                         </div>
 
                         <div class="action-buttons">
-                            <a href="{{ route('targets.edit', $target->id) }}" class="btn-action">Edit</a>
-                            <form action="{{ route('targets.destroy', $target->id) }}" method="POST" style="flex: 1; margin: 0;" onsubmit="return confirm('Hapus target ini?')">
+                            <a href="{{ route('targets.edit', $target->id) }}" class="btn-action">{{ __('targets.edit') }}</a>
+                            <form action="{{ route('targets.destroy', $target->id) }}" method="POST" style="flex: 1; margin: 0;" onsubmit="return confirm('{{ __('targets.delete_target_confirm') }}')">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn-action" style="width: 100%; height: 100%; color: #fb7185;">Hapus</button>
+                                <button type="submit" class="btn-action" style="width: 100%; height: 100%; color: #fb7185;">{{ __('targets.delete') }}</button>
                             </form>
                         </div>
                     </div>
@@ -659,7 +659,7 @@
             
             if (amount < 1000) {
                 e.preventDefault();
-                alert('Setoran minimal Rp 1.000');
+                alert('{{ __('targets.deposit_min_alert') }}');
                 return false;
             }
             

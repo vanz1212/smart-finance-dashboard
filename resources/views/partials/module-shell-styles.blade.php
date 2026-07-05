@@ -814,6 +814,30 @@
         color: #334155 !important;
     }
 
+    [data-theme="light"] body.module-page .module-hero-summary strong,
+    [data-theme="light"] body.module-page .stata-stat strong,
+    [data-theme="light"] body.module-page .tax-stat strong,
+    [data-theme="light"] body.module-page .stata-data-card strong,
+    [data-theme="light"] body.module-page .tax-metric strong,
+    [data-theme="light"] body.module-page .stata-console,
+    [data-theme="light"] body.module-page .stata-live-table td,
+    [data-theme="light"] body.module-page .history-item div {
+        color: #0f172a !important;
+    }
+
+    [data-theme="light"] body.module-page .module-hero-summary span,
+    [data-theme="light"] body.module-page .stata-stat span,
+    [data-theme="light"] body.module-page .tax-stat span,
+    [data-theme="light"] body.module-page .stata-data-card span,
+    [data-theme="light"] body.module-page .tax-metric span {
+        color: #475569 !important;
+    }
+
+    [data-theme="light"] body.module-page .stata-live-table th {
+        background: rgba(15, 23, 42, .06) !important;
+        color: #0f172a !important;
+    }
+
     ::view-transition-old(root),
     ::view-transition-new(root) {
         animation: none;

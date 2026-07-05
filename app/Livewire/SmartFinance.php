@@ -12,19 +12,19 @@ use Illuminate\Support\Facades\Auth;
 class SmartFinance extends Component
 {
     public $periode;
-    public $pemasukan = 0;
-    public $tabungan = 0;
-    public $saldo_tabungan = null;
-    public $setoran_tabungan = null;
-    public $investasi = 0;
-    public $dana_darurat = 0;
-    public $target_tabungan = null;
+    public $pemasukan = '';
+    public $tabungan = '';
+    public $saldo_tabungan = '';
+    public $setoran_tabungan = '';
+    public $investasi = '';
+    public $dana_darurat = '';
+    public $target_tabungan = '';
     
     // Legacy fixed fields
-    public $kebutuhan_pokok = 0;
-    public $transportasi = 0;
-    public $cicilan = 0;
-    public $gaya_hidup = 0;
+    public $kebutuhan_pokok = '';
+    public $transportasi = '';
+    public $cicilan = '';
+    public $gaya_hidup = '';
 
     // Dynamic expenses
     public $expenses = [];
@@ -76,7 +76,7 @@ class SmartFinance extends Component
 
     private function formatForInput($value)
     {
-        if ($value === null || $value === '') return '';
+        if ($value === null || $value === '' || (float)$this->normalize($value) === 0.0) return '';
         return number_format((float) $this->normalize($value), 0, ',', '.');
     }
 

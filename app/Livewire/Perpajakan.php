@@ -12,11 +12,11 @@ class Perpajakan extends Component
     public $tahun_pajak;
     public $metode_perhitungan = 'ter';
     public $status_wajib_pajak = 'TK/0';
-    public $penghasilan_bulanan = 0;
-    public $penghasilan_tidak_teratur = 0;
-    public $iuran_pensiun = 0;
-    public $zakat = 0;
-    public $kredit_pajak = 0;
+    public $penghasilan_bulanan = '';
+    public $penghasilan_tidak_teratur = '';
+    public $iuran_pensiun = '';
+    public $zakat = '';
+    public $kredit_pajak = '';
     
     public $result = null;
     public $history = [];
@@ -101,11 +101,11 @@ class Perpajakan extends Component
         $this->tahun_pajak = $result['tahun_pajak'] ?? date('Y');
         $this->metode_perhitungan = $result['metode_perhitungan'] ?? 'ter';
         $this->status_wajib_pajak = $result['status_wajib_pajak'] ?? 'TK/0';
-        $this->penghasilan_bulanan = $this->formatForInput($result['input']['penghasilan_bulanan'] ?? 0);
-        $this->penghasilan_tidak_teratur = $this->formatForInput($result['input']['penghasilan_tidak_teratur'] ?? 0);
-        $this->iuran_pensiun = $this->formatForInput($result['input']['iuran_pensiun'] ?? 0);
-        $this->zakat = $this->formatForInput($result['input']['zakat'] ?? 0);
-        $this->kredit_pajak = $this->formatForInput($result['input']['kredit_pajak'] ?? 0);
+        $this->penghasilan_bulanan = $this->formatForInput($result['input']['penghasilan_bulanan'] ?? null);
+        $this->penghasilan_tidak_teratur = $this->formatForInput($result['input']['penghasilan_tidak_teratur'] ?? null);
+        $this->iuran_pensiun = $this->formatForInput($result['input']['iuran_pensiun'] ?? null);
+        $this->zakat = $this->formatForInput($result['input']['zakat'] ?? null);
+        $this->kredit_pajak = $this->formatForInput($result['input']['kredit_pajak'] ?? null);
     }
 
     public function normalize($value)

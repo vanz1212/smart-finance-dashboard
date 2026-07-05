@@ -234,6 +234,7 @@
         .tax-form .col-12, .tax-form label.full { grid-column: 1 / -1; }
         .tax-form span { color: rgba(248,250,252,.7); font-size: .84rem; font-weight: 700; display: flex; align-items: center; gap: 7px; }
         .tax-form input, .tax-form select { 
+            box-sizing: border-box;
             min-height: 48px; width: 100%; 
             border: 1px solid rgba(255,255,255,.12); 
             border-radius: 12px; 
