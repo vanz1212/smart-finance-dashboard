@@ -970,7 +970,7 @@
                                         <input type="text" wire:model="expenses.{{ $index }}.name" placeholder="{{ __('finance.category_name') }}" autocomplete="off" required>
                                         <div class="money-field" style="position:relative;">
                                             <span class="money-prefix">Rp</span>
-                                            <input type="text" class="expense-amount" wire:model="expenses.{{ $index }}.amount" x-data x-init="$el.value = String($el.value).replace(/[^0-9]/g, '').replace(/\\B(?=(\\d{3})+(?!\\d))/g, '.')" x-on:input="$el.value = $el.value.replace(/[^0-9]/g, '').replace(/\\B(?=(\\d{3})+(?!\\d))/g, '.')" inputmode="numeric" autocomplete="off" required style="padding-left:42px;">
+                                            <input type="text" class="expense-amount" wire:model="expenses.{{ $index }}.amount" x-data x-init="$el.value = String($el.value).replace(/[^0-9]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, '.')" x-on:input="$el.value = $el.value.replace(/[^0-9]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, '.')" inputmode="numeric" autocomplete="off" required style="padding-left:42px;">
                                         </div>
                                         <label class="debt-toggle" title="{{ __('finance.mark_as_debt') }}">
                                             <input type="checkbox" wire:model="expenses.{{ $index }}.is_debt"> {{ __('finance.installment_label') }}
@@ -1064,7 +1064,21 @@
 
                     @if ($result)
                     <!-- What-If Simulation -->
-                    <div class="insight-box" style="background: rgba(99, 102, 241, 0.05); border-color: rgba(99, 102, 241, 0.3);">
+                    <div class="insight-box" 
+                        x-data="{
+                            expPct: 0,
+                            debtPct: 0,
+                            baseCashflow: {{ (float) $result['net_cashflow'] }},
+                            baseExpense: {{ (float) $result['total_expenses'] }},
+                            baseDebt: {{ (float) array_sum(array_column(array_filter($result['expense_items'], fn($i) => !empty($i['is_debt'])), 'amount')) }},
+                            get baseNonDebtExpense() { return this.baseExpense - this.baseDebt; },
+                            get savedFromExpense() { return this.baseNonDebtExpense * (this.expPct / 100); },
+                            get savedFromDebt() { return this.baseDebt * (this.debtPct / 100); },
+                            get totalSaved() { return this.savedFromExpense + this.savedFromDebt; },
+                            get projectedCashflow() { return this.baseCashflow + this.totalSaved; },
+                            formatRp(num) { return 'Rp ' + new Intl.NumberFormat('id-ID').format(Math.round(num)); }
+                        }"
+                        style="background: rgba(99, 102, 241, 0.05); border-color: rgba(99, 102, 241, 0.3);">
                         <h3 style="color: var(--accent-primary); margin-bottom: 15px;">{{ __('finance.what_if_simulation') }}</h3>
                         <p style="font-size: 0.85rem; color: rgba(248, 250, 252, 0.7); margin-bottom: 20px;">
                             {{ __('finance.simulation_intro') }}
@@ -1075,80 +1089,35 @@
                             <div>
                                 <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
                                     <label style="font-size: 0.85rem; font-weight: bold;">{{ __('finance.reduce_expenses') }}</label>
-                                    <span id="sim-expense-val" style="color: var(--accent-primary); font-weight: bold;">0%</span>
+                                    <span style="color: var(--accent-primary); font-weight: bold;" x-text="expPct + '%'">0%</span>
                                 </div>
-                                <input type="range" id="sim-expense-slider" min="0" max="50" step="5" value="0" style="width: 100%; accent-color: var(--accent-primary);">
+                                <input type="range" x-model="expPct" min="0" max="50" step="5" style="width: 100%; accent-color: var(--accent-primary);">
                             </div>
                             
                             <!-- Slider 2: Kurangi Cicilan -->
                             <div>
                                 <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
                                     <label style="font-size: 0.85rem; font-weight: bold;">{{ __('finance.reduce_debt') }}</label>
-                                    <span id="sim-debt-val" style="color: var(--accent-primary); font-weight: bold;">0%</span>
+                                    <span style="color: var(--accent-primary); font-weight: bold;" x-text="debtPct + '%'">0%</span>
                                 </div>
-                                <input type="range" id="sim-debt-slider" min="0" max="50" step="5" value="0" style="width: 100%; accent-color: var(--accent-primary);">
+                                <input type="range" x-model="debtPct" min="0" max="50" step="5" style="width: 100%; accent-color: var(--accent-primary);">
                             </div>
                         </div>
                         
                         <div style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px; border: 1px dashed rgba(255,255,255,0.2);">
-                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
                                 <span style="font-size: 0.9rem; color: rgba(255,255,255,0.7);">{{ __('finance.simulation_result_label') }}</span>
-                                <strong id="sim-net-cashflow" style="font-size: 1.2rem; color: {{ $result['net_cashflow'] < 0 ? '#ef4444' : '#10b981' }}">{{ $formatRupiah($result['net_cashflow']) }}</strong>
+                                <strong style="font-size: 1.2rem;" :style="{ color: projectedCashflow < 0 ? '#ef4444' : '#10b981' }" x-text="formatRp(projectedCashflow)">{{ $formatRupiah($result['net_cashflow']) }}</strong>
                             </div>
-                            <div style="font-size: 0.8rem; color: var(--accent-primary);" id="sim-impact-text">
-                                {{ __('finance.simulation_adjust') }}
+                            <div style="font-size: 0.8rem; color: var(--accent-primary);">
+                                <template x-if="totalSaved > 0">
+                                    <span x-text="`{{ __('finance.simulation_saving_message', ['amount' => '__AMOUNT__', 'months' => __('finance.months')]) }}`.replace('__AMOUNT__', formatRp(totalSaved))"></span>
+                                </template>
+                                <template x-if="totalSaved <= 0">
+                                    <span>{{ __('finance.simulation_adjust') }}</span>
+                                </template>
                             </div>
                         </div>
-                        
-                        <input type="hidden" id="sim-base-cashflow" value="{{ $result['net_cashflow'] }}">
-                        <input type="hidden" id="sim-base-expense" value="{{ $result['total_expenses'] }}">
-                        <input type="hidden" id="sim-base-debt" value="{{ array_sum(array_column(array_filter($result['expense_items'], fn($i) => !empty($i['is_debt'])), 'amount')) }}">
-                        
-                        <script>
-                            document.addEventListener('DOMContentLoaded', function() {
-                                const expenseSlider = document.getElementById('sim-expense-slider');
-                                const debtSlider = document.getElementById('sim-debt-slider');
-                                const expenseVal = document.getElementById('sim-expense-val');
-                                const debtVal = document.getElementById('sim-debt-val');
-                                const netCashflowLabel = document.getElementById('sim-net-cashflow');
-                                const impactText = document.getElementById('sim-impact-text');
-                                
-                                const baseCashflow = parseFloat(document.getElementById('sim-base-cashflow').value);
-                                const baseExpense = parseFloat(document.getElementById('sim-base-expense').value);
-                                const baseDebt = parseFloat(document.getElementById('sim-base-debt').value);
-                                const baseNonDebtExpense = baseExpense - baseDebt;
-                                
-                                function formatRp(num) {
-                                    return 'Rp ' + new Intl.NumberFormat('id-ID').format(Math.round(num));
-                                }
-                                
-                                function updateSimulation() {
-                                    const expPct = parseInt(expenseSlider.value);
-                                    const debtPct = parseInt(debtSlider.value);
-                                    
-                                    expenseVal.textContent = expPct + '%';
-                                    debtVal.textContent = debtPct + '%';
-                                    
-                                    const savedFromExpense = baseNonDebtExpense * (expPct / 100);
-                                    const savedFromDebt = baseDebt * (debtPct / 100);
-                                    
-                                    const totalSaved = savedFromExpense + savedFromDebt;
-                                    const projectedCashflow = baseCashflow + totalSaved;
-                                    
-                                    netCashflowLabel.textContent = formatRp(projectedCashflow);
-                                    netCashflowLabel.style.color = projectedCashflow < 0 ? '#ef4444' : '#10b981';
-                                    
-                                    if (totalSaved > 0) {
-                                        impactText.textContent = `{{ __('finance.simulation_saving_message', ['amount' => '__AMOUNT__', 'months' => __('finance.months')]) }}`.replace('__AMOUNT__', formatRp(totalSaved));
-                                    } else {
-                                        impactText.textContent = '{{ __('finance.simulation_adjust') }}';
-                                    }
-                                }
-                                
-                                expenseSlider.addEventListener('input', updateSimulation);
-                                debtSlider.addEventListener('input', updateSimulation);
-                            });
-                        </script>
                     </div>
                     @endif
                 </div>
@@ -1234,18 +1203,7 @@
                     </div>
                 </section>
 
-                @if (!empty($categoryHistory))
-                <section class="workspace-panel workspace-panel-inner">
-                    <div class="panel-heading">
-                        <h2>{{ __('finance.expense_trends') }}</h2>
-                        <p>{{ __('finance.category_trend_comparison') }}</p>
-                    </div>
 
-                    <div class="category-trend-wrapper">
-                        <canvas id="categoryTrendChart"></canvas>
-                    </div>
-                </section>
-                @endif
             @endif
 
             @if (isset($history) && count($history) > 0)

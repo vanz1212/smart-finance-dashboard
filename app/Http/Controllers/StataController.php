@@ -99,12 +99,41 @@ class StataController extends BaseController
 
     public function run(Request $request)
     {
-        $validated = $request->validate([
-            'command' => ['required', Rule::in(self::COMMANDS)],
+        $rules = [
+            'command' => ['nullable', Rule::in(self::COMMANDS)],
             'variables' => ['nullable', 'array', 'max:30'],
             'variables.*' => ['string', 'max:128'],
             'direction' => ['nullable', Rule::in(['asc', 'desc'])],
-        ]);
+            'stata_prompt' => ['nullable', 'string', 'max:255'],
+        ];
+
+        $validated = $request->validate($rules);
+
+        $command = $validated['command'] ?? null;
+        $variables = $validated['variables'] ?? [];
+        $direction = $validated['direction'] ?? 'asc';
+
+        if (!empty($validated['stata_prompt'])) {
+            $parts = preg_split('/\s+/', trim($validated['stata_prompt']));
+            $promptCommand = strtolower(array_shift($parts));
+            
+            // Handle 'misstable summarize' as 'missing'
+            if ($promptCommand === 'misstable' && isset($parts[0]) && strtolower($parts[0]) === 'summarize') {
+                $command = 'missing';
+                array_shift($parts);
+            } else {
+                $command = $promptCommand;
+            }
+
+            if (!in_array($command, self::COMMANDS)) {
+                return back()->withErrors(['stata_command' => 'Command tidak didukung via prompt.']);
+            }
+            $variables = $parts;
+        }
+
+        if (empty($command)) {
+            return back()->withErrors(['stata_command' => 'The command field is required.']);
+        }
 
         $dataset = $request->session()->get('stata_dataset');
         $relativePath = data_get($dataset, 'path');
@@ -115,9 +144,9 @@ class StataController extends BaseController
 
         try {
             $output = $this->runTool(Storage::disk('local')->path($relativePath), [
-                'command' => $validated['command'],
-                'variables' => array_values($validated['variables'] ?? []),
-                'direction' => $validated['direction'] ?? 'asc',
+                'command' => $command,
+                'variables' => array_values($variables),
+                'direction' => $direction,
             ]);
         } catch (Throwable $exception) {
             Log::warning('Stata command failed.', ['exception' => $exception]);

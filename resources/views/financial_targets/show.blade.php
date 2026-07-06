@@ -16,7 +16,7 @@
             'lainnya' => 'Lainnya',
         ];
         $categoryColors = [
-            'tabungan' => var(--accent-primary),
+            'tabungan' => 'var(--accent-primary)',
             'investasi' => '#6366f1',
             'asuransi' => '#f59e0b',
             'properti' => '#8b5cf6',

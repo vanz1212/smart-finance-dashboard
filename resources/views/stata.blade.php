@@ -595,7 +595,74 @@
             .stata-workspace { margin: -24px; padding-inline: 14px; }
             .tutorial-step { grid-template-columns: 1fr; }
         }
-            </style>
+        .stata-variable-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 10px;
+            margin-top: 16px;
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 8px;
+        }
+
+        .stata-variable-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 14px;
+            border-radius: 8px;
+            background: rgba(255,255,255,.05);
+            border: 1px solid rgba(255,255,255,.1);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .stata-variable-option:hover {
+            background: rgba(255,255,255,.1);
+        }
+
+        .stata-variable-option input {
+            accent-color: var(--accent-primary);
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+        }
+
+        .stata-variable-option span:not(.variable-type) {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .stata-variable-option strong {
+            color: #fff;
+            font-size: 0.95rem;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .stata-variable-option small {
+            color: rgba(248,250,252,.6);
+            font-size: 0.8rem;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .variable-type {
+            font-family: Consolas, monospace;
+            font-size: 0.75rem !important;
+            padding: 4px 8px;
+            background: rgba(0,0,0,.3);
+            border-radius: 4px;
+            color: var(--accent-primary) !important;
+            flex: 0 0 auto !important;
+        }
+    </style>
 
     @include('partials.module-shell-styles')
 
@@ -735,11 +802,18 @@
                                 <button class="stata-command-button" name="command" value="sort" type="submit">{{ __('stata.sort_preview') }}</button>
                                 <button class="stata-command-button" name="command" value="regress" type="submit">Regress</button>
                             </div>
+                            
+                            <div class="stata-prompt-bar" style="display: flex; gap: 10px; margin-top: 15px;">
+                                <div style="display: flex; align-items: center; justify-content: center; width: 40px; background: rgba(94, 234, 212, .16); color: #c7fff4; font-family: Consolas, monospace; font-weight: bold; border-radius: 8px; border: 1px solid rgba(94, 234, 212, .24);">.</div>
+                                <input type="text" name="stata_prompt" placeholder="Ketik command Stata (contoh: summarize mpg price)" autocomplete="off" style="flex: 1; padding: 12px 16px; border-radius: 8px; border: 1px solid rgba(255,255,255,.14); background: rgba(0,0,0,.2); color: #fff; font-family: Consolas, monospace; font-size: 0.95rem;">
+                                <button class="stata-command-button" type="submit" style="background: var(--accent-primary); border: none; color: #fff;">Run</button>
+                            </div>
+
 
                             <h3>{{ __('stata.data_preview') }}</h3>
                             <p>{{ __('stata.preview_desc') }}</p>
                             <div class="stata-table-wrap">
-                                <table class="stata-live-table">
+                                <table class="stata-output-table" style="white-space: nowrap;">
                                     <thead><tr>@foreach ($stataDataset['preview']['columns'] as $column)<th>{{ $column }}</th>@endforeach</tr></thead>
                                     <tbody>
                                         @foreach ($stataDataset['preview']['rows'] as $row)
@@ -758,8 +832,8 @@
                         <h3>{{ $stataOutput['title'] }}</h3>
                         <code class="stata-result-command">{{ $stataOutput['command'] }}</code>
                         <p>{{ $stataOutput['message'] }}</p>
-                        <div class="stata-table-wrap">
-                            <table class="stata-live-table">
+                        <div class="stata-table-wrap" style="overflow-x: auto;">
+                            <table class="stata-output-table" style="white-space: nowrap;">
                                 <thead><tr>@foreach ($stataOutput['table']['columns'] as $column)<th>{{ $column }}</th>@endforeach</tr></thead>
                                 <tbody>
                                     @foreach ($stataOutput['table']['rows'] as $row)

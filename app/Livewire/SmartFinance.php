@@ -150,7 +150,7 @@ class SmartFinance extends Component
         foreach ($categories as $category) {
             $amount = ($pemasukanFloat * $category['ratio_percent']) / 100;
             $this->expenses[] = [
-                'name' => $category['name'],
+                'name' => __($category['name']),
                 'amount' => $this->formatForInput($amount),
                 'is_debt' => $category['is_debt'] ?? false,
             ];
@@ -240,10 +240,10 @@ class SmartFinance extends Component
                 $expenseItems = is_string($rawJson) ? json_decode($rawJson, true) : $rawJson;
             } else {
                 $expenseItems = [
-                    ['name' => 'Kebutuhan pokok', 'amount' => (float) ($data['kebutuhan_pokok'] ?? 0), 'is_debt' => false],
-                    ['name' => 'Transportasi',    'amount' => (float) ($data['transportasi']    ?? 0), 'is_debt' => false],
-                    ['name' => 'Cicilan/utang',   'amount' => (float) ($data['cicilan']         ?? 0), 'is_debt' => true],
-                    ['name' => 'Gaya hidup',      'amount' => (float) ($data['gaya_hidup']      ?? 0), 'is_debt' => false],
+                    ['name' => __('Kebutuhan pokok'), 'amount' => (float) ($data['kebutuhan_pokok'] ?? 0), 'is_debt' => false],
+                    ['name' => __('Transportasi'),    'amount' => (float) ($data['transportasi']    ?? 0), 'is_debt' => false],
+                    ['name' => __('Cicilan/utang'),   'amount' => (float) ($data['cicilan']         ?? 0), 'is_debt' => true],
+                    ['name' => __('Gaya hidup'),      'amount' => (float) ($data['gaya_hidup']      ?? 0), 'is_debt' => false],
                 ];
             }
     

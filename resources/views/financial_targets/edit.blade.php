@@ -349,7 +349,7 @@
     </main>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        function initRupiahInputs() {
             var fields = document.querySelectorAll('[data-rupiah-input]');
 
             function formatRupiah(value) {
@@ -361,13 +361,16 @@
             function normalizeField(input) {
                 var digits = input.value.replace(/[^0-9]/g, '');
                 if (digits) {
-                    input.value = 'Rp ' + formatRupiah(digits);
+                    input.value = formatRupiah(digits);
                 } else {
                     input.value = '';
                 }
             }
 
             fields.forEach(function (field) {
+                if (field.dataset.rupiahInitialized) return;
+                field.dataset.rupiahInitialized = 'true';
+                
                 normalizeField(field);
                 field.addEventListener('input', function () {
                     normalizeField(field);
@@ -376,7 +379,11 @@
                     field.value = field.value.replace(/[^0-9]/g, '');
                 });
             });
-        });
+        }
+        
+        document.addEventListener('DOMContentLoaded', initRupiahInputs);
+        document.addEventListener('livewire:navigated', initRupiahInputs);
+        initRupiahInputs();
     </script>
     @include('partials.module-shell-styles')
 @endsection
