@@ -25,7 +25,7 @@
 
 <div class="module-switcher" aria-label="Navigasi modul finansial">
     <a class="module-switcher-brand" href="{{ route('dashboard.user') }}" wire:navigate>
-        <span>N</span>
+        <img src="{{ asset('images/nexio_logo.png') }}" alt="Nexio Logo" style="height: 28px; width: auto; border-radius: 6px;">
         <strong>NEXIO</strong>
     </a>
 
