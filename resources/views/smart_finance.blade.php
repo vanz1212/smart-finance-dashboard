@@ -827,7 +827,7 @@
         }
 
         .recommendation-text {
-            color: rgba(248, 250, 252, 0.6);
+            color: var(--text-muted);
             font-size: 0.75rem;
             line-height: 1.4;
         }
@@ -1039,7 +1039,7 @@
                                     </div>
                                     <div style="display: flex; flex-direction: column; gap: 4px; align-items: flex-end; justify-content: center;">
                                         <span class="recommendation-badge {{ $rec['status'] }}">{{ ucfirst($rec['status']) }}</span>
-                                        <span style="font-size: 0.75rem; color: rgba(248,250,252,0.6);">{{ number_format($rec['actual_ratio'], 1) }}%</span>
+                                        <span style="font-size: 0.75rem; color: var(--text-muted);">{{ number_format($rec['actual_ratio'], 1) }}%</span>
                                     </div>
                                 </div>
                             @endforeach

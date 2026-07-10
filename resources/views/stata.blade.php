@@ -638,7 +638,7 @@
         }
 
         .stata-variable-option strong {
-            color: #fff;
+            color: var(--text-main);
             font-size: 0.95rem;
             text-overflow: ellipsis;
             overflow: hidden;
@@ -646,7 +646,7 @@
         }
 
         .stata-variable-option small {
-            color: rgba(248,250,252,.6);
+            color: var(--text-muted);
             font-size: 0.8rem;
             text-overflow: ellipsis;
             overflow: hidden;
@@ -812,7 +812,7 @@
 
                             <h3>{{ __('stata.data_preview') }}</h3>
                             <p>{{ __('stata.preview_desc') }}</p>
-                            <div class="stata-table-wrap">
+                            <div class="stata-table-wrap" style="overflow-x: auto;">
                                 <table class="stata-output-table" style="white-space: nowrap;">
                                     <thead><tr>@foreach ($stataDataset['preview']['columns'] as $column)<th>{{ $column }}</th>@endforeach</tr></thead>
                                     <tbody>
