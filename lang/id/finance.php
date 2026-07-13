@@ -78,7 +78,7 @@ return [
     'category_trend_comparison' => 'Perbandingan perubahan kategori pengeluaran dalam 6 bulan terakhir.',
     'monthly_progress_comparison' => 'Bandingkan pemasukan, pengeluaran, tabungan, dan tren arus kas bersih dari bulan ke bulan.',
     'use_analysis' => 'Gunakan',
-    'delete_history_confirm' => 'Apakah Anda yakin ingin menghapus riwayat analisis untuk periode ini?',
+    'delete_history_confirm' => 'Apakah Anda yakin ingin menghapus SEMUA riwayat analisis?',
     'simulation_intro' => 'Geser slider di bawah ini untuk melihat dampak mengurangi gaya hidup atau mempercepat cicilan terhadap sisa kas (arus kas bersih) Anda secara instan.',
     'simulation_result_label' => 'Proyeksi Arus Kas Bersih:',
     'simulation_adjust' => 'Sesuaikan slider untuk melihat simulasi.',

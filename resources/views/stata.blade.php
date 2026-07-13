@@ -202,21 +202,21 @@
         }
 
         .stata-panel {
-            border: 1px solid rgba(255,255,255,.14);
+            border: 1px solid var(--border-color);
             border-radius: 14px;
-            background: linear-gradient(180deg, rgba(13,47,51,.78), rgba(6,24,32,.84));
-            box-shadow: 0 28px 80px rgba(0,0,0,.34);
+            background: var(--bg-panel);
+            box-shadow: 0 28px 80px rgba(0,0,0,.15);
             backdrop-filter: blur(16px);
         }
 
         .stata-panel-inner { padding: 26px; }
         .stata-kicker { color: var(--accent-primary); font-size: .8rem; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
         .stata-hero h1 { margin: 14px 0 0; font-size: clamp(2.4rem, 6vw, 5rem); line-height: .98; letter-spacing: 0; }
-        .stata-hero p { max-width: 720px; margin: 18px 0 0; color: rgba(248,250,252,.72); line-height: 1.7; }
+        .stata-hero p { max-width: 720px; margin: 18px 0 0; color: var(--text-muted); line-height: 1.7; }
         .stata-action { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; margin-top: 26px; padding: 0 20px; border-radius: 999px; background: var(--accent-primary); color: var(--accent-hover); text-decoration: none; font-weight: 900; }
         .stata-stat { display: grid; align-content: center; gap: 18px; }
-        .stata-stat strong { display: block; font-size: 2.4rem; color: #fff; }
-        .stata-stat span { color: rgba(248,250,252,.66); line-height: 1.5; }
+        .stata-stat strong { display: block; font-size: 2.4rem; color: var(--text-main); }
+        .stata-stat span { color: var(--text-muted); line-height: 1.5; }
 
         .feature-grid {
             display: grid;
@@ -227,24 +227,24 @@
         .feature-card {
             min-height: 230px;
             padding: 24px;
-            border: 1px solid rgba(255,255,255,.14);
+            border: 1px solid var(--border-color);
             border-radius: 14px;
-            background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(243,201,105,.07));
-            box-shadow: 0 22px 60px rgba(0,0,0,.24);
+            background: var(--bg-panel);
+            box-shadow: 0 22px 60px rgba(0,0,0,.1);
         }
 
         .feature-card small { color: var(--accent-primary); font-weight: 900; }
         .feature-card h2 { margin: 42px 0 12px; font-size: 1.45rem; line-height: 1.05; }
-        .feature-card p { margin: 0; color: rgba(248,250,252,.68); line-height: 1.65; }
+        .feature-card p { margin: 0; color: var(--text-muted); line-height: 1.65; }
 
         .stata-console {
             margin-top: 22px;
             padding: 22px;
-            border: 1px solid rgba(255,255,255,.14);
+            border: 1px solid var(--border-color);
             border-radius: 14px;
-            background: rgba(0,0,0,.34);
+            background: var(--bg-secondary);
             font-family: Consolas, 'Courier New', monospace;
-            color: rgba(248,250,252,.82);
+            color: var(--text-muted);
             line-height: 1.7;
         }
 
@@ -263,21 +263,21 @@
 
         .stata-data-card {
             padding: 16px;
-            border: 1px solid rgba(255,255,255,.14);
+            border: 1px solid var(--border-color);
             border-radius: 12px;
-            background: rgba(255,255,255,.06);
+            background: var(--bg-secondary);
         }
 
         .stata-data-card span {
             display: block;
-            color: rgba(248,250,252,.56);
+            color: var(--text-muted);
             font-size: .82rem;
             font-weight: 800;
             margin-bottom: 8px;
         }
 
         .stata-data-card strong {
-            color: #fff;
+            color: var(--text-main);
             font-size: 1.25rem;
         }
 
@@ -292,14 +292,14 @@
         .stata-output-table th,
         .stata-output-table td {
             padding: 12px;
-            border-bottom: 1px solid rgba(255,255,255,.1);
+            border-bottom: 1px solid var(--border-color);
             text-align: left;
-            color: rgba(248,250,252,.76);
+            color: var(--text-muted);
         }
 
         .stata-output-table th {
-            color: #fff;
-            background: rgba(255,255,255,.06);
+            color: var(--text-main);
+            background: var(--bg-secondary);
         }
 
         .stata-command-reference {
@@ -313,7 +313,7 @@
         .tutorial-intro {
             max-width: 760px;
             margin: 12px 0 24px;
-            color: rgba(248,250,252,.72);
+            color: var(--text-muted);
             line-height: 1.7;
         }
 
@@ -327,9 +327,9 @@
             grid-template-columns: 48px minmax(0, 1fr);
             gap: 16px;
             padding: 20px;
-            border: 1px solid rgba(255,255,255,.13);
+            border: 1px solid var(--border-color);
             border-radius: 14px;
-            background: rgba(255,255,255,.045);
+            background: var(--bg-panel);
         }
 
         .tutorial-number {
@@ -351,7 +351,7 @@
 
         .tutorial-content p {
             margin: 0;
-            color: rgba(248,250,252,.7);
+            color: var(--text-muted);
             line-height: 1.65;
         }
 
@@ -360,14 +360,13 @@
             overflow-x: auto;
             padding: 14px 16px;
             border-radius: 10px;
-            border: 1px solid rgba(94, 234, 212, .24);
-            background: linear-gradient(180deg, rgba(14, 44, 48, .96), rgba(8, 27, 31, .96));
-            color: #f8fffe;
+            border: 1px solid var(--border-color);
+            background: var(--bg-secondary);
+            color: var(--text-main);
             font-family: Consolas, 'Courier New', monospace;
             font-size: .9rem;
             line-height: 1.65;
             white-space: pre;
-            box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
         }
 
         .tutorial-tip {
@@ -375,7 +374,7 @@
             padding: 11px 13px;
             border-left: 3px solid var(--accent-primary);
             background: rgba(99, 102, 241,.08);
-            color: rgba(248,250,252,.74);
+            color: var(--text-muted);
             line-height: 1.6;
         }
 
@@ -391,7 +390,7 @@
             border: 1px solid rgba(99, 102, 241,.26);
             border-radius: 10px;
             background: rgba(99, 102, 241,.07);
-            color: rgba(248,250,252,.78);
+            color: var(--text-muted);
             line-height: 1.55;
         }
 
@@ -413,7 +412,7 @@
         .stata-section-heading p {
             max-width: 520px;
             margin: 0;
-            color: rgba(248,250,252,.68);
+            color: var(--text-muted);
             line-height: 1.65;
         }
 
@@ -424,9 +423,9 @@
 
         .stata-command-group {
             padding: 20px;
-            border: 1px solid rgba(255,255,255,.14);
+            border: 1px solid var(--border-color);
             border-radius: 14px;
-            background: rgba(255,255,255,.055);
+            background: var(--bg-panel);
         }
 
         .stata-command-group h3 {
@@ -445,26 +444,25 @@
             display: grid;
             gap: 10px;
             padding: 15px;
-            border: 1px solid rgba(255,255,255,.12);
+            border: 1px solid var(--border-color);
             border-radius: 12px;
-            background: linear-gradient(180deg, rgba(18, 55, 59, .92), rgba(9, 30, 34, .92));
-            box-shadow: inset 0 1px 0 rgba(255,255,255,.05);
+            background: var(--bg-secondary);
         }
 
         .stata-command-item code {
             width: fit-content;
             padding: 7px 10px;
             border-radius: 8px;
-            border: 1px solid rgba(94, 234, 212, .24);
-            background: rgba(94, 234, 212, .16);
-            color: #c7fff4;
+            border: 1px solid var(--border-color);
+            background: var(--bg-primary);
+            color: var(--accent-primary);
             font-family: Consolas, 'Courier New', monospace;
             font-weight: 900;
         }
 
         .stata-command-item p {
             margin: 0;
-            color: rgba(248,250,252,.9);
+            color: var(--text-main);
             line-height: 1.55;
         }
 
@@ -473,9 +471,9 @@
             overflow-x: auto;
             padding: 11px 12px;
             border-radius: 8px;
-            border: 1px solid rgba(230,196,109,.18);
-            background: rgba(244, 248, 248, .08);
-            color: #fff7dd;
+            border: 1px solid var(--border-color);
+            background: var(--bg-primary);
+            color: var(--text-muted);
             font-family: Consolas, 'Courier New', monospace;
             font-size: .88rem;
             line-height: 1.55;
@@ -487,7 +485,7 @@
             border: 1px solid rgba(99, 102, 241, .32);
             border-radius: 12px;
             background: rgba(99, 102, 241, .08);
-            color: rgba(248,250,252,.72);
+            color: var(--text-muted);
             line-height: 1.65;
         }
 
@@ -611,14 +609,14 @@
             gap: 12px;
             padding: 10px 14px;
             border-radius: 8px;
-            background: rgba(255,255,255,.05);
-            border: 1px solid rgba(255,255,255,.1);
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
             cursor: pointer;
             transition: background 0.2s;
         }
         
         .stata-variable-option:hover {
-            background: rgba(255,255,255,.1);
+            background: var(--bg-panel);
         }
 
         .stata-variable-option input {
@@ -657,7 +655,7 @@
             font-family: Consolas, monospace;
             font-size: 0.75rem !important;
             padding: 4px 8px;
-            background: rgba(0,0,0,.3);
+            background: var(--bg-primary);
             border-radius: 4px;
             color: var(--accent-primary) !important;
             flex: 0 0 auto !important;

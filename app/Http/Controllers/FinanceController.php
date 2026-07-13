@@ -229,6 +229,10 @@ class FinanceController extends BaseController
     {
         $userId = auth()->id();
         $analysis = FinancialAnalysis::where('user_id', $userId)->findOrFail($id);
+        
+        // Deleting the model will automatically trigger cascade deletes 
+        // if there are any related database records (e.g. via onDelete('cascade') in migrations)
+        // Since 'expenses_json' is in the same table, it's deleted automatically.
         $analysis->delete();
 
         return redirect()->route('finance.index')->with('success', 'Riwayat analisis berhasil dihapus.');
