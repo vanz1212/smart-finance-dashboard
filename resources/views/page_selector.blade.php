@@ -1386,20 +1386,20 @@
                                 </div>
                             </a>
 
-                            <a wire:navigate class="module-card" href="{{ route('stata') }}">
-                                <div class="module-icon-wrap" style="background: linear-gradient(135deg, rgba(168,85,247,0.2), rgba(168,85,247,0.05)); --card-accent: rgba(168,85,247,0.3);">📈</div>
-                                <div class="module-info">
-                                    <h3 class="module-title">{{ __('app.module_stata') }}</h3>
-                                    <p class="module-desc">{{ __('app.desc_stata') }}</p>
-                                    <span class="module-badge">{{ __('app.ready') }}</span>
-                                </div>
-                            </a>
-
                             <a wire:navigate class="module-card" href="{{ route('targets.index') }}">
                                 <div class="module-icon-wrap" style="background: linear-gradient(135deg, rgba(239,68,68,0.2), rgba(239,68,68,0.05)); --card-accent: rgba(239,68,68,0.3);">🎯</div>
                                 <div class="module-info">
                                     <h3 class="module-title">{{ __('app.module_targets') }}</h3>
                                     <p class="module-desc">{{ __('app.desc_targets') }}</p>
+                                    <span class="module-badge">{{ __('app.ready') }}</span>
+                                </div>
+                            </a>
+
+                            <a wire:navigate class="module-card" href="{{ route('stata') }}">
+                                <div class="module-icon-wrap" style="background: linear-gradient(135deg, rgba(168,85,247,0.2), rgba(168,85,247,0.05)); --card-accent: rgba(168,85,247,0.3);">📈</div>
+                                <div class="module-info">
+                                    <h3 class="module-title">{{ __('app.module_stata') }}</h3>
+                                    <p class="module-desc">{{ __('app.desc_stata') }}</p>
                                     <span class="module-badge">{{ __('app.ready') }}</span>
                                 </div>
                             </a>

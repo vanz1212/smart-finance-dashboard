@@ -1117,13 +1117,13 @@
                 </article>
                 <article class="service-card">
                     <small>03</small>
-                    <h3>{{ __('landing.service3_title') }}</h3>
-                    <p>{{ __('landing.service3_desc') }}</p>
+                    <h3>{{ __('landing.service4_title') }}</h3>
+                    <p>{{ __('landing.service4_desc') }}</p>
                 </article>
                 <article class="service-card">
                     <small>04</small>
-                    <h3>{{ __('landing.service4_title') }}</h3>
-                    <p>{{ __('landing.service4_desc') }}</p>
+                    <h3>{{ __('landing.service3_title') }}</h3>
+                    <p>{{ __('landing.service3_desc') }}</p>
                 </article>
             </div>
         </section>

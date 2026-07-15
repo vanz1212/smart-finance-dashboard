@@ -3,22 +3,22 @@
         [
             'label' => __('app.module_smart_finance'),
             'href' => route('finance.index'),
-            'active' => request()->routeIs('finance.*'),
+            'active' => request()->is('smart-finance*') || request()->routeIs('finance.*'),
         ],
         [
             'label' => __('app.module_perpajakan'),
             'href' => route('perpajakan.index'),
-            'active' => request()->routeIs('perpajakan.*'),
-        ],
-        [
-            'label' => 'Stata',
-            'href' => route('stata'),
-            'active' => request()->routeIs('stata'),
+            'active' => request()->is('perpajakan*') || request()->routeIs('perpajakan.*'),
         ],
         [
             'label' => __('targets.page_title'),
             'href' => route('targets.index'),
-            'active' => request()->routeIs('targets.*'),
+            'active' => request()->is('targets*') || request()->routeIs('targets.*'),
+        ],
+        [
+            'label' => 'Stata',
+            'href' => route('stata'),
+            'active' => request()->is('stata*') || request()->routeIs('stata*'),
         ],
     ];
 @endphp

@@ -143,8 +143,7 @@
             height: 44px;
             position: relative;
             flex: 0 0 auto;
-            display: grid;
-            place-items: center;
+            display: block;
             border: 1px solid rgba(129, 140, 248, .28);
             border-radius: 14px;
             color: #dbeafe;
@@ -169,12 +168,15 @@
             height: 24px;
             border: 2px solid currentColor;
             border-radius: 5px;
+            top: 10px;
+            left: 12px;
         }
 
         .tax-icon.calculator::after {
             width: 12px;
             height: 2px;
             top: 16px;
+            left: 16px;
             background: currentColor;
             box-shadow: 0 6px 0 currentColor, -5px 12px 0 -1px currentColor, 0 12px 0 -1px currentColor, 5px 12px 0 -1px currentColor;
         }
@@ -184,13 +186,15 @@
             height: 26px;
             border: 2px solid currentColor;
             border-radius: 6px;
+            top: 9px;
+            left: 11px;
         }
 
         .tax-icon.report::after {
             width: 13px;
             height: 2px;
-            left: 15px;
             top: 16px;
+            left: 15px;
             background: currentColor;
             box-shadow: 0 6px 0 currentColor, 0 12px 0 currentColor;
         }
@@ -200,6 +204,8 @@
             height: 24px;
             border: 2px solid currentColor;
             border-radius: 50%;
+            top: 10px;
+            left: 10px;
         }
 
         .tax-icon.history::after {
@@ -207,7 +213,8 @@
             height: 7px;
             border-left: 2px solid currentColor;
             border-bottom: 2px solid currentColor;
-            transform: translate(2px, -2px);
+            top: 17px;
+            left: 16px;
         }
 
         .tax-section-chip {
@@ -532,7 +539,7 @@
 
             <section class="tax-grid">
                 <div>
-                    <form class="workspace-panel workspace-panel-inner" wire:submit="calculate">
+                    <form class="tax-panel tax-panel-inner" wire:submit="calculate">
                         
                         <div class="tax-card-head">
                             <span class="tax-icon calculator" aria-hidden="true"></span>
