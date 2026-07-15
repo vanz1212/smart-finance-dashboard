@@ -21,10 +21,11 @@
 
         .stata-info-shell {
             min-height: 100vh;
-            color: #f8fafc;
+            color: var(--text-main);
             background:
-                linear-gradient(180deg, rgba(4, 17, 20, .78), #061316 680px),
-                url('{{ asset('images/slidev3.jpg') }}') center top / cover no-repeat;
+                radial-gradient(ellipse at 80% 0%, rgba(16, 185, 129, 0.12), transparent 50%),
+                radial-gradient(ellipse at 20% 100%, rgba(99, 102, 241, 0.08), transparent 50%),
+                linear-gradient(180deg, var(--bg-primary), var(--bg-secondary));
         }
 
         .stata-info-nav,
@@ -42,7 +43,7 @@
         }
 
         .stata-info-brand {
-            color: #fff;
+            color: var(--text-main);
             font-size: 1.05rem;
             font-weight: 900;
             text-decoration: none;
@@ -64,18 +65,33 @@
             justify-content: center;
             gap: 10px;
             padding: 0 18px;
-            border: 1px solid rgba(255, 255, 255, .22);
+            border: 1px solid var(--border-color);
             border-radius: 8px;
-            color: #fff;
+            color: var(--text-main);
             font-weight: 800;
             text-decoration: none;
+            background: var(--nav-bg);
+            transition: all 0.25s ease;
+        }
+
+        .stata-info-nav-actions a:hover,
+        .stata-info-button:hover {
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
         }
 
         .stata-info-nav-actions .primary,
         .stata-info-button.primary {
-            border-color: #18bf75;
-            color: #03261b;
-            background: #18bf75;
+            border-color: var(--accent-primary);
+            color: var(--accent-hover);
+            background: var(--accent-primary);
+        }
+
+        .stata-info-nav-actions .primary:hover,
+        .stata-info-button.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+            color: var(--accent-hover);
         }
 
         .stata-info-main { padding: 70px 0 84px; }
@@ -86,7 +102,7 @@
         }
 
         .stata-info-kicker {
-            color: #f3c969;
+            color: var(--accent-primary);
             font-size: .82rem;
             font-weight: 900;
             letter-spacing: .1em;
@@ -104,7 +120,7 @@
         .stata-info-hero p {
             max-width: 700px;
             margin: 0;
-            color: rgba(248, 250, 252, .8);
+            color: var(--text-muted);
             font-size: 1.08rem;
             line-height: 1.75;
         }
@@ -113,7 +129,7 @@
         .stata-info-section { margin-top: 48px; }
         .stata-info-section-head { max-width: 760px; margin-bottom: 24px; }
         .stata-info-section h2 { margin: 0 0 10px; font-size: clamp(1.7rem, 4vw, 2.5rem); }
-        .stata-info-section-head p { margin: 0; color: rgba(248, 250, 252, .66); line-height: 1.7; }
+        .stata-info-section-head p { margin: 0; color: var(--text-muted); line-height: 1.7; }
 
         .stata-info-grid {
             display: grid;
@@ -128,13 +144,14 @@
             display: flex;
             flex-direction: column;
             padding: 24px;
-            border: 1px solid rgba(148, 163, 184, .2);
-            border-radius: 8px;
-            background: rgba(12, 34, 36, .9);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            background: var(--bg-panel);
+            backdrop-filter: blur(10px);
         }
 
         .stata-info-card .number {
-            color: #18bf75;
+            color: var(--accent-primary);
             font-size: .78rem;
             font-weight: 900;
             letter-spacing: .08em;
@@ -142,35 +159,37 @@
         }
 
         .stata-info-card h3 { margin: 18px 0 10px; font-size: 1.18rem; }
-        .stata-info-card p { margin: 0; color: rgba(248, 250, 252, .68); line-height: 1.65; }
-        .stata-info-card a { margin-top: auto; padding-top: 24px; color: #f3c969; font-weight: 800; text-decoration: none; }
+        .stata-info-card p { margin: 0; color: var(--text-muted); line-height: 1.65; }
+        .stata-info-card a { margin-top: auto; padding-top: 24px; color: var(--accent-primary); font-weight: 800; text-decoration: none; transition: color 0.2s ease; }
+        .stata-info-card a:hover { color: var(--accent-hover); }
 
         .stata-command {
             display: inline-flex;
             width: fit-content;
             margin-top: 16px;
             padding: 7px 10px;
-            border: 1px solid rgba(24, 191, 117, .24);
+            border: 1px solid var(--border-color);
             border-radius: 6px;
-            color: #8cf0bf;
-            background: #071b1e;
+            color: var(--accent-primary);
+            background: var(--bg-primary);
             font: 700 .84rem Consolas, monospace;
         }
 
         .stata-learning-path {
             display: grid;
             grid-template-columns: repeat(4, minmax(0, 1fr));
-            border: 1px solid rgba(148, 163, 184, .2);
-            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
             overflow: hidden;
-            background: rgba(12, 34, 36, .88);
+            background: var(--bg-panel);
+            backdrop-filter: blur(10px);
         }
 
-        .stata-step { padding: 24px; border-right: 1px solid rgba(148, 163, 184, .18); }
+        .stata-step { padding: 24px; border-right: 1px solid var(--border-color); }
         .stata-step:last-child { border-right: 0; }
-        .stata-step strong { display: block; color: #f3c969; font-size: .8rem; margin-bottom: 14px; }
+        .stata-step strong { display: block; color: var(--accent-primary); font-size: .8rem; margin-bottom: 14px; }
         .stata-step h3 { margin: 0 0 8px; font-size: 1.05rem; }
-        .stata-step p { margin: 0; color: rgba(248, 250, 252, .64); line-height: 1.55; }
+        .stata-step p { margin: 0; color: var(--text-muted); line-height: 1.55; }
 
         .stata-login-panel {
             margin-top: 48px;
@@ -179,80 +198,19 @@
             align-items: center;
             gap: 28px;
             padding: 30px;
-            border: 1px solid rgba(24, 191, 117, .34);
-            border-radius: 8px;
-            background: #0d292a;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            background: var(--nav-bg);
         }
 
         .stata-login-panel h2 { margin: 0 0 8px; font-size: 1.55rem; }
-        .stata-login-panel p { margin: 0; color: rgba(248, 250, 252, .68); line-height: 1.6; }
+        .stata-login-panel p { margin: 0; color: var(--text-muted); line-height: 1.6; }
 
         .stata-info-note {
             margin-top: 22px;
-            color: rgba(248, 250, 252, .5);
+            color: var(--text-muted);
             font-size: .84rem;
             line-height: 1.6;
-        }
-
-        [data-theme="light"] body {
-            background: var(--bg-primary);
-        }
-
-        [data-theme="light"] .stata-info-shell {
-            color: var(--text-main);
-            background:
-                linear-gradient(180deg, rgba(241, 245, 249, .82), rgba(248, 250, 252, 1) 680px),
-                url('{{ asset('images/slidev3.jpg') }}') center top / cover no-repeat;
-        }
-
-        [data-theme="light"] .stata-info-brand,
-        [data-theme="light"] .stata-info-nav-actions a,
-        [data-theme="light"] .stata-info-hero p,
-        [data-theme="light"] .stata-info-section-head p,
-        [data-theme="light"] .stata-info-card p,
-        [data-theme="light"] .stata-step p,
-        [data-theme="light"] .stata-login-panel p,
-        [data-theme="light"] .stata-info-note {
-            color: rgba(15, 23, 42, .78);
-        }
-
-        [data-theme="light"] .stata-info-nav-actions a,
-        [data-theme="light"] .stata-info-button {
-            border-color: rgba(15, 23, 42, .14);
-            background: rgba(255, 255, 255, .72);
-            color: #0f172a;
-        }
-
-        [data-theme="light"] .stata-info-nav-actions .primary,
-        [data-theme="light"] .stata-info-button.primary {
-            border-color: #6366f1;
-            color: #ffffff;
-            background: #6366f1;
-        }
-
-        [data-theme="light"] .stata-info-kicker,
-        [data-theme="light"] .stata-info-card .number,
-        [data-theme="light"] .stata-step strong,
-        [data-theme="light"] .stata-info-card a {
-            color: #6366f1;
-        }
-
-        [data-theme="light"] .stata-info-card,
-        [data-theme="light"] .stata-learning-path,
-        [data-theme="light"] .stata-login-panel {
-            border-color: rgba(15, 23, 42, .12);
-            background: rgba(255, 255, 255, .82);
-            box-shadow: 0 18px 48px rgba(15, 23, 42, .08);
-        }
-
-        [data-theme="light"] .stata-step {
-            border-right-color: rgba(15, 23, 42, .1);
-        }
-
-        [data-theme="light"] .stata-command {
-            border-color: rgba(99, 102, 241, .22);
-            color: #6366f1;
-            background: rgba(15, 23, 42, .04);
         }
 
         @media (max-width: 940px) {
@@ -260,7 +218,7 @@
             .stata-info-grid.four { grid-template-columns: repeat(2, minmax(0, 1fr)); }
             .stata-learning-path { grid-template-columns: repeat(2, minmax(0, 1fr)); }
             .stata-step:nth-child(2) { border-right: 0; }
-            .stata-step:nth-child(-n+2) { border-bottom: 1px solid rgba(148, 163, 184, .18); }
+            .stata-step:nth-child(-n+2) { border-bottom: 1px solid var(--border-color); }
         }
 
         @media (max-width: 680px) {
@@ -269,7 +227,7 @@
             .stata-learning-path,
             .stata-login-panel { grid-template-columns: 1fr; }
             .stata-info-card { min-height: 0; }
-            .stata-step { border-right: 0; border-bottom: 1px solid rgba(148, 163, 184, .18); }
+            .stata-step { border-right: 0; border-bottom: 1px solid var(--border-color); }
             .stata-step:last-child { border-bottom: 0; }
             .stata-login-panel .stata-info-button { width: 100%; }
         }

@@ -193,8 +193,9 @@
             padding: 34px 24px 56px;
             color: var(--text-main);
             background:
-                linear-gradient(180deg, var(--bg-primary), var(--bg-primary)),
-                url('{{ asset('images/backgroundfinance.jpg') }}') center / cover fixed no-repeat;
+                radial-gradient(ellipse at 80% 0%, rgba(16, 185, 129, 0.12), transparent 50%),
+                radial-gradient(ellipse at 20% 100%, rgba(99, 102, 241, 0.08), transparent 50%),
+                linear-gradient(180deg, var(--bg-primary), var(--bg-secondary));
         }
 
         .stata-inner { width: min(1180px, 100%); margin: 0 auto; }

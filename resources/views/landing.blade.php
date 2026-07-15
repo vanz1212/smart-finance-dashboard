@@ -1,4 +1,4 @@
-@extends('layouts.app')
+            @extends('layouts.app')
 
 @section('title', 'Nexio Dashboard')
 
@@ -1032,8 +1032,8 @@
 
     <main class="landing-shell">
         <nav class="landing-nav">
-            <a class="landing-brand" href="{{ route('home') }}" style="display: flex; align-items: center; gap: 8px; text-decoration: none;">
-                <img src="{{ asset('images/nexio_logo.png') }}" alt="Nexio Logo" style="height: 24px; width: auto;">
+            <a class="landing-brand" href="{{ route('home') }}" style="display: flex; align-items: center; gap: 12px; text-decoration: none; font-size: 1.45rem;">
+                <img src="{{ asset('images/nexio_logo.png') }}" alt="Nexio Logo" style="height: 38px; width: auto;">
                 <span>NEXIO</span>
             </a>
             <div class="landing-links">

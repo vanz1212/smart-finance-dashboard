@@ -21,10 +21,11 @@
 
         .tax-info-shell {
             min-height: 100vh;
-            color: #f8fafc;
+            color: var(--text-main);
             background:
-                linear-gradient(180deg, rgba(4, 17, 20, .82), #061316 680px),
-                url('{{ asset('images/slidev2.jpg') }}') center top / cover no-repeat;
+                radial-gradient(ellipse at 20% 0%, rgba(99, 102, 241, 0.12), transparent 50%),
+                radial-gradient(ellipse at 80% 100%, rgba(139, 92, 246, 0.08), transparent 50%),
+                linear-gradient(180deg, var(--bg-primary), var(--bg-secondary));
         }
 
         .tax-info-nav {
@@ -38,7 +39,7 @@
         }
 
         .tax-info-brand {
-            color: #fff;
+            color: var(--text-main);
             font-size: 1.05rem;
             font-weight: 900;
             text-decoration: none;
@@ -54,18 +55,33 @@
             justify-content: center;
             gap: 10px;
             padding: 0 18px;
-            border: 1px solid rgba(255, 255, 255, .22);
+            border: 1px solid var(--border-color);
             border-radius: 8px;
-            color: #fff;
+            color: var(--text-main);
             font-weight: 800;
             text-decoration: none;
+            background: var(--nav-bg);
+            transition: all 0.25s ease;
+        }
+
+        .tax-info-nav-actions a:hover,
+        .tax-info-button:hover {
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
         }
 
         .tax-info-nav-actions .primary,
         .tax-info-button.primary {
-            border-color: #18bf75;
-            color: #03261b;
-            background: #18bf75;
+            border-color: var(--accent-primary);
+            color: var(--accent-hover);
+            background: var(--accent-primary);
+        }
+
+        .tax-info-nav-actions .primary:hover,
+        .tax-info-button.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+            color: var(--accent-hover);
         }
 
         .tax-info-main {
@@ -80,7 +96,7 @@
         }
 
         .tax-info-kicker {
-            color: #f3c969;
+            color: var(--accent-primary);
             font-size: .82rem;
             font-weight: 900;
             letter-spacing: .1em;
@@ -98,7 +114,7 @@
         .tax-info-hero p {
             max-width: 690px;
             margin: 0;
-            color: rgba(248, 250, 252, .78);
+            color: var(--text-muted);
             font-size: 1.08rem;
             line-height: 1.75;
         }
@@ -108,7 +124,7 @@
         .tax-info-section { margin-top: 42px; }
         .tax-info-section-head { max-width: 720px; margin-bottom: 24px; }
         .tax-info-section h2 { margin: 0 0 10px; font-size: clamp(1.7rem, 4vw, 2.5rem); }
-        .tax-info-section-head p { margin: 0; color: rgba(248, 250, 252, .66); line-height: 1.7; }
+        .tax-info-section-head p { margin: 0; color: var(--text-muted); line-height: 1.7; }
 
         .tax-update-grid,
         .tax-guide-grid {
@@ -122,21 +138,23 @@
             display: flex;
             flex-direction: column;
             padding: 24px;
-            border: 1px solid rgba(148, 163, 184, .2);
-            border-radius: 8px;
-            background: rgba(12, 34, 36, .88);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            background: var(--bg-panel);
+            backdrop-filter: blur(10px);
         }
 
         .tax-info-card .number {
-            color: #18bf75;
+            color: var(--accent-primary);
             font-size: .82rem;
             font-weight: 900;
             letter-spacing: .08em;
         }
 
         .tax-info-card h3 { margin: 20px 0 10px; font-size: 1.22rem; }
-        .tax-info-card p { margin: 0; color: rgba(248, 250, 252, .68); line-height: 1.65; }
-        .tax-info-card a { margin-top: auto; padding-top: 24px; color: #f3c969; font-weight: 800; text-decoration: none; }
+        .tax-info-card p { margin: 0; color: var(--text-muted); line-height: 1.65; }
+        .tax-info-card a { margin-top: auto; padding-top: 24px; color: var(--accent-primary); font-weight: 800; text-decoration: none; transition: color 0.2s ease; }
+        .tax-info-card a:hover { color: var(--accent-hover); }
 
         .tax-login-panel {
             margin-top: 42px;
@@ -145,70 +163,19 @@
             align-items: center;
             gap: 28px;
             padding: 30px;
-            border: 1px solid rgba(24, 191, 117, .34);
-            border-radius: 8px;
-            background: #0d292a;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            background: var(--nav-bg);
         }
 
         .tax-login-panel h2 { margin: 0 0 8px; font-size: 1.55rem; }
-        .tax-login-panel p { margin: 0; color: rgba(248, 250, 252, .68); line-height: 1.6; }
+        .tax-login-panel p { margin: 0; color: var(--text-muted); line-height: 1.6; }
 
         .tax-info-note {
             margin-top: 22px;
-            color: rgba(248, 250, 252, .54);
+            color: var(--text-muted);
             font-size: .84rem;
             line-height: 1.6;
-        }
-
-        [data-theme="light"] body {
-            background: var(--bg-primary);
-        }
-
-        [data-theme="light"] .tax-info-shell {
-            color: var(--text-main);
-            background:
-                linear-gradient(180deg, rgba(241, 245, 249, .84), rgba(248, 250, 252, 1) 680px),
-                url('{{ asset('images/slidev2.jpg') }}') center top / cover no-repeat;
-        }
-
-        [data-theme="light"] .tax-info-brand,
-        [data-theme="light"] .tax-info-nav-actions a,
-        [data-theme="light"] .tax-info-hero p,
-        [data-theme="light"] .tax-info-section-head p,
-        [data-theme="light"] .tax-info-card p,
-        [data-theme="light"] .tax-login-panel p,
-        [data-theme="light"] .tax-info-note {
-            color: rgba(15, 23, 42, .78);
-        }
-
-        [data-theme="light"] .tax-info-nav-actions a,
-        [data-theme="light"] .tax-info-button {
-            border-color: rgba(15, 23, 42, .14);
-            background: rgba(255, 255, 255, .72);
-            color: #0f172a;
-        }
-
-        [data-theme="light"] .tax-info-nav-actions .primary,
-        [data-theme="light"] .tax-info-button.primary {
-            border-color: #6366f1;
-            color: #ffffff;
-            background: #6366f1;
-        }
-
-        [data-theme="light"] .tax-info-kicker,
-        [data-theme="light"] .tax-info-card .number {
-            color: #6366f1;
-        }
-
-        [data-theme="light"] .tax-info-card,
-        [data-theme="light"] .tax-login-panel {
-            border-color: rgba(15, 23, 42, .12);
-            background: rgba(255, 255, 255, .82);
-            box-shadow: 0 18px 48px rgba(15, 23, 42, .08);
-        }
-
-        [data-theme="light"] .tax-info-card a {
-            color: #6366f1;
         }
 
         @media (max-width: 820px) {

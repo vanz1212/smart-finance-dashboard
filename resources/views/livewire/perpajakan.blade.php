@@ -49,12 +49,12 @@
         .tax-topbar, .tax-hero { display: flex; justify-content: space-between; gap: 18px; align-items: center; }
         .tax-topbar { margin-bottom: 34px; }
         .tax-nav { display: flex; flex-wrap: wrap; gap: 10px; }
-        .tax-nav a { padding: 10px 14px; border: 1px solid rgba(255,255,255,.12); border-radius: 999px; color: rgba(248,250,252,.78); text-decoration: none; font-weight: 800; background: rgba(255,255,255,.05); transition: all 0.25s ease; }
-        .tax-nav a.is-active, .tax-nav a:hover { color: #fff; background: var(--accent-primary); border-color: var(--accent-primary); box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3); }
+        .tax-nav a { padding: 10px 14px; border: 1px solid var(--border-color); border-radius: 999px; color: var(--text-muted); text-decoration: none; font-weight: 800; background: var(--nav-bg); transition: all 0.25s ease; }
+        .tax-nav a.is-active, .tax-nav a:hover { color: var(--accent-hover); background: var(--accent-primary); border-color: var(--accent-primary); box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3); }
         .tax-hero { align-items: flex-end; margin-bottom: 28px; }
         .tax-kicker { color: var(--accent-primary); font-size: .8rem; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
         .tax-hero h1 { margin: 12px 0 0; font-size: clamp(2.2rem, 5vw, 4.8rem); line-height: .98; letter-spacing: 0; }
-        .tax-hero p { max-width: 720px; margin: 16px 0 0; color: rgba(248,250,252,.72); line-height: 1.7; }
+        .tax-hero p { max-width: 720px; margin: 16px 0 0; color: var(--text-muted); line-height: 1.7; }
 
         .tax-orbit {
             position: absolute;
@@ -104,28 +104,28 @@
 
         .tax-badge { min-width: 144px; padding: 12px 16px; border-radius: 999px; text-align: center; font-weight: 900; transition: transform 0.2s ease; }
         .tax-badge:hover { transform: scale(1.05); }
-        .tax-badge.neutral { background: rgba(255,255,255,.12); color: #cbd5e1; border: 1px solid rgba(255,255,255,.15); }
+        .tax-badge.neutral { background: var(--nav-bg); color: var(--text-muted); border: 1px solid var(--border-color); }
         .tax-badge.success { background: linear-gradient(135deg, #10b981, #059669); color: #fff; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3); }
         .tax-badge.warning { background: linear-gradient(135deg, #f59e0b, #d97706); color: #fff; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3); }
         .tax-badge.danger { background: linear-gradient(135deg, #ef4444, #dc2626); color: #fff; box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3); }
 
         .tax-grid { display: grid; grid-template-columns: minmax(320px,.92fr) minmax(380px,1.08fr); gap: 22px; align-items: start; }
         .tax-panel { 
-            border: 1px solid rgba(255,255,255,.1); 
+            border: 1px solid var(--border-color); 
             border-radius: 20px; 
-            background: rgba(15, 23, 42, 0.6); 
+            background: var(--bg-panel); 
             box-shadow: 0 20px 60px rgba(0,0,0,.25); 
             backdrop-filter: blur(20px); 
             -webkit-backdrop-filter: blur(20px);
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
         .tax-panel:hover {
-            border-color: rgba(255,255,255,.15);
+            border-color: var(--accent-primary);
             box-shadow: 0 25px 70px rgba(0,0,0,.3);
         }
         .tax-panel-inner { padding: 28px; }
         .tax-panel h2 { margin: 0; font-size: 1.2rem; font-weight: 800; }
-        .tax-panel p { color: rgba(248,250,252,.6); line-height: 1.6; font-size: 0.9rem; }
+        .tax-panel p { color: var(--text-muted); line-height: 1.6; font-size: 0.9rem; }
 
         .tax-card-head {
             display: flex;
@@ -146,10 +146,10 @@
             display: block;
             border: 1px solid rgba(129, 140, 248, .28);
             border-radius: 14px;
-            color: #dbeafe;
+            color: var(--accent-primary);
             background:
-                linear-gradient(135deg, rgba(99, 102, 241, .34), rgba(34, 211, 238, .12)),
-                rgba(255, 255, 255, .05);
+                linear-gradient(135deg, rgba(99, 102, 241, .15), rgba(34, 211, 238, .05)),
+                var(--nav-bg);
             box-shadow: 0 12px 30px rgba(99, 102, 241, .18);
         }
 
@@ -239,15 +239,15 @@
         .tax-form .col-4 { grid-column: span 4; }
         .tax-form .col-6 { grid-column: span 6; }
         .tax-form .col-12, .tax-form label.full { grid-column: 1 / -1; }
-        .tax-form span { color: rgba(248,250,252,.7); font-size: .84rem; font-weight: 700; display: flex; align-items: center; gap: 7px; }
+        .tax-form span { color: var(--text-muted); font-size: .84rem; font-weight: 700; display: flex; align-items: center; gap: 7px; }
         .tax-form input, .tax-form select { 
             box-sizing: border-box;
             min-height: 48px; width: 100%; 
-            border: 1px solid rgba(255,255,255,.12); 
+            border: 1px solid var(--border-color); 
             border-radius: 12px; 
             padding: 10px 14px; 
-            background: rgba(255,255,255,.05); 
-            color: #fff; 
+            background: var(--nav-bg); 
+            color: var(--text-main); 
             font: inherit; 
             transition: all 0.25s ease;
         }
@@ -293,18 +293,18 @@
         .field-icon.minus::before { left: 5px; right: 5px; top: 9px; height: 2px; background: currentColor; }
         .field-icon.credit::before { inset: 4px 3px; border: 2px solid currentColor; border-radius: 4px; }
         .field-icon.credit::after { left: 5px; right: 5px; top: 9px; height: 2px; background: currentColor; }
-        .tax-form select option { background: #0f172a; color: #fff; }
+        .tax-form select option { background: var(--bg-primary); color: var(--text-main); }
         .tax-form input:focus, .tax-form select:focus { 
             outline: none; 
             border-color: var(--accent-primary); 
-            background: rgba(255,255,255,.08);
+            background: var(--nav-bg);
             box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
         }
         .tax-button { 
             width: 100%; min-height: 52px; margin-top: 18px; border: 0; 
             border-radius: 14px; 
-            background: linear-gradient(135deg, var(--accent-primary), #4f46e5); 
-            color: #fff; 
+            background: var(--accent-primary); 
+            color: var(--accent-hover); 
             cursor: pointer; font: inherit; font-weight: 800; font-size: 1rem;
             box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
             transition: all 0.25s ease;
@@ -333,18 +333,18 @@
         .tax-metrics { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 14px; margin-top: 15px;}
         .tax-metric, .tax-note { 
             padding: 18px; 
-            border: 1px solid rgba(255,255,255,.08); 
+            border: 1px solid var(--border-color); 
             border-radius: 14px; 
-            background: rgba(255,255,255,.04); 
+            background: var(--nav-bg); 
             transition: all 0.25s ease;
         }
         .tax-metric:hover { 
-            background: rgba(255,255,255,.07); 
-            border-color: rgba(255,255,255,.15);
+            background: var(--nav-bg); 
+            border-color: var(--accent-primary);
             transform: translateY(-2px); 
         }
-        .tax-metric span { display: block; margin-bottom: 8px; color: rgba(248,250,252,.55); font-size: .82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; }
-        .tax-metric strong { color: #fff; font-size: 1.1rem; }
+        .tax-metric span { display: block; margin-bottom: 8px; color: var(--text-muted); font-size: .82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; }
+        .tax-metric strong { color: var(--text-main); font-size: 1.1rem; }
         .tax-metric.featured {
             background: linear-gradient(135deg, rgba(99, 102, 241, .18), rgba(34, 211, 238, .08));
             border-color: rgba(129, 140, 248, .28);
@@ -393,10 +393,10 @@
             font-size: clamp(1.25rem, 2vw, 1.7rem);
         }
         .tax-table { width: 100%; border-collapse: collapse; margin-top: 22px; overflow: hidden; border-radius: 14px; font-size: 0.9rem;}
-        .tax-table th, .tax-table td { padding: 14px; border-bottom: 1px solid rgba(255,255,255,.07); text-align: left; color: rgba(248,250,252,.78); }
-        .tax-table th { color: #fff; background: rgba(255,255,255,.05); font-weight: 700; }
+        .tax-table th, .tax-table td { padding: 14px; border-bottom: 1px solid var(--border-color); text-align: left; color: var(--text-muted); }
+        .tax-table th { color: var(--text-main); background: var(--nav-bg); font-weight: 700; }
         .tax-table tbody tr { transition: background 0.2s ease; }
-        .tax-table tbody tr:hover { background: rgba(255,255,255,.04); }
+        .tax-table tbody tr:hover { background: var(--nav-bg); }
         .tax-table td:last-child, .tax-table th:last-child { text-align: right; }
         .tax-reference { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 22px; margin-top: 22px; }
 
@@ -408,15 +408,15 @@
         
         .history-list { margin-top: 20px; display: flex; flex-direction: column; gap: 10px; }
         .history-item { 
-            background: rgba(255,255,255,0.04); 
-            border: 1px solid rgba(255,255,255,0.08); 
+            background: var(--nav-bg); 
+            border: 1px solid var(--border-color); 
             padding: 14px 16px; border-radius: 12px; 
             display: flex; justify-content: space-between; align-items: center; 
             transition: all 0.25s ease;
         }
         .history-item:hover { 
-            background: rgba(255,255,255,0.07); 
-            border-color: rgba(255,255,255,.15);
+            background: var(--nav-bg); 
+            border-color: var(--accent-primary);
             transform: translateX(4px); 
         }
 
@@ -455,8 +455,8 @@
         .tooltip .tooltiptext {
             visibility: hidden;
             width: 250px;
-            background-color: rgba(15, 23, 42, 0.95);
-            color: #fff;
+            background-color: var(--bg-panel);
+            color: var(--text-main);
             text-align: left;
             border-radius: 10px;
             padding: 12px;
@@ -470,7 +470,7 @@
             transform: translateY(4px);
             font-size: 0.75rem;
             font-weight: normal;
-            border: 1px solid rgba(255,255,255,.12);
+            border: 1px solid var(--border-color);
             box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(12px);
         }
