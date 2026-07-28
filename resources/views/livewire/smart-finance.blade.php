@@ -563,12 +563,33 @@
         }
 
         .expense-row {
-            display: grid;
-            grid-template-columns: 1fr 1.1fr auto auto;
-            gap: 9px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
             align-items: center;
-            margin-bottom: 9px;
+            margin-bottom: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 12px;
+            border-radius: 12px;
             animation: fadeInRow 0.18s ease;
+        }
+
+        .expense-row > input[type="text"] {
+            flex: 1 1 130px;
+            margin: 0;
+        }
+
+        .expense-row .money-field {
+            flex: 1.2 1 150px;
+        }
+
+        .expense-row .debt-toggle {
+            flex: 1 1 auto;
+            justify-content: flex-start;
+        }
+
+        .expense-row .btn-remove-expense {
+            flex: 0 0 auto;
         }
 
         @keyframes fadeInRow {
@@ -727,7 +748,8 @@
             font-weight: 900;
             text-transform: uppercase;
             letter-spacing: 0.08em;
-            margin-bottom: 8px;
+            margin-top: 24px;
+            margin-bottom: 12px;
             display: block;
         }
 
@@ -894,7 +916,7 @@
 
             <section class="workspace-hero module-hero">
                 <div class="module-hero-panel module-hero-copy">
-                    <span class="workspace-kicker">Finance Intelligence</span>
+                    <span class="workspace-kicker">{{ __('finance.finance_intelligence') }}</span>
                     <h1>{{ __('finance.title') }}</h1>
                     <p>{{ __('finance.hero_desc') }}</p>
                     <a class="module-hero-action" href="{{ route('dashboard.user') }}">{{ __('finance.back_to_selector') }}</a>
@@ -1158,7 +1180,7 @@
                                     <span>
                                         {{ $translateCategory($item['name']) }}
                                         @if (!empty($item['is_debt']))
-                                            <span class="debt-tag">cicilan</span>
+                                            <span class="debt-tag">{{ __('finance.installment') }}</span>
                                         @endif
                                     </span>
                                     <strong>{{ $formatRupiah((float) $item['amount']) }}</strong>
@@ -1246,7 +1268,7 @@
                                         <td>{{ $formatRupiah($item->calculated['total_expenses']) }}</td>
                                         <td>{{ $formatRupiah($item->calculated['total_saving_investment']) }}</td>
                                         <td>{{ $formatRupiah($item->calculated['net_cashflow']) }}</td>
-                                        <td>{{ number_format($item->calculated['emergency_months'], 1, ',', '.') }} bln</td>
+                                        <td>{{ number_format($item->calculated['emergency_months'], 1, ',', '.') }} {{ __('finance.months_short') }}</td>
                                         <td>
                                             <span class="status-badge status-{{ $item->calculated['status_class'] }}" style="padding: 4px 10px; font-size: 0.76rem; min-width: 80px; display: inline-block;">
                                                 {{ __($item->calculated['status']) }}
@@ -1286,7 +1308,7 @@
                     '09': 'Sep', '10': 'Okt', '11': 'Nov', '12': 'Des'
                 };
 
-                var rawLabels = {!! json_encode($history->map(fn($item) => $item->periode)->toArray()) !!};
+                var rawLabels = @json($history->map(fn($item) => $item->periode)->toArray());
                 var allLabels = rawLabels.map(function(val) {
                     var parts = val.split('-');
                     if (parts.length === 2 && monthsMap[parts[1]]) {
@@ -1590,8 +1612,8 @@
 
             // Ensure Chart.js is loaded (it may come from the trend chart above or we load it here)
             function initDonut() {
-                var labels  = {!! json_encode($chartLabels) !!};
-                var amounts = {!! json_encode($chartAmounts) !!};
+                var labels  = @json($chartLabels);
+                var amounts = @json($chartAmounts);
                 var palette = {!! $chartColorsJson !!};
 
                 // Extend palette by repeating if needed
@@ -1689,7 +1711,7 @@
                 // Category trend chart
                 var categoryTrendCanvas = document.getElementById('categoryTrendChart');
                 if (categoryTrendCanvas) {
-                var categoryHistory = {!! json_encode($categoryHistory ?? []) !!};
+                var categoryHistory = @json($categoryHistory ?? []);
                 var monthsMap = {
                     '01': 'Jan', '02': 'Feb', '03': 'Mar', '04': 'Apr',
                     '05': 'Mei', '06': 'Jun', '07': 'Jul', '08': 'Agt',

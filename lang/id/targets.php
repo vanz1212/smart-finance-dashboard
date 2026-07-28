@@ -88,4 +88,9 @@ return [
     'deleted_success' => 'Target finansial berhasil dihapus.',
     'deposit_added_success' => 'Setoran berhasil dicatat.',
     'deposit_deleted_success' => 'Setoran berhasil dihapus.',
+
+    // Hardcode cleanup
+    'summary' => 'Ringkasan',
+    'no_deposits_yet' => 'Belum ada setoran tercatat',
+    'more' => 'lagi',
 ];

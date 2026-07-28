@@ -110,4 +110,9 @@ return [
     'target_label' => 'Target',
     'current_balance_label' => 'Saldo saat ini',
     'deposit_per_month' => 'Setoran/:months',
+
+    // Hardcode cleanup
+    'finance_intelligence' => 'Inteligensi Finansial',
+    'installment' => 'cicilan',
+    'months_short' => 'bln',
 ];

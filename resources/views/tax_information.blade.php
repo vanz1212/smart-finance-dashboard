@@ -280,7 +280,7 @@
                     <h2>Siap membuat estimasi pajak?</h2>
                     <p>Modul perhitungan dilindungi login. Setelah berhasil masuk, Anda akan langsung diarahkan kembali ke halaman perpajakan.</p>
                 </div>
-                <a class="tax-info-button primary" href="{{ route('perpajakan.index') }}">Masuk dan Buka Modul</a>
+                <a class="tax-info-button primary" href="{{ route('perpajakan.index') }}">{{ __('app.enter_and_open') }}</a>
             </section>
 
             <p class="tax-info-note">Informasi di halaman ini bersifat edukasi dan bukan nasihat pajak. Untuk keputusan pelaporan, gunakan ketentuan dan kanal resmi Direktorat Jenderal Pajak.</p>

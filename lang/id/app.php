@@ -29,4 +29,9 @@ return [
     'desc_stata' => 'Korelasi, regresi linear, dan statistik deskriptif makroekonomi.',
     'desc_targets' => 'Tracking progres real-time dan rekomendasi setoran cerdas.',
     'ready' => 'Ready',
+
+    // Hardcode cleanup
+    'enter_module' => 'Masuk ke Modul',
+    'enter_and_open' => 'Masuk dan Buka Modul',
+    'back' => 'Kembali',
 ];

@@ -156,7 +156,7 @@
     <main class="admin-shell">
         <section class="admin-card">
             <div class="topbar">
-                <a class="primary" href="{{ route('admin.users.index') }}">Kembali ke Daftar User</a>
+                <a class="primary" href="{{ route('admin.users.index') }}">Kembali ke {{ __('admin.user_list') }}</a>
                 <a href="{{ route('dashboard.admin') }}">Dashboard Admin</a>
             </div>
 
@@ -166,23 +166,23 @@
 
             <div class="profile-grid">
                 <div class="profile-item">
-                    <small>Nama Lengkap</small>
+                    <small>{{ __('admin.name') }}</small>
                     <strong>{{ $user->name }}</strong>
                 </div>
                 <div class="profile-item">
-                    <small>Role</small>
+                    <small>{{ __('admin.role') }}</small>
                     <strong class="role-badge">{{ ucfirst($user->role) }}</strong>
                 </div>
                 <div class="profile-item">
-                    <small>Username</small>
+                    <small>{{ __('admin.username') }}</small>
                     <strong>{{ $user->username }}</strong>
                 </div>
                 <div class="profile-item">
-                    <small>Email</small>
+                    <small>{{ __('admin.email') }}</small>
                     <strong>{{ $user->email }}</strong>
                 </div>
                 <div class="profile-item">
-                    <small>Bergabung Sejak</small>
+                    <small>{{ __('admin.joined') }} Sejak</small>
                     <strong>{{ optional($user->created_at)->timezone('Asia/Jakarta')->format('d M Y H:i') }} WIB</strong>
                 </div>
                 <div class="profile-item">
