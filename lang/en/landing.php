@@ -51,7 +51,7 @@ return [
     'service4_desc' => 'Set and track your financial goals to ensure you stay on path towards achieving them. Plan for the future with precision.',
 
     // Footer
-    'footer_address' => "Jl. Finansial No. 12<br>Jakarta, Indonesia<br>Financial analysis, taxation, and statistics platform.",
+    'footer_desc' => "Financial analysis, taxation, and statistics platform.",
     'footer_contact_title' => 'Contact Us',
     'footer_schedule_days' => 'Monday - Friday',
     'footer_schedule_hours' => '09:00 - 17:00 WIB',

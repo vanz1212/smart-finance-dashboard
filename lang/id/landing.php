@@ -51,7 +51,7 @@ return [
     'service4_desc' => 'Tetapkan dan pantau tujuan keuangan Anda untuk memastikan Anda tetap pada jalur pencapaian. Rencanakan masa depan dengan akurat.',
 
     // Footer
-    'footer_address' => "Jl. Finansial No. 12<br>Jakarta, Indonesia<br>Platform analisa keuangan, perpajakan, dan statistik.",
+    'footer_desc' => "Platform analisa keuangan, perpajakan, dan statistik.",
     'footer_contact_title' => 'Hubungi Kami',
     'footer_schedule_days' => 'Senin - Jumat',
     'footer_schedule_hours' => '09.00 - 17.00 WIB',

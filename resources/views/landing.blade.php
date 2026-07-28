@@ -621,12 +621,19 @@
             gap: 16px;
         }
 
+        .company-contact-list .contact-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
         .company-contact-list a,
-        .company-contact-list span,
         .company-quick-links a {
             color: rgba(248, 250, 252, 0.88);
             line-height: 1.5;
             text-decoration: none;
+            transition: color 0.2s ease, transform 0.2s ease;
+            display: inline-block;
         }
 
         .company-contact-list a:hover,
@@ -634,17 +641,25 @@
             color: #818cf8;
         }
 
-        .company-quick-links {
-            display: grid;
-            gap: 10px;
+        .company-quick-links a:hover {
+            transform: translateX(4px);
         }
 
-        .company-quick-links a::after {
-            content: ">";
-            margin-left: 8px;
-            color: #818cf8;
-            font-size: 1.25rem;
-            font-weight: 900;
+        .company-contact-list .contact-item a {
+            font-weight: 600;
+            font-size: 1.05rem;
+            color: #ffffff;
+        }
+
+        .company-contact-list .contact-item span {
+            font-size: 0.9rem;
+            color: rgba(248, 250, 252, 0.6);
+        }
+
+        .company-quick-links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
 
         .company-footer-bottom {
@@ -1132,19 +1147,19 @@
             <div class="company-footer-main">
                 <section class="company-footer-column">
                     <h3>Nexio</h3>
-                    <p>{!! __('landing.footer_address') !!}</p>
+                    <p>{!! __('landing.footer_desc') !!}</p>
                 </section>
 
                 <section class="company-footer-column">
                     <h3>{{ __('landing.footer_contact_title') }}</h3>
                     <div class="company-contact-list">
-                        <div style="display: flex; flex-direction: column; gap: 4px;">
-                            <a href="tel:+6287784070117" style="font-weight: bold; font-size: 1.1rem;">+62 877-8407-0117</a>
-                            <span style="font-size: 0.9rem; opacity: 0.7;">{{ __('landing.footer_schedule_days') }}</span>
+                        <div class="contact-item">
+                            <a href="tel:+6287784070117">+62 877-8407-0117</a>
+                            <span>{{ __('landing.footer_schedule_days') }}</span>
                         </div>
-                        <div style="display: flex; flex-direction: column; gap: 4px;">
-                            <a href="mailto:nexio.sf@gmail.com" style="font-weight: bold; font-size: 1.1rem;">nexio.sf@gmail.com</a>
-                            <span style="font-size: 0.9rem; opacity: 0.7;">{{ __('landing.footer_schedule_hours') }}</span>
+                        <div class="contact-item">
+                            <a href="mailto:nexio.sf@gmail.com">nexio.sf@gmail.com</a>
+                            <span>{{ __('landing.footer_schedule_hours') }}</span>
                         </div>
                     </div>
                 </section>

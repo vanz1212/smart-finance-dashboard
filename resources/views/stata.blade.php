@@ -288,24 +288,68 @@
             font-size: 1.25rem;
         }
 
-        .stata-output-table {
+        .stata-data-editor-table {
             width: 100%;
             margin-top: 18px;
             border-collapse: collapse;
             overflow: hidden;
-            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-panel);
         }
 
-        .stata-output-table th,
-        .stata-output-table td {
-            padding: 12px;
-            border-bottom: 1px solid var(--border-color);
-            text-align: left;
-            color: var(--text-muted);
-        }
-
-        .stata-output-table th {
+        .stata-data-editor-table th,
+        .stata-data-editor-table td {
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            text-align: right;
             color: var(--text-main);
+            font-size: 0.9rem;
+        }
+
+        .stata-data-editor-table th {
+            background: var(--nav-bg);
+            font-weight: 800;
+            text-align: center;
+        }
+        
+        .stata-data-editor-table tbody tr:nth-child(even) {
+            background: var(--bg-secondary);
+        }
+
+        .stata-command-table {
+            width: 100%;
+            margin-top: 18px;
+            border-collapse: collapse;
+            font-family: Consolas, 'Courier New', monospace;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            font-size: 0.9rem;
+        }
+
+        .stata-command-table th,
+        .stata-command-table td {
+            padding: 6px 16px;
+            text-align: right;
+        }
+
+        .stata-command-table th {
+            border-top: 1px dashed var(--text-muted);
+            border-bottom: 1px dashed var(--text-muted);
+            color: var(--text-main);
+            font-weight: normal;
+        }
+
+        .stata-command-table td {
+            color: var(--accent-primary);
+            border-bottom: none;
+        }
+        
+        .stata-command-table tbody tr:last-child td {
+            border-bottom: 1px dashed var(--text-muted);
+        }
+        
+        [data-theme="light"] .stata-command-table {
             background: var(--bg-secondary);
         }
 
@@ -818,7 +862,7 @@
                             <h3>{{ __('stata.data_preview') }}</h3>
                             <p>{{ __('stata.preview_desc') }}</p>
                             <div class="stata-table-wrap" style="overflow-x: auto;">
-                                <table class="stata-output-table" style="white-space: nowrap;">
+                                <table class="stata-data-editor-table" style="white-space: nowrap;">
                                     <thead><tr>@foreach ($stataDataset['preview']['columns'] as $column)<th>{{ $column }}</th>@endforeach</tr></thead>
                                     <tbody>
                                         @foreach ($stataDataset['preview']['rows'] as $row)
@@ -838,7 +882,7 @@
                         <code class="stata-result-command">{{ $stataOutput['command'] }}</code>
                         <p>{{ $stataOutput['message'] }}</p>
                         <div class="stata-table-wrap" style="overflow-x: auto;">
-                            <table class="stata-output-table" style="white-space: nowrap;">
+                            <table class="stata-command-table" style="white-space: nowrap;">
                                 <thead><tr>@foreach ($stataOutput['table']['columns'] as $column)<th>{{ $column }}</th>@endforeach</tr></thead>
                                 <tbody>
                                     @foreach ($stataOutput['table']['rows'] as $row)
