@@ -29,4 +29,9 @@ return [
     'desc_stata' => 'Correlation, linear regression, and macroeconomic descriptive statistics.',
     'desc_targets' => 'Real-time progress tracking and smart deposit recommendations.',
     'ready' => 'Ready',
+
+    // Hardcode cleanup
+    'enter_module' => 'Enter Module',
+    'enter_and_open' => 'Enter and Open Module',
+    'back' => 'Back',
 ];

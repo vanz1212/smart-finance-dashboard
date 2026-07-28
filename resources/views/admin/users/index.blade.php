@@ -420,13 +420,13 @@
         <section class="admin-card">
             <div class="admin-header">
                 <div>
-                    <span style="color:#818cf8;font-weight:900;letter-spacing:.12em;text-transform:uppercase;">Admin Access</span>
-                    <h1>Manajemen User</h1>
-                    <p>Lihat profil user, buka detail akun, edit data, ubah role, atau hapus user langsung dari panel ini.</p>
+                    <span style="color:#818cf8;font-weight:900;letter-spacing:.12em;text-transform:uppercase;">{{ __('admin.admin_access') }}</span>
+                    <h1>{{ __('admin.user_management') }}</h1>
+                    <p>{{ __('admin.user_management_desc') }}</p>
                 </div>
                 <div class="admin-actions">
-                    <a class="primary" href="{{ route('dashboard.user') }}">Halaman Utama</a>
-                    <a href="{{ route('profile') }}">Profile Saya</a>
+                    <a class="primary" href="{{ route('dashboard.user') }}">{{ __('admin.home') }}</a>
+                    <a href="{{ route('profile') }}">{{ __('admin.my_profile') }}</a>
                 </div>
             </div>
 
@@ -442,11 +442,11 @@
 
             <div class="user-table">
                 <div class="user-head">
-                    <span>Nama</span>
-                    <span>Username / Email</span>
-                    <span>Role</span>
-                    <span>Bergabung</span>
-                    <span>Aksi</span>
+                    <span>{{ __('admin.name') }}</span>
+                    <span>{{ __('admin.username_email') }}</span>
+                    <span>{{ __('admin.role') }}</span>
+                    <span>{{ __('admin.joined') }}</span>
+                    <span>{{ __('admin.actions') }}</span>
                 </div>
 
                 @forelse ($users as $user)
@@ -467,10 +467,10 @@
                                 @csrf
                                 @method('PATCH')
                                 <select name="role" aria-label="Ubah role {{ $user->name }}">
-                                    <option value="user" @selected($user->role === 'user')>User</option>
-                                    <option value="admin" @selected($user->role === 'admin')>Admin</option>
+                                    <option value="user" @selected($user->role === 'user')>{{ __('admin.user') }}</option>
+                                    <option value="admin" @selected($user->role === 'admin')>{{ __('admin.admin') }}</option>
                                 </select>
-                                <button type="submit">Simpan Role</button>
+                                <button type="submit">{{ __('admin.save_role') }}</button>
                             </form>
                         </div>
                         <div>
@@ -478,22 +478,22 @@
                             <span>{{ optional($user->created_at)->timezone('Asia/Jakarta')->format('H:i') }} WIB</span>
                         </div>
                         <div class="row-actions">
-                            <a href="{{ route('dashboard.user') }}">Akses Halaman User</a>
-                            <a href="{{ route('admin.users.show', $user) }}">Lihat Profil</a>
-                            <a class="edit" href="{{ route('admin.users.edit', $user) }}">Edit</a>
+                            <a href="{{ route('dashboard.user') }}">{{ __('admin.user_page_access') }}</a>
+                            <a href="{{ route('admin.users.show', $user) }}">{{ __('admin.view_profile') }}</a>
+                            <a class="edit" href="{{ route('admin.users.edit', $user) }}">{{ __('admin.edit') }}</a>
                             @if (! auth()->user()->is($user))
                                 <form action="{{ route('admin.users.destroy', $user) }}" method="POST" onsubmit="return confirm('Hapus user ini?');">
                                     @csrf
                                     @method('DELETE')
-                                    <button class="danger" type="submit">Hapus</button>
+                                    <button class="danger" type="submit">{{ __('admin.delete') }}</button>
                                 </form>
                             @else
-                                <span class="role-badge role-admin">Akun Aktif</span>
+                                <span class="role-badge role-admin">{{ __('admin.active_account') }}</span>
                             @endif
                         </div>
                     </div>
                 @empty
-                    <div class="empty-state">Belum ada user yang terdaftar.</div>
+                    <div class="empty-state">{{ __('admin.no_users') }}</div>
                 @endforelse
             </div>
 
@@ -502,17 +502,17 @@
             </div>
 
             <section class="log-section">
-                <h2>Activity Log</h2>
-                <p>Riwayat login, logout, dan halaman utama yang dibuka user.</p>
+                <h2>{{ __('admin.activity_log') }}</h2>
+                <p>{{ __('admin.activity_log_desc') }}</p>
 
                 <table class="log-table">
                     <thead>
                         <tr>
-                            <th>User</th>
-                            <th>Aksi</th>
-                            <th>Halaman</th>
-                            <th>Tanggal</th>
-                            <th>Waktu</th>
+                            <th>{{ __('admin.user') }}</th>
+                            <th>{{ __('admin.actions') }}</th>
+                            <th>{{ __('admin.page') }}</th>
+                            <th>{{ __('admin.date') }}</th>
+                            <th>{{ __('admin.time') }}</th>
                             <th>IP</th>
                         </tr>
                     </thead>
@@ -531,7 +531,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="6" class="empty-state">Belum ada activity log.</td>
+                                <td colspan="6" class="empty-state">{{ __('admin.no_logs') }}</td>
                             </tr>
                         @endforelse
                     </tbody>

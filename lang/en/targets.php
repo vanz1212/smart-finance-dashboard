@@ -88,4 +88,9 @@ return [
     'deleted_success' => 'Financial target deleted successfully.',
     'deposit_added_success' => 'Deposit recorded successfully.',
     'deposit_deleted_success' => 'Deposit deleted successfully.',
+
+    // Hardcode cleanup
+    'summary' => 'Summary',
+    'no_deposits_yet' => 'No deposits recorded yet',
+    'more' => 'more',
 ];

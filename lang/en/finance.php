@@ -110,4 +110,9 @@ return [
     'target_label' => 'Target',
     'current_balance_label' => 'Current balance',
     'deposit_per_month' => 'Deposit/:months',
+
+    // Hardcode cleanup
+    'finance_intelligence' => 'Finance Intelligence',
+    'installment' => 'installment',
+    'months_short' => 'mo',
 ];

@@ -486,7 +486,7 @@
                         </div>
                         <div class="progress-info">
                             <span>{{ $formatRupiah($target->current_amount) }} / {{ $formatRupiah($target->target_amount) }}</span>
-                            <span style="color: var(--accent-primary);">{{ $formatRupiah($target->remaining) }} lagi</span>
+                            <span style="color: var(--accent-primary);">{{ $formatRupiah($target->remaining) }} {{ __('targets.more') }}</span>
                         </div>
                     </div>
 
@@ -569,7 +569,7 @@
                             @endif
                         @else
                             <div style="padding: 20px; text-align: center; color: rgba(248, 250, 252, 0.5);">
-                                <p>Belum ada setoran tercatat</p>
+                                <p>{{ __('targets.no_deposits_yet') }}</p>
                             </div>
                         @endif
                     </div>
@@ -577,7 +577,7 @@
 
                 <div class="sidebar-panel">
                     <div class="panel">
-                        <h3 class="panel-title" style="margin-bottom: 16px;">Ringkasan</h3>
+                        <h3 class="panel-title" style="margin-bottom: 16px;">{{ __('targets.summary') }}</h3>
 
                         <div class="quick-stat">
                             <div class="quick-stat-label">{{ __('targets.days') }} {{ __('targets.remaining') }}</div>

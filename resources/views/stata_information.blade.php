@@ -265,7 +265,7 @@
                 <h1>Kenali Stata, lalu mulai menganalisis.</h1>
                 <p>Stata adalah perangkat lunak statistik untuk mengelola data, menjalankan analisis, membuat grafik, dan mendokumentasikan proses penelitian. Pelajari dasarnya di halaman publik ini, lalu login ketika ingin membuka modul praktik.</p>
                 <div class="stata-info-actions">
-                    <a class="stata-info-button primary" href="{{ route('stata') }}">Masuk ke Modul Stata <span aria-hidden="true">&rarr;</span></a>
+                    <a class="stata-info-button primary" href="{{ route('stata') }}">{{ __('app.enter_module') }} Stata <span aria-hidden="true">&rarr;</span></a>
                     <a class="stata-info-button" href="#materi">Mulai dari Materi Dasar</a>
                 </div>
             </section>
@@ -352,7 +352,7 @@
                     <h2>Siap mencoba analisis?</h2>
                     <p>Modul Stata dilindungi login. Setelah berhasil masuk, Anda akan langsung diarahkan kembali ke ruang praktik Stata.</p>
                 </div>
-                <a class="stata-info-button primary" href="{{ route('stata') }}">Masuk dan Buka Modul</a>
+                <a class="stata-info-button primary" href="{{ route('stata') }}">{{ __('app.enter_and_open') }}</a>
             </section>
 
             <p class="stata-info-note">Stata adalah merek dagang StataCorp LLC. Halaman ini merupakan materi pengantar independen untuk tujuan pembelajaran.</p>

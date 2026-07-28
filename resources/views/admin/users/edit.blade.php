@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Edit User - Nexio')
+@section('title', '{{ __('admin.edit_user') }} - Nexio')
 
 @section('content')
     <style>
@@ -176,13 +176,13 @@
     <main class="admin-shell">
         <section class="admin-card">
             <div class="topbar">
-                <a class="primary" href="{{ route('admin.users.show', $user) }}">Kembali ke Detail</a>
-                <a href="{{ route('admin.users.index') }}">Daftar User</a>
+                <a class="primary" href="{{ route('admin.users.show', $user) }}">{{ __('admin.back_to_detail') }}</a>
+                <a href="{{ route('admin.users.index') }}">{{ __('admin.user_list') }}</a>
             </div>
 
-            <span style="color:#818cf8;font-weight:900;letter-spacing:.12em;text-transform:uppercase;">Edit User</span>
+            <span style="color:#818cf8;font-weight:900;letter-spacing:.12em;text-transform:uppercase;">{{ __('admin.edit_user') }}</span>
             <h1 style="margin:12px 0 8px;font-size:clamp(2rem,5vw,3.2rem);line-height:1;">{{ $user->name }}</h1>
-            <p style="color:rgba(248,250,252,.72);line-height:1.7;">Ubah profil user, role, atau password dari sini.</p>
+            <p style="color:rgba(248,250,252,.72);line-height:1.7;">{{ __('admin.edit_user_desc') }}</p>
 
             @if ($errors->any())
                 <div class="error-box">{{ $errors->first() }}</div>
@@ -194,44 +194,44 @@
 
                 <div class="edit-grid">
                     <label class="field">
-                        <span>Nama Lengkap</span>
+                        <span>{{ __('admin.name') }}</span>
                         <input type="text" name="name" value="{{ old('name', $user->name) }}" required>
                     </label>
 
                     <label class="field">
-                        <span>Username</span>
+                        <span>{{ __('admin.username') }}</span>
                         <input type="text" name="username" value="{{ old('username', $user->username) }}" required>
                     </label>
 
                     <label class="field">
-                        <span>Email</span>
+                        <span>{{ __('admin.email') }}</span>
                         <input type="email" name="email" value="{{ old('email', $user->email) }}" required>
                     </label>
 
                     <label class="field">
-                        <span>Role</span>
+                        <span>{{ __('admin.role') }}</span>
                         <select name="role" required>
-                            <option value="user" @selected(old('role', $user->role) === 'user')>User</option>
-                            <option value="admin" @selected(old('role', $user->role) === 'admin')>Admin</option>
+                            <option value="user" @selected(old('role', $user->role) === 'user')>{{ __('admin.user') }}</option>
+                            <option value="admin" @selected(old('role', $user->role) === 'admin')>{{ __('admin.admin') }}</option>
                         </select>
                     </label>
 
                     <label class="field">
-                        <span>Password Baru</span>
+                        <span>{{ __('admin.new_password') }}</span>
                         <input type="password" name="password" placeholder="Kosongkan jika tidak diganti">
                     </label>
 
                     <label class="field">
-                        <span>Konfirmasi Password</span>
+                        <span>{{ __('admin.confirm_password') }}</span>
                         <input type="password" name="password_confirmation" placeholder="Ulangi password baru">
                     </label>
                 </div>
 
-                <p class="note">Jika password kosong, password lama tetap digunakan. Role hanya bisa diubah oleh admin.</p>
+                <p class="note">{{ __('admin.password_help') }}</p>
 
                 <div class="actions">
-                    <button class="primary" type="submit">Simpan Perubahan</button>
-                    <a href="{{ route('admin.users.show', $user) }}">Batal</a>
+                    <button class="primary" type="submit">{{ __('admin.save_changes') }}</button>
+                    <a href="{{ route('admin.users.show', $user) }}">{{ __('admin.cancel') }}</a>
                 </div>
             </form>
         </section>
