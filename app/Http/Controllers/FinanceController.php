@@ -46,6 +46,17 @@ class FinanceController extends BaseController
 
         $templates = $this->getCategoryTemplates();
 
+        if ($request->expectsJson() || $request->is('api/*')) {
+            return response()->json([
+                'result' => $result,
+                'categories' => $this->expenseCategories(),
+                'history' => $history,
+                'templates' => $templates,
+                'recommendations' => $recommendations,
+                'categoryHistory' => $categoryHistory,
+            ]);
+        }
+
         return view('smart_finance', [
             'result' => $result,
             'categories' => $this->expenseCategories(),
@@ -184,6 +195,17 @@ class FinanceController extends BaseController
         $categoryHistory = $this->getCategoryHistory($userId, 6);
         $templates = $this->getCategoryTemplates();
 
+        if ($request->expectsJson() || $request->is('api/*')) {
+            return response()->json([
+                'result'     => $result,
+                'categories' => $this->expenseCategories(),
+                'history'    => $history,
+                'templates'  => $templates,
+                'recommendations' => $recommendations,
+                'categoryHistory' => $categoryHistory,
+            ]);
+        }
+
         return view('smart_finance', [
             'result'     => $result,
             'categories' => $this->expenseCategories(),
@@ -234,6 +256,10 @@ class FinanceController extends BaseController
         // if there are any related database records (e.g. via onDelete('cascade') in migrations)
         // Since 'expenses_json' is in the same table, it's deleted automatically.
         $analysis->delete();
+
+        if ($request->expectsJson() || $request->is('api/*')) {
+            return response()->json(['message' => 'Riwayat analisis berhasil dihapus.']);
+        }
 
         return redirect()->route('finance.index')->with('success', 'Riwayat analisis berhasil dihapus.');
     }

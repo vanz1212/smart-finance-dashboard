@@ -21,4 +21,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/profile/update', [ProfileController::class, 'updateProfile']);
     Route::post('/profile/change-email/request-otp', [ProfileController::class, 'requestEmailChangeOtp']);
     Route::post('/profile/change-email/verify-otp', [ProfileController::class, 'verifyEmailChangeOtp']);
+
+    // Smart Finance Routes
+    Route::get('/smart-finance', [\App\Http\Controllers\FinanceController::class, 'index']);
+    Route::post('/smart-finance/analyze', [\App\Http\Controllers\FinanceController::class, 'analyze']);
+    Route::delete('/smart-finance/{id}', [\App\Http\Controllers\FinanceController::class, 'destroy']);
 });
