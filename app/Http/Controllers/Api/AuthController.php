@@ -117,8 +117,9 @@ class AuthController extends Controller
             ]);
 
         } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Google Login Error: ' . $e->getMessage());
             return response()->json([
-                'message' => 'Failed to authenticate with Google.',
+                'message' => 'Failed to authenticate with Google: ' . $e->getMessage(),
                 'error' => $e->getMessage()
             ], 401);
         }

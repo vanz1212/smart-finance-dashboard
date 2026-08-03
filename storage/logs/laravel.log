@@ -5088,3 +5088,68 @@ div>
 #31 D:/SMARTFINANCE/SFD/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('D://SMARTFINANCE...')
 #32 {main}
 "} 
+[2026-08-03 07:52:24] local.ERROR: PHP Parse error: Syntax error, unexpected T_NS_SEPARATOR, expecting ')' on line 1 {"exception":"[object] (Psy\\Exception\\ParseErrorException(code: 0): PHP Parse error: Syntax error, unexpected T_NS_SEPARATOR, expecting ')' on line 1 at D:/SMARTFINANCE/SFD/vendor/psy/psysh/src/Exception/ParseErrorException.php:44)
+[stacktrace]
+#0 D:/SMARTFINANCE/SFD/vendor/psy/psysh/src/CodeCleaner.php(657): Psy/Exception/ParseErrorException::fromParseError(Object(PhpParser/Error))
+#1 D:/SMARTFINANCE/SFD/vendor/psy/psysh/src/CodeCleaner.php(273): Psy/CodeCleaner->parse('<?php try { //La...', false)
+#2 D:/SMARTFINANCE/SFD/vendor/psy/psysh/src/Shell.php(1399): Psy/CodeCleaner->clean(Array, false)
+#3 D:/SMARTFINANCE/SFD/vendor/psy/psysh/src/Shell.php(1506): Psy/Shell->appendCode('try { //Laravel//...', true, false)
+#4 D:/SMARTFINANCE/SFD/vendor/psy/psysh/src/Shell.php(2215): Psy/Shell->setCode('try { //Laravel//...', true)
+#5 D:/SMARTFINANCE/SFD/vendor/laravel/tinker/src/Console/TinkerCommand.php(77): Psy/Shell->execute('try { //Laravel//...')
+#6 D:/SMARTFINANCE/SFD/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(36): Laravel/Tinker/Console/TinkerCommand->handle()
+#7 D:/SMARTFINANCE/SFD/vendor/laravel/framework/src/Illuminate/Container/Util.php(43): Illuminate/Container/BoundMethod::Illuminate/Container/{closure}()
+#8 D:/SMARTFINANCE/SFD/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(96): Illuminate/Container/Util::unwrapIfClosure(Object(Closure))
+#9 D:/SMARTFINANCE/SFD/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(35): Illuminate/Container/BoundMethod::callBoundMethod(Object(Illuminate/Foundation/Application), Array, Object(Closure))
+#10 D:/SMARTFINANCE/SFD/vendor/laravel/framework/src/Illuminate/Container/Container.php(799): Illuminate/Container/BoundMethod::call(Object(Illuminate/Foundation/Application), Array, Array, NULL)
+#11 D:/SMARTFINANCE/SFD/vendor/laravel/framework/src/Illuminate/Console/Command.php(211): Illuminate/Container/Container->call(Array)
+#12 D:/SMARTFINANCE/SFD/vendor/symfony/console/Command/Command.php(341): Illuminate/Console/Command->execute(Object(Symfony/Component/Console/Input/ArgvInput), Object(Illuminate/Console/OutputStyle))
+#13 D:/SMARTFINANCE/SFD/vendor/laravel/framework/src/Illuminate/Console/Command.php(180): Symfony/Component/Console/Command/Command->run(Object(Symfony/Component/Console/Input/ArgvInput), Object(Illuminate/Console/OutputStyle))
+#14 D:/SMARTFINANCE/SFD/vendor/symfony/console/Application.php(1117): Illuminate/Console/Command->run(Object(Symfony/Component/Console/Input/ArgvInput), Object(Symfony/Component/Console/Output/ConsoleOutput))
+#15 D:/SMARTFINANCE/SFD/vendor/symfony/console/Application.php(356): Symfony/Component/Console/Application->doRunCommand(Object(Laravel/Tinker/Console/TinkerCommand), Object(Symfony/Component/Console/Input/ArgvInput), Object(Symfony/Component/Console/Output/ConsoleOutput))
+#16 D:/SMARTFINANCE/SFD/vendor/symfony/console/Application.php(195): Symfony/Component/Console/Application->doRun(Object(Symfony/Component/Console/Input/ArgvInput), Object(Symfony/Component/Console/Output/ConsoleOutput))
+#17 D:/SMARTFINANCE/SFD/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(198): Symfony/Component/Console/Application->run(Object(Symfony/Component/Console/Input/ArgvInput), Object(Symfony/Component/Console/Output/ConsoleOutput))
+#18 D:/SMARTFINANCE/SFD/artisan(35): Illuminate/Foundation/Console/Kernel->handle(Object(Symfony/Component/Console/Input/ArgvInput), Object(Symfony/Component/Console/Output/ConsoleOutput))
+#19 {main}
+"} 
+[2026-08-03 07:57:55] local.ERROR: Google Login Error: SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation "personal_access_tokens" does not exist
+LINE 1: insert into "personal_access_tokens" ("name", "token", "abil...
+                    ^ (Connection: pgsql, Host: 127.0.0.1, Port: 5432, Database: smart_finance, SQL: insert into "personal_access_tokens" ("name", "token", "abilities", "expires_at", "tokenable_id", "tokenable_type", "updated_at", "created_at") values (auth_token, 472f55dd01fa5ca027732fd86045cd97ff63356f467cffe7fb72006855df3b02, ["*"], ?, 3, App\Models\User, 2026-08-03 07:57:55, 2026-08-03 07:57:55) returning "id")  
+[2026-08-03 07:58:03] local.ERROR: Google Login Error: SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation "personal_access_tokens" does not exist
+LINE 1: insert into "personal_access_tokens" ("name", "token", "abil...
+                    ^ (Connection: pgsql, Host: 127.0.0.1, Port: 5432, Database: smart_finance, SQL: insert into "personal_access_tokens" ("name", "token", "abilities", "expires_at", "tokenable_id", "tokenable_type", "updated_at", "created_at") values (auth_token, 76398eef740def92220a0fb540ceffcf3ede66f927ceb6def334ba1743c2b146, ["*"], ?, 3, App\Models\User, 2026-08-03 07:58:03, 2026-08-03 07:58:03) returning "id")  
+[2026-08-03 08:35:04] local.ERROR: syntax error, unexpected token "<" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"<\" at D:/SMARTFINANCE/SFD/app/Http/Controllers/TaxController.php:54)
+[stacktrace]
+#0 D:/SMARTFINANCE/SFD/vendor/composer/ClassLoader.php(427): Composer/Autoload/{closure}('D://SMARTFINANCE...')
+#1 [internal function]: Composer/Autoload/ClassLoader->loadClass('App//Http//Contro...')
+#2 D:/SMARTFINANCE/SFD/vendor/laravel/framework/src/Illuminate/Routing/Route.php(1125): is_a('App//Http//Contro...', 'Illuminate//Rout...', true)
+#3 D:/SMARTFINANCE/SFD/vendor/laravel/framework/src/Illuminate/Routing/Route.php(1062): Illuminate/Routing/Route->controllerMiddleware()
+#4 D:/SMARTFINANCE/SFD/vendor/laravel/framework/src/Illuminate/Routing/Router.php(834): Illuminate/Routing/Route->gatherMiddleware()
+#5 D:/SMARTFINANCE/SFD/vendor/laravel/framework/src/Illuminate/Routing/Router.php(816): Illuminate/Routing/Router->gatherRouteMiddleware(Object(Illuminate/Routing/Route))
+#6 D:/SMARTFINANCE/SFD/vendor/laravel/framework/src/Illuminate/Routing/Router.php(800): Illuminate/Routing/Router->runRouteWithinStack(Object(Illuminate/Routing/Route), Object(Illuminate/Http/Request))
+#7 D:/SMARTFINANCE/SFD/vendor/laravel/framework/src/Illuminate/Routing/Router.php(764): Illuminate/Routing/Router->runRoute(Object(Illuminate/Http/Request), Object(Illuminate/Routing/Route))
+#8 D:/SMARTFINANCE/SFD/vendor/laravel/framework/src/Illuminate/Routing/Router.php(753): Illuminate/Routing/Router->dispatchToRoute(Object(Illuminate/Http/Request))
+#9 D:/SMARTFINANCE/SFD/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(200): Illuminate/Routing/Router->dispatch(Object(Illuminate/Http/Request))
+#10 D:/SMARTFINANCE/SFD/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(180): Illuminate/Foundation/Http/Kernel->Illuminate/Foundation/Http/{closure}(Object(Illuminate/Http/Request))
+#11 D:/SMARTFINANCE/SFD/vendor/livewire/livewire/src/Features/SupportDisablingBackButtonCache/DisableBackButtonCacheMiddleware.php(19): Illuminate/Pipeline/Pipeline->Illuminate/Pipeline/{closure}(Object(Illuminate/Http/Request))
+#12 D:/SMARTFINANCE/SFD/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Livewire/Features/SupportDisablingBackButtonCache/DisableBackButtonCacheMiddleware->handle(Object(Illuminate/Http/Request), Object(Closure))
+#13 D:/SMARTFINANCE/SFD/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(21): Illuminate/Pipeline/Pipeline->Illuminate/Pipeline/{closure}(Object(Illuminate/Http/Request))
+#14 D:/SMARTFINANCE/SFD/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ConvertEmptyStringsToNull.php(31): Illuminate/Foundation/Http/Middleware/TransformsRequest->handle(Object(Illuminate/Http/Request), Object(Closure))
+#15 D:/SMARTFINANCE/SFD/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate/Foundation/Http/Middleware/ConvertEmptyStringsToNull->handle(Object(Illuminate/Http/Request), Object(Closure))
+#16 D:/SMARTFINANCE/SFD/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(21): Illuminate/Pipeline/Pipeline->Illuminate/Pipeline/{closure}(Object(Illuminate/Http/Request))
+#17 D:/SMARTFINANCE/SFD/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TrimStrings.php(51): Illuminate/Foundation/Http/Middleware/TransformsRequest->handle(Object(Illuminate/Http/Request), Object(Closure))
+#18 D:/SMARTFINANCE/SFD/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate/Foundation/Http/Middleware/TrimStrings->handle(Object(Illuminate/Http/Request), Object(Closure))
+#19 D:/SMARTFINANCE/SFD/vendor/laravel/framework/src/Illuminate/Http/Middleware/ValidatePostSize.php(27): Illuminate/Pipeline/Pipeline->Illuminate/Pipeline/{closure}(Object(Illuminate/Http/Request))
+#20 D:/SMARTFINANCE/SFD/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate/Http/Middleware/ValidatePostSize->handle(Object(Illuminate/Http/Request), Object(Closure))
+#21 D:/SMARTFINANCE/SFD/app/Http/Middleware/PreventRequestsDuringMaintenance.php(19): Illuminate/Pipeline/Pipeline->Illuminate/Pipeline/{closure}(Object(Illuminate/Http/Request))
+#22 D:/SMARTFINANCE/SFD/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): App/Http/Middleware/PreventRequestsDuringMaintenance->handle(Object(Illuminate/Http/Request), Object(Closure))
+#23 D:/SMARTFINANCE/SFD/vendor/laravel/framework/src/Illuminate/Http/Middleware/HandleCors.php(74): Illuminate/Pipeline/Pipeline->Illuminate/Pipeline/{closure}(Object(Illuminate/Http/Request))
+#24 D:/SMARTFINANCE/SFD/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate/Http/Middleware/HandleCors->handle(Object(Illuminate/Http/Request), Object(Closure))
+#25 D:/SMARTFINANCE/SFD/vendor/laravel/framework/src/Illuminate/Http/Middleware/TrustProxies.php(58): Illuminate/Pipeline/Pipeline->Illuminate/Pipeline/{closure}(Object(Illuminate/Http/Request))
+#26 D:/SMARTFINANCE/SFD/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(219): Illuminate/Http/Middleware/TrustProxies->handle(Object(Illuminate/Http/Request), Object(Closure))
+#27 D:/SMARTFINANCE/SFD/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(137): Illuminate/Pipeline/Pipeline->Illuminate/Pipeline/{closure}(Object(Illuminate/Http/Request))
+#28 D:/SMARTFINANCE/SFD/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(175): Illuminate/Pipeline/Pipeline->then(Object(Closure))
+#29 D:/SMARTFINANCE/SFD/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(144): Illuminate/Foundation/Http/Kernel->sendRequestThroughRouter(Object(Illuminate/Http/Request))
+#30 D:/SMARTFINANCE/SFD/public/index.php(18): Illuminate/Foundation/Http/Kernel->handle(Object(Illuminate/Http/Request))
+#31 D:/SMARTFINANCE/SFD/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('D://SMARTFINANCE...')
+#32 {main}
+"} 

@@ -51,65 +51,7 @@ class TaxController extends BaseController
             ->get();
 
         $result = null;
-        if ($request->has('load_id')) {
-            $loaded = TaxAnalysis::where('user_id', $userId)->find($request->input('load_id'));
-            if ($loaded) {
-                $result = $loaded->hasil_json;
-                $result['id'] = $loaded->id; // Untuk keperluan export PDF
-            }
-<?php
 
-namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
-use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Validation\Rule;
-use App\Models\TaxAnalysis;
-use Barryvdh\DomPDF\Facade\Pdf;
-
-class TaxController extends BaseController
-{
-    private const PTKP = [
-        'TK/0' => 54000000,
-        'TK/1' => 58500000,
-        'TK/2' => 63000000,
-        'TK/3' => 67500000,
-        'K/0' => 58500000,
-        'K/1' => 63000000,
-        'K/2' => 67500000,
-        'K/3' => 72000000,
-        'K/I/0' => 112500000,
-        'K/I/1' => 117000000,
-        'K/I/2' => 121500000,
-        'K/I/3' => 126000000,
-    ];
-
-    private const PTKP_TER_CATEGORY = [
-        'TK/0' => 'A', 'TK/1' => 'A', 'K/0' => 'A',
-        'TK/2' => 'B', 'TK/3' => 'B', 'K/1' => 'B', 'K/2' => 'B',
-        'K/3' => 'C',
-        'K/I/0' => 'A', // Simplified for demo
-        'K/I/1' => 'B',
-        'K/I/2' => 'B',
-        'K/I/3' => 'C',
-    ];
-
-    private const TAX_BRACKETS = [
-        ['label' => 's.d. Rp60.000.000', 'upper_limit' => 60000000, 'rate' => 0.05],
-        ['label' => '> Rp60.000.000 - Rp250.000.000', 'upper_limit' => 250000000, 'rate' => 0.15],
-        ['label' => '> Rp250.000.000 - Rp500.000.000', 'upper_limit' => 500000000, 'rate' => 0.25],
-        ['label' => '> Rp500.000.000 - Rp5.000.000.000', 'upper_limit' => 5000000000, 'rate' => 0.30],
-        ['label' => '> Rp5.000.000.000', 'upper_limit' => null, 'rate' => 0.35],
-    ];
-
-    public function index(Request $request)
-    {
-        $userId = auth()->id();
-        $history = TaxAnalysis::where('user_id', $userId)
-            ->orderBy('created_at', 'desc')
-            ->get();
-
-        $result = null;
         if ($request->has('load_id')) {
             $loaded = TaxAnalysis::where('user_id', $userId)->find($request->input('load_id'));
             if ($loaded) {
