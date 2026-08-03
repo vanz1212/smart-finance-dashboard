@@ -98,6 +98,7 @@ Route::middleware(Authenticate::class)->group(function () {
         ->middleware('activity:page_open,smart_finance,Smart Finance')
         ->name('finance.index');
     Route::post('/smart-finance', [FinanceController::class, 'analyze'])->name('finance.analyze');
+    Route::delete('/smart-finance/clear-all', [FinanceController::class, 'clearAll'])->name('finance.clear-all');
     Route::delete('/smart-finance/{id}', [FinanceController::class, 'destroy'])->name('finance.destroy');
     Route::get('/smart-finance/{id}/pdf', [FinanceController::class, 'exportPdf'])->name('finance.export-pdf');
     Route::get('/smart-finance/templates', [FinanceController::class, 'getTemplates'])->name('finance.templates');

@@ -26,4 +26,24 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/smart-finance', [\App\Http\Controllers\FinanceController::class, 'index']);
     Route::post('/smart-finance/analyze', [\App\Http\Controllers\FinanceController::class, 'analyze']);
     Route::delete('/smart-finance/{id}', [\App\Http\Controllers\FinanceController::class, 'destroy']);
+    
+    // Financial Targets Routes
+    Route::get('/targets', [\App\Http\Controllers\FinancialTargetController::class, 'index']);
+    Route::post('/targets', [\App\Http\Controllers\FinancialTargetController::class, 'store']);
+    Route::get('/targets/{target}', [\App\Http\Controllers\FinancialTargetController::class, 'show']);
+    Route::put('/targets/{target}', [\App\Http\Controllers\FinancialTargetController::class, 'update']);
+    Route::delete('/targets/{target}', [\App\Http\Controllers\FinancialTargetController::class, 'destroy']);
+    Route::post('/targets/{target}/deposit', [\App\Http\Controllers\FinancialTargetController::class, 'addDeposit']);
+    Route::delete('/targets/deposit/{deposit}', [\App\Http\Controllers\FinancialTargetController::class, 'removeDeposit']);
+
+    // Tax Routes
+    Route::get('/tax', [\App\Http\Controllers\TaxController::class, 'index']);
+    Route::post('/tax/calculate', [\App\Http\Controllers\TaxController::class, 'calculate']);
+    Route::delete('/tax/{id}', [\App\Http\Controllers\TaxController::class, 'destroy']);
+
+    // Stata Routes
+    Route::get('/stata', [\App\Http\Controllers\StataController::class, 'index']);
+    Route::post('/stata/import', [\App\Http\Controllers\StataController::class, 'import']);
+    Route::post('/stata/command', [\App\Http\Controllers\StataController::class, 'run']);
+    Route::delete('/stata/dataset', [\App\Http\Controllers\StataController::class, 'clear']);
 });

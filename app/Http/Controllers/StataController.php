@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use RuntimeException;
@@ -27,9 +28,20 @@ class StataController extends BaseController
 
     public function index(Request $request)
     {
+        $isApi = $request->expectsJson() || $request->is('api/*');
+        $dataset = $isApi ? Cache::get('stata_dataset_' . auth()->id()) : $request->session()->get('stata_dataset');
+        $output = $isApi ? Cache::get('stata_output_' . auth()->id()) : $request->session()->get('stata_output');
+
+        if ($isApi) {
+            return response()->json([
+                'dataset' => $dataset,
+                'output' => $output,
+            ]);
+        }
+
         return view('stata', [
-            'stataDataset' => $request->session()->get('stata_dataset'),
-            'stataOutput' => $request->session()->get('stata_output'),
+            'stataDataset' => $dataset,
+            'stataOutput' => $output,
         ]);
     }
 
@@ -77,20 +89,33 @@ class StataController extends BaseController
             ]);
         }
 
-        $oldPath = data_get($request->session()->get('stata_dataset'), 'path');
+        $isApi = $request->expectsJson() || $request->is('api/*');
+        $oldPath = data_get($isApi ? Cache::get('stata_dataset_' . auth()->id()) : $request->session()->get('stata_dataset'), 'path');
 
         if (is_string($oldPath) && $oldPath !== $relativePath) {
             Storage::disk('local')->delete($oldPath);
         }
 
-        $request->session()->put('stata_dataset', [
+        $datasetData = [
             'path' => $relativePath,
             'name' => $file->getClientOriginalName(),
             'size' => (int) $file->getSize(),
             'summary' => $inspection['summary'],
             'variables' => $inspection['variables'],
             'preview' => $inspection['table'],
-        ]);
+        ];
+
+        if ($isApi) {
+            Cache::put('stata_dataset_' . auth()->id(), $datasetData, now()->addHours(2));
+            Cache::forget('stata_output_' . auth()->id());
+            
+            return response()->json([
+                'message' => __('stata.import_success'),
+                'dataset' => $datasetData
+            ]);
+        }
+
+        $request->session()->put('stata_dataset', $datasetData);
         $request->session()->forget('stata_output');
 
         return redirect()->to(route('stata').'#stata-workbench')
@@ -135,10 +160,14 @@ class StataController extends BaseController
             return back()->withErrors(['stata_command' => 'The command field is required.']);
         }
 
-        $dataset = $request->session()->get('stata_dataset');
+        $isApi = $request->expectsJson() || $request->is('api/*');
+        $dataset = $isApi ? Cache::get('stata_dataset_' . auth()->id()) : $request->session()->get('stata_dataset');
         $relativePath = data_get($dataset, 'path');
 
         if (! is_string($relativePath) || ! Storage::disk('local')->exists($relativePath)) {
+            if ($isApi) {
+                return response()->json(['errors' => ['stata_command' => [__('stata.import_first')]]], 422);
+            }
             return back()->withErrors(['stata_command' => __('stata.import_first')]);
         }
 
@@ -151,8 +180,18 @@ class StataController extends BaseController
         } catch (Throwable $exception) {
             Log::warning('Stata command failed.', ['exception' => $exception]);
 
+            if ($isApi) {
+                return response()->json(['errors' => ['stata_command' => [$exception->getMessage()]]], 422);
+            }
             return redirect()->to(route('stata').'#stata-workbench')
                 ->withErrors(['stata_command' => $exception->getMessage()]);
+        }
+
+        if ($isApi) {
+            Cache::put('stata_output_' . auth()->id(), $output, now()->addHours(2));
+            return response()->json([
+                'output' => $output
+            ]);
         }
 
         $request->session()->put('stata_output', $output);
@@ -162,10 +201,17 @@ class StataController extends BaseController
 
     public function clear(Request $request)
     {
-        $relativePath = data_get($request->session()->get('stata_dataset'), 'path');
+        $isApi = $request->expectsJson() || $request->is('api/*');
+        $relativePath = data_get($isApi ? Cache::get('stata_dataset_' . auth()->id()) : $request->session()->get('stata_dataset'), 'path');
 
         if (is_string($relativePath)) {
             Storage::disk('local')->delete($relativePath);
+        }
+
+        if ($isApi) {
+            Cache::forget('stata_dataset_' . auth()->id());
+            Cache::forget('stata_output_' . auth()->id());
+            return response()->json(['message' => __('stata.dataset_closed')]);
         }
 
         $request->session()->forget(['stata_dataset', 'stata_output']);

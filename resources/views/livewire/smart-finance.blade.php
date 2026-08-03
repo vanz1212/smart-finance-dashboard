@@ -1030,11 +1030,20 @@
                             <h2>{{ __('finance.results_summary') }}</h2>
                             <p>{{ $result ? __('finance.summary_period_prefix') . ' ' . $translatePeriode($result['periode']) : __('finance.results_will_appear') }}</p>
                         </div>
-                        @if ($result && isset($request) && $request->has('load_id'))
-                            <a href="{{ route('finance.export-pdf', $request->input('load_id')) }}" class="btn-use" style="background: #ef4444; color: white;" target="_blank">{{ __('finance.export_pdf') }}</a>
-                        @elseif ($result && $history->last())
-                            <a href="{{ route('finance.export-pdf', $history->last()->id) }}" class="btn-use" style="background: #ef4444; color: white;" target="_blank">{{ __('finance.export_pdf') }}</a>
-                        @endif
+                        <div style="display: flex; gap: 8px; align-items: center;">
+                            @if ($result && isset($request) && $request->has('load_id'))
+                                <a href="{{ route('finance.export-pdf', $request->input('load_id')) }}" class="btn-use" style="background: #ef4444; color: white;" target="_blank">{{ __('finance.export_pdf') }}</a>
+                            @elseif ($result && $history->last())
+                                <a href="{{ route('finance.export-pdf', $history->last()->id) }}" class="btn-use" style="background: #ef4444; color: white;" target="_blank">{{ __('finance.export_pdf') }}</a>
+                            @endif
+                            @if (isset($history) && count($history) > 0)
+                                <form action="{{ route('finance.clear-all') }}" method="POST" onsubmit="return confirm('{{ __('finance.delete_all_confirm') }}')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn-delete" style="padding: 6px 14px; background: rgba(244, 63, 94, 0.15); border: 1px solid rgba(244, 63, 94, 0.3);">{{ __('finance.delete_all') }}</button>
+                                </form>
+                            @endif
+                        </div>
                     </div>
 
                     @if ($result)
@@ -1277,8 +1286,8 @@
                                         <td>
                                             <div class="action-buttons">
                                                 <a href="{{ route('finance.index', ['load_id' => $item->id]) }}" class="btn-use">{{ __('finance.use_analysis') }}</a>
-                                                <form class="workspace-panel workspace-panel-inner" wire:submit="analyze">
-                                                    
+                                                <form action="{{ route('finance.destroy', $item->id ?? $item['id']) }}" method="POST" onsubmit="return confirm('{{ __('finance.delete_confirm') }}')">
+                                                    @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn-delete">{{ __('finance.delete') }}</button>
                                                 </form>

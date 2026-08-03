@@ -247,7 +247,7 @@ class FinanceController extends BaseController
         return response()->json(['expenses' => $expenseItems]);
     }
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         $userId = auth()->id();
         $analysis = FinancialAnalysis::where('user_id', $userId)->findOrFail($id);
@@ -262,6 +262,18 @@ class FinanceController extends BaseController
         }
 
         return redirect()->route('finance.index')->with('success', 'Riwayat analisis berhasil dihapus.');
+    }
+
+    public function clearAll(Request $request)
+    {
+        $userId = auth()->id();
+        FinancialAnalysis::where('user_id', $userId)->delete();
+
+        if ($request->expectsJson() || $request->is('api/*')) {
+            return response()->json(['message' => 'Semua riwayat analisis berhasil dihapus.']);
+        }
+
+        return redirect()->route('finance.index')->with('success', 'Semua riwayat analisis berhasil dihapus.');
     }
 
     public function exportPdf($id)

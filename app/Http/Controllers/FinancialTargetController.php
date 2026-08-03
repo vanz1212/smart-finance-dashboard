@@ -39,6 +39,12 @@ class FinancialTargetController extends BaseController
                 ? ($targets->sum('current_amount') / $targets->sum('target_amount')) * 100 
                 : 0,
         ];
+        if (request()->expectsJson() || request()->is('api/*')) {
+            return response()->json([
+                'targets' => $targets,
+                'stats' => $summaryStats,
+            ]);
+        }
 
         return view('financial_targets.index', [
             'targets' => $targets,
@@ -83,6 +89,10 @@ class FinancialTargetController extends BaseController
         
         $target->save();
 
+        if ($request->expectsJson() || $request->is('api/*')) {
+            return response()->json(['message' => __('targets.created_success'), 'target' => $target], 201);
+        }
+
         return redirect()->route('targets.show', $target->id)->with('success', __('targets.created_success'));
     }
 
@@ -105,6 +115,14 @@ class FinancialTargetController extends BaseController
             ->get();
 
         $monthlyBreakdown = $this->getMonthlyBreakdown($target);
+
+        if (request()->expectsJson() || request()->is('api/*')) {
+            return response()->json([
+                'target' => $target,
+                'deposits' => $deposits,
+                'monthlyBreakdown' => $monthlyBreakdown,
+            ]);
+        }
 
         return view('financial_targets.show', [
             'target' => $target,
@@ -153,6 +171,10 @@ class FinancialTargetController extends BaseController
 
         $target->update($validated);
 
+        if ($request->expectsJson() || $request->is('api/*')) {
+            return response()->json(['message' => __('targets.updated_success'), 'target' => $target]);
+        }
+
         return redirect()->route('targets.show', $target->id)->with('success', __('targets.updated_success'));
     }
 
@@ -163,6 +185,10 @@ class FinancialTargetController extends BaseController
         }
 
         $target->delete();
+
+        if (request()->expectsJson() || request()->is('api/*')) {
+            return response()->json(['message' => __('targets.deleted_success')]);
+        }
 
         return redirect()->route('targets.index')->with('success', __('targets.deleted_success'));
     }
@@ -196,6 +222,10 @@ class FinancialTargetController extends BaseController
         
         $target->save();
 
+        if ($request->expectsJson() || $request->is('api/*')) {
+            return response()->json(['message' => __('targets.deposit_added_success'), 'deposit' => $deposit, 'target' => $target], 201);
+        }
+
         return redirect()->back()->with('success', __('targets.deposit_added_success'));
     }
 
@@ -215,6 +245,10 @@ class FinancialTargetController extends BaseController
         
         $target->save();
         $deposit->delete();
+
+        if (request()->expectsJson() || request()->is('api/*')) {
+            return response()->json(['message' => __('targets.deposit_deleted_success'), 'target' => $target]);
+        }
 
         return redirect()->back()->with('success', __('targets.deposit_deleted_success'));
     }
