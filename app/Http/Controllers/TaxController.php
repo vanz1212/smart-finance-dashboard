@@ -45,7 +45,7 @@ class TaxController extends BaseController
 
     public function index(Request $request)
     {
-        $userId = auth()->id();
+        $userId = auth()->id() ?? auth('sanctum')->id();
         $history = TaxAnalysis::where('user_id', $userId)
             ->orderBy('created_at', 'desc')
             ->get();
@@ -172,7 +172,7 @@ class TaxController extends BaseController
             'ter_rate' => $terRate * 100,
         ];
 
-        $userId = auth()->id();
+        $userId = auth()->id() ?? auth('sanctum')->id();
         $analysis = TaxAnalysis::create([
             'user_id' => $userId,
             'tahun_pajak' => $tahun,
@@ -200,7 +200,7 @@ class TaxController extends BaseController
 
     public function destroy(Request $request, $id)
     {
-        $userId = auth()->id();
+        $userId = auth()->id() ?? auth('sanctum')->id();
         $analysis = TaxAnalysis::where('user_id', $userId)->findOrFail($id);
         $analysis->delete();
 
@@ -209,6 +209,11 @@ class TaxController extends BaseController
         }
 
         return redirect()->route('perpajakan.index')->with('success', __('tax.deleted_success'));
+    }
+
+    public function exportPdf($id)
+    {
+        $userId = auth()->id() ?? auth('sanctum')->id();
         $analysis = TaxAnalysis::where('user_id', $userId)->findOrFail($id);
         
         $result = $analysis->hasil_json;

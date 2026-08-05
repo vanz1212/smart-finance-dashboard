@@ -29,8 +29,8 @@ class StataController extends BaseController
     public function index(Request $request)
     {
         $isApi = $request->expectsJson() || $request->is('api/*');
-        $dataset = $isApi ? Cache::get('stata_dataset_' . auth()->id()) : $request->session()->get('stata_dataset');
-        $output = $isApi ? Cache::get('stata_output_' . auth()->id()) : $request->session()->get('stata_output');
+        $dataset = $isApi ? Cache::get('stata_dataset_' . (auth()->id() ?? auth('sanctum')->id())) : $request->session()->get('stata_dataset');
+        $output = $isApi ? Cache::get('stata_output_' . (auth()->id() ?? auth('sanctum')->id())) : $request->session()->get('stata_output');
 
         if ($isApi) {
             return response()->json([
@@ -90,7 +90,7 @@ class StataController extends BaseController
         }
 
         $isApi = $request->expectsJson() || $request->is('api/*');
-        $oldPath = data_get($isApi ? Cache::get('stata_dataset_' . auth()->id()) : $request->session()->get('stata_dataset'), 'path');
+        $oldPath = data_get($isApi ? Cache::get('stata_dataset_' . (auth()->id() ?? auth('sanctum')->id())) : $request->session()->get('stata_dataset'), 'path');
 
         if (is_string($oldPath) && $oldPath !== $relativePath) {
             Storage::disk('local')->delete($oldPath);
@@ -106,8 +106,8 @@ class StataController extends BaseController
         ];
 
         if ($isApi) {
-            Cache::put('stata_dataset_' . auth()->id(), $datasetData, now()->addHours(2));
-            Cache::forget('stata_output_' . auth()->id());
+            Cache::put('stata_dataset_' . (auth()->id() ?? auth('sanctum')->id()), $datasetData, now()->addHours(2));
+            Cache::forget('stata_output_' . (auth()->id() ?? auth('sanctum')->id()));
             
             return response()->json([
                 'message' => __('stata.import_success'),
@@ -161,7 +161,7 @@ class StataController extends BaseController
         }
 
         $isApi = $request->expectsJson() || $request->is('api/*');
-        $dataset = $isApi ? Cache::get('stata_dataset_' . auth()->id()) : $request->session()->get('stata_dataset');
+        $dataset = $isApi ? Cache::get('stata_dataset_' . (auth()->id() ?? auth('sanctum')->id())) : $request->session()->get('stata_dataset');
         $relativePath = data_get($dataset, 'path');
 
         if (! is_string($relativePath) || ! Storage::disk('local')->exists($relativePath)) {
@@ -188,7 +188,7 @@ class StataController extends BaseController
         }
 
         if ($isApi) {
-            Cache::put('stata_output_' . auth()->id(), $output, now()->addHours(2));
+            Cache::put('stata_output_' . (auth()->id() ?? auth('sanctum')->id()), $output, now()->addHours(2));
             return response()->json([
                 'output' => $output
             ]);
@@ -202,15 +202,15 @@ class StataController extends BaseController
     public function clear(Request $request)
     {
         $isApi = $request->expectsJson() || $request->is('api/*');
-        $relativePath = data_get($isApi ? Cache::get('stata_dataset_' . auth()->id()) : $request->session()->get('stata_dataset'), 'path');
+        $relativePath = data_get($isApi ? Cache::get('stata_dataset_' . (auth()->id() ?? auth('sanctum')->id())) : $request->session()->get('stata_dataset'), 'path');
 
         if (is_string($relativePath)) {
             Storage::disk('local')->delete($relativePath);
         }
 
         if ($isApi) {
-            Cache::forget('stata_dataset_' . auth()->id());
-            Cache::forget('stata_output_' . auth()->id());
+            Cache::forget('stata_dataset_' . (auth()->id() ?? auth('sanctum')->id()));
+            Cache::forget('stata_output_' . (auth()->id() ?? auth('sanctum')->id()));
             return response()->json(['message' => __('stata.dataset_closed')]);
         }
 

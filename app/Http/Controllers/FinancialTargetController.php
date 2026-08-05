@@ -12,7 +12,7 @@ class FinancialTargetController extends BaseController
 {
     public function index()
     {
-        $userId = auth()->id();
+        $userId = auth()->id() ?? auth('sanctum')->id();
         
         $targets = FinancialTarget::where('user_id', $userId)
             ->orderBy('priority')
@@ -61,7 +61,7 @@ class FinancialTargetController extends BaseController
 
     public function store(Request $request)
     {
-        $userId = auth()->id();
+        $userId = auth()->id() ?? auth('sanctum')->id();
 
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:100'],
@@ -98,7 +98,7 @@ class FinancialTargetController extends BaseController
 
     public function show(FinancialTarget $target)
     {
-        if ($target->user_id !== auth()->id()) {
+        if ($target->user_id !== (auth()->id() ?? auth('sanctum')->id())) {
             abort(403);
         }
 
@@ -133,7 +133,7 @@ class FinancialTargetController extends BaseController
 
     public function edit(FinancialTarget $target)
     {
-        if ($target->user_id !== auth()->id()) {
+        if ($target->user_id !== (auth()->id() ?? auth('sanctum')->id())) {
             abort(403);
         }
 
@@ -144,7 +144,7 @@ class FinancialTargetController extends BaseController
 
     public function update(Request $request, FinancialTarget $target)
     {
-        if ($target->user_id !== auth()->id()) {
+        if ($target->user_id !== (auth()->id() ?? auth('sanctum')->id())) {
             abort(403);
         }
 
@@ -180,7 +180,7 @@ class FinancialTargetController extends BaseController
 
     public function destroy(FinancialTarget $target)
     {
-        if ($target->user_id !== auth()->id()) {
+        if ($target->user_id !== (auth()->id() ?? auth('sanctum')->id())) {
             abort(403);
         }
 
@@ -195,7 +195,7 @@ class FinancialTargetController extends BaseController
 
     public function addDeposit(Request $request, FinancialTarget $target)
     {
-        if ($target->user_id !== auth()->id()) {
+        if ($target->user_id !== (auth()->id() ?? auth('sanctum')->id())) {
             abort(403);
         }
 
@@ -209,7 +209,7 @@ class FinancialTargetController extends BaseController
 
         $deposit = new FinancialTargetDeposit($validated);
         $deposit->financial_target_id = $target->id;
-        $deposit->user_id = auth()->id();
+        $deposit->user_id = auth()->id() ?? auth('sanctum')->id();
         $deposit->save();
 
         // Update target current_amount
@@ -231,7 +231,7 @@ class FinancialTargetController extends BaseController
 
     public function removeDeposit(FinancialTargetDeposit $deposit)
     {
-        if ($deposit->user_id !== auth()->id()) {
+        if ($deposit->user_id !== (auth()->id() ?? auth('sanctum')->id())) {
             abort(403);
         }
 

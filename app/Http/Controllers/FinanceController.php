@@ -13,7 +13,7 @@ class FinanceController extends BaseController
 {
     public function index(Request $request)
     {
-        $userId = auth()->id();
+        $userId = auth()->id() ?? auth('sanctum')->id();
 
         $history = FinancialAnalysis::where('user_id', $userId)
             ->orderBy('periode', 'asc')
@@ -171,7 +171,7 @@ class FinanceController extends BaseController
             ];
         }
 
-        $userId = auth()->id();
+        $userId = auth()->id() ?? auth('sanctum')->id();
 
         $analysis = FinancialAnalysis::updateOrCreate(
             [
@@ -249,7 +249,7 @@ class FinanceController extends BaseController
 
     public function destroy(Request $request, $id)
     {
-        $userId = auth()->id();
+        $userId = auth()->id() ?? auth('sanctum')->id();
         $analysis = FinancialAnalysis::where('user_id', $userId)->findOrFail($id);
         
         // Deleting the model will automatically trigger cascade deletes 
@@ -266,7 +266,7 @@ class FinanceController extends BaseController
 
     public function clearAll(Request $request)
     {
-        $userId = auth()->id();
+        $userId = auth()->id() ?? auth('sanctum')->id();
         FinancialAnalysis::where('user_id', $userId)->delete();
 
         if ($request->expectsJson() || $request->is('api/*')) {
@@ -278,7 +278,7 @@ class FinanceController extends BaseController
 
     public function exportPdf($id)
     {
-        $userId = auth()->id();
+        $userId = auth()->id() ?? auth('sanctum')->id();
         $analysis = FinancialAnalysis::where('user_id', $userId)->findOrFail($id);
         
         $result = $this->calculateResults($analysis->toArray());
@@ -356,6 +356,7 @@ class FinanceController extends BaseController
             'expense_items'         => $expenseItems,   // [{name, amount, is_debt}] for dynamic form + chart
             'expenses'              => $expenses,
             'total_expenses'        => $totalExpenses,
+            'total_debt'            => $totalDebt,
             'saving'                => $saving,
             'saldo_tabungan'        => $saldoTabungan,
             'setoran_tabungan'      => $setoranTabungan,
@@ -374,6 +375,7 @@ class FinanceController extends BaseController
             'effective_saldo'       => $effectiveSaldo,
             'status'                => $assessment['status'],
             'status_class'          => $assessment['class'],
+            'financial_health_score'=> $assessment['score'],
             'recommendations'       => $assessment['recommendations'],
         ];
     }
@@ -457,7 +459,7 @@ class FinanceController extends BaseController
             $class = 'danger';
         }
 
-        return compact('status', 'class', 'recommendations');
+        return compact('status', 'class', 'recommendations', 'score');
     }
 
     private function getCategoryTemplates(): array
