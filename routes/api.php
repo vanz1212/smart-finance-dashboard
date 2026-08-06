@@ -46,4 +46,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/stata/import', [\App\Http\Controllers\StataController::class, 'import']);
     Route::post('/stata/command', [\App\Http\Controllers\StataController::class, 'run']);
     Route::delete('/stata/dataset', [\App\Http\Controllers\StataController::class, 'clear']);
+
+    // Admin Users Routes
+    Route::get('/admin/users', [\App\Http\Controllers\Api\AdminController::class, 'index']);
+    Route::get('/admin/users/{id}', [\App\Http\Controllers\Api\AdminController::class, 'show']);
+    Route::put('/admin/users/{id}/role', [\App\Http\Controllers\Api\AdminController::class, 'updateRole']);
+    Route::put('/admin/users/{id}/status', [\App\Http\Controllers\Api\AdminController::class, 'toggleStatus']);
+    Route::delete('/admin/users/{id}', [\App\Http\Controllers\Api\AdminController::class, 'destroy']);
 });
